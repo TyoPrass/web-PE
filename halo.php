@@ -34,7 +34,7 @@ if (isset($_GET['delete'])) {
         $_SESSION['message_type'] = 'danger';
     }
     $stmt->close();
-    header('Location: halo.php');
+    header('Location: tambah_part.php');
     exit();
 }
 
@@ -44,7 +44,6 @@ if (isset($_POST['update'])) {
     $nama_part = $_POST['projectname'];
     $tanggal = $_POST['startdate'];
     $tgl_selesai = $_POST['duedate'];
-    $status = $_POST['status'];
     $gambar_parts = [];
 
     // Convert date format from d-M-yyyy to yyyy-mm-dd
@@ -90,14 +89,14 @@ if (isset($_POST['update'])) {
 
     // Update data in database
     $gambar_part = implode(',', $gambar_parts);
-    $sql = "UPDATE data_part SET nama_part = ?, gambar_part = ?, tanggal = ?, tgl_selesai = ?, status = ? WHERE id_part = ?";
+    $sql = "UPDATE data_part SET nama_part = ?, gambar_part = ?, tanggal = ?, tgl_selesai = ? WHERE id_part = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssssi", $nama_part, $gambar_part, $tanggal, $tgl_selesai, $status, $id_part);
+    $stmt->bind_param("ssssi", $nama_part, $gambar_part, $tanggal, $tgl_selesai, $id_part);
 
     if ($stmt->execute()) {
         $_SESSION['message'] = 'Data updated successfully.';
         $_SESSION['message_type'] = 'success';
-        echo "<script>alert('Data updated successfully.'); window.location.href='halo.php';</script>";
+        echo "<script>alert('Data updated successfully.'); window.location.href='tambah_part.php';</script>";
         exit();
     } else {
         $_SESSION['message'] = 'Error: ' . $stmt->error;
@@ -112,7 +111,6 @@ if (isset($_POST['submit'])) {
     $nama_part = $_POST['projectname'];
     $tanggal = $_POST['startdate'];
     $tgl_selesai = $_POST['duedate'];
-    $status = $_POST['status'];
     $gambar_parts = [];
 
     // Convert date format from d-M-yyyy to yyyy-mm-dd
@@ -138,14 +136,14 @@ if (isset($_POST['submit'])) {
 
     // Insert data into database
     $gambar_part = implode(',', $gambar_parts);
-    $sql = "INSERT INTO data_part (nama_part, gambar_part, tanggal, tgl_selesai, status) VALUES (?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO data_part (nama_part, gambar_part, tanggal, tgl_selesai) VALUES (?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssss", $nama_part, $gambar_part, $tanggal, $tgl_selesai, $status);
+    $stmt->bind_param("ssss", $nama_part, $gambar_part, $tanggal, $tgl_selesai);
 
     if ($stmt->execute()) {
         $_SESSION['message'] = 'Data inserted successfully.';
         $_SESSION['message_type'] = 'success';
-        echo "<script>alert('Data inserted successfully.'); window.location.href='halo.php';</script>";
+        echo "<script>alert('Data inserted successfully.'); window.location.href='tambah_part.php';</script>";
         exit();
     } else {
         $_SESSION['message'] = 'Error: ' . $stmt->error;
@@ -209,7 +207,6 @@ if (isset($_GET['edit'])) {
                                                         <th>Image</th>
                                                         <th>Start Date</th>
                                                         <th>Due Date</th>
-                                                        <th>Status</th>
                                                         <th>Actions</th>
                                                     </tr>
                                                 </thead>
@@ -237,7 +234,6 @@ if (isset($_GET['edit'])) {
                                                             </td>
                                                             <td><?php echo date('d M Y', strtotime($row['tanggal'])); ?></td>
                                                             <td><?php echo date('d M Y', strtotime($row['tgl_selesai'])); ?></td>
-                                                            <td><?php echo htmlspecialchars($row['status']); ?></td>
                                                             <td>
                                                                 <div class="btn-group">
                                                                     <a href="halo.php?edit=<?php echo $row['id_part']; ?>" 
@@ -274,7 +270,7 @@ if (isset($_GET['edit'])) {
                                                     <div class="mb-3">
                                                         <label for="projectname" class="form-label">Name</label>
                                                         <input type="text" id="projectname" name="projectname" class="form-control" required
-                                                               value="<?php echo isset($edit_data['nama_part']) ? $edit_data['nama_part'] : ''; ?>">
+                                                               value="<?php echo isset($edit_data['nama_part']) ? htmlspecialchars($edit_data['nama_part']) : ''; ?>">
                                                     </div>
                                                     <div class="mb-3 position-relative" id="datepicker1">
                                                         <label class="form-label">Start Date</label>
@@ -294,24 +290,7 @@ if (isset($_GET['edit'])) {
                                                                data-provide="datepicker" data-date-format="d-M-yyyy" data-date-autoclose="true"
                                                                value="<?php echo isset($edit_data['tgl_selesai']) ? date('d-M-Y', strtotime($edit_data['tgl_selesai'])) : ''; ?>">
                                                     </div>
-                                                <div class="mb-3">
-                                                    <label for="status" class="form-label">Status</label>
-                                                    <input type="text" 
-                                                        id="status" 
-                                                        name="status" 
-                                                        class="form-control" 
-                                                        list="statusList" 
-                                                        placeholder="Type OPEN or CLOSED"
-                                                        value="<?php echo isset($edit_data['status']) ? $edit_data['status'] : ''; ?>"
-                                                        required>
-                                                    <datalist id="statusList">
-                                                        <option value="OPEN">
-                                                        <option value="CLOSED">
-                                                    </datalist>
-
-                                                    
                                                 </div>
-                                                
                                             </div>
                                             <button type="submit" name="<?php echo isset($_GET['edit']) ? 'update' : 'submit'; ?>" 
                                                     class="btn btn-primary"><?php echo isset($_GET['edit']) ? 'Update' : 'Submit'; ?></button>
