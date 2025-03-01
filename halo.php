@@ -164,6 +164,18 @@ if (isset($_GET['edit'])) {
     $edit_data = $result->fetch_assoc();
     $stmt->close();
 }
+
+// Fetch data for detail view
+if (isset($_GET['detail'])) {
+    $id_part = $_GET['detail'];
+    $sql = "SELECT * FROM data_part WHERE id_part = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id_part);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $detail_data = $result->fetch_assoc();
+    $stmt->close();
+}
 ?>
 
 <!DOCTYPE html>
@@ -178,6 +190,57 @@ if (isset($_GET['edit'])) {
     <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
     <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" id="app-style"/>
     <link href="assets/css/dropzone.min.css" rel="stylesheet" type="text/css" />
+
+    <style>
+.timeline {
+    position: relative;
+    padding: 10px 0;
+}
+
+.timeline-item {
+    position: relative;
+    padding-left: 30px;
+    margin-bottom: 15px;
+}
+
+.timeline-item:before {
+    content: '';
+    position: absolute;
+    left: 11px;
+    top: 0;
+    height: 100%;
+    width: 2px;
+    background: #e3e6f0;
+}
+
+.timeline-item:last-child:before {
+    display: none;
+}
+
+.timeline-item i {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border-radius: 50%;
+}
+
+.timeline-item .time {
+    display: block;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.timeline-item p {
+    margin: 0;
+    font-weight: 500;
+}
+</style>
 </head>
 <body class="loading" data-layout-color="light" data-leftbar-theme="dark" data-layout-mode="fluid" data-rightbar-onstart="true">
     <div class="wrapper">
@@ -196,7 +259,99 @@ if (isset($_GET['edit'])) {
                                         <?php unset($_SESSION['message']); unset($_SESSION['message_type']); ?>
                                     <?php endif; ?>
 
-                                    <?php if (!isset($_GET['edit']) && !isset($_GET['insert'])): ?>
+                                    <?php if (isset($_GET['detail'])): ?>
+                                        <!-- Detail View -->
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <h6 class="text-uppercase fw-bold">Part Information</h6>
+                                                    <table class="table table-sm">
+                                                        <tr>
+                                                            <th width="130">ID Part</th>
+                                                            <td>: <?php echo htmlspecialchars($detail_data['id_part']); ?></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Name</th>
+                                                            <td>: <?php echo htmlspecialchars($detail_data['nama_part']); ?></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Start Date</th>
+                                                            <td>: <?php echo date('d M Y', strtotime($detail_data['tanggal'])); ?></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Due Date</th>
+                                                            <td>: <?php echo date('d M Y', strtotime($detail_data['tgl_selesai'])); ?></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Created</th>
+                                                            <td>: <?php echo date('d M Y H:i:s', strtotime($detail_data['created_at'] ?? 'now')); ?></td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <h6 class="text-uppercase fw-bold">Status Timeline</h6>
+                                                <div class="timeline">
+                                                    <div class="timeline-item">
+                                                        <i class="mdi mdi-clock-outline text-primary"></i>
+                                                        <span class="time">Start: <?php echo date('d M Y', strtotime($detail_data['tanggal'])); ?></span>
+                                                        <p>Project Started</p>
+                                                    </div>
+                                                    <div class="timeline-item">
+                                                        <i class="mdi mdi-timer-sand text-warning"></i>
+                                                        <span class="time">Due: <?php echo date('d M Y', strtotime($detail_data['tgl_selesai'])); ?></span>
+                                                        <p>Expected Completion</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="mt-4">
+                                            <h6 class="text-uppercase fw-bold">Part Images</h6>
+                                            <div class="row g-2">
+                                                <?php
+                                                if (!empty($detail_data['gambar_part'])) {
+                                                    $images = explode(',', $detail_data['gambar_part']);
+                                                    foreach ($images as $image) {
+                                                        if (file_exists('uploads/' . $image)) {
+                                                            echo '<div class="col-md-4">
+                                                                    <div class="card">
+                                                                        <img src="uploads/' . htmlspecialchars($image) . '" 
+                                                                             alt="Part Image" 
+                                                                             class="card-img-top"
+                                                                             style="height: 200px; object-fit: cover;">
+                                                                        <div class="card-body p-2">
+                                                                            <p class="card-text small text-muted mb-0">' . htmlspecialchars($image) . '</p>
+                                                                            <a href="uploads/' . htmlspecialchars($image) . '" 
+                                                                               class="btn btn-sm btn-primary mt-1"
+                                                                               target="_blank">
+                                                                                <i class="mdi mdi-eye"></i> View Full
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                  </div>';
+                                                        }
+                                                    }
+                                                } else {
+                                                    echo '<div class="col-12">
+                                                            <div class="alert alert-info mb-0">
+                                                                <i class="mdi mdi-information-outline me-1"></i>
+                                                                No images available for this part.
+                                                            </div>
+                                                          </div>';
+                                                }
+                                                ?>
+                                            </div>
+                                        </div>
+                                        <div class="mt-4">
+                                            <a href="halo.php" class="btn btn-secondary">
+                                                <i class="mdi mdi-arrow-left"></i> Back
+                                            </a>
+                                            <a href="halo.php?edit=<?php echo $detail_data['id_part']; ?>" class="btn btn-info">
+                                                <i class="mdi mdi-pencil"></i> Edit
+                                            </a>
+                                        </div>
+                                    <?php else: ?>
                                         <!-- Display Records Table -->
                                         <div class="table-responsive">
                                             <table class="table table-bordered">
@@ -212,7 +367,7 @@ if (isset($_GET['edit'])) {
                                                 </thead>
                                                 <tbody>
                                                     <?php
-                                                    $sql = "SELECT * FROM data_part ORDER BY id_part DESC";
+                                                    $sql = "SELECT * FROM data_part ORDER BY id_part ASC";
                                                     $result = $conn->query($sql);
                                                     $no = 1;
                                                     while ($row = $result->fetch_assoc()): ?>
@@ -249,6 +404,12 @@ if (isset($_GET['edit'])) {
                                                                        title="Delete">
                                                                         <i class="mdi mdi-delete"></i>
                                                                     </a>
+                                                                    <a href="halo.php?detail=<?php echo $row['id_part']; ?>" 
+                                                                       class="btn btn-primary btn-sm" 
+                                                                       data-bs-toggle="tooltip" 
+                                                                       title="Detail">
+                                                                        <i class="mdi mdi-eye"></i>
+                                                                    </a>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -261,40 +422,6 @@ if (isset($_GET['edit'])) {
                                                 <i class="mdi mdi-plus"></i> Insert New Record
                                             </a>
                                         </div>
-                                    <?php else: ?>
-                                        <!-- Insert/Update Form -->
-                                        <form id="dataForm" action="halo.php" method="post" enctype="multipart/form-data">
-                                            <input type="hidden" name="id_part" value="<?php echo isset($_GET['edit']) ? $_GET['edit'] : ''; ?>">
-                                            <div class="row">
-                                                <div class="col-xl-6">
-                                                    <div class="mb-3">
-                                                        <label for="projectname" class="form-label">Name</label>
-                                                        <input type="text" id="projectname" name="projectname" class="form-control" required
-                                                               value="<?php echo isset($edit_data['nama_part']) ? htmlspecialchars($edit_data['nama_part']) : ''; ?>">
-                                                    </div>
-                                                    <div class="mb-3 position-relative" id="datepicker1">
-                                                        <label class="form-label">Start Date</label>
-                                                        <input type="text" name="startdate" class="form-control" required
-                                                               data-provide="datepicker" data-date-format="d-M-yyyy" data-date-autoclose="true"
-                                                               value="<?php echo isset($edit_data['tanggal']) ? date('d-M-Y', strtotime($edit_data['tanggal'])) : ''; ?>">
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-6">
-                                                    <div class="mb-3 mt-3 mt-xl-0">
-                                                        <label class="mb-0">Gambar Part</label>
-                                                        <div class="dropzone" id="myAwesomeDropzone"></div>
-                                                    </div>
-                                                    <div class="mb-3 position-relative" id="datepicker2">
-                                                        <label class="form-label">Due Date</label>
-                                                        <input type="text" name="duedate" class="form-control" required
-                                                               data-provide="datepicker" data-date-format="d-M-yyyy" data-date-autoclose="true"
-                                                               value="<?php echo isset($edit_data['tgl_selesai']) ? date('d-M-Y', strtotime($edit_data['tgl_selesai'])) : ''; ?>">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <button type="submit" name="<?php echo isset($_GET['edit']) ? 'update' : 'submit'; ?>" 
-                                                    class="btn btn-primary"><?php echo isset($_GET['edit']) ? 'Update' : 'Submit'; ?></button>
-                                        </form>
                                     <?php endif; ?>
                                 </div>
                             </div>
@@ -344,6 +471,12 @@ if (isset($_GET['edit'])) {
                 });
             }
         };
+
+        // Initialize tooltips
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        });
     </script>
 </body>
 </html>
