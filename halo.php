@@ -242,6 +242,7 @@ if (isset($_GET['detail'])) {
 }
 </style>
 </head>
+<!-- filepath: /c:/laragon/www/coba/halo.php -->
 <body class="loading" data-layout-color="light" data-leftbar-theme="dark" data-layout-mode="fluid" data-rightbar-onstart="true">
     <div class="wrapper">
         <div class="content-page">
@@ -351,6 +352,51 @@ if (isset($_GET['detail'])) {
                                                 <i class="mdi mdi-pencil"></i> Edit
                                             </a>
                                         </div>
+                                    <?php elseif (isset($_GET['edit'])): ?>
+                                        <!-- Edit Form -->
+                                        <form action="halo.php" method="post" enctype="multipart/form-data">
+                                            <input type="hidden" name="id_part" value="<?php echo htmlspecialchars($edit_data['id_part']); ?>">
+                                            <input type="hidden" name="update" value="true">
+                                            <div class="mb-3">
+                                                <label for="projectname" class="form-label">Project Name</label>
+                                                <input type="text" class="form-control" id="projectname" name="projectname" value="<?php echo htmlspecialchars($edit_data['nama_part']); ?>" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="startdate" class="form-label">Start Date</label>
+                                                <input type="date" class="form-control" id="startdate" name="startdate" value="<?php echo htmlspecialchars($edit_data['tanggal']); ?>" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="duedate" class="form-label">Due Date</label>
+                                                <input type="date" class="form-control" id="duedate" name="duedate" value="<?php echo htmlspecialchars($edit_data['tgl_selesai']); ?>" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="file" class="form-label">Upload Images</label>
+                                                <input type="file" class="form-control" id="file" name="file[]" multiple>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Update</button>
+                                        </form>
+                                    <?php elseif (isset($_GET['insert'])): ?>
+                                        <!-- Insert Form -->
+                                        <form action="halo.php" method="post" enctype="multipart/form-data">
+                                            <input type="hidden" name="submit" value="true">
+                                            <div class="mb-3">
+                                                <label for="projectname" class="form-label">Project Name</label>
+                                                <input type="text" class="form-control" id="projectname" name="projectname" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="startdate" class="form-label">Start Date</label>
+                                                <input type="date" class="form-control" id="startdate" name="startdate" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="duedate" class="form-label">Due Date</label>
+                                                <input type="date" class="form-control" id="duedate" name="duedate" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="file" class="form-label">Upload Images</label>
+                                                <input type="file" class="form-control" id="file" name="file[]" multiple>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Insert</button>
+                                        </form>
                                     <?php else: ?>
                                         <!-- Display Records Table -->
                                         <div class="table-responsive">
@@ -479,4 +525,5 @@ if (isset($_GET['detail'])) {
         });
     </script>
 </body>
+</html>
 </html>
