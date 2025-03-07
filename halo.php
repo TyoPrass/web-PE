@@ -34,7 +34,7 @@ if (isset($_GET['delete'])) {
         $_SESSION['message_type'] = 'danger';
     }
     $stmt->close();
-    header('Location: tambah_part.php');
+    header('Location: halo.php');
     exit();
 }
 
@@ -96,7 +96,7 @@ if (isset($_POST['update'])) {
     if ($stmt->execute()) {
         $_SESSION['message'] = 'Data updated successfully.';
         $_SESSION['message_type'] = 'success';
-        echo "<script>alert('Data updated successfully.'); window.location.href='tambah_part.php';</script>";
+        echo "<script>alert('Data updated successfully.'); window.location.href='halo.php';</script>";
         exit();
     } else {
         $_SESSION['message'] = 'Error: ' . $stmt->error;
@@ -143,7 +143,7 @@ if (isset($_POST['submit'])) {
     if ($stmt->execute()) {
         $_SESSION['message'] = 'Data inserted successfully.';
         $_SESSION['message_type'] = 'success';
-        echo "<script>alert('Data inserted successfully.'); window.location.href='tambah_part.php';</script>";
+        echo "<script>alert('Data inserted successfully.'); window.location.href='halo.php';</script>";
         exit();
     } else {
         $_SESSION['message'] = 'Error: ' . $stmt->error;
@@ -345,16 +345,16 @@ if (isset($_GET['detail'])) {
                                             </div>
                                         </div>
                                         <div class="mt-4">
-                                            <a href="halo.php" class="btn btn-secondary">
+                                            <a href="aksi.php" class="btn btn-secondary">
                                                 <i class="mdi mdi-arrow-left"></i> Back
                                             </a>
-                                            <a href="halo.php?edit=<?php echo $detail_data['id_part']; ?>" class="btn btn-info">
+                                            <a href="aksi.php?edit=<?php echo $detail_data['id_part']; ?>" class="btn btn-info">
                                                 <i class="mdi mdi-pencil"></i> Edit
                                             </a>
                                         </div>
                                     <?php elseif (isset($_GET['edit'])): ?>
                                         <!-- Edit Form -->
-                                        <form action="halo.php" method="post" enctype="multipart/form-data">
+                                        <form action="aksi.php" method="post" enctype="multipart/form-data">
                                             <input type="hidden" name="id_part" value="<?php echo htmlspecialchars($edit_data['id_part']); ?>">
                                             <input type="hidden" name="update" value="true">
                                             <div class="mb-3">
@@ -377,7 +377,7 @@ if (isset($_GET['detail'])) {
                                         </form>
                                     <?php elseif (isset($_GET['insert'])): ?>
                                         <!-- Insert Form -->
-                                        <form action="halo.php" method="post" enctype="multipart/form-data">
+                                        <form action="aksi.php" method="post" enctype="multipart/form-data">
                                             <input type="hidden" name="submit" value="true">
                                             <div class="mb-3">
                                                 <label for="projectname" class="form-label">Project Name</label>
@@ -437,20 +437,20 @@ if (isset($_GET['detail'])) {
                                                             <td><?php echo date('d M Y', strtotime($row['tgl_selesai'])); ?></td>
                                                             <td>
                                                                 <div class="btn-group">
-                                                                    <a href="halo.php?edit=<?php echo $row['id_part']; ?>" 
+                                                                    <a href="aksi.php?edit=<?php echo $row['id_part']; ?>" 
                                                                        class="btn btn-info btn-sm" 
                                                                        data-bs-toggle="tooltip" 
                                                                        title="Edit">
                                                                         <i class="mdi mdi-pencil"></i>
                                                                     </a>
-                                                                    <a href="halo.php?delete=<?php echo $row['id_part']; ?>" 
+                                                                    <a href="aksi.php?delete=<?php echo $row['id_part']; ?>" 
                                                                        class="btn btn-danger btn-sm" 
                                                                        onclick="return confirm('Are you sure you want to delete this record?');"
                                                                        data-bs-toggle="tooltip" 
                                                                        title="Delete">
                                                                         <i class="mdi mdi-delete"></i>
                                                                     </a>
-                                                                    <a href="halo.php?detail=<?php echo $row['id_part']; ?>" 
+                                                                    <a href="aksi.php?detail=<?php echo $row['id_part']; ?>" 
                                                                        class="btn btn-primary btn-sm" 
                                                                        data-bs-toggle="tooltip" 
                                                                        title="Detail">
@@ -464,7 +464,7 @@ if (isset($_GET['detail'])) {
                                             </table>
                                         </div>
                                         <div class="mt-3">
-                                            <a href="halo.php?insert=true" class="btn btn-success">
+                                            <a href="aksi.php?insert=true" class="btn btn-success">
                                                 <i class="mdi mdi-plus"></i> Insert New Record
                                             </a>
                                         </div>
@@ -483,7 +483,7 @@ if (isset($_GET['detail'])) {
     <script src="assets/js/vendor/dropzone.min.js"></script>
     <script>
         Dropzone.options.myAwesomeDropzone = {
-            url: 'halo.php',
+            url: 'aksi.php',
             autoProcessQueue: false,
             uploadMultiple: true,
             parallelUploads: 10,
@@ -509,7 +509,7 @@ if (isset($_GET['detail'])) {
                 });
 
                 myDropzone.on("successmultiple", function() {
-                    window.location.href = 'halo.php';
+                    window.location.href = 'aksi.php';
                 });
 
                 myDropzone.on("errormultiple", function() {
