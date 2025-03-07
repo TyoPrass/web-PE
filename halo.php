@@ -244,6 +244,7 @@ if (isset($_GET['detail'])) {
 </head>
 <!-- filepath: /c:/laragon/www/coba/halo.php -->
 <body class="loading" data-layout-color="light" data-leftbar-theme="dark" data-layout-mode="fluid" data-rightbar-onstart="true">
+<body class="loading" data-layout-color="light" data-leftbar-theme="dark" data-layout-mode="fluid" data-rightbar-onstart="true">
     <div class="wrapper">
         <div class="content-page">
             <div class="content">
@@ -286,6 +287,10 @@ if (isset($_GET['detail'])) {
                                                         <tr>
                                                             <th>Created</th>
                                                             <td>: <?php echo date('d M Y H:i:s', strtotime($detail_data['created_at'] ?? 'now')); ?></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Customer</th>
+                                                            <td>: <?php echo htmlspecialchars($detail_data['nama_customer']); ?></td>
                                                         </tr>
                                                     </table>
                                                 </div>
@@ -370,6 +375,19 @@ if (isset($_GET['detail'])) {
                                                 <input type="date" class="form-control" id="duedate" name="duedate" value="<?php echo htmlspecialchars($edit_data['tgl_selesai']); ?>" required>
                                             </div>
                                             <div class="mb-3">
+                                                <label for="id_customer" class="form-label">Customer</label>
+                                                <select class="form-control" id="id_customer" name="id_customer" required>
+                                                    <?php
+                                                    $sql = "SELECT id_customer, nama_customer FROM customer";
+                                                    $result = $conn->query($sql);
+                                                    while ($customer = $result->fetch_assoc()) {
+                                                        $selected = $customer['id_customer'] == $edit_data['id_customer'] ? 'selected' : '';
+                                                        echo "<option value='{$customer['id_customer']}' $selected>{$customer['nama_customer']}</option>";
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </div>
+                                            <div class="mb-3">
                                                 <label for="file" class="form-label">Upload Images</label>
                                                 <input type="file" class="form-control" id="file" name="file[]" multiple>
                                             </div>
@@ -392,6 +410,18 @@ if (isset($_GET['detail'])) {
                                                 <input type="date" class="form-control" id="duedate" name="duedate" required>
                                             </div>
                                             <div class="mb-3">
+                                                <label for="id_customer" class="form-label">Customer</label>
+                                                <select class="form-control" id="id_customer" name="id_customer" required>
+                                                    <?php
+                                                    $sql = "SELECT id_customer, nama_customer FROM customer";
+                                                    $result = $conn->query($sql);
+                                                    while ($customer = $result->fetch_assoc()) {
+                                                        echo "<option value='{$customer['id_customer']}'>{$customer['nama_customer']}</option>";
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </div>
+                                            <div class="mb-3">
                                                 <label for="file" class="form-label">Upload Images</label>
                                                 <input type="file" class="form-control" id="file" name="file[]" multiple>
                                             </div>
@@ -408,12 +438,13 @@ if (isset($_GET['detail'])) {
                                                         <th>Image</th>
                                                         <th>Start Date</th>
                                                         <th>Due Date</th>
+                                                        <th>Customer</th>
                                                         <th>Actions</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <?php
-                                                    $sql = "SELECT * FROM data_part ORDER BY id_part ASC";
+                                                    $sql = "SELECT dp.*, c.nama_customer FROM data_part dp JOIN customer c ON dp.id_customer = c.id_customer ORDER BY dp.id_part ASC";
                                                     $result = $conn->query($sql);
                                                     $no = 1;
                                                     while ($row = $result->fetch_assoc()): ?>
@@ -435,6 +466,7 @@ if (isset($_GET['detail'])) {
                                                             </td>
                                                             <td><?php echo date('d M Y', strtotime($row['tanggal'])); ?></td>
                                                             <td><?php echo date('d M Y', strtotime($row['tgl_selesai'])); ?></td>
+                                                            <td><?php echo htmlspecialchars($row['nama_customer']); ?></td>
                                                             <td>
                                                                 <div class="btn-group">
                                                                     <a href="halo.php?edit=<?php echo $row['id_part']; ?>" 
@@ -525,4 +557,5 @@ if (isset($_GET['detail'])) {
         });
     </script>
 </body>
+</html>
 </html>
