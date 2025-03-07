@@ -44,6 +44,7 @@ if (isset($_POST['update'])) {
     $nama_part = $_POST['projectname'];
     $tanggal = $_POST['startdate'];
     $tgl_selesai = $_POST['duedate'];
+    $id_customer = $_POST['id_customer'];
     $gambar_parts = [];
 
     // Convert date format from d-M-yyyy to yyyy-mm-dd
@@ -89,9 +90,9 @@ if (isset($_POST['update'])) {
 
     // Update data in database
     $gambar_part = implode(',', $gambar_parts);
-    $sql = "UPDATE data_part SET nama_part = ?, gambar_part = ?, tanggal = ?, tgl_selesai = ? WHERE id_part = ?";
+    $sql = "UPDATE data_part SET nama_part = ?, gambar_part = ?, tanggal = ?, tgl_selesai = ?, id_customer = ? WHERE id_part = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssi", $nama_part, $gambar_part, $tanggal, $tgl_selesai, $id_part);
+    $stmt->bind_param("ssssii", $nama_part, $gambar_part, $tanggal, $tgl_selesai, $id_customer, $id_part);
 
     if ($stmt->execute()) {
         $_SESSION['message'] = 'Data updated successfully.';
@@ -111,6 +112,7 @@ if (isset($_POST['submit'])) {
     $nama_part = $_POST['projectname'];
     $tanggal = $_POST['startdate'];
     $tgl_selesai = $_POST['duedate'];
+    $id_customer = $_POST['id_customer'];
     $gambar_parts = [];
 
     // Convert date format from d-M-yyyy to yyyy-mm-dd
@@ -136,9 +138,9 @@ if (isset($_POST['submit'])) {
 
     // Insert data into database
     $gambar_part = implode(',', $gambar_parts);
-    $sql = "INSERT INTO data_part (nama_part, gambar_part, tanggal, tgl_selesai) VALUES (?, ?, ?, ?)";
+    $sql = "INSERT INTO data_part (nama_part, gambar_part, tanggal, tgl_selesai, id_customer) VALUES (?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssss", $nama_part, $gambar_part, $tanggal, $tgl_selesai);
+    $stmt->bind_param("ssssi", $nama_part, $gambar_part, $tanggal, $tgl_selesai, $id_customer);
 
     if ($stmt->execute()) {
         $_SESSION['message'] = 'Data inserted successfully.';
@@ -168,7 +170,7 @@ if (isset($_GET['edit'])) {
 // Fetch data for detail view
 if (isset($_GET['detail'])) {
     $id_part = $_GET['detail'];
-    $sql = "SELECT * FROM data_part WHERE id_part = ?";
+    $sql = "SELECT dp.*, c.project FROM data_part dp JOIN customer c ON dp.id_customer = c.id_customer WHERE dp.id_part = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id_part);
     $stmt->execute();
@@ -290,7 +292,7 @@ if (isset($_GET['detail'])) {
                                                         </tr>
                                                         <tr>
                                                             <th>Customer</th>
-                                                            <td>: <?php echo htmlspecialchars($detail_data['nama_customer']); ?></td>
+                                                            <td>: <?php echo htmlspecialchars($detail_data['project']); ?></td>
                                                         </tr>
                                                     </table>
                                                 </div>
@@ -378,11 +380,11 @@ if (isset($_GET['detail'])) {
                                                 <label for="id_customer" class="form-label">Customer</label>
                                                 <select class="form-control" id="id_customer" name="id_customer" required>
                                                     <?php
-                                                    $sql = "SELECT id_customer, nama_customer FROM customer";
+                                                    $sql = "SELECT id_customer, project FROM customer";
                                                     $result = $conn->query($sql);
                                                     while ($customer = $result->fetch_assoc()) {
                                                         $selected = $customer['id_customer'] == $edit_data['id_customer'] ? 'selected' : '';
-                                                        echo "<option value='{$customer['id_customer']}' $selected>{$customer['nama_customer']}</option>";
+                                                        echo "<option value='{$customer['id_customer']}' $selected>{$customer['project']}</option>";
                                                     }
                                                     ?>
                                                 </select>
@@ -413,10 +415,10 @@ if (isset($_GET['detail'])) {
                                                 <label for="id_customer" class="form-label">Customer</label>
                                                 <select class="form-control" id="id_customer" name="id_customer" required>
                                                     <?php
-                                                    $sql = "SELECT id_customer, nama_customer FROM customer";
+                                                    $sql = "SELECT id_customer, project FROM customer";
                                                     $result = $conn->query($sql);
                                                     while ($customer = $result->fetch_assoc()) {
-                                                        echo "<option value='{$customer['id_customer']}'>{$customer['nama_customer']}</option>";
+                                                        echo "<option value='{$customer['id_customer']}'>{$customer['project']}</option>";
                                                     }
                                                     ?>
                                                 </select>
@@ -435,16 +437,16 @@ if (isset($_GET['detail'])) {
                                                     <tr>
                                                         <th>No</th>
                                                         <th>Name</th>
-                                                        <th>Image</th>
+                                                        <th>Gambar Part</th>
                                                         <th>Start Date</th>
                                                         <th>Due Date</th>
-                                                        <th>Customer</th>
+                                                        <th>Project</th>
                                                         <th>Actions</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <?php
-                                                    $sql = "SELECT dp.*, c.nama_customer FROM data_part dp JOIN customer c ON dp.id_customer = c.id_customer ORDER BY dp.id_part ASC";
+                                                    $sql = "SELECT dp.*, c.project FROM data_part dp JOIN customer c ON dp.id_customer = c.id_customer ORDER BY dp.id_part ASC";
                                                     $result = $conn->query($sql);
                                                     $no = 1;
                                                     while ($row = $result->fetch_assoc()): ?>
@@ -466,7 +468,7 @@ if (isset($_GET['detail'])) {
                                                             </td>
                                                             <td><?php echo date('d M Y', strtotime($row['tanggal'])); ?></td>
                                                             <td><?php echo date('d M Y', strtotime($row['tgl_selesai'])); ?></td>
-                                                            <td><?php echo htmlspecialchars($row['nama_customer']); ?></td>
+                                                            <td><?php echo htmlspecialchars($row['project']); ?></td>
                                                             <td>
                                                                 <div class="btn-group">
                                                                     <a href="halo.php?edit=<?php echo $row['id_part']; ?>" 
