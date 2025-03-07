@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Mar 07, 2025 at 06:30 AM
+-- Generation Time: Mar 07, 2025 at 08:33 AM
 -- Server version: 8.4.3
 -- PHP Version: 8.3.16
 
@@ -38,7 +38,8 @@ CREATE TABLE `customer` (
 --
 
 INSERT INTO `customer` (`id_customer`, `nama_customer`, `project`) VALUES
-(1, 'SIM', 'YTB');
+(1, 'jom', 'GGK'),
+(2, 'ATESAN', 'JMK');
 
 -- --------------------------------------------------------
 
@@ -51,16 +52,17 @@ CREATE TABLE `data_part` (
   `nama_part` varchar(255) NOT NULL,
   `gambar_part` varchar(255) NOT NULL,
   `tanggal` date NOT NULL,
-  `tgl_selesai` date NOT NULL
+  `tgl_selesai` date NOT NULL,
+  `id_customer` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `data_part`
 --
 
-INSERT INTO `data_part` (`id_part`, `nama_part`, `gambar_part`, `tanggal`, `tgl_selesai`) VALUES
-(15, 'RETAINER FULL GAUGE', 'Screenshot (7).png', '2025-03-04', '2025-06-30'),
-(16, 'YTB-MM09', 'Screenshot (9).png', '2025-03-11', '2025-03-12');
+INSERT INTO `data_part` (`id_part`, `nama_part`, `gambar_part`, `tanggal`, `tgl_selesai`, `id_customer`) VALUES
+(18, 'YTB-MM09', 'Screenshot (7).png', '2025-03-05', '2025-03-21', 1),
+(19, 'REINF INNER FR L', 'Screenshot (8).png', '2025-03-14', '2025-03-29', 2);
 
 -- --------------------------------------------------------
 
@@ -96,7 +98,8 @@ ALTER TABLE `customer`
 -- Indexes for table `data_part`
 --
 ALTER TABLE `data_part`
-  ADD PRIMARY KEY (`id_part`);
+  ADD PRIMARY KEY (`id_part`),
+  ADD KEY `id_customer` (`id_customer`);
 
 --
 -- Indexes for table `user`
@@ -112,19 +115,29 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `id_customer` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_customer` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `data_part`
 --
 ALTER TABLE `data_part`
-  MODIFY `id_part` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id_part` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
   MODIFY `id_user` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `data_part`
+--
+ALTER TABLE `data_part`
+  ADD CONSTRAINT `data_part_ibfk_1` FOREIGN KEY (`id_customer`) REFERENCES `customer` (`id_customer`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

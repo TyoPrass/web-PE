@@ -270,10 +270,7 @@ if (isset($_GET['detail'])) {
                                                 <div class="mb-3">
                                                     <h6 class="text-uppercase fw-bold">Part Information</h6>
                                                     <table class="table table-sm">
-                                                        <tr>
-                                                            <th width="130">ID Part</th>
-                                                            <td>: <?php echo htmlspecialchars($detail_data['id_part']); ?></td>
-                                                        </tr>
+                                                       
                                                         <tr>
                                                             <th>Name</th>
                                                             <td>: <?php echo htmlspecialchars($detail_data['nama_part']); ?></td>
