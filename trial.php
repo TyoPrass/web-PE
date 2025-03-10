@@ -90,7 +90,7 @@ if (isset($_POST['submit'])) {
     // Insert data into database
     $sql = "INSERT INTO trial (tanggal, jam_start, jam_finish, mc_name, kapasitas, cush_prec, pin_cus_qtt, die_height, die_dim, problem_tool, analisa_sebab_tool, counter_measure_tool, problem_part, analisa_sebab_part, counter_measure_part, PIC, target, keterangan, kelengkapan_dies, accuracy_part, id_proses) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssiiiiisssssssssiisi", $tanggal, $jam_start, $jam_finish, $mc_name, $kapasitas, $cush_prec, $pin_cus_qtt, $die_height, $die_dim, $problem_tool, $analisa_sebab_tool, $counter_measure_tool, $problem_part, $analisa_sebab_part, $counter_measure_part, $PIC, $target, $keterangan, $kelengkapan_dies, $accuracy_part, $id_proses);
+    $stmt->bind_param("ssssiiiiisssssssssiis", $tanggal, $jam_start, $jam_finish, $mc_name, $kapasitas, $cush_prec, $pin_cus_qtt, $die_height, $die_dim, $problem_tool, $analisa_sebab_tool, $counter_measure_tool, $problem_part, $analisa_sebab_part, $counter_measure_part, $PIC, $target, $keterangan, $kelengkapan_dies, $accuracy_part, $id_proses);
 
     if ($stmt->execute()) {
         $_SESSION['message'] = 'Trial inserted successfully.';
@@ -336,23 +336,23 @@ if (isset($_GET['detail'])) {
                                             </div>
                                             <div class="mb-3">
                                                 <label for="kapasitas" class="form-label">Kapasitas</label>
-                                                <input type="number" class="form-control" id="kapasitas" name="kapasitas" value="<?php echo htmlspecialchars($edit_data['kapasitas']); ?>" required>
+                                                <input type="text" class="form-control" id="kapasitas" name="kapasitas" value="<?php echo htmlspecialchars($edit_data['kapasitas']); ?>" required>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="cush_prec" class="form-label">Cush Prec</label>
-                                                <input type="number" class="form-control" id="cush_prec" name="cush_prec" value="<?php echo htmlspecialchars($edit_data['cush_prec']); ?>" required>
+                                                <input type="text" class="form-control" id="cush_prec" name="cush_prec" value="<?php echo htmlspecialchars($edit_data['cush_prec']); ?>" required>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="pin_cus_qtt" class="form-label">Pin Cus Qtt</label>
-                                                <input type="number" class="form-control" id="pin_cus_qtt" name="pin_cus_qtt" value="<?php echo htmlspecialchars($edit_data['pin_cus_qtt']); ?>" required>
+                                                <input type="text" class="form-control" id="pin_cus_qtt" name="pin_cus_qtt" value="<?php echo htmlspecialchars($edit_data['pin_cus_qtt']); ?>" required>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="die_height" class="form-label">Die Height</label>
-                                                <input type="number" class="form-control" id="die_height" name="die_height" value="<?php echo htmlspecialchars($edit_data['die_height']); ?>" required>
+                                                <input type="text" class="form-control" id="die_height" name="die_height" value="<?php echo htmlspecialchars($edit_data['die_height']); ?>" required>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="die_dim" class="form-label">Die Dim</label>
-                                                <input type="number" class="form-control" id="die_dim" name="die_dim" value="<?php echo htmlspecialchars($edit_data['die_dim']); ?>" required>
+                                                <input type="text" class="form-control" id="die_dim" name="die_dim" value="<?php echo htmlspecialchars($edit_data['die_dim']); ?>" required>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="problem_tool" class="form-label">Problem Tool</label>
@@ -404,13 +404,15 @@ if (isset($_GET['detail'])) {
                                                 <select class="form-select" id="id_proses" name="id_proses" required>
                                                     <option value="">Select Proses</option>
                                                     <?php
-                                                    $sql = "SELECT * FROM proses";
+                                                    $sql = "SELECT id_proses, Proses FROM proses";
                                                     $result = $conn->query($sql);
                                                     while ($row = $result->fetch_assoc()) {
                                                         $selected = ($edit_data['id_proses'] == $row['id_proses']) ? 'selected' : '';
-                                                        echo '<option value="' . $row['id_proses'] . '" ' . $selected . '>' . $row['part_no'] . '</option>';
+                                                        echo '<option value="' . $row['id_proses'] . '" ' . $selected . '>' . $row['Proses'] . '</option>';
                                                     }
                                                     ?>
+                                                </select>
+                                            </div>
                                                 </select>
                                             </div>
                                             <div class="mb-3">
@@ -420,11 +422,25 @@ if (isset($_GET['detail'])) {
                                         </form>
                                     <?php else: ?>
                                         <!-- Create Form -->
-                                        <form action="trial.php" method="post">
+                                        <button class="btn btn-primary" id="show-insert-form">Insert New Trial</button>
+                                        <form action="trial.php" method="post" id="insert-form" style="display: none;">
                                             <input type="hidden" name="submit" value="true">
                                             <div class="mb-3">
                                                 <label for="tanggal" class="form-label">Tanggal</label>
                                                 <input type="date" class="form-control" id="tanggal" name="tanggal" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="id_proses" class="form-label">Proses</label>
+                                                <select class="form-select" id="id_proses" name="id_proses" required>
+                                                    <option value="">Select Proses</option>
+                                                    <?php
+                                                    $sql = "SELECT id_proses, Proses FROM proses";
+                                                    $result = $conn->query($sql);
+                                                    while ($row = $result->fetch_assoc()) {
+                                                        echo '<option value="' . $row['id_proses'] . '">' . $row['Proses'] . '</option>';
+                                                    }
+                                                    ?>
+                                                </select>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="jam_start" class="form-label">Jam Start</label>
@@ -440,28 +456,26 @@ if (isset($_GET['detail'])) {
                                             </div>
                                             <div class="mb-3">
                                                 <label for="kapasitas" class="form-label">Kapasitas</label>
-                                                <input type="number" class="form-control" id="kapasitas" name="kapasitas" required>
+                                                <input type="text" class="form-control" id="kapasitas" name="kapasitas" required>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="cush_prec" class="form-label">Cush Prec</label>
-                                                <input type="number" class="form-control" id="cush_prec" name="cush_prec" required>
+                                                <input type="text" class="form-control" id="cush_prec" name="cush_prec" required>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="pin_cus_qtt" class="form-label
-                                                ">Pin Cus Qtt</label>
-                                                <input type="number" class="form-control" id="pin_cus_qtt" name="pin_cus_qtt" required>
+                                                <label for="pin_cus_qtt" class="form-label">Pin Cus Qtt</label>
+                                                <input type="text" class="form-control" id="pin_cus_qtt" name="pin_cus_qtt" required>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="die_height" class="form-label">Die Height</label>
-                                                <input type="number" class="form-control" id="die_height" name="die_height" required>
+                                                <input type="text" class="form-control" id="die_height" name="die_height" required>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="die_dim" class="form-label">Die Dim</label>
                                                 <input type="number" class="form-control" id="die_dim" name="die_dim" required>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="problem_tool" class="form-label
-                                                ">Problem Tool</label>
+                                                <label for="problem_tool" class="form-label">Problem Tool</label>
                                                 <input type="text" class="form-control" id="problem_tool" name="problem_tool" required>
                                             </div>
                                             <div class="mb-3">
@@ -473,8 +487,7 @@ if (isset($_GET['detail'])) {
                                                 <input type="text" class="form-control" id="counter_measure_tool" name="counter_measure_tool" required>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="problem_part" class="form-label
-                                                ">Problem Part</label>
+                                                <label for="problem_part" class="form-label">Problem Part</label>
                                                 <input type="text" class="form-control" id="problem_part" name="problem_part" required>
                                             </div>
                                             <div class="mb-3">
@@ -502,23 +515,10 @@ if (isset($_GET['detail'])) {
                                                 <input type="text" class="form-control" id="kelengkapan_dies" name="kelengkapan_dies" required>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="accuracy_part" class="form-label
-                                                ">Accuracy Part</label>
+                                                <label for="accuracy_part" class="form-label">Accuracy Part</label>
                                                 <input type="text" class="form-control" id="accuracy_part" name="accuracy_part" required>
                                             </div>
-                                            <div class="mb-3">
-                                                <label for="id_proses" class="form-label">Proses</label>
-                                                <select class="form-select" id="id_proses" name="id_proses" required>
-                                                    <option value="">Select Proses</option>
-                                                    <?php
-                                                    $sql = "SELECT * FROM proses";
-                                                    $result = $conn->query($sql);
-                                                    while ($row = $result->fetch_assoc()) {
-                                                        echo '<option value="' . $row['id_proses'] . '">' . $row['part_no'] . '</option>';
-                                                    }
-                                                    ?>
-                                                </select>
-                                            </div>
+                                       
                                             <div class="mb-3">
                                                 <button type="submit" class="btn btn-primary">Submit</button>
                                             </div>
@@ -532,8 +532,7 @@ if (isset($_GET['detail'])) {
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-body">
-                                    <h4 class="card-title
-                                    ">Trial List</h4>
+                                    <h4 class="card-title">Trial List</h4>
                                     <div class="table-responsive">
                                         <table class="table table-centered table-nowrap table-hover mb-0">
                                             <thead>
@@ -551,7 +550,7 @@ if (isset($_GET['detail'])) {
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $sql = "SELECT t.*, p.part_no FROM trial t JOIN proses p ON t.id_proses = p.id_proses";
+                                                $sql = "SELECT t.*, p.Proses FROM trial t JOIN proses p ON t.id_proses = p.id_proses";
                                                 $result = $conn->query($sql);
                                                 $no = 1;
                                                 while ($row = $result->fetch_assoc()) {
@@ -563,7 +562,7 @@ if (isset($_GET['detail'])) {
                                                     echo '<td>' . $row['mc_name'] . '</td>';
                                                     echo '<td>' . $row['kapasitas'] . '</td>';
                                                     echo '<td>' . $row['PIC'] . '</td>';
-                                                    echo '<td>' . $row['part_no'] . '</td>';
+                                                    echo '<td>' . $row['Proses'] . '</td>';
                                                     echo '<td>';
                                                     echo '<a href="trial.php?detail=' . $row['id_trial'] . '" class="btn btn-info btn-sm">Detail</a>';
                                                     echo '<a href="trial.php?edit=' . $row['id_trial'] . '" class="btn btn-warning btn-sm">Edit</a>';
@@ -573,29 +572,26 @@ if (isset($_GET['detail'])) {
                                                 }
                                                 ?>
                                             </tbody>
-                                            </table>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <script>
+                        document.getElementById('show-insert-form').addEventListener('click', function() {
+                            document.getElementById('insert-form').style.display = 'block';
+                            this.style.display = 'none';
+                        });
+                        </script>
                     </div>
                 </div>
             </div>
-            <script src="assets/js/vendor.min.js"></script>
-    <script src="assets/js/app.min.js"></script>
-    <script>
-        // Initialize tooltips
-        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-            return new bootstrap.Tooltip(tooltipTriggerEl)
-        });
 
-        // Initialize popovers
-        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
-        var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-            return new bootstrap.Popover(popoverTriggerEl)
-        });
-    </script>
+        </div>
+    </div>
+    <script src="assets/js/vendor.min.js"></script>
+    <script src="assets/js/app.min.js"></script>
+</body>
 </html>
 
 
