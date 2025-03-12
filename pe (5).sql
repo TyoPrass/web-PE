@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Mar 08, 2025 at 04:00 AM
+-- Generation Time: Mar 12, 2025 at 04:06 AM
 -- Server version: 8.4.3
 -- PHP Version: 8.3.16
 
@@ -101,12 +101,12 @@ CREATE TABLE `trial` (
   `tanggal` date NOT NULL,
   `jam_start` varchar(25) NOT NULL,
   `jam_finish` varchar(25) NOT NULL,
-  `m/c_name` varchar(50) NOT NULL,
-  `kapasitas` int NOT NULL,
-  `cush_prec` int NOT NULL,
-  `pin_cus_qtt` int NOT NULL,
-  `die_height` int NOT NULL,
-  `die_dim` int NOT NULL,
+  `mc_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `kapasitas` varchar(50) NOT NULL,
+  `cush_prec` varchar(50) NOT NULL,
+  `pin_cus_qtt` varchar(50) NOT NULL,
+  `die_height` varchar(50) NOT NULL,
+  `die_dim` varchar(50) NOT NULL,
   `problem_tool` varchar(255) NOT NULL,
   `analisa_sebab_tool` varchar(255) NOT NULL,
   `counter_measure_tool` varchar(255) NOT NULL,
@@ -116,10 +116,18 @@ CREATE TABLE `trial` (
   `PIC` varchar(50) NOT NULL,
   `target` varchar(50) NOT NULL,
   `keterangan` varchar(50) NOT NULL,
-  `kelengkapan_dies` int NOT NULL,
-  `accuracy_part` int NOT NULL,
+  `kelengkapan_dies` varchar(50) NOT NULL,
+  `accuracy_part` varchar(50) NOT NULL,
   `id_proses` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `trial`
+--
+
+INSERT INTO `trial` (`id_trial`, `tanggal`, `jam_start`, `jam_finish`, `mc_name`, `kapasitas`, `cush_prec`, `pin_cus_qtt`, `die_height`, `die_dim`, `problem_tool`, `analisa_sebab_tool`, `counter_measure_tool`, `problem_part`, `analisa_sebab_part`, `counter_measure_part`, `PIC`, `target`, `keterangan`, `kelengkapan_dies`, `accuracy_part`, `id_proses`) VALUES
+(2, '2025-03-21', '08:00', '12:00', 'asfa', '0', '0', '0', '0', '123', '123', '123', '123', '123', '123', '123', '123', '123', '123', '123', '123', 1),
+(3, '2025-03-21', '08:00', '12:00', 'asfa', '0', '0', '0', '0', '213', '123', '123', '123', '123', '123', '123', '123', '123', '123', '123', '123', 1);
 
 -- --------------------------------------------------------
 
@@ -204,7 +212,7 @@ ALTER TABLE `proses`
 -- AUTO_INCREMENT for table `trial`
 --
 ALTER TABLE `trial`
-  MODIFY `id_trial` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id_trial` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `user`
