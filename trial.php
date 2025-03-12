@@ -76,6 +76,15 @@ if (isset($_POST['update'])) {
     $stmt->close();
 }
 
+
+// Kemungkinanan gara-gara database yang kurang. 
+/** 
+ * Deploy sampai selesai tgl 20 wajib selesai 
+ * waktunya 2 minggu cukup
+ * kurang fitur schedule
+ * katakensha tidak tahu ngisinya
+ * 
+*/
 // Handle insert operation
 if (isset($_POST['submit'])) {
     $tanggal = $_POST['tanggal'];
@@ -103,6 +112,8 @@ if (isset($_POST['submit'])) {
     $ng = $_POST['ng'];
     $qty_trial = $_POST['qty_trial'];
     $peserta = $_POST['peserta'];
+    $id_proses = $_POST['id_proses'];
+    $ok = $_POST['ok'];
     $id_part = $_POST['id_part'];
     $id_customer = $_POST['id_customer'];
     $visual = $_POST['visual'];
