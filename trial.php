@@ -53,7 +53,7 @@ if (isset($_POST['update'])) {
     $visual = $_POST['visual'];
     $dimension = $_POST['dimension'];
     $function = $_POST['function'];
-    $judgement = $_POST['judgement'];
+    $judfgement = $_POST['judfgement'];
     $dibuat = $_POST['dibuat'];
     $diperiksa = $_POST['diperiksa'];
     $diketahui = $_POST['diketahui'];
