@@ -44,24 +44,11 @@ if (isset($_POST['update'])) {
     $kelengkapan_dies = $_POST['kelengkapan_dies'];
     $accuracy_part = $_POST['accuracy_part'];
     $id_proses = $_POST['id_proses'];
-    $ok = $_POST['ok'];
-    $ng = $_POST['ng'];
-    $qty_trial = $_POST['qty_trial'];
-    $peserta = $_POST['peserta'];
-    $id_part = $_POST['id_part'];
-    $id_customer = $_POST['id_customer'];
-    $visual = $_POST['visual'];
-    $dimension = $_POST['dimension'];
-    $function = $_POST['function'];
-    $judgement = $_POST['judgement'];
-    $dibuat = $_POST['dibuat'];
-    $diperiksa = $_POST['diperiksa'];
-    $diketahui = $_POST['diketahui'];
 
     // Update data in database
-    $sql = "UPDATE trial SET tanggal = ?, jam_start = ?, jam_finish = ?, mc_name = ?, kapasitas = ?, cush_prec = ?, pin_cus_qtt = ?, die_height = ?, die_dim = ?, problem_tool = ?, analisa_sebab_tool = ?, counter_measure_tool = ?, problem_part = ?, analisa_sebab_part = ?, counter_measure_part = ?, PIC = ?, target = ?, keterangan = ?, kelengkapan_dies = ?, accuracy_part = ?, id_proses = ?, ok = ?, ng = ?, qty_trial = ?, peserta = ?, id_part = ?, id_customer = ?, visual = ?, dimension = ?, function = ?, judfgement = ?, dibuat = ?, diperiksa = ?, diketahui = ? WHERE id_trial = ?";
+    $sql = "UPDATE trial SET tanggal = ?, jam_start = ?, jam_finish = ?, mc_name = ?, kapasitas = ?, cush_prec = ?, pin_cus_qtt = ?, die_height = ?, die_dim = ?, problem_tool = ?, analisa_sebab_tool = ?, counter_measure_tool = ?, problem_part = ?, analisa_sebab_part = ?, counter_measure_part = ?, PIC = ?, target = ?, keterangan = ?, kelengkapan_dies = ?, accuracy_part = ?, id_proses = ? WHERE id_trial = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssiiiiisssssssssiissisissssssssi", $tanggal, $jam_start, $jam_finish, $mc_name, $kapasitas, $cush_prec, $pin_cus_qtt, $die_height, $die_dim, $problem_tool, $analisa_sebab_tool, $counter_measure_tool, $problem_part, $analisa_sebab_part, $counter_measure_part, $PIC, $target, $keterangan, $kelengkapan_dies, $accuracy_part, $id_proses, $ok, $ng, $qty_trial, $peserta, $id_part, $id_customer, $visual, $dimension, $function, $judfgement, $dibuat, $diperiksa, $diketahui, $id_trial);
+    $stmt->bind_param("ssssiiiiisssssssssiisi", $tanggal, $jam_start, $jam_finish, $mc_name, $kapasitas, $cush_prec, $pin_cus_qtt, $die_height, $die_dim, $problem_tool, $analisa_sebab_tool, $counter_measure_tool, $problem_part, $analisa_sebab_part, $counter_measure_part, $PIC, $target, $keterangan, $kelengkapan_dies, $accuracy_part, $id_proses, $id_trial);
 
     if ($stmt->execute()) {
         $_SESSION['message'] = 'Trial updated successfully.';
@@ -99,24 +86,11 @@ if (isset($_POST['submit'])) {
     $kelengkapan_dies = $_POST['kelengkapan_dies'];
     $accuracy_part = $_POST['accuracy_part'];
     $id_proses = $_POST['id_proses'];
-    $ok = $_POST['ok'];
-    $ng = $_POST['ng'];
-    $qty_trial = $_POST['qty_trial'];
-    $peserta = $_POST['peserta'];
-    $id_part = $_POST['id_part'];
-    $id_customer = $_POST['id_customer'];
-    $visual = $_POST['visual'];
-    $dimension = $_POST['dimension'];
-    $function = $_POST['function'];
-    $judfgement = $_POST['judfgement'];
-    $dibuat = $_POST['dibuat'];
-    $diperiksa = $_POST['diperiksa'];
-    $diketahui = $_POST['diketahui'];
 
     // Insert data into database
-    $sql = "INSERT INTO trial (tanggal, jam_start, jam_finish, mc_name, kapasitas, cush_prec, pin_cus_qtt, die_height, die_dim, problem_tool, analisa_sebab_tool, counter_measure_tool, problem_part, analisa_sebab_part, counter_measure_part, PIC, target, keterangan, kelengkapan_dies, accuracy_part, id_proses, ok, ng, qty_trial, peserta, id_part, id_customer, visual, dimension, `function`, judfgement, dibuat, diperiksa, diketahui) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO trial (tanggal, jam_start, jam_finish, mc_name, kapasitas, cush_prec, pin_cus_qtt, die_height, die_dim, problem_tool, analisa_sebab_tool, counter_measure_tool, problem_part, analisa_sebab_part, counter_measure_part, PIC, target, keterangan, kelengkapan_dies, accuracy_part, id_proses) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssiiiiisssssssssiissisissssssss", $tanggal, $jam_start, $jam_finish, $mc_name, $kapasitas, $cush_prec, $pin_cus_qtt, $die_height, $die_dim, $problem_tool, $analisa_sebab_tool, $counter_measure_tool, $problem_part, $analisa_sebab_part, $counter_measure_part, $PIC, $target, $keterangan, $kelengkapan_dies, $accuracy_part, $id_proses, $ok, $ng, $qty_trial, $peserta, $id_part, $id_customer, $visual, $dimension, $function, $judfgement, $dibuat, $diperiksa, $diketahui);
+    $stmt->bind_param("ssssiiiiisssssssssiis", $tanggal, $jam_start, $jam_finish, $mc_name, $kapasitas, $cush_prec, $pin_cus_qtt, $die_height, $die_dim, $problem_tool, $analisa_sebab_tool, $counter_measure_tool, $problem_part, $analisa_sebab_part, $counter_measure_part, $PIC, $target, $keterangan, $kelengkapan_dies, $accuracy_part, $id_proses);
 
     if ($stmt->execute()) {
         $_SESSION['message'] = 'Trial inserted successfully.';
@@ -457,6 +431,19 @@ if (isset($_GET['detail'])) {
         <input type="date" class="form-control" id="tanggal" name="tanggal" required>
     </div>
     <div class="mb-3">
+        <label for="id_proses" class="form-label">Proses</label>
+        <select class="form-select" id="id_proses" name="id_proses" required>
+            <option value="">Select Proses</option>
+            <?php
+            $sql = "SELECT id_proses, Proses FROM proses";
+            $result = $conn->query($sql);
+            while ($row = $result->fetch_assoc()) {
+                echo '<option value="' . $row['id_proses'] . '">' . $row['Proses'] . '</option>';
+            }
+            ?>
+        </select>
+    </div>
+    <div class="mb-3">
         <label for="jam_start" class="form-label">Jam Start</label>
         <input type="text" class="form-control" id="jam_start" name="jam_start" required>
     </div>
@@ -486,7 +473,7 @@ if (isset($_GET['detail'])) {
     </div>
     <div class="mb-3">
         <label for="die_dim" class="form-label">Die Dim</label>
-        <input type="text" class="form-control" id="die_dim" name="die_dim" required>
+        <input type="number" class="form-control" id="die_dim" name="die_dim" required>
     </div>
     <div class="mb-3">
         <label for="problem_tool" class="form-label">Problem Tool</label>
@@ -532,101 +519,7 @@ if (isset($_GET['detail'])) {
         <label for="accuracy_part" class="form-label">Accuracy Part</label>
         <input type="text" class="form-control" id="accuracy_part" name="accuracy_part" required>
     </div>
-    <div class="mb-3">
-        <label for="id_proses" class="form-label">Proses</label>
-        <select class="form-select" id="id_proses" name="id_proses" required>
-            <option value="">Select Proses</option>
-            <?php
-            $sql = "SELECT id_proses, Proses FROM proses";
-            $result = $conn->query($sql);
-            while ($row = $result->fetch_assoc()) {
-                echo '<option value="' . $row['id_proses'] . '">' . $row['Proses'] . '</option>';
-            }
-            ?>
-        </select>
-    </div>
-    <div class="mb-3">
-        <label for="ok" class="form-label">OK</label>
-        <input type="text" class="form-control" id="ok" name="ok" required>
-    </div>
-    <div class="mb-3">
-        <label for="ng" class="form-label">NG</label>
-        <input type="text" class="form-control" id="ng" name="ng" required>
-    </div>
-    <div class="mb-3">
-        <label for="qty_trial" class="form-label">Qty Trial</label>
-        <input type="number" class="form-control" id="qty_trial" name="qty_trial" required>
-    </div>
-    <div class="mb-3">
-        <label for="id_part" class="form-label">Nama Part</label>
-        <select class="form-select" id="id_part" name="id_part" required>
-            <option value="">Nama Part</option>
-            <?php
-            $sql = "SELECT id_part, nama_part FROM data_part";
-            $result = $conn->query($sql);
-            while ($row = $result->fetch_assoc()) {
-                echo '<option value="' . $row['id_part'] . '">' . $row['nama_part'] . '</option>';
-            }
-            ?>
-        </select>
-    </div>
-    <div class="mb-3">
-        <label for="id_customer" class="form-label">Proses</label>
-        <select class="form-select" id="id_customer" name="id_customer" required>
-            <option value="">Nama Customer</option>
-            <?php
-            $sql = "SELECT id_customer, nama_customer FROM customer";
-            $result = $conn->query($sql);
-            while ($row = $result->fetch_assoc()) {
-                echo '<option value="' . $row['id_customer'] . '">' . $row['nama_customer'] . '</option>';
-            }
-            ?>
-        </select>
-    </div>
-    <div class="mb-3">
-        <label for="visual" class="form-label">Visual</label>
-        <select class="form-select" id="visual" name="visual" required>
-            <option value="OK">OK</option>
-            <option value="NG">NG</option>
-        </select>
-    </div>
-    <div class="mb-3">
-        <label for="dimension" class="form-label">Dimension</label>
-        <select class="form-select" id="dimension" name="dimension" required>
-            <option value="OK">OK</option>
-            <option value="NG">NG</option>
-        </select>
-    </div>
-    <div class="mb-3">
-        <label for="function" class="form-label">Function</label>
-        <select class="form-select" id="function" name="function" required>
-            <option value="OK">OK</option>
-            <option value="NG">NG</option>
-        </select>
-    </div>
-    <div class="mb-3">
-        <label for="judfgement" class="form-label">Judgement</label>
-        <select class="form-select" id="judfgement" name="judfgement" required>
-            <option value="OK">OK</option>
-            <option value="NG">NG</option>
-        </select>
-    </div>
-    <div class="mb-3">
-        <label for="dibuat" class="form-label">Dibuat</label>
-        <input type="text" class="form-control" id="dibuat" name="dibuat" required>
-    </div>
-    <div class="mb-3">
-        <label for="diperiksa" class="form-label">Diperiksa</label>
-        <input type="text" class="form-control" id="diperiksa" name="diperiksa" required>
-    </div>
-    <div class="mb-3">
-        <label for="diketahui" class="form-label">Diketahui</label>
-        <input type="text" class="form-control" id="diketahui" name="diketahui" required>
-    </div>
-    <div class="mb-3">
-        <label for="peserta" class="form-label">Peserta</label>
-        <input type="text" class="form-control" id="peserta" name="peserta" required>
-    </div>
+
     <div class="mb-3">
         <button type="submit" class="btn btn-primary">Submit</button>
         <button type="button" class="btn btn-secondary" id="hide-insert-form">Back</button>
