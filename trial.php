@@ -210,7 +210,7 @@ if (isset($_GET['detail'])) {
                                         <?php unset($_SESSION['message']); unset($_SESSION['message_type']); ?>
                                     <?php endif; ?>
 
-                                    <?php if (isset($_GET['detail'])): ?>
+                                        <?php if (isset($_GET['detail'])): ?>
                                         <!-- Detail View -->
                                         <div class="row">
                                             <div class="col-md-6">
@@ -313,6 +313,7 @@ if (isset($_GET['detail'])) {
                                                 <i class="mdi mdi-pencil"></i> Edit
                                             </a>
                                         </div>
+
                                     <?php elseif (isset($_GET['edit'])): ?>
                                         <!-- Edit Form -->
                                         <form action="trial.php" method="post">
