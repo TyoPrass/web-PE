@@ -53,15 +53,15 @@ if (isset($_POST['update'])) {
     $visual = $_POST['visual'];
     $dimension = $_POST['dimension'];
     $function = $_POST['function'];
-    $judfgement = $_POST['judfgement'];
+    $judgement = $_POST['judgement'];
     $dibuat = $_POST['dibuat'];
     $diperiksa = $_POST['diperiksa'];
     $diketahui = $_POST['diketahui'];
 
     // Update data in database
-    $sql = "UPDATE trial SET tanggal = ?, jam_start = ?, jam_finish = ?, mc_name = ?, kapasitas = ?, cush_prec = ?, pin_cus_qtt = ?, die_height = ?, die_dim = ?, problem_tool = ?, analisa_sebab_tool = ?, counter_measure_tool = ?, problem_part = ?, analisa_sebab_part = ?, counter_measure_part = ?, PIC = ?, target = ?, keterangan = ?, kelengkapan_dies = ?, accuracy_part = ?, id_proses = ?, ok = ?, ng = ?, qty_trial = ?, peserta = ?, id_part = ?, id_customer = ?, visual = ?, dimension = ?, function = ?, judfgement = ?, dibuat = ?, diperiksa = ?, diketahui = ? WHERE id_trial = ?";
+    $sql = "UPDATE trial SET tanggal = ?, jam_start = ?, jam_finish = ?, mc_name = ?, kapasitas = ?, cush_prec = ?, pin_cus_qtt = ?, die_height = ?, die_dim = ?, problem_tool = ?, analisa_sebab_tool = ?, counter_measure_tool = ?, problem_part = ?, analisa_sebab_part = ?, counter_measure_part = ?, PIC = ?, target = ?, keterangan = ?, kelengkapan_dies = ?, accuracy_part = ?, id_proses = ?, ok = ?, ng = ?, qty_trial = ?, peserta = ?, id_part = ?, id_customer = ?, visual = ?, dimension = ?, function = ?, judgement = ?, dibuat = ?, diperiksa = ?, diketahui = ? WHERE id_trial = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssiiiiisssssssssiissisissssssssi", $tanggal, $jam_start, $jam_finish, $mc_name, $kapasitas, $cush_prec, $pin_cus_qtt, $die_height, $die_dim, $problem_tool, $analisa_sebab_tool, $counter_measure_tool, $problem_part, $analisa_sebab_part, $counter_measure_part, $PIC, $target, $keterangan, $kelengkapan_dies, $accuracy_part, $id_proses, $ok, $ng, $qty_trial, $peserta, $id_part, $id_customer, $visual, $dimension, $function, $judfgement, $dibuat, $diperiksa, $diketahui, $id_trial);
+    $stmt->bind_param("ssssiiiiisssssssssiissisissssssssi", $tanggal, $jam_start, $jam_finish, $mc_name, $kapasitas, $cush_prec, $pin_cus_qtt, $die_height, $die_dim, $problem_tool, $analisa_sebab_tool, $counter_measure_tool, $problem_part, $analisa_sebab_part, $counter_measure_part, $PIC, $target, $keterangan, $kelengkapan_dies, $accuracy_part, $id_proses, $ok, $ng, $qty_trial, $peserta, $id_part, $id_customer, $visual, $dimension, $function, $judgement, $dibuat, $diperiksa, $diketahui, $id_trial);
 
     if ($stmt->execute()) {
         $_SESSION['message'] = 'Trial updated successfully.';
@@ -85,6 +85,8 @@ if (isset($_POST['update'])) {
  * katakensha tidak tahu ngisinya
  * 
 */
+// ...existing code...
+
 // Handle insert operation
 if (isset($_POST['submit'])) {
     $tanggal = $_POST['tanggal'];
@@ -112,22 +114,20 @@ if (isset($_POST['submit'])) {
     $ng = $_POST['ng'];
     $qty_trial = $_POST['qty_trial'];
     $peserta = $_POST['peserta'];
-    $id_proses = $_POST['id_proses'];
-    $ok = $_POST['ok'];
     $id_part = $_POST['id_part'];
     $id_customer = $_POST['id_customer'];
     $visual = $_POST['visual'];
     $dimension = $_POST['dimension'];
     $function = $_POST['function'];
-    $judfgement = $_POST['judfgement'];
+    $judgement = $_POST['judgement'];
     $dibuat = $_POST['dibuat'];
     $diperiksa = $_POST['diperiksa'];
     $diketahui = $_POST['diketahui'];
 
     // Insert data into database
-    $sql = "INSERT INTO trial (tanggal, jam_start, jam_finish, mc_name, kapasitas, cush_prec, pin_cus_qtt, die_height, die_dim, problem_tool, analisa_sebab_tool, counter_measure_tool, problem_part, analisa_sebab_part, counter_measure_part, PIC, target, keterangan, kelengkapan_dies, accuracy_part, id_proses, ok, ng, qty_trial, peserta, id_part, id_customer, visual, dimension, `function`, judfgement, dibuat, diperiksa, diketahui) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO trial (tanggal, jam_start, jam_finish, mc_name, kapasitas, cush_prec, pin_cus_qtt, die_height, die_dim, problem_tool, analisa_sebab_tool, counter_measure_tool, problem_part, analisa_sebab_part, counter_measure_part, PIC, target, keterangan, kelengkapan_dies, accuracy_part, id_proses, ok, ng, qty_trial, peserta, id_part, id_customer, visual, dimension, `function`, judgement, dibuat, diperiksa, diketahui) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssiiiiisssssssssiissisissssssss", $tanggal, $jam_start, $jam_finish, $mc_name, $kapasitas, $cush_prec, $pin_cus_qtt, $die_height, $die_dim, $problem_tool, $analisa_sebab_tool, $counter_measure_tool, $problem_part, $analisa_sebab_part, $counter_measure_part, $PIC, $target, $keterangan, $kelengkapan_dies, $accuracy_part, $id_proses, $ok, $ng, $qty_trial, $peserta, $id_part, $id_customer, $visual, $dimension, $function, $judfgement, $dibuat, $diperiksa, $diketahui);
+    $stmt->bind_param("ssssiiiiisssssssssiissisissssssss", $tanggal, $jam_start, $jam_finish, $mc_name, $kapasitas, $cush_prec, $pin_cus_qtt, $die_height, $die_dim, $problem_tool, $analisa_sebab_tool, $counter_measure_tool, $problem_part, $analisa_sebab_part, $counter_measure_part, $PIC, $target, $keterangan, $kelengkapan_dies, $accuracy_part, $id_proses, $ok, $ng, $qty_trial, $peserta, $id_part, $id_customer, $visual, $dimension, $function, $judgement, $dibuat, $diperiksa, $diketahui);
 
     if ($stmt->execute()) {
         $_SESSION['message'] = 'Trial inserted successfully.';
@@ -141,6 +141,8 @@ if (isset($_POST['submit'])) {
 
     $stmt->close();
 }
+
+// ...existing code...
 
 // Fetch data for editing
 if (isset($_GET['edit'])) {
@@ -582,7 +584,7 @@ if (isset($_GET['detail'])) {
         </select>
     </div>
     <div class="mb-3">
-        <label for="id_customer" class="form-label">Proses</label>
+        <label for="id_customer" class="form-label">Nama Customer</label>
         <select class="form-select" id="id_customer" name="id_customer" required>
             <option value="">Nama Customer</option>
             <?php
@@ -616,8 +618,8 @@ if (isset($_GET['detail'])) {
         </select>
     </div>
     <div class="mb-3">
-        <label for="judfgement" class="form-label">Judgement</label>
-        <select class="form-select" id="judfgement" name="judfgement" required>
+        <label for="judgement" class="form-label">Judgement</label>
+        <select class="form-select" id="judgement" name="judgement" required>
             <option value="OK">OK</option>
             <option value="NG">NG</option>
         </select>
@@ -644,6 +646,9 @@ if (isset($_GET['detail'])) {
     </div>
 </form>
 <?php endif; ?>
+
+
+<!-- ini batasnya -->
 </div>
 </div>
 </div>
