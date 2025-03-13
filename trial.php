@@ -95,6 +95,11 @@ if (isset($_POST['submit'])) {
     $problem_tool = $_POST['problem_tool'];
     $analisa_sebab_tool = $_POST['analisa_sebab_tool'];
     $counter_measure_tool = $_POST['counter_measure_tool'];
+
+    $pic_tool = $_POST['pic_tool'];
+    $target_tool = $_POST['target_tool'];
+    $keterangan_tool = $_POST['keterangan_tool'];
+    
     $problem_part = $_POST['problem_part'];
     $analisa_sebab_part = $_POST['analisa_sebab_part'];
     $counter_measure_part = $_POST['counter_measure_part'];
@@ -122,11 +127,11 @@ if (isset($_POST['submit'])) {
 
     // Query INSERT dengan kolom tambahan
     $sql = "INSERT INTO trial 
-        (tanggal, jam_start, jam_finish, mc_name, trial, kapasitas, cush_prec, pin_cus_qtt, die_height, die_dim, 
-        problem_tool, analisa_sebab_tool, counter_measure_tool, problem_part, analisa_sebab_part, 
+        (tanggal, jam_start, jam_finish, trial, mc_name, kapasitas, cush_prec, pin_cus_qtt, die_height, die_dim, 
+        problem_tool, analisa_sebab_tool, counter_measure_tool, pic_tool, target_tool, keterangan_tool, problem_part, analisa_sebab_part, 
         counter_measure_part, PIC, target, keterangan, kelengkapan_dies, accuracy_part, id_proses, id_part, id_customer, 
         qty_trial, jumlah_ok, jumlah_ng, visual, dimensi, fungsi, judgement, dibuat, diperiksa, diketahui, peserta) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     // Persiapkan statement
     $stmt = $conn->prepare($sql);
@@ -137,10 +142,11 @@ if (isset($_POST['submit'])) {
 
     // Bind parameters (sesuai jumlah dan tipe data)
     $stmt->bind_param(
-        "sssssiiiiissssssssssiiiiissssssssss",
-        $tanggal, $jam_start, $jam_finish, $mc_name, $trial,
+        "sssssiiiiisssssssssssssiiiiissssssssss",
+        $tanggal, $jam_start, $jam_finish, $trial, $mc_name, 
         $kapasitas, $cush_prec, $pin_cus_qtt, $die_height, $die_dim, 
         $problem_tool, $analisa_sebab_tool, $counter_measure_tool, 
+        $pic_tool, $target_tool, $keterangan_tool,
         $problem_part, $analisa_sebab_part, $counter_measure_part, 
         $PIC, $target, $keterangan, $kelengkapan_dies, $accuracy_part, 
         $id_proses, $id_part, $id_customer,
@@ -801,6 +807,18 @@ if (isset($_GET['detail'])) {
             <div class="mb-3">
                 <label for="counter_measure_tool" class="form-label">Counter Measure Tool</label>
                 <input type="text" class="form-control" id="counter_measure_tool" name="counter_measure_tool" required>
+            </div>
+            <div class="mb-3">
+                <label for="pic_tool" class="form-label">P.I.C</label>
+                <input type="text" class="form-control" id="pic_tool" name="pic_tool" required>
+            </div>
+            <div class="mb-3">
+                <label for="target_tool" class="form-label">Target</label>
+                <input type="text" class="form-control" id="target_tool" name="target_tool" required>
+            </div>
+            <div class="mb-3">
+                <label for="keterangan_tool" class="form-label">Keterangan</label>
+                <input type="text" class="form-control" id="keterangan_tool" name="keterangan_tool" required>
             </div>
 
             <div class="mb-3">
