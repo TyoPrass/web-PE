@@ -27,6 +27,7 @@ if (isset($_POST['update'])) {
     
     $jam_start = $_POST['jam_start'];
     $jam_finish = $_POST['jam_finish'];
+    $trial = $_POST['trial'];
     $mc_name = $_POST['mc_name'];
     $kapasitas = $_POST['kapasitas'];
     $cush_prec = $_POST['cush_prec'];
@@ -60,9 +61,9 @@ if (isset($_POST['update'])) {
     $peserta = $_POST['peserta'];
 
     // Update data in database
-    $sql = "UPDATE trial SET tanggal = ?, jam_start = ?, jam_finish = ?, mc_name = ?, kapasitas = ?, cush_prec = ?, pin_cus_qtt = ?, die_height = ?, die_dim = ?, problem_tool = ?, analisa_sebab_tool = ?, counter_measure_tool = ?, problem_part = ?, analisa_sebab_part = ?, counter_measure_part = ?, PIC = ?, target = ?, keterangan = ?, kelengkapan_dies = ?, accuracy_part = ?, id_proses = ?, id_part = ?, id_customer = ?, qty_trial = ?, jumlah_ok = ?, jumlah_ng = ?, visual = ?, dimensi = ?, fungsi = ?, judgement = ?, dibuat = ?, diperiksa = ?, diketahui = ?, peserta = ? WHERE id_trial = ?";
+    $sql = "UPDATE trial SET tanggal = ?, jam_start = ?, jam_finish = ?, trial= ?, mc_name = ?, kapasitas = ?, cush_prec = ?, pin_cus_qtt = ?, die_height = ?, die_dim = ?, problem_tool = ?, analisa_sebab_tool = ?, counter_measure_tool = ?, problem_part = ?, analisa_sebab_part = ?, counter_measure_part = ?, PIC = ?, target = ?, keterangan = ?, kelengkapan_dies = ?, accuracy_part = ?, id_proses = ?, id_part = ?, id_customer = ?, qty_trial = ?, jumlah_ok = ?, jumlah_ng = ?, visual = ?, dimensi = ?, fungsi = ?, judgement = ?, dibuat = ?, diperiksa = ?, diketahui = ?, peserta = ? WHERE id_trial = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssiiiiissssssssssiiiiissssssssssi", $tanggal, $jam_start, $jam_finish, $mc_name, $kapasitas, $cush_prec, $pin_cus_qtt, $die_height, $die_dim, $problem_tool, $analisa_sebab_tool, $counter_measure_tool, $problem_part, $analisa_sebab_part, $counter_measure_part, $PIC, $target, $keterangan, $kelengkapan_dies, $accuracy_part, $id_proses, $id_part, $id_customer, $qty_trial, $jumlah_ok, $jumlah_ng, $visual, $dimensi, $fungsi, $judgement, $dibuat, $diperiksa, $diketahui, $peserta, $id_trial);
+    $stmt->bind_param("sssssiiiiissssssssssiiiiissssssssssi", $tanggal, $jam_start, $jam_finish, $trial, $mc_name, $kapasitas, $cush_prec, $pin_cus_qtt, $die_height, $die_dim, $problem_tool, $analisa_sebab_tool, $counter_measure_tool, $problem_part, $analisa_sebab_part, $counter_measure_part, $PIC, $target, $keterangan, $kelengkapan_dies, $accuracy_part, $id_proses, $id_part, $id_customer, $qty_trial, $jumlah_ok, $jumlah_ng, $visual, $dimensi, $fungsi, $judgement, $dibuat, $diperiksa, $diketahui, $peserta, $id_trial);
 
     if ($stmt->execute()) {
         $_SESSION['message'] = 'Trial updated successfully.';
@@ -86,6 +87,7 @@ if (isset($_POST['submit'])) {
     $jam_start = $_POST['jam_start'];
     $jam_finish = $_POST['jam_finish'];
     $mc_name = $_POST['mc_name'];
+    $trial = $_POST['trial'];
     $kapasitas = $_POST['kapasitas'];
     $cush_prec = $_POST['cush_prec'];
     $pin_cus_qtt = $_POST['pin_cus_qtt'];
@@ -121,11 +123,11 @@ if (isset($_POST['submit'])) {
 
     // Query INSERT dengan kolom tambahan
     $sql = "INSERT INTO trial 
-        (tanggal, jam_start, jam_finish, mc_name, kapasitas, cush_prec, pin_cus_qtt, die_height, die_dim, 
+        (tanggal, jam_start, jam_finish, mc_name, trial, kapasitas, cush_prec, pin_cus_qtt, die_height, die_dim, 
         problem_tool, analisa_sebab_tool, counter_measure_tool, problem_part, analisa_sebab_part, 
         counter_measure_part, PIC, target, keterangan, kelengkapan_dies, accuracy_part, id_proses, id_part, id_customer, 
         qty_trial, jumlah_ok, jumlah_ng, visual, dimensi, fungsi, judgement, dibuat, diperiksa, diketahui, peserta) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     // Persiapkan statement
     $stmt = $conn->prepare($sql);
@@ -136,8 +138,8 @@ if (isset($_POST['submit'])) {
 
     // Bind parameters (sesuai jumlah dan tipe data)
     $stmt->bind_param(
-        "ssssiiiiissssssssssiiiiissssssssss",
-        $tanggal, $jam_start, $jam_finish, $mc_name, 
+        "sssssiiiiissssssssssiiiiissssssssss",
+        $tanggal, $jam_start, $jam_finish, $mc_name, $trial,
         $kapasitas, $cush_prec, $pin_cus_qtt, $die_height, $die_dim, 
         $problem_tool, $analisa_sebab_tool, $counter_measure_tool, 
         $problem_part, $analisa_sebab_part, $counter_measure_part, 
@@ -294,6 +296,10 @@ if (isset($_GET['detail'])) {
                                                             <td>: <?php echo htmlspecialchars($detail_data['mc_name']); ?></td>
                                                         </tr>
                                                         <tr>
+                                                            <th>Trial</th>
+                                                            <td>: <?php echo htmlspecialchars($detail_data['trial']); ?></td>
+                                                        </tr>
+                                                        <tr>
                                                             <th>Kapasitas</th>
                                                             <td>: <?php echo htmlspecialchars($detail_data['kapasitas']); ?></td>
                                                         </tr>
@@ -439,10 +445,20 @@ if (isset($_GET['detail'])) {
                                                 <label for="jam_finish" class="form-label">Jam Finish</label>
                                                 <input type="time" class="form-control" id="jam_finish" name="jam_finish" value="<?php echo htmlspecialchars($edit_data['jam_finish']); ?>" required>
                                             </div>
+
+                                            <div class="mb-3">
+                                                <label for="trial" class="form-label">M/C Name</label>
+                                                <input type="text" class="form-control" id="mc_name" name="mc_name" value="<?php echo htmlspecialchars($edit_data['mc_name']); ?>" required>
+                                            </div>
                                             
                                             <div class="mb-3">
-                                                <label for="mc_name" class="form-label">M/C Name</label>
-                                                <input type="text" class="form-control" id="mc_name" name="mc_name" value="<?php echo htmlspecialchars($edit_data['mc_name']); ?>" required>
+                                                <label for="mc_name" class="form-label">Trial</label>
+                                                <input type="text" class="form-control" id="trial" name="trial" value="<?php echo htmlspecialchars($edit_data['trial']); ?>" required>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="trial" class="form-label">Trial</label>
+                                                <input type="text" class="form-control" id="trial" name="trial" value="<?php echo htmlspecialchars($edit_data['trial']); ?>" required>
                                             </div>
                                             
                                             <div class="mb-3">
@@ -711,6 +727,11 @@ if (isset($_GET['detail'])) {
     <div class="mb-3">
         <label for="mc_name" class="form-label">M/C Name</label>
         <input type="text" class="form-control" id="mc_name" name="mc_name" required>
+    </div>
+    
+    <div class="mb-3">
+        <label for="trial" class="form-label">Trial</label>
+        <input type="text" class="form-control" id="trial" name="trial" required>
     </div>
     
     <div class="row">
