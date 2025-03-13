@@ -24,6 +24,7 @@ if (isset($_GET['delete'])) {
 if (isset($_POST['update'])) {
     $id_trial = $_POST['id_trial'];
     $tanggal = $_POST['tanggal'];
+    
     $jam_start = $_POST['jam_start'];
     $jam_finish = $_POST['jam_finish'];
     $mc_name = $_POST['mc_name'];
@@ -85,11 +86,11 @@ if (isset($_POST['submit'])) {
     $jam_start = $_POST['jam_start'];
     $jam_finish = $_POST['jam_finish'];
     $mc_name = $_POST['mc_name'];
-    $kapasitas = intval($_POST['kapasitas']);
-    $cush_prec = intval($_POST['cush_prec']);
-    $pin_cus_qtt = intval($_POST['pin_cus_qtt']);
-    $die_height = intval($_POST['die_height']);
-    $die_dim = intval($_POST['die_dim']);
+    $kapasitas = $_POST['kapasitas'];
+    $cush_prec = $_POST['cush_prec'];
+    $pin_cus_qtt = $_POST['pin_cus_qtt'];
+    $die_height = $_POST['die_height'];
+    $die_dim = $_POST['die_dim'];
     $problem_tool = $_POST['problem_tool'];
     $analisa_sebab_tool = $_POST['analisa_sebab_tool'];
     $counter_measure_tool = $_POST['counter_measure_tool'];
@@ -101,9 +102,9 @@ if (isset($_POST['submit'])) {
     $keterangan = $_POST['keterangan'];
     $kelengkapan_dies = $_POST['kelengkapan_dies'];
     $accuracy_part = $_POST['accuracy_part'];
-    $id_proses = intval($_POST['id_proses']);
-    $id_part = intval($_POST['id_part']);
-    $id_customer = intval($_POST['id_customer']);
+    $id_proses = $_POST['id_proses'];
+    $id_part = $_POST['id_part'];
+    $id_customer = $_POST['id_customer'];
 
     // Tambahan kolom baru
     $qty_trial = $_POST['qty_trial'];
@@ -357,6 +358,50 @@ if (isset($_GET['detail'])) {
                                                             <td>: <?php echo htmlspecialchars($detail_data['accuracy_part']); ?></td>
                                                         </tr>
                                                         <tr>
+                                                            <th>Qty Trial/Total Produksi</th>
+                                                            <td>: <?php echo htmlspecialchars($detail_data['qty_trial']); ?></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Jumlah OK</th>
+                                                            <td>: <?php echo htmlspecialchars($detail_data['jumlah_ok']); ?></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Jumlah NG</th>
+                                                            <td>: <?php echo htmlspecialchars($detail_data['jumlah_ng']); ?></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Visual</th>
+                                                            <td>: <?php echo htmlspecialchars($detail_data['visual']); ?></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Dimensi</th>
+                                                            <td>: <?php echo htmlspecialchars($detail_data['dimensi']); ?></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Fungsi</th>
+                                                            <td>: <?php echo htmlspecialchars($detail_data['fungsi']); ?></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Judgement</th>
+                                                            <td>: <?php echo htmlspecialchars($detail_data['judgement']); ?></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Dibuat Oleh</th>
+                                                            <td>: <?php echo htmlspecialchars($detail_data['dibuat']); ?></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Diperiksa Oleh</th>
+                                                            <td>: <?php echo htmlspecialchars($detail_data['diperiksa']); ?></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Diketahui Oleh</th>
+                                                            <td>: <?php echo htmlspecialchars($detail_data['diketahui']); ?></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Peserta</th>
+                                                            <td>: <?php echo htmlspecialchars($detail_data['peserta']); ?></td>
+                                                        </tr>
+                                                        <tr>
                                                             <th>Part No</th>
                                                             <td>: <?php echo htmlspecialchars($detail_data['part_no']); ?></td>
                                                         </tr>
@@ -402,27 +447,27 @@ if (isset($_GET['detail'])) {
                                             
                                             <div class="mb-3">
                                                 <label for="kapasitas" class="form-label">Kapasitas</label>
-                                                <input type="number" class="form-control" id="kapasitas" name="kapasitas" value="<?php echo htmlspecialchars($edit_data['kapasitas']); ?>" required>
+                                                <input type="text" class="form-control" id="kapasitas" name="kapasitas" value="<?php echo htmlspecialchars($edit_data['kapasitas']); ?>" required>
                                             </div>
                                             
                                             <div class="mb-3">
                                                 <label for="cush_prec" class="form-label">Cush Prec</label>
-                                                <input type="number" class="form-control" id="cush_prec" name="cush_prec" value="<?php echo htmlspecialchars($edit_data['cush_prec']); ?>" required>
+                                                <input type="text" class="form-control" id="cush_prec" name="cush_prec" value="<?php echo htmlspecialchars($edit_data['cush_prec']); ?>" required>
                                             </div>
                                             
                                             <div class="mb-3">
                                                 <label for="pin_cus_qtt" class="form-label">Pin Cus Qtt</label>
-                                                <input type="number" class="form-control" id="pin_cus_qtt" name="pin_cus_qtt" value="<?php echo htmlspecialchars($edit_data['pin_cus_qtt']); ?>" required>
+                                                <input type="text" class="form-control" id="pin_cus_qtt" name="pin_cus_qtt" value="<?php echo htmlspecialchars($edit_data['pin_cus_qtt']); ?>" required>
                                             </div>
                                             
                                             <div class="mb-3">
                                                 <label for="die_height" class="form-label">Die Height</label>
-                                                <input type="number" class="form-control" id="die_height" name="die_height" value="<?php echo htmlspecialchars($edit_data['die_height']); ?>" required>
+                                                <input type="text" class="form-control" id="die_height" name="die_height" value="<?php echo htmlspecialchars($edit_data['die_height']); ?>" required>
                                             </div>
                                             
                                             <div class="mb-3">
                                                 <label for="die_dim" class="form-label">Die Dim</label>
-                                                <input type="number" class="form-control" id="die_dim" name="die_dim" value="<?php echo htmlspecialchars($edit_data['die_dim']); ?>" required>
+                                                <input type="text" class="form-control" id="die_dim" name="die_dim" value="<?php echo htmlspecialchars($edit_data['die_dim']); ?>" required>
                                             </div>
                                             
                                             <div class="mb-3">
@@ -527,17 +572,17 @@ if (isset($_GET['detail'])) {
                                             
                                             <div class="mb-3">
                                                 <label for="qty_trial" class="form-label">Qty Trial/Total Produksi</label>
-                                                <input type="number" class="form-control" id="qty_trial" name="qty_trial" value="<?php echo htmlspecialchars($edit_data['qty_trial']); ?>" required>
+                                                <input type="text" class="form-control" id="qty_trial" name="qty_trial" value="<?php echo htmlspecialchars($edit_data['qty_trial']); ?>" required>
                                             </div>
                                             
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <label for="jumlah_ok" class="form-label">Jumlah OK</label>
-                                                    <input type="number" class="form-control" id="jumlah_ok" name="jumlah_ok" value="<?php echo htmlspecialchars($edit_data['jumlah_ok']); ?>" required>
+                                                    <input type="text" class="form-control" id="jumlah_ok" name="jumlah_ok" value="<?php echo htmlspecialchars($edit_data['jumlah_ok']); ?>" required>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <label for="jumlah_ng" class="form-label">Jumlah NG</label>
-                                                    <input type="number" class="form-control" id="jumlah_ng" name="jumlah_ng" value="<?php echo htmlspecialchars($edit_data['jumlah_ng']); ?>" required>
+                                                    <input type="text" class="form-control" id="jumlah_ng" name="jumlah_ng" value="<?php echo htmlspecialchars($edit_data['jumlah_ng']); ?>" required>
                                                 </div>
                                             </div>
                                             
@@ -671,26 +716,26 @@ if (isset($_GET['detail'])) {
     <div class="row">
         <div class="col-md-6">
             <label for="kapasitas" class="form-label">Kapasitas</label>
-            <input type="number" class="form-control" id="kapasitas" name="kapasitas" required>
+            <input type="text" class="form-control" id="kapasitas" name="kapasitas" required>
         </div>
         <div class="col-md-6">
             <label for="cush_prec" class="form-label">Cush Prec</label>
-            <input type="number" class="form-control" id="cush_prec" name="cush_prec" required>
+            <input type="text" class="form-control" id="cush_prec" name="cush_prec" required>
         </div>
         <div class="col-md-6">
             <label for="die_dim" class="form-label">Die Dim</label>
-            <input type="number" class="form-control" id="die_dim" name="die_dim" required>
+            <input type="text" class="form-control" id="die_dim" name="die_dim" required>
         </div>
     </div>
     
     <div class="row">
         <div class="col-md-6">
             <label for="pin_cus_qtt" class="form-label">Pin Cus Qtt</label>
-            <input type="number" class="form-control" id="pin_cus_qtt" name="pin_cus_qtt" required>
+            <input type="text" class="form-control" id="pin_cus_qtt" name="pin_cus_qtt" required>
         </div>
         <div class="col-md-6">
             <label for="die_height" class="form-label">Die Height</label>
-            <input type="number" class="form-control" id="die_height" name="die_height" required>
+            <input type="text" class="form-control" id="die_height" name="die_height" required>
         </div>
     </div>
     
@@ -751,17 +796,17 @@ if (isset($_GET['detail'])) {
     
     <div class="mb-3">
         <label for="qty_trial" class="form-label">Qty Trial/Total Produksi</label>
-        <input type="number" class="form-control" id="qty_trial" name="qty_trial" required>
+        <input type="text" class="form-control" id="qty_trial" name="qty_trial" required>
     </div>
     
     <div class="row">
         <div class="col-md-4">
             <label for="jumlah_ok" class="form-label">Jumlah OK</label>
-            <input type="number" class="form-control" id="jumlah_ok" name="jumlah_ok" required>
+            <input type="text" class="form-control" id="jumlah_ok" name="jumlah_ok" required>
         </div>
         <div class="col-md-4">
             <label for="jumlah_ng" class="form-label">Jumlah NG</label>
-            <input type="number" class="form-control" id="jumlah_ng" name="jumlah_ng" required>
+            <input type="text" class="form-control" id="jumlah_ng" name="jumlah_ng" required>
         </div>
     </div>
     
@@ -837,7 +882,7 @@ if (isset($_GET['detail'])) {
             <thead>
                 <tr>
                     <th class="border-0">No</th>
-                    <th class="border-0">Tanggal</th>
+                    <th class="border-0">Nama Part</th>
                     <th class="border-0">Jam Start</th>
                     <th class="border-0">Jam Finish</th>
                     <th class="border-0">M/C Name</th>
@@ -849,13 +894,17 @@ if (isset($_GET['detail'])) {
             </thead>
             <tbody>
                 <?php
-                $sql = "SELECT t.*, p.Proses FROM trial t JOIN proses p ON t.id_proses = p.id_proses";
+                $sql = "SELECT t.*, a.nama_part, p.Proses  
+                FROM trial t 
+                JOIN proses p ON t.id_proses = p.id_proses 
+                JOIN data_part a ON t.id_part = a.id_part";
+        
                 $result = $conn->query($sql);
                 $no = 1;
                 while ($row = $result->fetch_assoc()) {
                     echo '<tr>';
                     echo '<td>' . $no++ . '</td>';
-                    echo '<td>' . $row['tanggal'] . '</td>';
+                    echo '<td>' . $row['nama_part'] . '</td>';
                     echo '<td>' . $row['jam_start'] . '</td>';
                     echo '<td>' . $row['jam_finish'] . '</td>';
                     echo '<td>' . $row['mc_name'] . '</td>';
