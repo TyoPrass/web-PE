@@ -95,11 +95,9 @@ if (isset($_POST['submit'])) {
     $problem_tool = $_POST['problem_tool'];
     $analisa_sebab_tool = $_POST['analisa_sebab_tool'];
     $counter_measure_tool = $_POST['counter_measure_tool'];
-
     $pic_tool = $_POST['pic_tool'];
     $target_tool = $_POST['target_tool'];
     $keterangan_tool = $_POST['keterangan_tool'];
-    
     $problem_part = $_POST['problem_part'];
     $analisa_sebab_part = $_POST['analisa_sebab_part'];
     $counter_measure_part = $_POST['counter_measure_part'];
@@ -111,8 +109,6 @@ if (isset($_POST['submit'])) {
     $id_proses = $_POST['id_proses'];
     $id_part = $_POST['id_part'];
     $id_customer = $_POST['id_customer'];
-
-    // Tambahan kolom baru
     $qty_trial = $_POST['qty_trial'];
     $jumlah_ok = $_POST['jumlah_ok'];
     $jumlah_ng = $_POST['jumlah_ng'];
@@ -125,13 +121,20 @@ if (isset($_POST['submit'])) {
     $diketahui = $_POST['diketahui'];
     $peserta = $_POST['peserta'];
 
+    // Tambahan kolom baru
+    $part_no = $_POST['part_no'];
+    $project = $_POST['project'];
+    $mat_spec = $_POST['mat_spec'];
+    $mat_size = $_POST['mat_size'];
+
     // Query INSERT dengan kolom tambahan
     $sql = "INSERT INTO trial 
         (tanggal, jam_start, jam_finish, trial, mc_name, kapasitas, cush_prec, pin_cus_qtt, die_height, die_dim, 
         problem_tool, analisa_sebab_tool, counter_measure_tool, pic_tool, target_tool, keterangan_tool, problem_part, analisa_sebab_part, 
         counter_measure_part, PIC, target, keterangan, kelengkapan_dies, accuracy_part, id_proses, id_part, id_customer, 
-        qty_trial, jumlah_ok, jumlah_ng, visual, dimensi, fungsi, judgement, dibuat, diperiksa, diketahui, peserta) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        qty_trial, jumlah_ok, jumlah_ng, visual, dimensi, fungsi, judgement, dibuat, diperiksa, diketahui, peserta, 
+        part_no, project, mat_spec, mat_size) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     // Persiapkan statement
     $stmt = $conn->prepare($sql);
@@ -142,7 +145,7 @@ if (isset($_POST['submit'])) {
 
     // Bind parameters (sesuai jumlah dan tipe data)
     $stmt->bind_param(
-        "sssssiiiiisssssssssssssiiiiissssssssss",
+        "sssssiiiiisssssssssssssiiiiissssssssssssss",
         $tanggal, $jam_start, $jam_finish, $trial, $mc_name, 
         $kapasitas, $cush_prec, $pin_cus_qtt, $die_height, $die_dim, 
         $problem_tool, $analisa_sebab_tool, $counter_measure_tool, 
@@ -151,7 +154,8 @@ if (isset($_POST['submit'])) {
         $PIC, $target, $keterangan, $kelengkapan_dies, $accuracy_part, 
         $id_proses, $id_part, $id_customer,
         $qty_trial, $jumlah_ok, $jumlah_ng, $visual, $dimensi, $fungsi, $judgement,
-        $dibuat, $diperiksa, $diketahui, $peserta
+        $dibuat, $diperiksa, $diketahui, $peserta,
+        $part_no, $project, $mat_spec, $mat_size
     );
 
     // Eksekusi statement
@@ -284,139 +288,163 @@ if (isset($_GET['detail'])) {
                                                 <div class="mb-3">
                                                     <h6 class="text-uppercase fw-bold">Trial Information</h6>
                                                     <table class="table table-sm">
-                                                        <tr>
-                                                            <th>Tanggal</th>
-                                                            <td>: <?php echo htmlspecialchars($detail_data['tanggal']); ?></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Jam Start</th>
-                                                            <td>: <?php echo htmlspecialchars($detail_data['jam_start']); ?></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Jam Finish</th>
-                                                            <td>: <?php echo htmlspecialchars($detail_data['jam_finish']); ?></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>M/C Name</th>
-                                                            <td>: <?php echo htmlspecialchars($detail_data['mc_name']); ?></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Trial</th>
-                                                            <td>: <?php echo htmlspecialchars($detail_data['trial']); ?></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Kapasitas</th>
-                                                            <td>: <?php echo htmlspecialchars($detail_data['kapasitas']); ?></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Cush Prec</th>
-                                                            <td>: <?php echo htmlspecialchars($detail_data['cush_prec']); ?></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Pin Cus Qtt</th>
-                                                            <td>: <?php echo htmlspecialchars($detail_data['pin_cus_qtt']); ?></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Die Height</th>
-                                                            <td>: <?php echo htmlspecialchars($detail_data['die_height']); ?></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Die Dim</th>
-                                                            <td>: <?php echo htmlspecialchars($detail_data['die_dim']); ?></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Problem Tool</th>
-                                                            <td>: <?php echo htmlspecialchars($detail_data['problem_tool']); ?></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Analisa Sebab Tool</th>
-                                                            <td>: <?php echo htmlspecialchars($detail_data['analisa_sebab_tool']); ?></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Counter Measure Tool</th>
-                                                            <td>: <?php echo htmlspecialchars($detail_data['counter_measure_tool']); ?></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Problem Part</th>
-                                                            <td>: <?php echo htmlspecialchars($detail_data['problem_part']); ?></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Analisa Sebab Part</th>
-                                                            <td>: <?php echo htmlspecialchars($detail_data['analisa_sebab_part']); ?></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Counter Measure Part</th>
-                                                            <td>: <?php echo htmlspecialchars($detail_data['counter_measure_part']); ?></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>PIC</th>
-                                                            <td>: <?php echo htmlspecialchars($detail_data['PIC']); ?></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Target</th>
-                                                            <td>: <?php echo htmlspecialchars($detail_data['target']); ?></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Keterangan</th>
-                                                            <td>: <?php echo htmlspecialchars($detail_data['keterangan']); ?></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Kelengkapan Dies</th>
-                                                            <td>: <?php echo htmlspecialchars($detail_data['kelengkapan_dies']); ?></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Accuracy Part</th>
-                                                            <td>: <?php echo htmlspecialchars($detail_data['accuracy_part']); ?></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Qty Trial/Total Produksi</th>
-                                                            <td>: <?php echo htmlspecialchars($detail_data['qty_trial']); ?></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Jumlah OK</th>
-                                                            <td>: <?php echo htmlspecialchars($detail_data['jumlah_ok']); ?></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Jumlah NG</th>
-                                                            <td>: <?php echo htmlspecialchars($detail_data['jumlah_ng']); ?></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Visual</th>
-                                                            <td>: <?php echo htmlspecialchars($detail_data['visual']); ?></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Dimensi</th>
-                                                            <td>: <?php echo htmlspecialchars($detail_data['dimensi']); ?></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Fungsi</th>
-                                                            <td>: <?php echo htmlspecialchars($detail_data['fungsi']); ?></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Judgement</th>
-                                                            <td>: <?php echo htmlspecialchars($detail_data['judgement']); ?></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Dibuat Oleh</th>
-                                                            <td>: <?php echo htmlspecialchars($detail_data['dibuat']); ?></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Diperiksa Oleh</th>
-                                                            <td>: <?php echo htmlspecialchars($detail_data['diperiksa']); ?></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Diketahui Oleh</th>
-                                                            <td>: <?php echo htmlspecialchars($detail_data['diketahui']); ?></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Peserta</th>
-                                                            <td>: <?php echo htmlspecialchars($detail_data['peserta']); ?></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>Part No</th>
-                                                            <td>: <?php echo htmlspecialchars($detail_data['part_no']); ?></td>
-                                                        </tr>
-                                                    </table>
+                                                    <tr>
+                                                        <th>Nama Customer</th>
+                                                        <td>: <?php echo htmlspecialchars($detail_data['nama_customer']); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Nama Part</th>
+                                                        <td>: <?php echo htmlspecialchars($detail_data['nama_part']); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Proses</th>
+                                                        <td>: <?php echo htmlspecialchars($detail_data['Proses']); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Part No</th>
+                                                        <td>: <?php echo htmlspecialchars($detail_data['part_no']); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Nama Project</th>
+                                                        <td>: <?php echo htmlspecialchars($detail_data['project']); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Mat Spec</th>
+                                                        <td>: <?php echo htmlspecialchars($detail_data['mat_spec']); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Mat Size</th>
+                                                        <td>: <?php echo htmlspecialchars($detail_data['mat_size']); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Trial</th>
+                                                        <td>: <?php echo htmlspecialchars($detail_data['trial']); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Tanggal</th>
+                                                        <td>: <?php echo htmlspecialchars($detail_data['tanggal']); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Jam Start</th>
+                                                        <td>: <?php echo htmlspecialchars($detail_data['jam_start']); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Jam Finish</th>
+                                                        <td>: <?php echo htmlspecialchars($detail_data['jam_finish']); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>M/C Name</th>
+                                                        <td>: <?php echo htmlspecialchars($detail_data['mc_name']); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Kapasitas</th>
+                                                        <td>: <?php echo htmlspecialchars($detail_data['kapasitas']); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Cush Prec</th>
+                                                        <td>: <?php echo htmlspecialchars($detail_data['cush_prec']); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Pin Cus Qtt</th>
+                                                        <td>: <?php echo htmlspecialchars($detail_data['pin_cus_qtt']); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Die Height</th>
+                                                        <td>: <?php echo htmlspecialchars($detail_data['die_height']); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Die Dim</th>
+                                                        <td>: <?php echo htmlspecialchars($detail_data['die_dim']); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Problem Tool</th>
+                                                        <td>: <?php echo htmlspecialchars($detail_data['problem_tool']); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Analisa Sebab Tool</th>
+                                                        <td>: <?php echo htmlspecialchars($detail_data['analisa_sebab_tool']); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Counter Measure Tool</th>
+                                                        <td>: <?php echo htmlspecialchars($detail_data['counter_measure_tool']); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Problem Part</th>
+                                                        <td>: <?php echo htmlspecialchars($detail_data['problem_part']); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Analisa Sebab Part</th>
+                                                        <td>: <?php echo htmlspecialchars($detail_data['analisa_sebab_part']); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Counter Measure Part</th>
+                                                        <td>: <?php echo htmlspecialchars($detail_data['counter_measure_part']); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>PIC</th>
+                                                        <td>: <?php echo htmlspecialchars($detail_data['PIC']); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Target</th>
+                                                        <td>: <?php echo htmlspecialchars($detail_data['target']); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Keterangan</th>
+                                                        <td>: <?php echo htmlspecialchars($detail_data['keterangan']); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Kelengkapan Dies</th>
+                                                        <td>: <?php echo htmlspecialchars($detail_data['kelengkapan_dies']); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Accuracy Part</th>
+                                                        <td>: <?php echo htmlspecialchars($detail_data['accuracy_part']); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Qty Trial/Total Produksi</th>
+                                                        <td>: <?php echo htmlspecialchars($detail_data['qty_trial']); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Jumlah OK</th>
+                                                        <td>: <?php echo htmlspecialchars($detail_data['jumlah_ok']); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Jumlah NG</th>
+                                                        <td>: <?php echo htmlspecialchars($detail_data['jumlah_ng']); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Visual</th>
+                                                        <td>: <?php echo htmlspecialchars($detail_data['visual']); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Dimensi</th>
+                                                        <td>: <?php echo htmlspecialchars($detail_data['dimensi']); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Fungsi</th>
+                                                        <td>: <?php echo htmlspecialchars($detail_data['fungsi']); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Judgement</th>
+                                                        <td>: <?php echo htmlspecialchars($detail_data['judgement']); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Dibuat Oleh</th>
+                                                        <td>: <?php echo htmlspecialchars($detail_data['dibuat']); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Diperiksa Oleh</th>
+                                                        <td>: <?php echo htmlspecialchars($detail_data['diperiksa']); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Diketahui Oleh</th>
+                                                        <td>: <?php echo htmlspecialchars($detail_data['diketahui']); ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Peserta</th>
+                                                        <td>: <?php echo htmlspecialchars($detail_data['peserta']); ?></td>
+                                                    </tr>
+                                                </table>
                                                 </div>
                                             </div>
                                         </div>
@@ -715,10 +743,71 @@ if (isset($_GET['detail'])) {
                     ?>
                 </select>
             </div>
+            <!-- Part No -->
+            <div class="mb-3">
+                <label for="part_no" class="form-label">Part No</label>
+                <select class="form-select" id="part_no" name="part_no" required>
+                    <option value="">Select Part No</option>
+                    <?php
+                    $sql = "SELECT DISTINCT part_no FROM proses";
+                    $result = $conn->query($sql);
+                    while ($row = $result->fetch_assoc()) {
+                        echo '<option value="' . htmlspecialchars($row['part_no']) . '">' . htmlspecialchars($row['part_no']) . '</option>';
+                    }
+                    ?>
+                </select>
+            </div>
+
+            <!-- Nama Project -->
+            <div class="mb-3">
+                <label for="project" class="form-label">Nama Project</label>
+                <select class="form-select" id="project" name="project" required>
+                    <option value="">Nama Project</option>
+                    <?php
+                    $sql = "SELECT DISTINCT project FROM customer";
+                    $result = $conn->query($sql);
+                    while ($row = $result->fetch_assoc()) {
+                        echo '<option value="' . htmlspecialchars($row['project']) . '">' . htmlspecialchars($row['project']) . '</option>';
+                    }
+                    ?>
+                </select>
+            </div>
+
+            <!-- Mat Spec -->
+            <div class="mb-3">
+                <label for="mat_spec" class="form-label">Mat Spec</label>
+                <select class="form-select" id="mat_spec" name="mat_spec" required>
+                    <option value="">Mat Spec</option>
+                    <?php
+                    $sql = "SELECT DISTINCT mat_spec FROM proses";
+                    $result = $conn->query($sql);
+                    while ($row = $result->fetch_assoc()) {
+                        echo '<option value="' . htmlspecialchars($row['mat_spec']) . '">' . htmlspecialchars($row['mat_spec']) . '</option>';
+                    }
+                    ?>
+                </select>
+            </div>
+
+            <!-- Mat Size -->
+            <div class="mb-3">
+                <label for="mat_size" class="form-label">Mat Size</label>
+                <select class="form-select" id="mat_size" name="mat_size" required>
+                    <option value="">Mat Size</option>
+                    <?php
+                    $sql = "SELECT DISTINCT mat_size FROM proses";
+                    $result = $conn->query($sql);
+                    while ($row = $result->fetch_assoc()) {
+                        echo '<option value="' . htmlspecialchars($row['mat_size']) . '">' . htmlspecialchars($row['mat_size']) . '</option>';
+                    }
+                    ?>
+                </select>
+            </div>
+
+
+
         </div>
     </div>
 
-        
     <div class="card mb-3">
         <div class="card-body">
             <h5 class="card-title">Trial</h5>
