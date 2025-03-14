@@ -122,7 +122,9 @@ if (isset($_POST['submit'])) {
     $pin_cus_qtt = $_POST['pin_cus_qtt'];
     $die_height = $_POST['die_height'];
     $die_dim = $_POST['die_dim'];
+    // Get the problem_tool content from Quill editor
     $problem_tool = $_POST['problem_tool'];
+    // batas tes
     $analisa_sebab_tool = $_POST['analisa_sebab_tool'];
     $counter_measure_tool = $_POST['counter_measure_tool'];
     $pic_tool = $_POST['pic_tool'];
@@ -1243,29 +1245,20 @@ var quill = new Quill('#snow-editor', {
             ['bold', 'italic', 'underline'],
             [{ 'color': [] }, { 'background': [] }],
             [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-            ['image', 'link'],
-            ['clean']
+            ['image', 'clean']
         ]
     },
     placeholder: 'Write problem tool description...'
 });
 
-// Handle form submission
-document.querySelector('form').addEventListener('submit', function(e) {
-    // Get Quill contents
-    var problemToolContent = quill.root.innerHTML;
-    // Set the content to hidden input
-    document.getElementById('problem_tool_input').value = problemToolContent;
-});
-
-// Handle image upload
-quill.getModule('toolbar').addHandler('image', function() {
+// Handle image upload through paste or drag-and-drop
+quill.getModule('toolbar').addHandler('image', () => {
     const input = document.createElement('input');
     input.setAttribute('type', 'file');
     input.setAttribute('accept', 'image/*');
     input.click();
 
-    input.onchange = async () => {
+    input.onchange = () => {
         const file = input.files[0];
         if (file) {
             const reader = new FileReader();
@@ -1276,6 +1269,12 @@ quill.getModule('toolbar').addHandler('image', function() {
             reader.readAsDataURL(file);
         }
     };
+});
+
+// Update hidden input before form submission
+document.querySelector('form').addEventListener('submit', function(e) {
+    var content = quill.root.innerHTML;
+    document.getElementById('problem_tool').value = content;
 });
 
 </script>
