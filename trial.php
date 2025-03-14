@@ -293,6 +293,28 @@ if (isset($_GET['detail'])) {
     margin: 0;
     font-weight: 500;
 }
+
+.ql-editor {
+    min-height: 200px;
+    background: #fff;
+}
+
+.ql-editor img {
+    max-width: 100%;
+    height: auto;
+}
+
+.ql-toolbar.ql-snow {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+.ql-container.ql-snow {
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+
 </style>
 </head>
 <body class="loading" data-layout-color="light" data-leftbar-theme="dark" data-layout-mode="fluid" data-rightbar-onstart="true">
@@ -989,19 +1011,24 @@ if (isset($_GET['detail'])) {
 
     <div class="card mb-3">
         <div class="card-body">
-            <h5 class="card-title">Problem Tools</h5>
-            <!-- HTML -->
-            <div id="snow-editor" style="height: 300px;">
-                
-            </div>
-
-
-
-            <div class="mb-3">
-                <label for="problem_tool" class="form-label">Problem Tool</label>
-                <input type="text" class="form-control" id="problem_tool" name="problem_tool" required>
-            </div>
             
+                        <!-- Uji Coba -->
+
+                            <div class="card-body">
+                                <h5 class="card-title">Problem Tools</h5>
+                                <div id="snow-editor" style="height: 300px;">
+                                </div>
+                                <!-- Add hidden input to store Quill content -->
+                                <input type="hidden" name="problem_tool" id="problem_tool">
+                            </div>
+
+<!-- Uji Coba 1 -->
+<!-- 
+    <div class="mb-3">
+                <label for="problem_tool" class="form-label">Problem Tool</label>
+                <textarea id="problem_tool" name="problem_tool"></textarea>
+            </div>
+             -->
             <!-- batas -->
             <div class="mb-3">
                 <label for="analisa_sebab_tool" class="form-label">Analisa Sebab Tool</label>
@@ -1206,6 +1233,51 @@ document.getElementById('hide-insert-form').addEventListener('click', function()
     document.getElementById('table-container').style.display = 'block';
     document.getElementById('show-insert-form').style.display = 'block';
 });
+
+// Initialize Quill editor
+var quill = new Quill('#snow-editor', {
+    theme: 'snow',
+    modules: {
+        toolbar: [
+            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+            ['bold', 'italic', 'underline'],
+            [{ 'color': [] }, { 'background': [] }],
+            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+            ['image', 'link'],
+            ['clean']
+        ]
+    },
+    placeholder: 'Write problem tool description...'
+});
+
+// Handle form submission
+document.querySelector('form').addEventListener('submit', function(e) {
+    // Get Quill contents
+    var problemToolContent = quill.root.innerHTML;
+    // Set the content to hidden input
+    document.getElementById('problem_tool_input').value = problemToolContent;
+});
+
+// Handle image upload
+quill.getModule('toolbar').addHandler('image', function() {
+    const input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.setAttribute('accept', 'image/*');
+    input.click();
+
+    input.onchange = async () => {
+        const file = input.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const range = quill.getSelection(true);
+                quill.insertEmbed(range.index, 'image', e.target.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+});
+
 </script>
 </div>
 </div>
