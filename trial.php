@@ -82,6 +82,36 @@ if (isset($_POST['update'])) {
 
 if (isset($_POST['submit'])) {
     // Ambil data dari form
+    $id_customer = $_POST['id_customer'];
+    $id_part = $_POST['id_part'];
+    $id_proses = $_POST['id_proses'];
+
+    // Fetch the corresponding names based on the selected IDs
+    $sql_customer = "SELECT nama_customer FROM customer WHERE id_customer = ?";
+    $stmt_customer = $conn->prepare($sql_customer);
+    $stmt_customer->bind_param("i", $id_customer);
+    $stmt_customer->execute();
+    $result_customer = $stmt_customer->get_result();
+    $nama_customer = $result_customer->fetch_assoc()['nama_customer'];
+    $stmt_customer->close();
+
+    $sql_part = "SELECT nama_part FROM data_part WHERE id_part = ?";
+    $stmt_part = $conn->prepare($sql_part);
+    $stmt_part->bind_param("i", $id_part);
+    $stmt_part->execute();
+    $result_part = $stmt_part->get_result();
+    $nama_part = $result_part->fetch_assoc()['nama_part'];
+    $stmt_part->close();
+
+    $sql_proses = "SELECT Proses FROM proses WHERE id_proses = ?";
+    $stmt_proses = $conn->prepare($sql_proses);
+    $stmt_proses->bind_param("i", $id_proses);
+    $stmt_proses->execute();
+    $result_proses = $stmt_proses->get_result();
+    $Proses = $result_proses->fetch_assoc()['Proses'];
+    $stmt_proses->close();
+
+    // Ambil data lainnya dari form
     $tanggal = $_POST['tanggal'];
     $jam_start = $_POST['jam_start'];
     $jam_finish = $_POST['jam_finish'];
@@ -106,9 +136,6 @@ if (isset($_POST['submit'])) {
     $keterangan = $_POST['keterangan'];
     $kelengkapan_dies = $_POST['kelengkapan_dies'];
     $accuracy_part = $_POST['accuracy_part'];
-    $id_proses = $_POST['id_proses'];
-    $id_part = $_POST['id_part'];
-    $id_customer = $_POST['id_customer'];
     $qty_trial = $_POST['qty_trial'];
     $jumlah_ok = $_POST['jumlah_ok'];
     $jumlah_ng = $_POST['jumlah_ng'];
@@ -133,8 +160,8 @@ if (isset($_POST['submit'])) {
         problem_tool, analisa_sebab_tool, counter_measure_tool, pic_tool, target_tool, keterangan_tool, problem_part, analisa_sebab_part, 
         counter_measure_part, PIC, target, keterangan, kelengkapan_dies, accuracy_part, id_proses, id_part, id_customer, 
         qty_trial, jumlah_ok, jumlah_ng, visual, dimensi, fungsi, judgement, dibuat, diperiksa, diketahui, peserta, 
-        part_no, project, mat_spec, mat_size) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        part_no, project, mat_spec, mat_size, nama_customer, nama_part, Proses) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     // Persiapkan statement
     $stmt = $conn->prepare($sql);
@@ -145,7 +172,7 @@ if (isset($_POST['submit'])) {
 
     // Bind parameters (sesuai jumlah dan tipe data)
     $stmt->bind_param(
-        "sssssiiiiisssssssssssssiiiiissssssssssssss",
+        "sssssiiiiisssssssssssssiiiiisssssssssssssssss",
         $tanggal, $jam_start, $jam_finish, $trial, $mc_name, 
         $kapasitas, $cush_prec, $pin_cus_qtt, $die_height, $die_dim, 
         $problem_tool, $analisa_sebab_tool, $counter_measure_tool, 
@@ -155,7 +182,8 @@ if (isset($_POST['submit'])) {
         $id_proses, $id_part, $id_customer,
         $qty_trial, $jumlah_ok, $jumlah_ng, $visual, $dimensi, $fungsi, $judgement,
         $dibuat, $diperiksa, $diketahui, $peserta,
-        $part_no, $project, $mat_spec, $mat_size
+        $part_no, $project, $mat_spec, $mat_size,
+        $nama_customer, $nama_part, $Proses
     );
 
     // Eksekusi statement
@@ -212,6 +240,9 @@ if (isset($_GET['detail'])) {
     <link rel="shortcut icon" href="assets/images/favicon.ico">
     <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
     <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" id="app-style"/>
+    <!-- Quill css -->
+    <link href="assets/css/vendor/quill.core.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/vendor/quill.snow.css" rel="stylesheet" type="text/css" />
 
     <style>
 .timeline {
@@ -460,80 +491,215 @@ if (isset($_GET['detail'])) {
                                     <?php elseif (isset($_GET['edit'])): ?>
                                         <!-- Edit Form -->
                                     <!-- Edit Form -->
-                                        <form action="trial.php" method="post">
-                                            <input type="hidden" name="id_trial" value="<?php echo htmlspecialchars($edit_data['id_trial']); ?>">
-                                            <input type="hidden" name="update" value="true">
-                                            
-                                            <div class="mb-3">
-                                                <label for="tanggal" class="form-label">Tanggal</label>
-                                                <input type="date" class="form-control" id="tanggal" name="tanggal" value="<?php echo htmlspecialchars($edit_data['tanggal']); ?>" required>
-                                            </div>
-                                            
-                                            <div class="mb-3">
-                                                <label for="jam_start" class="form-label">Jam Start</label>
-                                                <input type="time" class="form-control" id="jam_start" name="jam_start" value="<?php echo htmlspecialchars($edit_data['jam_start']); ?>" required>
-                                            </div>
-                                            
-                                            <div class="mb-3">
-                                                <label for="jam_finish" class="form-label">Jam Finish</label>
-                                                <input type="time" class="form-control" id="jam_finish" name="jam_finish" value="<?php echo htmlspecialchars($edit_data['jam_finish']); ?>" required>
-                                            </div>
+                                    <form action="trial.php" method="post" id="edit-form">
+                                        <input type="hidden" name="id_trial" value="<?php echo htmlspecialchars($edit_data['id_trial']); ?>">
+                                        <input type="hidden" name="update" value="true">
 
-                                            <div class="mb-3">
-                                                <label for="trial" class="form-label">M/C Name</label>
-                                                <input type="text" class="form-control" id="mc_name" name="mc_name" value="<?php echo htmlspecialchars($edit_data['mc_name']); ?>" required>
-                                            </div>
-                                            
-                                            <div class="mb-3">
-                                                <label for="mc_name" class="form-label">Trial</label>
-                                                <input type="text" class="form-control" id="trial" name="trial" value="<?php echo htmlspecialchars($edit_data['trial']); ?>" required>
-                                            </div>
+                                        <div class="card mb-3">
+                                                        <div class="card-body">
+                                                            <div class="mb-3">
+                                                                <label for="id_customer" class="form-label">Nama Customer</label>
+                                                                <select class="form-select" id="id_customer" name="id_customer" required>
+                                                                    <option value="">Nama Customer</option>
+                                                                    <?php
+                                                                    $sql = "SELECT id_customer, nama_customer FROM customer";
+                                                                    $result = $conn->query($sql);
+                                                                    while ($row = $result->fetch_assoc()) {
+                                                                        $selected = ($edit_data['id_customer'] == $row['id_customer']) ? 'selected' : '';
+                                                                        echo '<option value="' . $row['id_customer'] . '" ' . $selected . '>' . $row['nama_customer'] . '</option>';
+                                                                    }
+                                                                    ?>
+                                                                </select>
+                                                            </div>
 
-                                            <div class="mb-3">
-                                                <label for="trial" class="form-label">Trial</label>
-                                                <input type="text" class="form-control" id="trial" name="trial" value="<?php echo htmlspecialchars($edit_data['trial']); ?>" required>
-                                            </div>
-                                            
-                                            <div class="mb-3">
-                                                <label for="kapasitas" class="form-label">Kapasitas</label>
-                                                <input type="text" class="form-control" id="kapasitas" name="kapasitas" value="<?php echo htmlspecialchars($edit_data['kapasitas']); ?>" required>
-                                            </div>
-                                            
-                                            <div class="mb-3">
-                                                <label for="cush_prec" class="form-label">Cush Prec</label>
-                                                <input type="text" class="form-control" id="cush_prec" name="cush_prec" value="<?php echo htmlspecialchars($edit_data['cush_prec']); ?>" required>
-                                            </div>
-                                            
-                                            <div class="mb-3">
-                                                <label for="pin_cus_qtt" class="form-label">Pin Cus Qtt</label>
-                                                <input type="text" class="form-control" id="pin_cus_qtt" name="pin_cus_qtt" value="<?php echo htmlspecialchars($edit_data['pin_cus_qtt']); ?>" required>
-                                            </div>
-                                            
-                                            <div class="mb-3">
-                                                <label for="die_height" class="form-label">Die Height</label>
-                                                <input type="text" class="form-control" id="die_height" name="die_height" value="<?php echo htmlspecialchars($edit_data['die_height']); ?>" required>
-                                            </div>
-                                            
-                                            <div class="mb-3">
-                                                <label for="die_dim" class="form-label">Die Dim</label>
-                                                <input type="text" class="form-control" id="die_dim" name="die_dim" value="<?php echo htmlspecialchars($edit_data['die_dim']); ?>" required>
-                                            </div>
-                                            
-                                            <div class="mb-3">
-                                                <label for="problem_tool" class="form-label">Problem Tool</label>
-                                                <input type="text" class="form-control" id="problem_tool" name="problem_tool" value="<?php echo htmlspecialchars($edit_data['problem_tool']); ?>" required>
-                                            </div>
-                                            
-                                            <div class="mb-3">
-                                                <label for="analisa_sebab_tool" class="form-label">Analisa Sebab Tool</label>
-                                                <input type="text" class="form-control" id="analisa_sebab_tool" name="analisa_sebab_tool" value="<?php echo htmlspecialchars($edit_data['analisa_sebab_tool']); ?>" required>
-                                            </div>
-                                            
-                                            <div class="mb-3">
-                                                <label for="counter_measure_tool" class="form-label">Counter Measure Tool</label>
-                                                <input type="text" class="form-control" id="counter_measure_tool" name="counter_measure_tool" value="<?php echo htmlspecialchars($edit_data['counter_measure_tool']); ?>" required>
-                                            </div>
-                                            
+                                                            <div class="mb-3">
+                                                                <label for="id_part" class="form-label">Nama Part</label>
+                                                                <select class="form-select" id="id_part" name="id_part" required>
+                                                                    <option value="">Nama Part</option>
+                                                                    <?php
+                                                                    $sql = "SELECT id_part, nama_part FROM data_part";
+                                                                    $result = $conn->query($sql);
+                                                                    while ($row = $result->fetch_assoc()) {
+                                                                        $selected = ($edit_data['id_part'] == $row['id_part']) ? 'selected' : '';
+                                                                        echo '<option value="' . $row['id_part'] . '" ' . $selected . '>' . $row['nama_part'] . '</option>';
+                                                                    }
+                                                                    ?>
+                                                                </select>
+                                                            </div>
+
+                                                            <div class="mb-3">
+                                                                <label for="id_proses" class="form-label">Proses</label>
+                                                                <select class="form-select" id="id_proses" name="id_proses" required>
+                                                                    <option value="">Select Proses</option>
+                                                                    <?php
+                                                                    $sql = "SELECT id_proses, Proses FROM proses";
+                                                                    $result = $conn->query($sql);
+                                                                    while ($row = $result->fetch_assoc()) {
+                                                                        $selected = ($edit_data['id_proses'] == $row['id_proses']) ? 'selected' : '';
+                                                                        echo '<option value="' . $row['id_proses'] . '" ' . $selected . '>' . $row['Proses'] . '</option>';
+                                                                    }
+                                                                    ?>
+                                                                </select>
+                                                            </div>
+
+                                                            <div class="mb-3">
+                                                                <label for="part_no" class="form-label">Part No</label>
+                                                                <input type="text" class="form-control" id="part_no" name="part_no" value="<?php echo htmlspecialchars($edit_data['part_no']); ?>" required>
+                                                            </div>
+
+                                                            <div class="mb-3">
+                                                                <label for="project" class="form-label">Nama Project</label>
+                                                                <input type="text" class="form-control" id="project" name="project" value="<?php echo htmlspecialchars($edit_data['project']); ?>" required>
+                                                            </div>
+
+                                                            <div class="mb-3">
+                                                                <label for="mat_spec" class="form-label">Mat Spec</label>
+                                                                <input type="text" class="form-control" id="mat_spec" name="mat_spec" value="<?php echo htmlspecialchars($edit_data['mat_spec']); ?>" required>
+                                                            </div>
+
+                                                            <div class="mb-3">
+                                                                <label for="mat_size" class="form-label">Mat Size</label>
+                                                                <input type="text" class="form-control" id="mat_size" name="mat_size" value="<?php echo htmlspecialchars($edit_data['mat_size']); ?>" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="card mb-3">
+                                                        <div class="card-body">
+                                                            <h5 class="card-title">Trial</h5>
+                                                            <div class="mb-3">
+                                                                <label for="trial" class="form-label">Trial</label>
+                                                                <input type="text" class="form-control" id="trial" name="trial" value="<?php echo htmlspecialchars($edit_data['trial']); ?>" required>
+                                                            </div>
+
+                                                            <div class="mb-3">
+                                                                <label for="tanggal" class="form-label">Tanggal</label>
+                                                                <input type="date" class="form-control" id="tanggal" name="tanggal" value="<?php echo htmlspecialchars($edit_data['tanggal']); ?>" required>
+                                                            </div>
+
+                                                            <div class="mb-3">
+                                                                <label for="jam_start" class="form-label">Jam Start</label>
+                                                                <input type="time" class="form-control" id="jam_start" name="jam_start" value="<?php echo htmlspecialchars($edit_data['jam_start']); ?>" required>
+                                                            </div>
+
+                                                            <div class="mb-3">
+                                                                <label for="jam_finish" class="form-label">Jam Finish</label>
+                                                                <input type="time" class="form-control" id="jam_finish" name="jam_finish" value="<?php echo htmlspecialchars($edit_data['jam_finish']); ?>" required>
+                                                            </div>
+
+                                                            <div class="mb-3">
+                                                                <label for="mc_name" class="form-label">M/C Name</label>
+                                                                <input type="text" class="form-control" id="mc_name" name="mc_name" value="<?php echo htmlspecialchars($edit_data['mc_name']); ?>" required>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <label for="kapasitas" class="form-label">Kapasitas</label>
+                                                                    <input type="text" class="form-control" id="kapasitas" name="kapasitas" value="<?php echo htmlspecialchars($edit_data['kapasitas']); ?>" required>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <label for="cush_prec" class="form-label">Cush Prec</label>
+                                                                    <input type="text" class="form-control" id="cush_prec" name="cush_prec" value="<?php echo htmlspecialchars($edit_data['cush_prec']); ?>" required>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <label for="die_dim" class="form-label">Die Dim</label>
+                                                                    <input type="text" class="form-control" id="die_dim" name="die_dim" value="<?php echo htmlspecialchars($edit_data['die_dim']); ?>" required>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <label for="pin_cus_qtt" class="form-label">Pin Cus Qtt</label>
+                                                                    <input type="text" class="form-control" id="pin_cus_qtt" name="pin_cus_qtt" value="<?php echo htmlspecialchars($edit_data['pin_cus_qtt']); ?>" required>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <label for="die_height" class="form-label">Die Height</label>
+                                                                    <input type="text" class="form-control" id="die_height" name="die_height" value="<?php echo htmlspecialchars($edit_data['die_height']); ?>" required>
+                                                                </div>
+
+                                                                <div class="mb-3">
+                                                                    <label for="qty_trial" class="form-label">Qty Trial/Total Produksi</label>
+                                                                    <input type="text" class="form-control" id="qty_trial" name="qty_trial" value="<?php echo htmlspecialchars($edit_data['qty_trial']); ?>" required>
+                                                                </div>
+
+                                                                <div class="row">
+                                                                    <div class="col-md-4">
+                                                                        <label for="jumlah_ok" class="form-label">Jumlah OK</label>
+                                                                        <input type="text" class="form-control" id="jumlah_ok" name="jumlah_ok" value="<?php echo htmlspecialchars($edit_data['jumlah_ok']); ?>" required>
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <label for="jumlah_ng" class="form-label">Jumlah NG</label>
+                                                                        <input type="text" class="form-control" id="jumlah_ng" name="jumlah_ng" value="<?php echo htmlspecialchars($edit_data['jumlah_ng']); ?>" required>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="card mb-3">
+                                                        <div class="card-body">
+                                                            <h5 class="card-title">Problem Tools</h5>
+                                                            <!-- HTML -->
+                                                            <div id="snow-editor" style="height: 300px;">
+                                                                <h3><span class="ql-size-large">Hello World!</span></h3>
+                                                                <p><br></p>
+                                                                <h3>This is an simple editable area.</h3>
+                                                                <p><br></p>
+                                                                <ul>
+                                                                    <li>
+                                                                        Select a text to reveal the toolbar.
+                                                                    </li>
+                                                                    <li>
+                                                                        Edit rich document on-the-fly, so elastic!
+                                                                    </li>
+                                                                </ul>
+                                                                <p><br></p>
+                                                                <p>
+                                                                    End of simple area
+                                                                </p>
+                                                            </div>
+
+                                                            <div class="mb-3">
+                                                                <label for="problem_tool" class="form-label">Problem Tool</label>
+                                                                <input type="text" class="form-control" id="problem_tool" name="problem_tool" value="<?php echo htmlspecialchars($edit_data['problem_tool']); ?>" required>
+                                                            </div>
+
+                                                            <div class="mb-3">
+                                                                <label for="analisa_sebab_tool" class="form-label">Analisa Sebab Tool</label>
+                                                                <input type="text" class="form-control" id="analisa_sebab_tool" name="analisa_sebab_tool" value="<?php echo htmlspecialchars($edit_data['analisa_sebab_tool']); ?>" required>
+                                                            </div>
+
+                                                            <div class="mb-3">
+                                                                <label for="counter_measure_tool" class="form-label">Counter Measure Tool</label>
+                                                                <input type="text" class="form-control" id="counter_measure_tool" name="counter_measure_tool" value="<?php echo htmlspecialchars($edit_data['counter_measure_tool']); ?>" required>
+                                                            </div>
+
+                                                            <div class="mb-3">
+                                                                <label for="pic_tool" class="form-label">P.I.C</label>
+                                                                <input type="text" class="form-control" id="pic_tool" name="pic_tool" value="<?php echo htmlspecialchars($edit_data['pic_tool']); ?>" required>
+                                                            </div>
+
+                                                            <div class="mb-3">
+                                                                <label for="target_tool" class="form-label">Target</label>
+                                                                <input type="text" class="form-control" id="target_tool" name="target_tool" value="<?php echo htmlspecialchars($edit_data['target_tool']); ?>" required>
+                                                            </div>
+
+                                                            <div class="mb-3">
+                                                                <label for="keterangan_tool" class="form-label">Keterangan</label>
+                                                                <input type="text" class="form-control" id="keterangan_tool" name="keterangan_tool" value="<?php echo htmlspecialchars($edit_data['keterangan_tool']); ?>" required>
+                                                            </div>
+
+                                                            <div class="mb-3">
+                                                                <label for="kelengkapan_dies" class="form-label">Kelengkapan Dies</label>
+                                                                <input type="text" class="form-control" id="kelengkapan_dies" name="kelengkapan_dies" value="<?php echo htmlspecialchars($edit_data['kelengkapan_dies']); ?>" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                        <div class="card mb-3">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Problem Part</h5>
                                             <div class="mb-3">
                                                 <label for="problem_part" class="form-label">Problem Part</label>
                                                 <input type="text" class="form-control" id="problem_part" name="problem_part" value="<?php echo htmlspecialchars($edit_data['problem_part']); ?>" required>
@@ -553,88 +719,27 @@ if (isset($_GET['detail'])) {
                                                 <label for="PIC" class="form-label">PIC</label>
                                                 <input type="text" class="form-control" id="PIC" name="PIC" value="<?php echo htmlspecialchars($edit_data['PIC']); ?>" required>
                                             </div>
-                                            
+
                                             <div class="mb-3">
                                                 <label for="target" class="form-label">Target</label>
                                                 <input type="text" class="form-control" id="target" name="target" value="<?php echo htmlspecialchars($edit_data['target']); ?>" required>
                                             </div>
-                                            
+
                                             <div class="mb-3">
                                                 <label for="keterangan" class="form-label">Keterangan</label>
                                                 <input type="text" class="form-control" id="keterangan" name="keterangan" value="<?php echo htmlspecialchars($edit_data['keterangan']); ?>" required>
                                             </div>
-                                            
-                                            <div class="mb-3">
-                                                <label for="kelengkapan_dies" class="form-label">Kelengkapan Dies</label>
-                                                <input type="text" class="form-control" id="kelengkapan_dies" name="kelengkapan_dies" value="<?php echo htmlspecialchars($edit_data['kelengkapan_dies']); ?>" required>
-                                            </div>
-                                            
+
                                             <div class="mb-3">
                                                 <label for="accuracy_part" class="form-label">Accuracy Part</label>
                                                 <input type="text" class="form-control" id="accuracy_part" name="accuracy_part" value="<?php echo htmlspecialchars($edit_data['accuracy_part']); ?>" required>
                                             </div>
-                                            
-                                            <div class="mb-3">
-                                                <label for="id_proses" class="form-label">Proses</label>
-                                                <select class="form-select" id="id_proses" name="id_proses" required>
-                                                    <option value="">Select Proses</option>
-                                                    <?php
-                                                    $sql = "SELECT id_proses, Proses FROM proses";
-                                                    $result = $conn->query($sql);
-                                                    while ($row = $result->fetch_assoc()) {
-                                                        $selected = ($edit_data['id_proses'] == $row['id_proses']) ? 'selected' : '';
-                                                        echo '<option value="' . $row['id_proses'] . '" ' . $selected . '>' . $row['Proses'] . '</option>';
-                                                    }
-                                                    ?>
-                                                </select>
-                                            </div>
-                                            
-                                            <div class="mb-3">
-                                                <label for="id_part" class="form-label">Nama Part</label>
-                                                <select class="form-select" id="id_part" name="id_part" required>
-                                                    <option value="">Nama Part</option>
-                                                    <?php
-                                                    $sql = "SELECT id_part, nama_part FROM data_part";
-                                                    $result = $conn->query($sql);
-                                                    while ($row = $result->fetch_assoc()) {
-                                                        $selected = ($edit_data['id_part'] == $row['id_part']) ? 'selected' : '';
-                                                        echo '<option value="' . $row['id_part'] . '" ' . $selected . '>' . $row['nama_part'] . '</option>';
-                                                    }
-                                                    ?>
-                                                </select>
-                                            </div>
-                                            
-                                            <div class="mb-3">
-                                                <label for="id_customer" class="form-label">Nama Customer</label>
-                                                <select class="form-select" id="id_customer" name="id_customer" required>
-                                                    <option value="">Nama Customer</option>
-                                                    <?php
-                                                    $sql = "SELECT id_customer, nama_customer FROM customer";
-                                                    $result = $conn->query($sql);
-                                                    while ($row = $result->fetch_assoc()) {
-                                                        $selected = ($edit_data['id_customer'] == $row['id_customer']) ? 'selected' : '';
-                                                        echo '<option value="' . $row['id_customer'] . '" ' . $selected . '>' . $row['nama_customer'] . '</option>';
-                                                    }
-                                                    ?>
-                                                </select>
-                                            </div>
-                                            
-                                            <div class="mb-3">
-                                                <label for="qty_trial" class="form-label">Qty Trial/Total Produksi</label>
-                                                <input type="text" class="form-control" id="qty_trial" name="qty_trial" value="<?php echo htmlspecialchars($edit_data['qty_trial']); ?>" required>
-                                            </div>
-                                            
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <label for="jumlah_ok" class="form-label">Jumlah OK</label>
-                                                    <input type="text" class="form-control" id="jumlah_ok" name="jumlah_ok" value="<?php echo htmlspecialchars($edit_data['jumlah_ok']); ?>" required>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <label for="jumlah_ng" class="form-label">Jumlah NG</label>
-                                                    <input type="text" class="form-control" id="jumlah_ng" name="jumlah_ng" value="<?php echo htmlspecialchars($edit_data['jumlah_ng']); ?>" required>
-                                                </div>
-                                            </div>
-                                            
+                                        </div>
+                                    </div>
+
+                                    <div class="card mb-3">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Result</h5>
                                             <div class="mb-3">
                                                 <label for="visual" class="form-label">Visual</label>
                                                 <select class="form-select" id="visual" name="visual" required>
@@ -642,7 +747,7 @@ if (isset($_GET['detail'])) {
                                                     <option value="NG" <?php echo ($edit_data['visual'] == 'NG') ? 'selected' : ''; ?>>NG</option>
                                                 </select>
                                             </div>
-                                            
+
                                             <div class="mb-3">
                                                 <label for="dimensi" class="form-label">Dimensi</label>
                                                 <select class="form-select" id="dimensi" name="dimensi" required>
@@ -650,7 +755,7 @@ if (isset($_GET['detail'])) {
                                                     <option value="NG" <?php echo ($edit_data['dimensi'] == 'NG') ? 'selected' : ''; ?>>NG</option>
                                                 </select>
                                             </div>
-                                            
+
                                             <div class="mb-3">
                                                 <label for="fungsi" class="form-label">Fungsi</label>
                                                 <select class="form-select" id="fungsi" name="fungsi" required>
@@ -658,7 +763,7 @@ if (isset($_GET['detail'])) {
                                                     <option value="NG" <?php echo ($edit_data['fungsi'] == 'NG') ? 'selected' : ''; ?>>NG</option>
                                                 </select>
                                             </div>
-                                            
+
                                             <div class="mb-3">
                                                 <label for="judgement" class="form-label">Judgement</label>
                                                 <select class="form-select" id="judgement" name="judgement" required>
@@ -666,32 +771,34 @@ if (isset($_GET['detail'])) {
                                                     <option value="NG" <?php echo ($edit_data['judgement'] == 'NG') ? 'selected' : ''; ?>>NG</option>
                                                 </select>
                                             </div>
-                                            
-                                            <div class="mb-3">
-                                                <label for="dibuat" class="form-label">Dibuat Oleh</label>
-                                                <input type="text" class="form-control" id="dibuat" name="dibuat" value="<?php echo htmlspecialchars($edit_data['dibuat']); ?>" required>
-                                            </div>
-                                            
-                                            <div class="mb-3">
-                                                <label for="diperiksa" class="form-label">Diperiksa Oleh</label>
-                                                <input type="text" class="form-control" id="diperiksa" name="diperiksa" value="<?php echo htmlspecialchars($edit_data['diperiksa']); ?>" required>
-                                            </div>
-                                            
-                                            <div class="mb-3">
-                                                <label for="diketahui" class="form-label">Diketahui Oleh</label>
-                                                <input type="text" class="form-control" id="diketahui" name="diketahui" value="<?php echo htmlspecialchars($edit_data['diketahui']); ?>" required>
-                                            </div>
-                                            
-                                            <div class="mb-3">
-                                                <label for="peserta" class="form-label">Peserta</label>
-                                                <input type="text" class="form-control" id="peserta" name="peserta" value="<?php echo htmlspecialchars($edit_data['peserta']); ?>" required>
-                                            </div>
-                                            
-                                            <div class="mb-3">
-                                                <button type="submit" class="btn btn-primary">Update</button>
-                                                <a href="trial.php" class="btn btn-secondary">Cancel</a>
-                                            </div>
-                                        </form>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="dibuat" class="form-label">Dibuat Oleh</label>
+                                        <input type="text" class="form-control" id="dibuat" name="dibuat" value="<?php echo htmlspecialchars($edit_data['dibuat']); ?>" required>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="diperiksa" class="form-label">Diperiksa Oleh</label>
+                                        <input type="text" class="form-control" id="diperiksa" name="diperiksa" value="<?php echo htmlspecialchars($edit_data['diperiksa']); ?>" required>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="diketahui" class="form-label">Diketahui Oleh</label>
+                                        <input type="text" class="form-control" id="diketahui" name="diketahui" value="<?php echo htmlspecialchars($edit_data['diketahui']); ?>" required>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="peserta" class="form-label">Peserta</label>
+                                        <input type="text" class="form-control" id="peserta" name="peserta" value="<?php echo htmlspecialchars($edit_data['peserta']); ?>" required>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <button type="submit" class="btn btn-primary">Update</button>
+                                        <a href="trial.php" class="btn btn-secondary">Cancel</a>
+                                    </div>
+                                    </form>
                                         <?php else: ?>
 <!-- Button untuk menampilkan form -->
 <button class="btn btn-primary" id="show-insert-form">Insert New Trial</button>
@@ -883,11 +990,19 @@ if (isset($_GET['detail'])) {
     <div class="card mb-3">
         <div class="card-body">
             <h5 class="card-title">Problem Tools</h5>
+            <!-- HTML -->
+            <div id="snow-editor" style="height: 300px;">
+                
+            </div>
+
+
+
             <div class="mb-3">
                 <label for="problem_tool" class="form-label">Problem Tool</label>
                 <input type="text" class="form-control" id="problem_tool" name="problem_tool" required>
             </div>
             
+            <!-- batas -->
             <div class="mb-3">
                 <label for="analisa_sebab_tool" class="form-label">Analisa Sebab Tool</label>
                 <input type="text" class="form-control" id="analisa_sebab_tool" name="analisa_sebab_tool" required>
@@ -1051,7 +1166,7 @@ if (isset($_GET['detail'])) {
                 $sql = "SELECT t.*, a.nama_part, p.Proses  
                 FROM trial t 
                 JOIN proses p ON t.id_proses = p.id_proses 
-                JOIN data_part a ON t.id_part = a.id_part";
+                JOIN data_part a ON t.id_part = a.id_part ORDER BY t.id_trial DESC";  
         
                 $result = $conn->query($sql);
                 $no = 1;
@@ -1100,5 +1215,9 @@ document.getElementById('hide-insert-form').addEventListener('click', function()
 </div>
 <script src="assets/js/vendor.min.js"></script>
 <script src="assets/js/app.min.js"></script>
+<!-- quill js -->
+<script src="assets/js/vendor/quill.min.js"></script>
+<!-- quill Init js-->
+<script src="assets/js/pages/demo.quilljs.js"></script>
 </body>
 </html>
