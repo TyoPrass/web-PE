@@ -1296,7 +1296,5 @@ document.querySelector('form').addEventListener('submit', function(e) {
 <script src="assets/js/app.min.js"></script>
 <!-- quill js -->
 <script src="assets/js/vendor/quill.min.js"></script>
-<!-- quill Init js-->
-<script src="assets/js/pages/demo.quilljs.js"></script>
 </body>
 </html>
