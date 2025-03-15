@@ -244,6 +244,7 @@ if (isset($_GET['detail'])) {
     <!-- Quill css -->
     <link href="assets/css/vendor/quill.core.css" rel="stylesheet" type="text/css" />
     <link href="assets/css/vendor/quill.snow.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
 
 
@@ -999,9 +1000,11 @@ if (isset($_GET['detail'])) {
             <h5 class="card-title">Problem Tool</h5>
 
 
-         <!-- Uji Coba -->
          <div class="card mb-3">
                     <div class="card-body">
+
+         <!-- Uji Coba -->
+
                         <h5 class="card-title">Problem Tools</h5>
                         <div id="snow-editor" style="height: 300px;">
                         </div>
@@ -1009,7 +1012,59 @@ if (isset($_GET['detail'])) {
                         <input type="hidden" name="problem_tool" id="problem_tool">
                     </div>
                  </div>  
+
+                <!-- Uji Coba  -->
+                 <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Problem Tools</h5>
+                    <div id="snow-editor2" style="height: 300px;">
+                    </div>
+                    <!-- Add hidden input to store Quill content -->
+                    <input type="hidden" name="problem_tool" id="problem_tool">
+                </div>
+            </div>
       
+            <!-- Uji Coba  -->
+                 <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Problem Tools</h5>
+                    <div id="snow-editor3" style="height: 300px;">
+                    </div>
+                    <!-- Add hidden input to store Quill content -->
+                    <input type="hidden" name="problem_tool" id="problem_tool">
+                </div>
+            </div>
+          
+            <!-- Uji Coba  -->
+                 <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Problem Tools</h5>
+                    <div id="snow-editor4" style="height: 300px;">
+                    </div>
+                    <!-- Add hidden input to store Quill content -->
+                    <input type="hidden" name="problem_tool" id="problem_tool">
+                </div>
+            </div>
+            <!-- Uji Coba  -->
+                 <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Problem Tools</h5>
+                    <div id="snow-editor5" style="height: 300px;">
+                    </div>
+                    <!-- Add hidden input to store Quill content -->
+                    <input type="hidden" name="problem_tool" id="problem_tool">
+                </div>
+            </div>
+            <!-- Uji Coba  -->
+                 <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Problem Tools</h5>
+                    <div id="snow-editor6" style="height: 300px;">
+                    </div>
+                    <!-- Add hidden input to store Quill content -->
+                    <input type="hidden" name="problem_tool" id="problem_tool">
+                </div>
+            </div>
                
 
 
@@ -1032,17 +1087,7 @@ if (isset($_GET['detail'])) {
 
             <!-- Uji Coba 2 -->
            
-            <div class="card mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Problem Tools</h5>
-                        <div id="snow-editor1" style="height: 300px;">
-                        </div>
-                         <!-- Add hidden input to store Quill content -->
-                        <input type="hidden" name="problem_tool" id="problem_tool">
-                    </div>
-                 </div>  
-        
-                        
+    
              
             <!-- Batas Uji -->
 
@@ -1241,6 +1286,35 @@ document.getElementById('hide-insert-form').addEventListener('click', function()
     document.getElementById('show-insert-form').style.display = 'block';
 });
 
+// Ini 2
+document.addEventListener('DOMContentLoaded', function() {
+    function initializeQuill(editorId) {
+        new Quill(editorId, {
+            theme: "snow",
+            modules: {
+                toolbar: [
+                    [{ font: [] }, { size: [] }],
+                    ["bold", "italic", "underline", "strike"],
+                    [{ color: [] }, { background: [] }],
+                    [{ script: "super" }, { script: "sub" }],
+                    [{ header: [!1, 1, 2, 3, 4, 5, 6] }, "blockquote", "code-block"],
+                    [{ list: "ordered" }, { list: "bullet" }, { indent: "-1" }, { indent: "+1" }],
+                    ["direction", { align: [] }],
+                    ["link", "image", "video"],
+                    ["clean"]
+                ]
+            }
+        });
+    }
+
+    // Initialize each Quill editor
+    initializeQuill("#snow-editor2");
+    initializeQuill("#snow-editor3");
+    initializeQuill("#snow-editor4");
+    initializeQuill("#snow-editor5");
+    initializeQuill("#snow-editor6");
+});
+
 
 </script>
 </div>
@@ -1253,5 +1327,6 @@ document.getElementById('hide-insert-form').addEventListener('click', function()
 <script src="assets/js/app.min.js"></script>
 <script src="assets/js/vendor/quill.min.js"></script>
 <script src="assets/js/pages/demo.quilljs.js"></script>
+<script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
 </body>
 </html>
