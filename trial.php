@@ -60,17 +60,9 @@ if (isset($_POST['update'])) {
     $peserta = $_POST['peserta'];
 
     // Update data in database
-    $sql = "UPDATE trial SET tanggal = ?, jam_start = ?, jam_finish = ?, trial= ?, mc_name = ?, kapasitas = ?, 
-    cush_prec = ?, pin_cus_qtt = ?, die_height = ?, die_dim = ?, problem_tool = ?, analisa_sebab_tool = ?, 
-    counter_measure_tool = ?, problem_part = ?, analisa_sebab_part = ?, counter_measure_part = ?, PIC = ?, 
-    target = ?, keterangan = ?, kelengkapan_dies = ?, accuracy_part = ?, id_proses = ?, id_part = ?, id_customer = ?, 
-    qty_trial = ?, jumlah_ok = ?, jumlah_ng = ?, visual = ?, dimensi = ?, fungsi = ?, judgement = ?, dibuat = ?, 
-    diperiksa = ?, diketahui = ?, peserta = ? WHERE id_trial = ?";
+    $sql = "UPDATE trial SET tanggal = ?, jam_start = ?, jam_finish = ?, trial= ?, mc_name = ?, kapasitas = ?, cush_prec = ?, pin_cus_qtt = ?, die_height = ?, die_dim = ?, problem_tool = ?, analisa_sebab_tool = ?, counter_measure_tool = ?, problem_part = ?, analisa_sebab_part = ?, counter_measure_part = ?, PIC = ?, target = ?, keterangan = ?, kelengkapan_dies = ?, accuracy_part = ?, id_proses = ?, id_part = ?, id_customer = ?, qty_trial = ?, jumlah_ok = ?, jumlah_ng = ?, visual = ?, dimensi = ?, fungsi = ?, judgement = ?, dibuat = ?, diperiksa = ?, diketahui = ?, peserta = ? WHERE id_trial = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssssiiiiissssssssssiiiiissssssssssi", $tanggal, $jam_start, $jam_finish, $trial, $mc_name, $kapasitas, $cush_prec, 
-    $pin_cus_qtt, $die_height, $die_dim, $problem_tool, $analisa_sebab_tool, $counter_measure_tool, $problem_part, $analisa_sebab_part, 
-    $counter_measure_part, $PIC, $target, $keterangan, $kelengkapan_dies, $accuracy_part, $id_proses, $id_part, $id_customer, $qty_trial, 
-    $jumlah_ok, $jumlah_ng, $visual, $dimensi, $fungsi, $judgement, $dibuat, $diperiksa, $diketahui, $peserta, $id_trial);
+    $stmt->bind_param("sssssiiiiissssssssssiiiiissssssssssi", $tanggal, $jam_start, $jam_finish, $trial, $mc_name, $kapasitas, $cush_prec, $pin_cus_qtt, $die_height, $die_dim, $problem_tool, $analisa_sebab_tool, $counter_measure_tool, $problem_part, $analisa_sebab_part, $counter_measure_part, $PIC, $target, $keterangan, $kelengkapan_dies, $accuracy_part, $id_proses, $id_part, $id_customer, $qty_trial, $jumlah_ok, $jumlah_ng, $visual, $dimensi, $fungsi, $judgement, $dibuat, $diperiksa, $diketahui, $peserta, $id_trial);
 
     if ($stmt->execute()) {
         $_SESSION['message'] = 'Trial updated successfully.';
@@ -130,9 +122,7 @@ if (isset($_POST['submit'])) {
     $pin_cus_qtt = $_POST['pin_cus_qtt'];
     $die_height = $_POST['die_height'];
     $die_dim = $_POST['die_dim'];
-    // Get the problem_tool content from Quill editor
     $problem_tool = $_POST['problem_tool'];
-    // batas tes
     $analisa_sebab_tool = $_POST['analisa_sebab_tool'];
     $counter_measure_tool = $_POST['counter_measure_tool'];
     $pic_tool = $_POST['pic_tool'];
@@ -251,8 +241,12 @@ if (isset($_GET['detail'])) {
     <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
     <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" id="app-style"/>
     <!-- Quill css -->
+    <!-- Quill css -->
     <link href="assets/css/vendor/quill.core.css" rel="stylesheet" type="text/css" />
     <link href="assets/css/vendor/quill.snow.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+
+
 
     <style>
 .timeline {
@@ -304,25 +298,7 @@ if (isset($_GET['detail'])) {
     font-weight: 500;
 }
 
-.ql-editor {
-    min-height: 200px;
-    background: #fff;
-}
 
-.ql-editor img {
-    max-width: 100%;
-    height: auto;
-}
-
-.ql-toolbar.ql-snow {
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
-}
-
-.ql-container.ql-snow {
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
-}
 
 
 </style>
@@ -1021,24 +997,83 @@ if (isset($_GET['detail'])) {
 
     <div class="card mb-3">
         <div class="card-body">
-            
-                        <!-- Uji Coba -->
+            <h5 class="card-title">Problem Tool</h5>
 
-                            <div class="card-body">
-                                <h5 class="card-title">Problem Tools</h5>
-                                <div id="snow-editor" style="height: 300px;">
-                                </div>
-                                <!-- Add hidden input to store Quill content -->
-                                <input type="hidden" name="problem_tool" id="problem_tool">
-                            </div>
 
-<!-- Uji Coba 1 -->
-<!-- 
-    <div class="mb-3">
-                <label for="problem_tool" class="form-label">Problem Tool</label>
-                <textarea id="problem_tool" name="problem_tool"></textarea>
+         <div class="card mb-3">
+                    <div class="card-body">
+
+         <!-- Uji Coba -->
+
+                        <h5 class="card-title">Problem Tools</h5>
+                        <div id="snow-editor" style="height: 300px;">
+                        </div>
+                         <!-- Add hidden input to store Quill content -->
+                        <input type="hidden" name="problem_tool" id="problem_tool">
+                    </div>
+                 </div>  
+
+                <!-- Uji Coba  -->
+                 <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Problem Tools</h5>
+                    <div id="snow-editor2" style="height: 300px;">
+                    </div>
+                    <!-- Add hidden input to store Quill content -->
+                    <input type="hidden" name="problem_tool" id="problem_tool">
+                </div>
             </div>
-             -->
+      
+            <!-- Uji Coba  -->
+                 <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Problem Tools</h5>
+                    <div id="snow-editor3" style="height: 300px;">
+                    </div>
+                    <!-- Add hidden input to store Quill content -->
+                    <input type="hidden" name="problem_tool" id="problem_tool">
+                </div>
+            </div>
+          
+            <!-- Uji Coba  -->
+                 <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Problem Tools</h5>
+                    <div id="snow-editor4" style="height: 300px;">
+                    </div>
+                    <!-- Add hidden input to store Quill content -->
+                    <input type="hidden" name="problem_tool" id="problem_tool">
+                </div>
+            </div>
+            <!-- Uji Coba  -->
+                 <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Problem Tools</h5>
+                    <div id="snow-editor5" style="height: 300px;">
+                    </div>
+                    <!-- Add hidden input to store Quill content -->
+                    <input type="hidden" name="problem_tool" id="problem_tool">
+                </div>
+            </div>
+            <!-- Uji Coba  -->
+                 <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Problem Tools</h5>
+                    <div id="snow-editor6" style="height: 300px;">
+                    </div>
+                    <!-- Add hidden input to store Quill content -->
+                    <input type="hidden" name="problem_tool" id="problem_tool">
+                </div>
+            </div>
+               
+
+
+
+            <!-- <div class="mb-3">
+                <label for="problem_tool" class="form-label">Analisa Sebab Tool</label>
+                <input type="text" class="form-control" id="problem_tool" name="problem_tool" required>
+            </div> -->
+            
             <!-- batas -->
             <div class="mb-3">
                 <label for="analisa_sebab_tool" class="form-label">Analisa Sebab Tool</label>
@@ -1049,6 +1084,13 @@ if (isset($_GET['detail'])) {
                 <label for="counter_measure_tool" class="form-label">Counter Measure Tool</label>
                 <input type="text" class="form-control" id="counter_measure_tool" name="counter_measure_tool" required>
             </div>
+
+            <!-- Uji Coba 2 -->
+           
+    
+             
+            <!-- Batas Uji -->
+
             <div class="mb-3">
                 <label for="pic_tool" class="form-label">P.I.C</label>
                 <input type="text" class="form-control" id="pic_tool" name="pic_tool" required>
@@ -1244,46 +1286,35 @@ document.getElementById('hide-insert-form').addEventListener('click', function()
     document.getElementById('show-insert-form').style.display = 'block';
 });
 
-// Initialize Quill editor
-var quill = new Quill('#snow-editor', {
-    theme: 'snow',
-    modules: {
-        toolbar: [
-            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-            ['bold', 'italic', 'underline'],
-            [{ 'color': [] }, { 'background': [] }],
-            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-            ['image', 'clean']
-        ]
-    },
-    placeholder: 'Write problem tool description...'
+// Ini 2
+document.addEventListener('DOMContentLoaded', function() {
+    function initializeQuill(editorId) {
+        new Quill(editorId, {
+            theme: "snow",
+            modules: {
+                toolbar: [
+                    [{ font: [] }, { size: [] }],
+                    ["bold", "italic", "underline", "strike"],
+                    [{ color: [] }, { background: [] }],
+                    [{ script: "super" }, { script: "sub" }],
+                    [{ header: [!1, 1, 2, 3, 4, 5, 6] }, "blockquote", "code-block"],
+                    [{ list: "ordered" }, { list: "bullet" }, { indent: "-1" }, { indent: "+1" }],
+                    ["direction", { align: [] }],
+                    ["link", "image", "video"],
+                    ["clean"]
+                ]
+            }
+        });
+    }
+
+    // Initialize each Quill editor
+    initializeQuill("#snow-editor2");
+    initializeQuill("#snow-editor3");
+    initializeQuill("#snow-editor4");
+    initializeQuill("#snow-editor5");
+    initializeQuill("#snow-editor6");
 });
 
-// Handle image upload through paste or drag-and-drop
-quill.getModule('toolbar').addHandler('image', () => {
-    const input = document.createElement('input');
-    input.setAttribute('type', 'file');
-    input.setAttribute('accept', 'image/*');
-    input.click();
-
-    input.onchange = () => {
-        const file = input.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                const range = quill.getSelection(true);
-                quill.insertEmbed(range.index, 'image', e.target.result);
-            };
-            reader.readAsDataURL(file);
-        }
-    };
-});
-
-// Update hidden input before form submission
-document.querySelector('form').addEventListener('submit', function(e) {
-    var content = quill.root.innerHTML;
-    document.getElementById('problem_tool').value = content;
-});
 
 </script>
 </div>
@@ -1294,7 +1325,8 @@ document.querySelector('form').addEventListener('submit', function(e) {
 </div>
 <script src="assets/js/vendor.min.js"></script>
 <script src="assets/js/app.min.js"></script>
-<!-- quill js -->
 <script src="assets/js/vendor/quill.min.js"></script>
+<script src="assets/js/pages/demo.quilljs.js"></script>
+<script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
 </body>
 </html>
