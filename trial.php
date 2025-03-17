@@ -233,7 +233,7 @@ if (isset($_GET['detail'])) {
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>Create Trial | PE Stamping Admin Dashboard</title>
+    <title>Create Trial | Hyper - Responsive Bootstrap 5 Admin Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
     <meta content="Coderthemes" name="author" />
@@ -641,6 +641,14 @@ if (isset($_GET['detail'])) {
 
                                                 <div class="row mt-3">
                                                     <div class="col-md-4">
+                                                        <label for="pin_cus_qtt" class="form-label">Pin Cus Qtt</label>
+                                                        <input type="text" class="form-control" id="pin_cus_qtt" name="pin_cus_qtt" required
+                                                               value="<?php echo htmlspecialchars($edit_data['pin_cus_qtt']); ?>">
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mt-3">
+                                                    <div class="col-md-4">
                                                         <label for="qty_trial" class="form-label">Qty Trial</label>
                                                         <input type="text" class="form-control" id="qty_trial" name="qty_trial" required
                                                                value="<?php echo htmlspecialchars($edit_data['qty_trial']); ?>">
@@ -656,6 +664,12 @@ if (isset($_GET['detail'])) {
                                                                value="<?php echo htmlspecialchars($edit_data['jumlah_ng']); ?>">
                                                     </div>
                                                 </div>
+                                                
+                                                <div class="mb-3">
+                                                    <label for="kelengkapan_dies" class="form-label">Kelengkapan Dies</label>
+                                                    <input type="text" class="form-control" id="kelengkapan_dies" name="kelengkapan_dies" required
+                                                           value="<?php echo htmlspecialchars($edit_data['kelengkapan_dies']); ?>">
+                                                </div>
                                             </div>
                                         </div>
 
@@ -663,70 +677,41 @@ if (isset($_GET['detail'])) {
                                         <div class="card mb-3">
                                             <div class="card-body">
                                                 <h5 class="card-title">Problem Tool</h5>
-                                                
-                                                <div class="card mb-3">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">Problem Tools</h5>
-                                                        <div id="snow-editor" style="height: 300px;">
-                                                            <?php echo $edit_data['problem_tool']; ?>
-                                                        </div>
-                                                        <input type="hidden" name="problem_tool" id="problem_tool" value="<?php echo htmlspecialchars($edit_data['problem_tool']); ?>">
-                                                    </div>
-                                                </div>
 
-                                                <div class="card mb-3">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">Problem Analisa Penyebab</h5>
-                                                        <div id="snow-editor2" style="height: 300px;">
-                                                            <?php echo $edit_data['analisa_sebab_tool']; ?>
-                                                        </div>
-                                                        <input type="hidden" name="analisa_sebab_tool" id="analisa_sebab_tool" value="<?php echo htmlspecialchars($edit_data['analisa_sebab_tool']); ?>">
-                                                    </div>
-                                                </div>
-
-                                                <div class="card mb-3">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">Counter Meassure</h5>
-                                                        <div id="snow-editor3" style="height: 300px;">
-                                                            <?php echo $edit_data['counter_measure_tool']; ?>
-                                                        </div>
-                                                        <input type="hidden" name="counter_measure_tool" id="counter_measure_tool" value="<?php echo htmlspecialchars($edit_data['counter_measure_tool']); ?>">
-                                                    </div>
-                                                </div>
-
-                                                <div class="card mb-3">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">PIC Tools</h5>
-                                                        <div id="snow-editor4" style="height: 300px;">
-                                                            <?php echo $edit_data['pic_tool']; ?>
-                                                        </div>
-                                                        <input type="hidden" name="pic_tool" id="pic_tool" value="<?php echo htmlspecialchars($edit_data['pic_tool']); ?>">
-                                                    </div>
-                                                </div>
-
-                                                <div class="card mb-3">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">Target</h5>
-                                                        <div id="snow-editor5" style="height: 300px;">
-                                                            <?php echo $edit_data['target_tool']; ?>
-                                                        </div>
-                                                        <input type="hidden" name="target_tool" id="target_tool" value="<?php echo htmlspecialchars($edit_data['target_tool']); ?>">
-                                                    </div>
-                                                </div>
-
-                                                <div class="card mb-3">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">Keterangan</h5>
-                                                        <div id="snow-editor6" style="height: 300px;">
-                                                            <?php echo $edit_data['keterangan_tool']; ?>
-                                                        </div>
-                                                        <input type="hidden" name="keterangan_tool" id="keterangan_tool" value="<?php echo htmlspecialchars($edit_data['keterangan_tool']); ?>">
-                                                    </div>
+                                                <div class="mb-3">
+                                                    <label for="problem_tool_editor" class="form-label">Problem Tool</label>
+                                                    <div id="problem_tool_editor" style="height: 300px;"><?php echo htmlspecialchars_decode($edit_data['problem_tool'] ?? ''); ?></div>
+                                                    <input type="hidden" name="problem_tool" id="problem_tool_input" value="<?php echo htmlspecialchars($edit_data['problem_tool'] ?? ''); ?>">
                                                 </div>
 
                                                 <div class="mb-3">
-                                                    <label for="kelengkapan_dies" class="form-label">Kelengkapan Dies</label>
-                                                    <input type="text" class="form-control" id="kelengkapan_dies" name="kelengkapan_dies" required value="<?php echo htmlspecialchars($edit_data['kelengkapan_dies']); ?>">
+                                                    <label for="analisa_sebab_tool_editor" class="form-label">Analisa Sebab Tool</label>
+                                                    <div id="analisa_sebab_tool_editor" style="height: 300px;"><?php echo htmlspecialchars_decode($edit_data['analisa_sebab_tool'] ?? ''); ?></div>
+                                                    <input type="hidden" name="analisa_sebab_tool" id="analisa_sebab_tool_input" value="<?php echo htmlspecialchars($edit_data['analisa_sebab_tool'] ?? ''); ?>">
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="counter_measure_tool_editor" class="form-label">Counter Measure Tool</label>
+                                                    <div id="counter_measure_tool_editor" style="height: 300px;"><?php echo htmlspecialchars_decode($edit_data['counter_measure_tool'] ?? ''); ?></div>
+                                                    <input type="hidden" name="counter_measure_tool" id="counter_measure_tool_input" value="<?php echo htmlspecialchars($edit_data['counter_measure_tool'] ?? ''); ?>">
+                                                </div>
+                                                
+                                                <div class="mb-3">
+                                                    <label for="pic_tool_editor" class="form-label">PIC Tool</label>
+                                                    <div id="pic_tool_editor" style="height: 300px;"><?php echo htmlspecialchars_decode($edit_data['pic_tool'] ?? ''); ?></div>
+                                                    <input type="hidden" name="pic_tool" id="pic_tool_input" value="<?php echo htmlspecialchars($edit_data['pic_tool'] ?? ''); ?>">
+                                                </div>
+                                                
+                                                <div class="mb-3">
+                                                    <label for="target_tool_editor" class="form-label">Target Tool</label>
+                                                    <div id="target_tool_editor" style="height: 300px;"><?php echo htmlspecialchars_decode($edit_data['target_tool'] ?? ''); ?></div>
+                                                    <input type="hidden" name="target_tool" id="target_tool_input" value="<?php echo htmlspecialchars($edit_data['target_tool'] ?? ''); ?>">
+                                                </div>
+                                                
+                                                <div class="mb-3">
+                                                    <label for="keterangan_tool_editor" class="form-label">Keterangan Tool</label>
+                                                    <div id="keterangan_tool_editor" style="height: 300px;"><?php echo htmlspecialchars_decode($edit_data['keterangan_tool'] ?? ''); ?></div>
+                                                    <input type="hidden" name="keterangan_tool" id="keterangan_tool_input" value="<?php echo htmlspecialchars($edit_data['keterangan_tool'] ?? ''); ?>">
                                                 </div>
                                             </div>
                                         </div>
@@ -734,65 +719,41 @@ if (isset($_GET['detail'])) {
                                         <div class="card mb-3">
                                             <div class="card-body">
                                                 <h5 class="card-title">Problem Part</h5>
-                                                
-                                                <div class="card mb-3">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">Problem Part</h5>
-                                                        <div id="snow-editor7" style="height: 300px;">
-                                                            <?php echo $edit_data['problem_part']; ?>
-                                                        </div>
-                                                        <input type="hidden" name="problem_part" id="problem_part" value="<?php echo htmlspecialchars($edit_data['problem_part']); ?>">
-                                                    </div>
+
+                                                <div class="mb-3">
+                                                    <label for="problem_part_editor" class="form-label">Problem Part</label>
+                                                    <div id="problem_part_editor" style="height: 300px;"><?php echo htmlspecialchars_decode($edit_data['problem_part']); ?></div>
+                                                    <input type="hidden" name="problem_part" id="problem_part_input" value="<?php echo htmlspecialchars($edit_data['problem_part']); ?>">
                                                 </div>
 
-                                                <div class="card mb-3">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">Analisa Penyebab Part</h5>
-                                                        <div id="snow-editor8" style="height: 300px;">
-                                                            <?php echo $edit_data['analisa_sebab_part']; ?>
-                                                        </div>
-                                                        <input type="hidden" name="analisa_sebab_part" id="analisa_sebab_part" value="<?php echo htmlspecialchars($edit_data['analisa_sebab_part']); ?>">
-                                                    </div>
+                                                <div class="mb-3">
+                                                    <label for="analisa_sebab_part_editor" class="form-label">Analisa Sebab Part</label>
+                                                    <div id="analisa_sebab_part_editor" style="height: 300px;"><?php echo htmlspecialchars_decode($edit_data['analisa_sebab_part']); ?></div>
+                                                    <input type="hidden" name="analisa_sebab_part" id="analisa_sebab_part_input" value="<?php echo htmlspecialchars($edit_data['analisa_sebab_part']); ?>">
                                                 </div>
 
-                                                <div class="card mb-3">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">Counter Meassure Part</h5>
-                                                        <div id="snow-editor9" style="height: 300px;">
-                                                            <?php echo $edit_data['counter_measure_part']; ?>
-                                                        </div>
-                                                        <input type="hidden" name="counter_measure_part" id="counter_measure_part" value="<?php echo htmlspecialchars($edit_data['counter_measure_part']); ?>">
-                                                    </div>
+                                                <div class="mb-3">
+                                                    <label for="counter_measure_part_editor" class="form-label">Counter Measure Part</label>
+                                                    <div id="counter_measure_part_editor" style="height: 300px;"><?php echo htmlspecialchars_decode($edit_data['counter_measure_part']); ?></div>
+                                                    <input type="hidden" name="counter_measure_part" id="counter_measure_part_input" value="<?php echo htmlspecialchars($edit_data['counter_measure_part']); ?>">
                                                 </div>
 
-                                                <div class="card mb-3">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">PIC</h5>
-                                                        <div id="snow-editor10" style="height: 300px;">
-                                                            <?php echo $edit_data['PIC']; ?>
-                                                        </div>
-                                                        <input type="hidden" name="PIC" id="PIC" value="<?php echo htmlspecialchars($edit_data['PIC']); ?>">
-                                                    </div>
+                                                <div class="mb-3">
+                                                    <label for="PIC_editor" class="form-label">PIC</label>
+                                                    <div id="PIC_editor" style="height: 300px;"><?php echo htmlspecialchars_decode($edit_data['PIC']); ?></div>
+                                                    <input type="hidden" name="PIC" id="PIC_input" value="<?php echo htmlspecialchars($edit_data['PIC']); ?>">
                                                 </div>
 
-                                                <div class="card mb-3">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">Target</h5>
-                                                        <div id="snow-editor11" style="height: 300px;">
-                                                            <?php echo $edit_data['target']; ?>
-                                                        </div>
-                                                        <input type="hidden" name="target" id="target" value="<?php echo htmlspecialchars($edit_data['target']); ?>">
-                                                    </div>
+                                                <div class="mb-3">
+                                                    <label for="target_editor" class="form-label">Target</label>
+                                                    <div id="target_editor" style="height: 300px;"><?php echo htmlspecialchars_decode($edit_data['target']); ?></div>
+                                                    <input type="hidden" name="target" id="target_input" value="<?php echo htmlspecialchars($edit_data['target']); ?>">
                                                 </div>
 
-                                                <div class="card mb-3">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">Keterangan</h5>
-                                                        <div id="snow-editor12" style="height: 300px;">
-                                                            <?php echo $edit_data['keterangan']; ?>
-                                                        </div>
-                                                        <input type="hidden" name="keterangan" id="keterangan" value="<?php echo htmlspecialchars($edit_data['keterangan']); ?>">
-                                                    </div>
+                                                <div class="mb-3">
+                                                    <label for="keterangan_editor" class="form-label">Keterangan</label>
+                                                    <div id="keterangan_editor" style="height: 300px;"><?php echo htmlspecialchars_decode($edit_data['keterangan']); ?></div>
+                                                    <input type="hidden" name="keterangan" id="keterangan_input" value="<?php echo htmlspecialchars($edit_data['keterangan']); ?>">
                                                 </div>
 
                                                 <div class="mb-3">
@@ -875,6 +836,57 @@ if (isset($_GET['detail'])) {
                                             <a href="trial.php" class="btn btn-secondary">Cancel</a>
                                         </div>
                                     </form>
+
+                                    <script>
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        // Configure Quill toolbar
+                                        const toolbarOptions = [
+                                            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                                            ['bold', 'italic', 'underline', 'strike'],
+                                            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                                            [{ 'color': [] }, { 'background': [] }],
+                                            [{ 'align': [] }],
+                                            ['clean']
+                                        ];
+                                        
+                                        // Initialize Quill editors for edit form
+                                        const editorMappings = [
+                                            { editor: 'problem_tool_editor', input: 'problem_tool_input' },
+                                            { editor: 'analisa_sebab_tool_editor', input: 'analisa_sebab_tool_input' },
+                                            { editor: 'counter_measure_tool_editor', input: 'counter_measure_tool_input' },
+                                            { editor: 'pic_tool_editor', input: 'pic_tool_input' },
+                                            { editor: 'target_tool_editor', input: 'target_tool_input' },
+                                            { editor: 'keterangan_tool_editor', input: 'keterangan_tool_input' },
+                                            { editor: 'problem_part_editor', input: 'problem_part_input' },
+                                            { editor: 'analisa_sebab_part_editor', input: 'analisa_sebab_part_input' },
+                                            { editor: 'counter_measure_part_editor', input: 'counter_measure_part_input' },
+                                            { editor: 'PIC_editor', input: 'PIC_input' },
+                                            { editor: 'target_editor', input: 'target_input' },
+                                            { editor: 'keterangan_editor', input: 'keterangan_input' }
+                                        ];
+                                        
+                                        // Initialize all editors
+                                        editorMappings.forEach(mapping => {
+                                            const editorElement = document.getElementById(mapping.editor);
+                                            if (editorElement) {
+                                                const quill = new Quill('#' + mapping.editor, {
+                                                    theme: 'snow',
+                                                    modules: {
+                                                        toolbar: toolbarOptions
+                                                    }
+                                                });
+                                                
+                                                // When form is submitted, update hidden input with editor content
+                                                const form = document.getElementById('edit-form');
+                                                form.addEventListener('submit', function() {
+                                                    const input = document.getElementById(mapping.input);
+                                                    input.value = quill.root.innerHTML;
+                                                });
+                                            }
+                                        });
+                                    });
+                                    </script>
+                                        <?php else: ?>
 <!-- Button untuk menampilkan form -->
 <button class="btn btn-primary" id="show-insert-form">Insert New Trial</button>
 
@@ -1334,6 +1346,7 @@ document.getElementById('hide-insert-form').addEventListener('click', function()
     document.getElementById('show-insert-form').style.display = 'block';
 });
 
+// Ini 2
 document.addEventListener('DOMContentLoaded', function () {
     // Konfigurasi toolbar Quill
     const toolbarOptions = [
@@ -1356,49 +1369,56 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Daftar editor dan input tersembunyi yang terkait
     const editors = [
-        { editorId: '#snow-editor', inputId: 'problem_tool' },
-        { editorId: '#snow-editor2', inputId: 'analisa_sebab_tool' },
-        { editorId: '#snow-editor3', inputId: 'counter_measure_tool' },
-        { editorId: '#snow-editor4', inputId: 'pic_tool' },
-        { editorId: '#snow-editor5', inputId: 'target_tool' },
-        { editorId: '#snow-editor6', inputId: 'keterangan_tool' },
-        { editorId: '#snow-editor7', inputId: 'problem_part' },
-        { editorId: '#snow-editor8', inputId: 'analisa_sebab_part' },
-        { editorId: '#snow-editor9', inputId: 'counter_measure_part' },
-        { editorId: '#snow-editor10', inputId: 'PIC' },
-        { editorId: '#snow-editor11', inputId: 'target' },
-        { editorId: '#snow-editor12', inputId: 'keterangan' }
-    ];
+    { editorId: '#snow-editor', inputId: 'problem_tool' },
+    { editorId: '#snow-editor2', inputId: 'analisa_sebab_tool' },
+    { editorId: '#snow-editor3', inputId: 'counter_measure_tool' },
+    { editorId: '#snow-editor4', inputId: 'pic_tool' },
+    { editorId: '#snow-editor5', inputId: 'target_tool' },
+    { editorId: '#snow-editor6', inputId: 'keterangan_tool' },
+    { editorId: '#snow-editor7', inputId: 'problem_part' },
+    { editorId: '#snow-editor8', inputId: 'analisa_sebab_part' },
+    { editorId: '#snow-editor9', inputId: 'counter_measure_part' },
+    { editorId: '#snow-editor10', inputId: 'PIC' },
+    { editorId: '#snow-editor11', inputId: 'target' },
+    { editorId: '#snow-editor12', inputId: 'keterangan' },
 
-    // Inisialisasi semua editor Quill
-    const quillEditors = {};
-    editors.forEach(({ editorId, inputId }) => {
-        const editorElement = document.querySelector(editorId);
-        if (editorElement) {
-            quillEditors[inputId] = new Quill(editorId, quillConfig);
-        } else {
-            console.warn(`Editor dengan ID "${editorId}" tidak ditemukan.`);
+];
+
+// Inisialisasi semua editor Quill
+const quillEditors = {};
+editors.forEach(({ editorId, inputId }) => {
+    const editorElement = document.querySelector(editorId);
+    if (editorElement) {
+        quillEditors[inputId] = new Quill(editorId, quillConfig);
+        // Set nilai awal dari hidden input ke editor
+        const hiddenInput = document.getElementById(inputId);
+        if (hiddenInput) {
+            quillEditors[inputId].root.innerHTML = hiddenInput.value;
         }
-    });
-
-    // Tangani pengiriman form
-    const form = document.querySelector('form');
-    if (form) {
-        form.addEventListener('submit', function () {
-            // Perbarui semua input tersembunyi dengan konten editor terkait
-            Object.entries(quillEditors).forEach(([inputId, editor]) => {
-                const hiddenInput = document.getElementById(inputId);
-                if (hiddenInput) {
-                    hiddenInput.value = editor.root.innerHTML;
-                } else {
-                    console.warn(`Input tersembunyi dengan ID "${inputId}" tidak ditemukan.`);
-                }
-            });
-        });
     } else {
-        console.error('Elemen form tidak ditemukan.');
+        console.warn(`Editor dengan ID "${editorId}" tidak ditemukan.`);
     }
 });
+
+// Tangani pengiriman form
+const form = document.querySelector('form');
+if (form) {
+    form.addEventListener('submit', function () {
+        // Perbarui semua input tersembunyi dengan konten editor terkait
+        Object.entries(quillEditors).forEach(([inputId, editor]) => {
+            const hiddenInput = document.getElementById(inputId);
+            if (hiddenInput) {
+                hiddenInput.value = editor.root.innerHTML;
+            } else {
+                console.warn(`Input tersembunyi dengan ID "${inputId}" tidak ditemukan.`);
+            }
+        });
+    });
+} else {
+    console.error('Elemen form tidak ditemukan.');
+}
+});
+
 
 </script>
 </div>
@@ -1409,8 +1429,8 @@ document.addEventListener('DOMContentLoaded', function () {
 </div>
 <script src="assets/js/vendor.min.js"></script>
 <script src="assets/js/app.min.js"></script>
-<script src="assets/js/vendor/quill.min.js"></script>
-<script src="assets/js/pages/demo.quilljs.js"></script>
+<!-- <script src="assets/js/vendor/quill.min.js"></script>
+<script src="assets/js/pages/demo.quilljs.js"></script> -->
 <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
 </body>
 </html>
