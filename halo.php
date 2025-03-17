@@ -246,7 +246,6 @@ if (isset($_GET['detail'])) {
 </head>
 <!-- filepath: /c:/laragon/www/coba/halo.php -->
 <body class="loading" data-layout-color="light" data-leftbar-theme="dark" data-layout-mode="fluid" data-rightbar-onstart="true">
-<body class="loading" data-layout-color="light" data-leftbar-theme="dark" data-layout-mode="fluid" data-rightbar-onstart="true">
     <div class="wrapper">
         <div class="content-page">
             <div class="content">
@@ -457,7 +456,7 @@ if (isset($_GET['detail'])) {
                                                                     foreach ($images as $image) {
                                                                         if (file_exists('uploads/' . $image)) {
                                                                             echo '<img src="uploads/' . htmlspecialchars($image) . '" alt="Part Image" 
-                                                                                  class="rounded" style="width: 50px; height: 50px; object-fit: cover; margin-right: 5px;">';
+                                                                                class="rounded" style="width: 50px; height: 50px; object-fit: cover; margin-right: 5px;">';
                                                                         }
                                                                     }
                                                                 }
@@ -468,23 +467,26 @@ if (isset($_GET['detail'])) {
                                                             <td><?php echo htmlspecialchars($row['project']); ?></td>
                                                             <td>
                                                                 <div class="btn-group">
+                                                                    <!-- Edit Icon -->
                                                                     <a href="halo.php?edit=<?php echo $row['id_part']; ?>" 
-                                                                       class="btn btn-info btn-sm" 
-                                                                       data-bs-toggle="tooltip" 
-                                                                       title="Edit">
+                                                                    class="btn btn-sm btn-info" 
+                                                                    data-bs-toggle="tooltip" 
+                                                                    title="Edit">
                                                                         <i class="mdi mdi-pencil"></i>
                                                                     </a>
+                                                                    <!-- Delete Icon -->
                                                                     <a href="halo.php?delete=<?php echo $row['id_part']; ?>" 
-                                                                       class="btn btn-danger btn-sm" 
-                                                                       onclick="return confirm('Are you sure you want to delete this record?');"
-                                                                       data-bs-toggle="tooltip" 
-                                                                       title="Delete">
+                                                                    class="btn btn-sm btn-danger" 
+                                                                    onclick="return confirm('Are you sure you want to delete this record?');"
+                                                                    data-bs-toggle="tooltip" 
+                                                                    title="Delete">
                                                                         <i class="mdi mdi-delete"></i>
                                                                     </a>
+                                                                    <!-- Detail Icon -->
                                                                     <a href="halo.php?detail=<?php echo $row['id_part']; ?>" 
-                                                                       class="btn btn-primary btn-sm" 
-                                                                       data-bs-toggle="tooltip" 
-                                                                       title="Detail">
+                                                                    class="btn btn-sm btn-primary" 
+                                                                    data-bs-toggle="tooltip" 
+                                                                    title="Detail">
                                                                         <i class="mdi mdi-eye"></i>
                                                                     </a>
                                                                 </div>
@@ -494,7 +496,7 @@ if (isset($_GET['detail'])) {
                                                 </tbody>
                                             </table>
                                         </div>
-                                        <div class="mt-3">
+                                                                                <div class="mt-3">
                                             <a href="halo.php?insert=true" class="btn btn-success">
                                                 <i class="mdi mdi-plus"></i> Insert New Record
                                             </a>

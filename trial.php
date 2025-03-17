@@ -233,7 +233,7 @@ if (isset($_GET['detail'])) {
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>Create Trial | Hyper - Responsive Bootstrap 5 Admin Dashboard</title>
+    <title>Create Trial | PE Stamping Admin Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
     <meta content="Coderthemes" name="author" />
@@ -1063,11 +1063,22 @@ if (isset($_GET['detail'])) {
                     <!-- Add hidden input to store Quill content -->
                     <input type="hidden" name="keterangan_tool" id="keterangan_tool">
                 </div>
+                </div>
+
+            <div class="mb-3">
+            <label for="kelengkapan_dies" class="form-label">Kelengkapan Dies</label>
+            <input type="text" class="form-control" id="kelengkapan_dies" name="kelengkapan_dies" required>
             </div>
+    
+        </div>
+    </div>
+    
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">Problem Part</h5>
+                    <!-- Uji 3 Ini -->
 
-            <!-- Uji 3 Ini -->
-
-                            <div class="card mb-3">
+                    <div class="card mb-3">
                     <div class="card-body">
                         <h5 class="card-title">Problem Tools</h5>
                         <div id="snow-editor7" style="height: 300px;"></div>
@@ -1114,82 +1125,6 @@ if (isset($_GET['detail'])) {
                         <input type="hidden" name="keterangan" id="keterangan">
                     </div>
                 </div>
-                            
-
-
-
-            <!-- <div class="mb-3">
-                <label for="problem_tool" class="form-label">Analisa Sebab Tool</label>
-                <input type="text" class="form-control" id="problem_tool" name="problem_tool" required>
-            </div> -->
-            
-            <!-- batas -->
-            <!-- <div class="mb-3">
-                <label for="analisa_sebab_tool" class="form-label">Analisa Sebab Tool</label>
-                <input type="text" class="form-control" id="analisa_sebab_tool" name="analisa_sebab_tool" required>
-            </div>
-            
-            <div class="mb-3">
-                <label for="counter_measure_tool" class="form-label">Counter Measure Tool</label>
-                <input type="text" class="form-control" id="counter_measure_tool" name="counter_measure_tool" required>
-            </div>
-
-
-            <div class="mb-3">
-                <label for="pic_tool" class="form-label">P.I.C</label>
-                <input type="text" class="form-control" id="pic_tool" name="pic_tool" required>
-            </div>
-            <div class="mb-3">
-                <label for="target_tool" class="form-label">Target</label>
-                <input type="text" class="form-control" id="target_tool" name="target_tool" required>
-            </div>
-            <div class="mb-3">
-                <label for="keterangan_tool" class="form-label">Keterangan</label>
-                <input type="text" class="form-control" id="keterangan_tool" name="keterangan_tool" required>
-            </div> -->
-
-            <!-- Back Up Sebelumnya -->
-
-            <div class="mb-3">
-            <label for="kelengkapan_dies" class="form-label">Kelengkapan Dies</label>
-            <input type="text" class="form-control" id="kelengkapan_dies" name="kelengkapan_dies" required>
-            </div>
-    
-        </div>
-    </div>
-    
-    <div class="card mb-3">
-        <div class="card-body">
-            <h5 class="card-title">Problem Part</h5>
-            <div class="mb-3">
-                <label for="problem_part" class="form-label">Problem Part</label>
-                <input type="text" class="form-control" id="problem_part" name="problem_part" required>
-            </div>
-            
-            <div class="mb-3">
-                <label for="analisa_sebab_part" class="form-label">Analisa Sebab Part</label>
-                <input type="text" class="form-control" id="analisa_sebab_part" name="analisa_sebab_part" required>
-            </div>
-            
-            <div class="mb-3">
-                <label for="counter_measure_part" class="form-label">Counter Measure Part</label>
-                <input type="text" class="form-control" id="counter_measure_part" name="counter_measure_part" required>
-            </div>
-            
-            <div class="mb-3">
-                <label for="PIC" class="form-label">PIC</label>
-                <input type="text" class="form-control" id="PIC" name="PIC" required>
-            </div>
-
-            <div class="mb-3">
-            <label for="target" class="form-label">Target</label>
-            <input type="text" class="form-control" id="target" name="target" required>
-            </div>
-
-            <div class="mb-3">
-            <label for="keterangan" class="form-label">Keterangan</label>
-            <input type="text" class="form-control" id="keterangan" name="keterangan" required>
-            </div>
 
             <div class="mb-3">
             <label for="accuracy_part" class="form-label">Accuracy Part</label>
