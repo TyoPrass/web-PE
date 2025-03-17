@@ -696,6 +696,7 @@ if (isset($_GET['detail'])) {
                                                     <input type="hidden" name="counter_measure_tool" id="counter_measure_tool_input" value="<?php echo htmlspecialchars($edit_data['counter_measure_tool'] ?? ''); ?>">
                                                 </div>
                                                 
+                                                <!-- Form fields for tool section -->
                                                 <div class="mb-3">
                                                     <label for="pic_tool_editor" class="form-label">PIC Tool</label>
                                                     <div id="pic_tool_editor" style="height: 300px;"><?php echo htmlspecialchars_decode($edit_data['pic_tool'] ?? ''); ?></div>
@@ -737,7 +738,8 @@ if (isset($_GET['detail'])) {
                                                     <div id="counter_measure_part_editor" style="height: 300px;"><?php echo htmlspecialchars_decode($edit_data['counter_measure_part']); ?></div>
                                                     <input type="hidden" name="counter_measure_part" id="counter_measure_part_input" value="<?php echo htmlspecialchars($edit_data['counter_measure_part']); ?>">
                                                 </div>
-
+                                                
+                                                <!-- Tidak bisa di update bagian part -->
                                                 <div class="mb-3">
                                                     <label for="PIC_editor" class="form-label">PIC</label>
                                                     <div id="PIC_editor" style="height: 300px;"><?php echo htmlspecialchars_decode($edit_data['PIC']); ?></div>

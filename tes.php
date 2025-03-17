@@ -4,5 +4,7 @@
 // ternyata pada bagian beberapa data tidak dapat melakukan update dengan baik
 /** 
  * harus segera diperbaiki dengan cepat
+ * karena sebelum tgl tertentu harus selesai
+ * 
  */
 ?>
