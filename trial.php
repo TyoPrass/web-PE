@@ -1009,7 +1009,7 @@ if (isset($_GET['detail'])) {
                         <div id="snow-editor" style="height: 300px;">
                         </div>
                          <!-- Add hidden input to store Quill content -->
-                        <input type="hidden" name="problem_tool" id="problem_tool">
+                        <input type="hidden" name="problem_part" id="problem_part">
                     </div>
                  </div>  
 
@@ -1020,7 +1020,7 @@ if (isset($_GET['detail'])) {
                     <div id="snow-editor2" style="height: 300px;">
                     </div>
                     <!-- Add hidden input to store Quill content -->
-                    <input type="hidden" name="analisa_sebab_tool" id="analisa_sebab_tool">
+                    <input type="hidden" name="analisa_sebab_part" id="analisa_sebab_part">
                 </div>
             </div>
       
@@ -1031,7 +1031,7 @@ if (isset($_GET['detail'])) {
                     <div id="snow-editor3" style="height: 300px;">
                     </div>
                     <!-- Add hidden input to store Quill content -->
-                    <input type="hidden" name="counter_measure_tool" id="counter_measure_tool">
+                    <input type="hidden" name="counter_measure_part" id="counter_measure_part">
                 </div>
             </div>
           
@@ -1042,7 +1042,7 @@ if (isset($_GET['detail'])) {
                     <div id="snow-editor4" style="height: 300px;">
                     </div>
                     <!-- Add hidden input to store Quill content -->
-                    <input type="hidden" name="pic_tool" id="pic_tool">
+                    <input type="hidden" name="PIC" id="PIC">
                 </div>
             </div>
             <!-- Uji Coba  -->
@@ -1052,7 +1052,7 @@ if (isset($_GET['detail'])) {
                     <div id="snow-editor5" style="height: 300px;">
                     </div>
                     <!-- Add hidden input to store Quill content -->
-                    <input type="hidden" name="target_tool" id="target_tool">
+                    <input type="hidden" name="target" id="target">
                 </div>
             </div>
             <!-- Uji Coba  -->
@@ -1062,43 +1062,12 @@ if (isset($_GET['detail'])) {
                     <div id="snow-editor6" style="height: 300px;">
                     </div>
                     <!-- Add hidden input to store Quill content -->
-                    <input type="hidden" name="keterangan_tool" id="keterangan_tool">
+                    <input type="hidden" name="keterangan" id="keterangan">
                 </div>
             </div>
                
 
-
-
-            <!-- <div class="mb-3">
-                <label for="problem_tool" class="form-label">Analisa Sebab Tool</label>
-                <input type="text" class="form-control" id="problem_tool" name="problem_tool" required>
-            </div> -->
-            
-            <!-- batas -->
-            <!-- <div class="mb-3">
-                <label for="analisa_sebab_tool" class="form-label">Analisa Sebab Tool</label>
-                <input type="text" class="form-control" id="analisa_sebab_tool" name="analisa_sebab_tool" required>
-            </div>
-            
-            <div class="mb-3">
-                <label for="counter_measure_tool" class="form-label">Counter Measure Tool</label>
-                <input type="text" class="form-control" id="counter_measure_tool" name="counter_measure_tool" required>
-            </div>
-
-
-            <div class="mb-3">
-                <label for="pic_tool" class="form-label">P.I.C</label>
-                <input type="text" class="form-control" id="pic_tool" name="pic_tool" required>
-            </div>
-            <div class="mb-3">
-                <label for="target_tool" class="form-label">Target</label>
-                <input type="text" class="form-control" id="target_tool" name="target_tool" required>
-            </div>
-            <div class="mb-3">
-                <label for="keterangan_tool" class="form-label">Keterangan</label>
-                <input type="text" class="form-control" id="keterangan_tool" name="keterangan_tool" required>
-            </div> -->
-
+            <!-- Sukses dan done fitur -->
             <!-- Back Up Sebelumnya -->
 
             <div class="mb-3">
@@ -1112,6 +1081,78 @@ if (isset($_GET['detail'])) {
     <div class="card mb-3">
         <div class="card-body">
             <h5 class="card-title">Problem Part</h5>
+
+            <div class="card mb-3">
+                    <div class="card-body">
+
+         <!-- Uji Coba -->
+
+                        <h5 class="card-title">Problem Tools</h5>
+                        <div id="snow-editor7" style="height: 300px;">
+                        </div>
+                         <!-- Add hidden input to store Quill content -->
+                        <input type="hidden" name="problem_part" id="problem_part">
+                    </div>
+                 </div>  
+
+                <!-- Uji Coba  -->
+                 <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Problem Tools</h5>
+                    <div id="snow-editor8" style="height: 300px;">
+                    </div>
+                    <!-- Add hidden input to store Quill content -->
+                    <input type="hidden" name="analisa_sebab_part" id="analisa_sebab_part">
+                </div>
+            </div>
+      
+            <!-- Uji Coba  -->
+                 <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Problem Tools</h5>
+                    <div id="snow-editor9" style="height: 300px;">
+                    </div>
+                    <!-- Add hidden input to store Quill content -->
+                    <input type="hidden" name="counter_measure_part" id="counter_measure_part">
+                </div>
+            </div>
+          
+            <!-- Uji Coba  -->
+                 <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Problem Tools</h5>
+                    <div id="snow-editor10" style="height: 300px;">
+                    </div>
+                    <!-- Add hidden input to store Quill content -->
+                    <input type="hidden" name="PIC" id="PIC">
+                </div>
+            </div>
+            <!-- Uji Coba  -->
+                 <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Problem Tools</h5>
+                    <div id="snow-editor11" style="height: 300px;">
+                    </div>
+                    <!-- Add hidden input to store Quill content -->
+                    <input type="hidden" name="target" id="target">
+                </div>
+            </div>
+            <!-- Uji Coba  -->
+                 <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Problem Tools</h5>
+                    <div id="snow-editor" style="height: 300px;">
+                    </div>
+                    <!-- Add hidden input to store Quill content -->
+                    <input type="hidden" name="keterangan" id="keterangan_tool">
+                </div>
+            </div>
+               
+
+            
+
+            <!-- Uji Coba 2 Untuk problem part -->
+
             <div class="mb-3">
                 <label for="problem_part" class="form-label">Problem Part</label>
                 <input type="text" class="form-control" id="problem_part" name="problem_part" required>
@@ -1310,6 +1351,12 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeQuill("#snow-editor4");
     initializeQuill("#snow-editor5");
     initializeQuill("#snow-editor6");
+    initializeQuill("#snow-editor7");
+    initializeQuill("#snow-editor8");
+    initializeQuill("#snow-editor9");
+    initializeQuill("#snow-editor10");
+    initializeQuill("#snow-editor11");
+    initializeQuill("#snow-editor12");
 });
 
 
