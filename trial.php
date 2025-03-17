@@ -36,6 +36,12 @@ if (isset($_POST['update'])) {
     $problem_tool = $_POST['problem_tool'];
     $analisa_sebab_tool = $_POST['analisa_sebab_tool'];
     $counter_measure_tool = $_POST['counter_measure_tool'];
+    $pic_tool = $_POST['pic_tool'];
+    $target_tool = $_POST['target_tool'];
+    $keterangan_tool = $_POST['keterangan_tool'];
+    
+    $target = $_POST['target'];
+    $keterangan = $_POST['keterangan'];
     $problem_part = $_POST['problem_part'];
     $analisa_sebab_part = $_POST['analisa_sebab_part'];
     $counter_measure_part = $_POST['counter_measure_part'];
@@ -60,9 +66,9 @@ if (isset($_POST['update'])) {
     $peserta = $_POST['peserta'];
 
     // Update data in database
-    $sql = "UPDATE trial SET tanggal = ?, jam_start = ?, jam_finish = ?, trial= ?, mc_name = ?, kapasitas = ?, cush_prec = ?, pin_cus_qtt = ?, die_height = ?, die_dim = ?, problem_tool = ?, analisa_sebab_tool = ?, counter_measure_tool = ?, problem_part = ?, analisa_sebab_part = ?, counter_measure_part = ?, PIC = ?, target = ?, keterangan = ?, kelengkapan_dies = ?, accuracy_part = ?, id_proses = ?, id_part = ?, id_customer = ?, qty_trial = ?, jumlah_ok = ?, jumlah_ng = ?, visual = ?, dimensi = ?, fungsi = ?, judgement = ?, dibuat = ?, diperiksa = ?, diketahui = ?, peserta = ? WHERE id_trial = ?";
+    $sql = "UPDATE trial SET tanggal = ?, jam_start = ?, jam_finish = ?, trial= ?, mc_name = ?, kapasitas = ?, cush_prec = ?, pin_cus_qtt = ?, die_height = ?, die_dim = ?, problem_tool = ?, analisa_sebab_tool = ?, pic_tool = ?, target_tool = ?, keterangan_tool = ?, counter_measure_tool = ?, problem_part = ?, analisa_sebab_part = ?, counter_measure_part = ?, PIC = ?, target = ?, keterangan = ?, kelengkapan_dies = ?, accuracy_part = ?, id_proses = ?, id_part = ?, id_customer = ?, qty_trial = ?, jumlah_ok = ?, jumlah_ng = ?, visual = ?, dimensi = ?, fungsi = ?, judgement = ?, dibuat = ?, diperiksa = ?, diketahui = ?, peserta = ? WHERE id_trial = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssssiiiiissssssssssiiiiissssssssssi", $tanggal, $jam_start, $jam_finish, $trial, $mc_name, $kapasitas, $cush_prec, $pin_cus_qtt, $die_height, $die_dim, $problem_tool, $analisa_sebab_tool, $counter_measure_tool, $problem_part, $analisa_sebab_part, $counter_measure_part, $PIC, $target, $keterangan, $kelengkapan_dies, $accuracy_part, $id_proses, $id_part, $id_customer, $qty_trial, $jumlah_ok, $jumlah_ng, $visual, $dimensi, $fungsi, $judgement, $dibuat, $diperiksa, $diketahui, $peserta, $id_trial);
+    $stmt->bind_param("sssssiiiiisssssssssssssiiiiissssssssssi", $tanggal, $jam_start, $jam_finish, $trial, $mc_name, $kapasitas, $cush_prec, $pin_cus_qtt, $die_height, $die_dim, $problem_tool, $analisa_sebab_tool, $pic_tool, $target_tool, $keterangan_tool,  $counter_measure_tool, $problem_part, $analisa_sebab_part, $counter_measure_part, $PIC, $target, $keterangan, $kelengkapan_dies, $accuracy_part, $id_proses, $id_part, $id_customer, $qty_trial, $jumlah_ok, $jumlah_ng, $visual, $dimensi, $fungsi, $judgement, $dibuat, $diperiksa, $diketahui, $peserta, $id_trial);
 
     if ($stmt->execute()) {
         $_SESSION['message'] = 'Trial updated successfully.';
@@ -665,11 +671,7 @@ if (isset($_GET['detail'])) {
                                                     </div>
                                                 </div>
                                                 
-                                                <div class="mb-3">
-                                                    <label for="kelengkapan_dies" class="form-label">Kelengkapan Dies</label>
-                                                    <input type="text" class="form-control" id="kelengkapan_dies" name="kelengkapan_dies" required
-                                                           value="<?php echo htmlspecialchars($edit_data['kelengkapan_dies']); ?>">
-                                                </div>
+                                           
                                             </div>
                                         </div>
 
@@ -713,6 +715,12 @@ if (isset($_GET['detail'])) {
                                                     <label for="keterangan_tool_editor" class="form-label">Keterangan Tool</label>
                                                     <div id="keterangan_tool_editor" style="height: 300px;"><?php echo htmlspecialchars_decode($edit_data['keterangan_tool'] ?? ''); ?></div>
                                                     <input type="hidden" name="keterangan_tool" id="keterangan_tool_input" value="<?php echo htmlspecialchars($edit_data['keterangan_tool'] ?? ''); ?>">
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="kelengkapan_dies" class="form-label">Kelengkapan Dies</label>
+                                                    <input type="text" class="form-control" id="kelengkapan_dies" name="kelengkapan_dies" required
+                                                           value="<?php echo htmlspecialchars($edit_data['kelengkapan_dies']); ?>">
                                                 </div>
                                             </div>
                                         </div>
@@ -839,55 +847,7 @@ if (isset($_GET['detail'])) {
                                         </div>
                                     </form>
 
-                                    <script>
-                                    document.addEventListener('DOMContentLoaded', function () {
-                                        // Configure Quill toolbar
-                                        const toolbarOptions = [
-                                            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-                                            ['bold', 'italic', 'underline', 'strike'],
-                                            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                                            [{ 'color': [] }, { 'background': [] }],
-                                            [{ 'align': [] }],
-                                            ['clean']
-                                        ];
-                                        
-                                        // Initialize Quill editors for edit form
-                                        const editorMappings = [
-                                            { editor: 'problem_tool_editor', input: 'problem_tool_input' },
-                                            { editor: 'analisa_sebab_tool_editor', input: 'analisa_sebab_tool_input' },
-                                            { editor: 'counter_measure_tool_editor', input: 'counter_measure_tool_input' },
-                                            { editor: 'pic_tool_editor', input: 'pic_tool_input' },
-                                            { editor: 'target_tool_editor', input: 'target_tool_input' },
-                                            { editor: 'keterangan_tool_editor', input: 'keterangan_tool_input' },
-                                            { editor: 'problem_part_editor', input: 'problem_part_input' },
-                                            { editor: 'analisa_sebab_part_editor', input: 'analisa_sebab_part_input' },
-                                            { editor: 'counter_measure_part_editor', input: 'counter_measure_part_input' },
-                                            { editor: 'PIC_editor', input: 'PIC_input' },
-                                            { editor: 'target_editor', input: 'target_input' },
-                                            { editor: 'keterangan_editor', input: 'keterangan_input' }
-                                        ];
-                                        
-                                        // Initialize all editors
-                                        editorMappings.forEach(mapping => {
-                                            const editorElement = document.getElementById(mapping.editor);
-                                            if (editorElement) {
-                                                const quill = new Quill('#' + mapping.editor, {
-                                                    theme: 'snow',
-                                                    modules: {
-                                                        toolbar: toolbarOptions
-                                                    }
-                                                });
-                                                
-                                                // When form is submitted, update hidden input with editor content
-                                                const form = document.getElementById('edit-form');
-                                                form.addEventListener('submit', function() {
-                                                    const input = document.getElementById(mapping.input);
-                                                    input.value = quill.root.innerHTML;
-                                                });
-                                            }
-                                        });
-                                    });
-                                    </script>
+                                 
                                         <?php else: ?>
 <!-- Button untuk menampilkan form -->
 <button class="btn btn-primary" id="show-insert-form">Insert New Trial</button>
@@ -1420,9 +1380,61 @@ if (form) {
     console.error('Elemen form tidak ditemukan.');
 }
 });
-
-
 </script>
+
+<script>
+         document.addEventListener('DOMContentLoaded', function () {
+             // Configure Quill toolbar
+                    const toolbarOptions = [
+                     [{ font: [] }, { size: [] }],
+                      ['bold', 'italic', 'underline', 'strike'],
+                     [{ color: [] }, { background: [] }],
+                                        [{ script: 'super' }, { script: 'sub' }],
+                                        [{ header: [false, 1, 2, 3, 4, 5, 6] }, 'blockquote', 'code-block'],
+                                        [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
+                                        ['direction', { align: [] }],
+                                        ['link', 'image', 'video'],
+                                        ['clean']
+                                        ];
+                                                                        
+                                        // Initialize Quill editors for edit form
+                                        const editorMappings = [
+                                            { editor: 'problem_tool_editor', input: 'problem_tool_input' },
+                                            { editor: 'analisa_sebab_tool_editor', input: 'analisa_sebab_tool_input' },
+                                            { editor: 'counter_measure_tool_editor', input: 'counter_measure_tool_input' },
+                                            { editor: 'pic_tool_editor', input: 'pic_tool_input' },
+                                            { editor: 'target_tool_editor', input: 'target_tool_input' },
+                                            { editor: 'keterangan_tool_editor', input: 'keterangan_tool_input' },
+                                            { editor: 'problem_part_editor', input: 'problem_part_input' },
+                                            { editor: 'analisa_sebab_part_editor', input: 'analisa_sebab_part_input' },
+                                            { editor: 'counter_measure_part_editor', input: 'counter_measure_part_input' },
+                                            { editor: 'PIC_editor', input: 'PIC_input' },
+                                            { editor: 'target_editor', input: 'target_input' },
+                                            { editor: 'keterangan_editor', input: 'keterangan_input' }
+                                        ];
+                                        
+                                        // Initialize all editors
+                                        editorMappings.forEach(mapping => {
+                                            const editorElement = document.getElementById(mapping.editor);
+                                            if (editorElement) {
+                                                const quill = new Quill('#' + mapping.editor, {
+                                                    theme: 'snow',
+                                                    modules: {
+                                                        toolbar: toolbarOptions
+                                                    }
+                                                });
+                                                
+                                                // When form is submitted, update hidden input with editor content
+                                                const form = document.getElementById('edit-form');
+                                                form.addEventListener('submit', function() {
+                                                    const input = document.getElementById(mapping.input);
+                                                    input.value = quill.root.innerHTML;
+                                                });
+                                            }
+                                        });
+                                    });
+                                    </script>
+
 </div>
 </div>
 </div>
