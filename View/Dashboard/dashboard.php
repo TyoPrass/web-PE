@@ -42,11 +42,11 @@ if (!isset($_SESSION['username'])) {
                 <!-- LOGO -->
                 <a href="index.html" class="logo text-center logo-light">
                     <span class="logo-lg">
-                        <img src="../../assets/images/logo.png" alt="" height="16">
+                        <img src="../../assets/images/logo_sjm.png" alt="" height="70">
                     </span>
                     <span class="logo-sm">
-                        <img src="../../assets/images/logo_sm.png" alt="" height="16">
-                    </span>
+                    <img src="../../assets/images/logo_sjm.png" alt="" height="70">
+                     </span>
                 </a>
 
                 <!-- LOGO -->

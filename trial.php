@@ -491,8 +491,10 @@ if (isset($_GET['detail'])) {
                                                                             </div>
                                                                         </div>
                                                                         
-                                                                        <h6 class="mt-3">Participants:</h6>
-                                                                        <p><?php echo htmlspecialchars($detail_data['peserta']); ?></p>
+                                                                        <h6 class="mt-3">Peserta:</h6>
+                                                                            <div class="border rounded p-3 bg-light">
+                                                                                <?php echo htmlspecialchars_decode($detail_data['peserta']); ?>
+                                                                            </div>
                                                                     </div>
                                                                 </div>
 
