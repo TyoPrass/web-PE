@@ -1551,9 +1551,9 @@ function exportPDF() {
                                 echo '<td>' . $row['PIC'] . '</td>';
                                 echo '<td>' . $row['Proses'] . '</td>';
                                 echo '<td>';
-                                echo '<a href="trial.php?detail=' . $row['id_trial'] . '" class="btn btn-info btn-sm"><i class="mdi mdi-eye"></i> Detail</a> ';
-                                echo '<a href="trial.php?edit=' . $row['id_trial'] . '" class="btn btn-warning btn-sm"><i class="mdi mdi-pencil"></i> Edit</a> ';
-                                echo '<a href="trial.php?delete=' . $row['id_trial'] . '" class="btn btn-danger btn-sm" onclick="return confirm(\'Are you sure you want to delete this item?\')"><i class="mdi mdi-trash-can"></i> Delete</a>';
+                                echo '<a href="trial.php?detail=' . $row['id_trial'] . '" class="btn btn-info btn-sm"><i class="mdi mdi-eye"></i> </a> ';
+                                echo '<a href="trial.php?edit=' . $row['id_trial'] . '" class="btn btn-warning btn-sm"><i class="mdi mdi-pencil"></i> </a> ';
+                                echo '<a href="trial.php?delete=' . $row['id_trial'] . '" class="btn btn-danger btn-sm" onclick="return confirm(\'Are you sure you want to delete this item?\')"><i class="mdi mdi-trash-can"></i> </a>';
                                 echo '</td>';
                                 echo '</tr>';
                             }
@@ -1705,7 +1705,6 @@ if (form) {
                                         });
                                     });
                                     </script>
-
 </div>
 </div>
 </div>
