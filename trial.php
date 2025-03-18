@@ -304,10 +304,9 @@ if (isset($_GET['detail'])) {
     font-weight: 500;
 }
 
-
-
-
 </style>
+
+
 </head>
 <body class="loading" data-layout-color="light" data-leftbar-theme="dark" data-layout-mode="fluid" data-rightbar-onstart="true">
     <div class="wrapper">
@@ -316,8 +315,7 @@ if (isset($_GET['detail'])) {
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-12">
-                            <div class="card">
-                                <div class="card-body">
+                            <div class="card-body">
                                     <?php if (isset($_SESSION['message'])): ?>
                                         <div class="alert alert-<?php echo $_SESSION['message_type']; ?> alert-dismissible fade show" role="alert">
                                             <?php echo $_SESSION['message']; ?>
@@ -593,83 +591,18 @@ if (isset($_GET['detail'])) {
                                                     </div>
                                                 </div>
                                             </div>
+                                            </div>
+                                        <div class="mt-4">
+                                            <a href="trial.php" class="btn btn-secondary">
+                                                <i class="mdi mdi-arrow-left"></i> Back
+                                            </a>
+                                            <a href="trial.php?edit=<?php echo $detail_data['id_trial']; ?>" class="btn btn-info">
+                                                <i class="mdi mdi-pencil"></i> Edit
+                                            </a>
+                                        </div>
                                         </div>
 
-<!-- CSS for print layout - will only apply when printing -->
-<style type="text/css" media="print">
-    @page {
-        size: A4 landscape;  /* F4 landscape orientation */
-        margin: 1cm;
-    }
-    
-    body {
-        width: 100%;
-        height: 100%;
-        margin: 0;
-        padding: 0;
-        background-color: #FFFFFF;
-        font-size: 12pt;
-    }
-    
-    .card {
-        box-shadow: none;
-        border: 1px solid #ddd;
-        margin-bottom: 10px;
-    }
-    
-    .no-print, .no-print * {
-        display: none !important;
-    }
-    
-    .content-page, .wrapper, .content {
-        margin: 0 !important;
-        padding: 0 !important;
-        width: 100% !important;
-    }
-    
-    .badge.bg-success {
-        color: #000 !important;
-        background-color: #c6e6c6 !important;
-        border: 1px solid #28a745;
-    }
-    
-    .badge.bg-danger {
-        color: #000 !important;
-        background-color: #f8d7da !important;
-        border: 1px solid #dc3545;
-    }
-    
-    h4.card-title {
-        font-size: 18pt;
-        font-weight: bold;
-        text-align: center;
-        margin-bottom: 20px;
-    }
-    
-    h5.card-title {
-        font-size: 14pt;
-        font-weight: bold;
-        border-bottom: 1px solid #333;
-        padding-bottom: 5px;
-    }
-    
-    table {
-        width: 100%;
-    }
-    
-    .timeline i {
-        display: none;
-    }
-    
-    .timeline-item {
-        padding-left: 0;
-        margin-bottom: 10px;
-    }
-    
-    .timeline-item:before {
-        display: none;
-    }
-</style>
+
 
 <!-- Script for printing and PDF export -->
 <script>
@@ -714,15 +647,7 @@ function exportPDF() {
     */
 }
 </script>
-                                        </div>
-                                        <div class="mt-4">
-                                            <a href="trial.php" class="btn btn-secondary">
-                                                <i class="mdi mdi-arrow-left"></i> Back
-                                            </a>
-                                            <a href="trial.php?edit=<?php echo $detail_data['id_trial']; ?>" class="btn btn-info">
-                                                <i class="mdi mdi-pencil"></i> Edit
-                                            </a>
-                                        </div>
+                                      
 
                                     <?php elseif (isset($_GET['edit'])): ?>
                                         <!-- Edit Form -->
@@ -1186,7 +1111,6 @@ function exportPDF() {
                                  
                                         <?php else: ?>
 <!-- Button untuk menampilkan form -->
-<button class="btn btn-primary" id="show-insert-form">Insert New Trial</button>
 
 <!-- Form Insert -->
 <form action="trial.php" method="post" id="insert-form" style="display: none;">
@@ -1547,25 +1471,30 @@ function exportPDF() {
             </div>
         </div>
     </div>
-    
-    <div class="mb-3">
-        <label for="dibuat" class="form-label">Dibuat Oleh</label>
-        <input type="text" class="form-control" id="dibuat" name="dibuat" required>
-    </div>
-    
-    <div class="mb-3">
-        <label for="diperiksa" class="form-label">Diperiksa Oleh</label>
-        <input type="text" class="form-control" id="diperiksa" name="diperiksa" required>
-    </div>
-    
-    <div class="mb-3">
-        <label for="diketahui" class="form-label">Diketahui Oleh</label>
-        <input type="text" class="form-control" id="diketahui" name="diketahui" required>
-    </div>
-    
-    <div class="mb-3">
-        <label for="peserta" class="form-label">Peserta</label>
-        <input type="text" class="form-control" id="peserta" name="peserta" required>
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">Approval</h5>
+            
+            <div class="mb-3">
+                <label for="dibuat" class="form-label">Dibuat Oleh</label>
+                <input type="text" class="form-control" id="dibuat" name="dibuat" required>
+            </div>
+            
+            <div class="mb-3">
+                <label for="diperiksa" class="form-label">Diperiksa Oleh</label>
+                <input type="text" class="form-control" id="diperiksa" name="diperiksa" required>
+            </div>
+            
+            <div class="mb-3">
+                <label for="diketahui" class="form-label">Diketahui Oleh</label>
+                <input type="text" class="form-control" id="diketahui" name="diketahui" required>
+            </div>
+            
+            <div class="mb-3">
+                <label for="peserta" class="form-label">Peserta</label>
+                <input type="text" class="form-control" id="peserta" name="peserta" required>
+            </div>
+        </div>
     </div>
     
     <div class="mb-3">
@@ -1578,59 +1507,65 @@ function exportPDF() {
 </div>
 </div>
 </div>
+<?php if (!isset($_GET['detail']) && !isset($_GET['edit'])): ?>
 <div class="row">
-<div class="col-12">
-<div class="card">
-<div class="card-body" id="table-container">
-    <h4 class="card-title">Trial List</h4>
-    <div class="table-responsive">
-        <table class="table table-centered table-nowrap table-hover mb-0">
-            <thead>
-                <tr>
-                    <th class="border-0">No</th>
-                    <th class="border-0">Nama Part</th>
-                    <th class="border-0">Jam Start</th>
-                    <th class="border-0">Jam Finish</th>
-                    <th class="border-0">M/C Name</th>
-                    <th class="border-0">Kapasitas</th>
-                    <th class="border-0">PIC</th>
-                    <th class="border-0">Proses</th>
-                    <th class="border-0">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                $sql = "SELECT t.*, a.nama_part, p.Proses  
-                FROM trial t 
-                JOIN proses p ON t.id_proses = p.id_proses 
-                JOIN data_part a ON t.id_part = a.id_part ORDER BY t.id_trial DESC";  
-        
-                $result = $conn->query($sql);
-                $no = 1;
-                while ($row = $result->fetch_assoc()) {
-                    echo '<tr>';
-                    echo '<td>' . $no++ . '</td>';
-                    echo '<td>' . $row['nama_part'] . '</td>';
-                    echo '<td>' . $row['jam_start'] . '</td>';
-                    echo '<td>' . $row['jam_finish'] . '</td>';
-                    echo '<td>' . $row['mc_name'] . '</td>';
-                    echo '<td>' . $row['kapasitas'] . '</td>';
-                    echo '<td>' . $row['PIC'] . '</td>';
-                    echo '<td>' . $row['Proses'] . '</td>';
-                    echo '<td>';
-                    echo '<a href="trial.php?detail=' . $row['id_trial'] . '" class="btn btn-info btn-sm">Detail</a>';
-                    echo '<a href="trial.php?edit=' . $row['id_trial'] . '" class="btn btn-warning btn-sm">Edit</a>';
-                    echo '<a href="trial.php?delete=' . $row['id_trial'] . '" class="btn btn-danger btn-sm" onclick="return confirm(\'Are you sure you want to delete this item?\')">Delete</a>';
-                    echo '</td>';
-                    echo '</tr>';
-                }
-                ?>
-            </tbody>
-        </table>
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body" id="table-container">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="card-title">Trial List</h4>
+                    <button class="btn btn-primary" id="show-insert-form">Insert New Trial</button>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-centered table-nowrap table-hover mb-0">
+                        <thead>
+                            <tr>
+                                <th class="border-0">No</th>
+                                <th class="border-0">Nama Part</th>
+                                <th class="border-0">Jam Start</th>
+                                <th class="border-0">Jam Finish</th>
+                                <th class="border-0">M/C Name</th>
+                                <th class="border-0">Kapasitas</th>
+                                <th class="border-0">PIC</th>
+                                <th class="border-0">Proses</th>
+                                <th class="border-0">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $sql = "SELECT t.*, a.nama_part, p.Proses  
+                            FROM trial t 
+                            JOIN proses p ON t.id_proses = p.id_proses 
+                            JOIN data_part a ON t.id_part = a.id_part ORDER BY t.id_trial DESC";  
+                    
+                            $result = $conn->query($sql);
+                            $no = 1;
+                            while ($row = $result->fetch_assoc()) {
+                                echo '<tr>';
+                                echo '<td>' . $no++ . '</td>';
+                                echo '<td>' . $row['nama_part'] . '</td>';
+                                echo '<td>' . $row['jam_start'] . '</td>';
+                                echo '<td>' . $row['jam_finish'] . '</td>';
+                                echo '<td>' . $row['mc_name'] . '</td>';
+                                echo '<td>' . $row['kapasitas'] . '</td>';
+                                echo '<td>' . $row['PIC'] . '</td>';
+                                echo '<td>' . $row['Proses'] . '</td>';
+                                echo '<td>';
+                                echo '<a href="trial.php?detail=' . $row['id_trial'] . '" class="btn btn-info btn-sm"><i class="mdi mdi-eye"></i> Detail</a> ';
+                                echo '<a href="trial.php?edit=' . $row['id_trial'] . '" class="btn btn-warning btn-sm"><i class="mdi mdi-pencil"></i> Edit</a> ';
+                                echo '<a href="trial.php?delete=' . $row['id_trial'] . '" class="btn btn-danger btn-sm" onclick="return confirm(\'Are you sure you want to delete this item?\')"><i class="mdi mdi-trash-can"></i> Delete</a>';
+                                echo '</td>';
+                                echo '</tr>';
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-</div>
-</div>
+<?php endif; ?>
 <script>
 document.getElementById('show-insert-form').addEventListener('click', function() {
     document.getElementById('insert-form').style.display = 'block';
