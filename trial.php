@@ -781,30 +781,144 @@ function exportPDF() {
                                                 <!-- Part No -->
                                                 <div class="mb-3">
                                                     <label for="part_no" class="form-label">Part No</label>
-                                                    <input type="text" class="form-control" id="part_no" name="part_no" required 
-                                                           value="<?php echo htmlspecialchars($edit_data['part_no']); ?>">
+                                                    <select class="form-select" id="part_no" name="part_no" required>
+                                                        <option value="">Select Part No</option>
+                                                        <?php
+                                                        // Get part_no from proses table based on selected id_part
+                                                        $sql_part_no = "SELECT DISTINCT p.part_no 
+                                                                        FROM proses p 
+                                                                        INNER JOIN data_part dp ON p.id_part = dp.id_part";
+                                                        if (!empty($edit_data['id_part'])) {
+                                                            $sql_part_no .= " WHERE p.id_part = " . $edit_data['id_part'];
+                                                        }
+                                                        $result_part_no = $conn->query($sql_part_no);
+                                                        while ($row = $result_part_no->fetch_assoc()) {
+                                                            $selected = ($edit_data['part_no'] == $row['part_no']) ? 'selected' : '';
+                                                            echo '<option value="' . htmlspecialchars($row['part_no']) . '" ' . $selected . '>' . htmlspecialchars($row['part_no']) . '</option>';
+                                                        }
+                                                        ?>
+                                                    </select>
                                                 </div>
 
-                                                <!-- Project -->
+                                                <!-- Nama Project -->
                                                 <div class="mb-3">
                                                     <label for="project" class="form-label">Nama Project</label>
-                                                    <input type="text" class="form-control" id="project" name="project" required
-                                                           value="<?php echo htmlspecialchars($edit_data['project']); ?>">
+                                                    <select class="form-select" id="project" name="project" required>
+                                                        <option value="">Nama Project</option>
+                                                        <?php
+                                                        // Get project from customer table based on selected id_customer
+                                                        $sql_project = "SELECT DISTINCT c.project 
+                                                                       FROM customer c 
+                                                                       INNER JOIN data_part dp ON c.id_customer = dp.id_customer";
+                                                        if (!empty($edit_data['id_customer'])) {
+                                                            $sql_project .= " WHERE c.id_customer = " . $edit_data['id_customer'];
+                                                        }
+                                                        $result_project = $conn->query($sql_project);
+                                                        while ($row = $result_project->fetch_assoc()) {
+                                                            $selected = ($edit_data['project'] == $row['project']) ? 'selected' : '';
+                                                            echo '<option value="' . htmlspecialchars($row['project']) . '" ' . $selected . '>' . htmlspecialchars($row['project']) . '</option>';
+                                                        }
+                                                        ?>
+                                                    </select>
                                                 </div>
 
                                                 <!-- Mat Spec -->
                                                 <div class="mb-3">
                                                     <label for="mat_spec" class="form-label">Mat Spec</label>
-                                                    <input type="text" class="form-control" id="mat_spec" name="mat_spec" required
-                                                           value="<?php echo htmlspecialchars($edit_data['mat_spec']); ?>">  
+                                                    <select class="form-select" id="mat_spec" name="mat_spec" required>
+                                                        <option value="">Mat Spec</option>
+                                                        <?php
+                                                        // Get mat_spec from proses table based on selected id_part
+                                                        $sql_mat_spec = "SELECT DISTINCT p.mat_spec 
+                                                                        FROM proses p 
+                                                                        INNER JOIN data_part dp ON p.id_part = dp.id_part";
+                                                        if (!empty($edit_data['id_part'])) {
+                                                            $sql_mat_spec .= " WHERE p.id_part = " . $edit_data['id_part'];
+                                                        }
+                                                        $result_mat_spec = $conn->query($sql_mat_spec);
+                                                        while ($row = $result_mat_spec->fetch_assoc()) {
+                                                            $selected = ($edit_data['mat_spec'] == $row['mat_spec']) ? 'selected' : '';
+                                                            echo '<option value="' . htmlspecialchars($row['mat_spec']) . '" ' . $selected . '>' . htmlspecialchars($row['mat_spec']) . '</option>';
+                                                        }
+                                                        ?>
+                                                    </select>
                                                 </div>
 
                                                 <!-- Mat Size -->
                                                 <div class="mb-3">
                                                     <label for="mat_size" class="form-label">Mat Size</label>
-                                                    <input type="text" class="form-control" id="mat_size" name="mat_size" required
-                                                           value="<?php echo htmlspecialchars($edit_data['mat_size']); ?>">
+                                                    <select class="form-select" id="mat_size" name="mat_size" required>
+                                                        <option value="">Mat Size</option>
+                                                        <?php
+                                                        // Get mat_size from proses table based on selected id_part
+                                                        $sql_mat_size = "SELECT DISTINCT p.mat_size 
+                                                                        FROM proses p 
+                                                                        INNER JOIN data_part dp ON p.id_part = dp.id_part";
+                                                        if (!empty($edit_data['id_part'])) {
+                                                            $sql_mat_size .= " WHERE p.id_part = " . $edit_data['id_part'];
+                                                        }
+                                                        $result_mat_size = $conn->query($sql_mat_size);
+                                                        while ($row = $result_mat_size->fetch_assoc()) {
+                                                            $selected = ($edit_data['mat_size'] == $row['mat_size']) ? 'selected' : '';
+                                                            echo '<option value="' . htmlspecialchars($row['mat_size']) . '" ' . $selected . '>' . htmlspecialchars($row['mat_size']) . '</option>';
+                                                        }
+                                                        ?>
+                                                    </select>
                                                 </div>
+
+                                                <script>
+                                                // Add event listener for id_part change to update related fields
+                                                document.getElementById('id_part').addEventListener('change', function() {
+                                                    const id_part = this.value;
+                                                    if (id_part) {
+                                                        // Update Part No dropdown
+                                                        fetch(`get_part_data.php?type=part_no&id_part=${id_part}`)
+                                                            .then(response => response.json())
+                                                            .then(data => {
+                                                                updateDropdown('part_no', data);
+                                                            });
+                                                        
+                                                        // Update Mat Spec dropdown
+                                                        fetch(`get_part_data.php?type=mat_spec&id_part=${id_part}`)
+                                                            .then(response => response.json())
+                                                            .then(data => {
+                                                                updateDropdown('mat_spec', data);
+                                                            });
+                                                        
+                                                        // Update Mat Size dropdown
+                                                        fetch(`get_part_data.php?type=mat_size&id_part=${id_part}`)
+                                                            .then(response => response.json())
+                                                            .then(data => {
+                                                                updateDropdown('mat_size', data);
+                                                            });
+                                                    }
+                                                });
+
+                                                // Add event listener for id_customer change to update project field
+                                                document.getElementById('id_customer').addEventListener('change', function() {
+                                                    const id_customer = this.value;
+                                                    if (id_customer) {
+                                                        fetch(`get_part_data.php?type=project&id_customer=${id_customer}`)
+                                                            .then(response => response.json())
+                                                            .then(data => {
+                                                                updateDropdown('project', data);
+                                                            });
+                                                    }
+                                                });
+
+                                                // Helper function to update dropdowns
+                                                function updateDropdown(dropdownId, data) {
+                                                    const dropdown = document.getElementById(dropdownId);
+                                                    dropdown.innerHTML = '<option value="">Select ' + dropdownId.replace('_', ' ') + '</option>';
+                                                    data.forEach(item => {
+                                                        const option = document.createElement('option');
+                                                        option.value = item;
+                                                        option.textContent = item;
+                                                        dropdown.appendChild(option);
+                                                    });
+                                                }
+                                                </script>
+
                                             </div>
                                         </div>
 
