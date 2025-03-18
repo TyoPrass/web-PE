@@ -329,169 +329,392 @@ if (isset($_GET['detail'])) {
                                         <?php if (isset($_GET['detail'])): ?>
                                         <!-- Detail View -->
                                         <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="mb-3">
-                                                    <h6 class="text-uppercase fw-bold">Trial Information</h6>
-                                                    <table class="table table-sm">
-                                                    <tr>
-                                                        <th>Nama Customer</th>
-                                                        <td>: <?php echo htmlspecialchars($detail_data['nama_customer']); ?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Nama Part</th>
-                                                        <td>: <?php echo htmlspecialchars($detail_data['nama_part']); ?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Proses</th>
-                                                        <td>: <?php echo htmlspecialchars($detail_data['Proses']); ?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Part No</th>
-                                                        <td>: <?php echo htmlspecialchars($detail_data['part_no']); ?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Nama Project</th>
-                                                        <td>: <?php echo htmlspecialchars($detail_data['project']); ?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Mat Spec</th>
-                                                        <td>: <?php echo htmlspecialchars($detail_data['mat_spec']); ?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Mat Size</th>
-                                                        <td>: <?php echo htmlspecialchars($detail_data['mat_size']); ?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Trial</th>
-                                                        <td>: <?php echo htmlspecialchars($detail_data['trial']); ?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Tanggal</th>
-                                                        <td>: <?php echo htmlspecialchars($detail_data['tanggal']); ?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Jam Start</th>
-                                                        <td>: <?php echo htmlspecialchars($detail_data['jam_start']); ?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Jam Finish</th>
-                                                        <td>: <?php echo htmlspecialchars($detail_data['jam_finish']); ?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>M/C Name</th>
-                                                        <td>: <?php echo htmlspecialchars($detail_data['mc_name']); ?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Kapasitas</th>
-                                                        <td>: <?php echo htmlspecialchars($detail_data['kapasitas']); ?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Cush Prec</th>
-                                                        <td>: <?php echo htmlspecialchars($detail_data['cush_prec']); ?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Pin Cus Qtt</th>
-                                                        <td>: <?php echo htmlspecialchars($detail_data['pin_cus_qtt']); ?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Die Height</th>
-                                                        <td>: <?php echo htmlspecialchars($detail_data['die_height']); ?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Die Dim</th>
-                                                        <td>: <?php echo htmlspecialchars($detail_data['die_dim']); ?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Problem Tool</th>
-                                                        <td>: <?php echo htmlspecialchars($detail_data['problem_tool']); ?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Analisa Sebab Tool</th>
-                                                        <td>: <?php echo htmlspecialchars($detail_data['analisa_sebab_tool']); ?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Counter Measure Tool</th>
-                                                        <td>: <?php echo htmlspecialchars($detail_data['counter_measure_tool']); ?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Problem Part</th>
-                                                        <td>: <?php echo htmlspecialchars($detail_data['problem_part']); ?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Analisa Sebab Part</th>
-                                                        <td>: <?php echo htmlspecialchars($detail_data['analisa_sebab_part']); ?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Counter Measure Part</th>
-                                                        <td>: <?php echo htmlspecialchars($detail_data['counter_measure_part']); ?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>PIC</th>
-                                                        <td>: <?php echo htmlspecialchars($detail_data['PIC']); ?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Target</th>
-                                                        <td>: <?php echo htmlspecialchars($detail_data['target']); ?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Keterangan</th>
-                                                        <td>: <?php echo htmlspecialchars($detail_data['keterangan']); ?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Kelengkapan Dies</th>
-                                                        <td>: <?php echo htmlspecialchars($detail_data['kelengkapan_dies']); ?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Accuracy Part</th>
-                                                        <td>: <?php echo htmlspecialchars($detail_data['accuracy_part']); ?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Qty Trial/Total Produksi</th>
-                                                        <td>: <?php echo htmlspecialchars($detail_data['qty_trial']); ?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Jumlah OK</th>
-                                                        <td>: <?php echo htmlspecialchars($detail_data['jumlah_ok']); ?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Jumlah NG</th>
-                                                        <td>: <?php echo htmlspecialchars($detail_data['jumlah_ng']); ?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Visual</th>
-                                                        <td>: <?php echo htmlspecialchars($detail_data['visual']); ?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Dimensi</th>
-                                                        <td>: <?php echo htmlspecialchars($detail_data['dimensi']); ?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Fungsi</th>
-                                                        <td>: <?php echo htmlspecialchars($detail_data['fungsi']); ?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Judgement</th>
-                                                        <td>: <?php echo htmlspecialchars($detail_data['judgement']); ?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Dibuat Oleh</th>
-                                                        <td>: <?php echo htmlspecialchars($detail_data['dibuat']); ?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Diperiksa Oleh</th>
-                                                        <td>: <?php echo htmlspecialchars($detail_data['diperiksa']); ?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Diketahui Oleh</th>
-                                                        <td>: <?php echo htmlspecialchars($detail_data['diketahui']); ?></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Peserta</th>
-                                                        <td>: <?php echo htmlspecialchars($detail_data['peserta']); ?></td>
-                                                    </tr>
-                                                </table>
+                                            <div class="col-12 mb-3">
+                                                <button class="btn btn-primary" onclick="printReport()">
+                                                    <i class="mdi mdi-printer"></i> Print Report
+                                                </button>
+                                                <button class="btn btn-success" onclick="exportPDF()">
+                                                    <i class="mdi mdi-file-pdf"></i> Save as PDF
+                                                </button>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="card">
+                                                    <div class="card-body" id="printable-content">
+                                                        <h4 class="card-title">Trial Details</h4>
+                                                        
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="card mb-3">
+                                                                    <div class="card-body">
+                                                                        <h5 class="card-title">Basic Information</h5>
+                                                                        <table class="table table-sm table-borderless">
+                                                                            <tr>
+                                                                                <th style="width: 35%;">Customer</th>
+                                                                                <td>: <?php echo htmlspecialchars($detail_data['nama_customer']); ?></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <th>Part Name</th>
+                                                                                <td>: <?php echo htmlspecialchars($detail_data['nama_part']); ?></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <th>Process</th>
+                                                                                <td>: <?php echo htmlspecialchars($detail_data['Proses']); ?></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <th>Part No</th>
+                                                                                <td>: <?php echo htmlspecialchars($detail_data['part_no']); ?></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <th>Project</th>
+                                                                                <td>: <?php echo htmlspecialchars($detail_data['project']); ?></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <th>Material Specification</th>
+                                                                                <td>: <?php echo htmlspecialchars($detail_data['mat_spec']); ?></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <th>Material Size</th>
+                                                                                <td>: <?php echo htmlspecialchars($detail_data['mat_size']); ?></td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="card mb-3">
+                                                                    <div class="card-body">
+                                                                        <h5 class="card-title">Trial Information</h5>
+                                                                        <table class="table table-sm table-borderless">
+                                                                            <tr>
+                                                                                <th style="width: 35%;">Trial</th>
+                                                                                <td>: <?php echo htmlspecialchars($detail_data['trial']); ?></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <th>Date</th>
+                                                                                <td>: <?php echo htmlspecialchars($detail_data['tanggal']); ?></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <th>Start Time</th>
+                                                                                <td>: <?php echo htmlspecialchars($detail_data['jam_start']); ?></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <th>Finish Time</th>
+                                                                                <td>: <?php echo htmlspecialchars($detail_data['jam_finish']); ?></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <th>Machine Name</th>
+                                                                                <td>: <?php echo htmlspecialchars($detail_data['mc_name']); ?></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <th>Capacity</th>
+                                                                                <td>: <?php echo htmlspecialchars($detail_data['kapasitas']); ?></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <th>Cush Prec</th>
+                                                                                <td>: <?php echo htmlspecialchars($detail_data['cush_prec']); ?></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <th>Pin Cus Qtt</th>
+                                                                                <td>: <?php echo htmlspecialchars($detail_data['pin_cus_qtt']); ?></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <th>Die Height</th>
+                                                                                <td>: <?php echo htmlspecialchars($detail_data['die_height']); ?></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <th>Die Dimension</th>
+                                                                                <td>: <?php echo htmlspecialchars($detail_data['die_dim']); ?></td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                                
+                                                                <div class="card mb-3">
+                                                                    <div class="card-body">
+                                                                        <h5 class="card-title">Production Results</h5>
+                                                                        <table class="table table-sm table-borderless">
+                                                                            <tr>
+                                                                                <th style="width: 35%;">Qty Trial</th>
+                                                                                <td>: <?php echo htmlspecialchars($detail_data['qty_trial']); ?></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <th>OK Parts</th>
+                                                                                <td>: <?php echo htmlspecialchars($detail_data['jumlah_ok']); ?></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <th>NG Parts</th>
+                                                                                <td>: <?php echo htmlspecialchars($detail_data['jumlah_ng']); ?></td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                                
+                                                                <div class="card mb-3">
+                                                                    <div class="card-body">
+                                                                        <h5 class="card-title">Final Assessment</h5>
+                                                                        <table class="table table-sm table-borderless">
+                                                                            <tr>
+                                                                                <th style="width: 35%;">Visual</th>
+                                                                                <td>: <span class="badge bg-<?php echo ($detail_data['visual'] == 'OK') ? 'success' : 'danger'; ?>"><?php echo $detail_data['visual']; ?></span></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <th>Dimension</th>
+                                                                                <td>: <span class="badge bg-<?php echo ($detail_data['dimensi'] == 'OK') ? 'success' : 'danger'; ?>"><?php echo $detail_data['dimensi']; ?></span></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <th>Function</th>
+                                                                                <td>: <span class="badge bg-<?php echo ($detail_data['fungsi'] == 'OK') ? 'success' : 'danger'; ?>"><?php echo $detail_data['fungsi']; ?></span></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <th>Final Judgement</th>
+                                                                                <td>: <span class="badge bg-<?php echo ($detail_data['judgement'] == 'OK') ? 'success' : 'danger'; ?>"><?php echo $detail_data['judgement']; ?></span></td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+
+                                                                   <div class="card mb-3">
+                                                                    <div class="card-body">
+                                                                        <h5 class="card-title">Approvals</h5>
+                                                                        <div class="timeline">
+                                                                            <div class="timeline-item">
+                                                                                <i class="mdi mdi-account-check text-primary"></i>
+                                                                                <span class="time">Created by</span>
+                                                                                <p><?php echo htmlspecialchars($detail_data['dibuat']); ?></p>
+                                                                            </div>
+                                                                            <div class="timeline-item">
+                                                                                <i class="mdi mdi-clipboard-check text-info"></i>
+                                                                                <span class="time">Checked by</span>
+                                                                                <p><?php echo htmlspecialchars($detail_data['diperiksa']); ?></p>
+                                                                            </div>
+                                                                            <div class="timeline-item">
+                                                                                <i class="mdi mdi-shield-check text-success"></i>
+                                                                                <span class="time">Approved by</span>
+                                                                                <p><?php echo htmlspecialchars($detail_data['diketahui']); ?></p>
+                                                                            </div>
+                                                                        </div>
+                                                                        
+                                                                        <h6 class="mt-3">Participants:</h6>
+                                                                        <p><?php echo htmlspecialchars($detail_data['peserta']); ?></p>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                            
+                                                            <div class="col-md-6">
+                                                                <div class="card mb-3">
+                                                                    <div class="card-body">
+                                                                        <h5 class="card-title">Tool Problems</h5>
+                                                                        <div class="mb-3">
+                                                                            <h6 class="mt-3">Problem Description:</h6>
+                                                                            <div class="border rounded p-3 bg-light">
+                                                                                <?php echo htmlspecialchars_decode($detail_data['problem_tool']); ?>
+                                                                            </div>
+                                                                            
+                                                                            <h6 class="mt-3">Root Cause Analysis:</h6>
+                                                                            <div class="border rounded p-3 bg-light">
+                                                                                <?php echo htmlspecialchars_decode($detail_data['analisa_sebab_tool']); ?>
+                                                                            </div>
+                                                                            
+                                                                            <h6 class="mt-3">Countermeasures:</h6>
+                                                                            <div class="border rounded p-3 bg-light">
+                                                                                <?php echo htmlspecialchars_decode($detail_data['counter_measure_tool']); ?>
+                                                                            </div>
+                                                                            
+                                                                            <h6 class="mt-3">PIC:</h6>
+                                                                            <div class="border rounded p-3 bg-light">
+                                                                                <?php echo htmlspecialchars_decode($detail_data['pic_tool']); ?>
+                                                                            </div>
+                                                                            
+                                                                            <h6 class="mt-3">Target:</h6>
+                                                                            <div class="border rounded p-3 bg-light">
+                                                                                <?php echo htmlspecialchars_decode($detail_data['target_tool']); ?>
+                                                                            </div>
+                                                                            
+                                                                            <h6 class="mt-3">Remarks:</h6>
+                                                                            <div class="border rounded p-3 bg-light">
+                                                                                <?php echo htmlspecialchars_decode($detail_data['keterangan_tool']); ?>
+                                                                            </div>
+
+                                                                            <h6 class="mt-3">Kelengkapan Dies:</h6>
+                                                                            <div class="border rounded p-3 bg-light">
+                                                                                <?php echo htmlspecialchars_decode($detail_data['kelengkapan_dies']); ?>
+                                                                            </div>
+                                                                            
+                                                                      
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                
+                                                                <div class="card mb-3">
+                                                                    <div class="card-body">
+                                                                        <h5 class="card-title">Part Problems</h5>
+                                                                        <div class="mb-3">
+                                                                            <h6 class="mt-3">Problem Description:</h6>
+                                                                            <div class="border rounded p-3 bg-light">
+                                                                                <?php echo htmlspecialchars_decode($detail_data['problem_part']); ?>
+                                                                            </div>
+                                                                            
+                                                                            <h6 class="mt-3">Root Cause Analysis:</h6>
+                                                                            <div class="border rounded p-3 bg-light">
+                                                                                <?php echo htmlspecialchars_decode($detail_data['analisa_sebab_part']); ?>
+                                                                            </div>
+                                                                            
+                                                                            <h6 class="mt-3">Countermeasures:</h6>
+                                                                            <div class="border rounded p-3 bg-light">
+                                                                                <?php echo htmlspecialchars_decode($detail_data['counter_measure_part']); ?>
+                                                                            </div>
+                                                                            
+                                                                            <h6 class="mt-3">PIC:</h6>
+                                                                            <div class="border rounded p-3 bg-light">
+                                                                                <?php echo htmlspecialchars_decode($detail_data['PIC']); ?>
+                                                                            </div>
+                                                                            
+                                                                            <h6 class="mt-3">Target:</h6>
+                                                                            <div class="border rounded p-3 bg-light">
+                                                                                <?php echo htmlspecialchars_decode($detail_data['target']); ?>
+                                                                            </div>
+                                                                            
+                                                                            <h6 class="mt-3">Remarks:</h6>
+                                                                            <div class="border rounded p-3 bg-light">
+                                                                                <?php echo htmlspecialchars_decode($detail_data['keterangan']); ?>
+                                                                            </div>
+                                                                            
+                                                                            <h6 class="mt-3">Accuracy Part :</h6>
+                                                                            <div class="border rounded p-3 bg-light">
+                                                                                <?php echo htmlspecialchars_decode($detail_data['accuracy_part']); ?>
+                                                                            </div>
+                                                                            
+                                                                            <h6 class="mt-3">Part Accuracy:</h6>
+                                                                            <p><?php echo htmlspecialchars($detail_data['accuracy_part']); ?></p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
+                                        </div>
+
+<!-- CSS for print layout - will only apply when printing -->
+<style type="text/css" media="print">
+    @page {
+        size: A4 landscape;  /* F4 landscape orientation */
+        margin: 1cm;
+    }
+    
+    body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        background-color: #FFFFFF;
+        font-size: 12pt;
+    }
+    
+    .card {
+        box-shadow: none;
+        border: 1px solid #ddd;
+        margin-bottom: 10px;
+    }
+    
+    .no-print, .no-print * {
+        display: none !important;
+    }
+    
+    .content-page, .wrapper, .content {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+    }
+    
+    .badge.bg-success {
+        color: #000 !important;
+        background-color: #c6e6c6 !important;
+        border: 1px solid #28a745;
+    }
+    
+    .badge.bg-danger {
+        color: #000 !important;
+        background-color: #f8d7da !important;
+        border: 1px solid #dc3545;
+    }
+    
+    h4.card-title {
+        font-size: 18pt;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    
+    h5.card-title {
+        font-size: 14pt;
+        font-weight: bold;
+        border-bottom: 1px solid #333;
+        padding-bottom: 5px;
+    }
+    
+    table {
+        width: 100%;
+    }
+    
+    .timeline i {
+        display: none;
+    }
+    
+    .timeline-item {
+        padding-left: 0;
+        margin-bottom: 10px;
+    }
+    
+    .timeline-item:before {
+        display: none;
+    }
+</style>
+
+<!-- Script for printing and PDF export -->
+<script>
+function printReport() {
+    // Prepare for printing
+    window.onbeforeprint = function() {
+        // Add any preparation you need before printing
+        document.body.classList.add('printing');
+    };
+    
+    window.onafterprint = function() {
+        // Cleanup after printing
+        document.body.classList.remove('printing');
+    };
+    
+    // Trigger print dialog
+    window.print();
+}
+
+function exportPDF() {
+    // Show loading message
+    alert("Preparing PDF for download...");
+    
+    // In a real implementation, you would use a library like html2pdf.js or jsPDF
+    // For now, we'll just use the browser's print to PDF functionality
+    printReport();
+    
+    /* 
+    // If you want to implement a proper PDF export, you would do something like:
+    
+    // Using html2pdf.js
+    html2pdf()
+        .set({
+            margin: 10,
+            filename: 'trial_report_<?php echo $detail_data['id_trial']; ?>.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2, letterRendering: true },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' }
+        })
+        .from(document.getElementById('printable-content'))
+        .save();
+    */
+}
+</script>
                                         </div>
                                         <div class="mt-4">
                                             <a href="trial.php" class="btn btn-secondary">
