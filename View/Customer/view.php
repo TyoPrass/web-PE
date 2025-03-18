@@ -1,36 +1,79 @@
 <?php
+include_once('Database/koneksi.php');
 session_start();
-
-// Cek apakah pengguna sudah login, jika tidak maka alihkan ke halaman login
-if (!isset($_SESSION['username'])) {
-    header("Location: ../../login.php"); // Redirect ke halaman login
-    exit();
-}
-
-/*          
-*/
-
+include('action.php');
 ?>
-
 
 
 <!DOCTYPE html>
 <html lang="en">
     
-<!-- Mirrored from coderthemes.com/hyper/saas/dashboard-projects.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 29 Jul 2022 10:20:35 GMT -->
+<!-- Mirrored from coderthemes.com/hyper/saas/apps-projects-details.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 29 Jul 2022 10:21:06 GMT -->
 <head>
         <meta charset="utf-8" />
-        <title>Project Dashboard | Hyper - Responsive Bootstrap 5 Admin Dashboard</title>
+        <title>Project Overview | Hyper - Responsive Bootstrap 5 Admin Dashboard</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
         <meta content="Coderthemes" name="author" />
         <!-- App favicon -->
-        <link rel="shortcut icon" href="assets/images/favicon.ico">
+        <link rel="shortcut icon" href="../../assets/images/favicon.ico">
 
         <!-- App css -->
         <link href="../../assets/css/icons.min.css" rel="stylesheet" type="text/css" />
         <link href="../../assets/css/app.min.css" rel="stylesheet" type="text/css" id="app-style"/>
+        <link rel="shortcut icon" href="../../assets/images/favicon.ico">
 
+
+    <style>
+.timeline {
+    position: relative;
+    padding: 10px 0;
+}
+
+.timeline-item {
+    position: relative;
+    padding-left: 30px;
+    margin-bottom: 15px;
+}
+
+.timeline-item:before {
+    content: '';
+    position: absolute;
+    left: 11px;
+    top: 0;
+    height: 100%;
+    width: 2px;
+    background: #e3e6f0;
+}
+
+.timeline-item:last-child:before {
+    display: none;
+}
+
+.timeline-item i {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border-radius: 50%;
+}
+
+.timeline-item .time {
+    display: block;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.timeline-item p {
+    margin: 0;
+    font-weight: 500;
+}
+</style>
     </head>
 
     <body class="loading" data-layout-color="light" data-leftbar-theme="dark" data-layout-mode="fluid" data-rightbar-onstart="true">
@@ -42,11 +85,11 @@ if (!isset($_SESSION['username'])) {
                 <!-- LOGO -->
                 <a href="index.html" class="logo text-center logo-light">
                     <span class="logo-lg">
-                        <img src="../../assets/images/logo_sjm.png" alt="" height="70">
+                        <img src="../../assets/images/logo.png" alt="" height="16">
                     </span>
                     <span class="logo-sm">
-                    <img src="../../assets/images/logo_sjm.png" alt="" height="70">
-                     </span>
+                        <img src="../../assets/images/logo_sm.png" alt="" height="16">
+                    </span>
                 </a>
 
                 <!-- LOGO -->
@@ -67,13 +110,30 @@ if (!isset($_SESSION['username'])) {
                         <li class="side-nav-title side-nav-item">Navigation</li>
 
                         <li class="side-nav-item">
-                            <a data-bs-toggle="" href="#sidebarDashboards" aria-expanded="false" aria-controls="sidebarDashboards" class="side-nav-link">
+                            <a data-bs-toggle="collapse" href="#sidebarDashboards" aria-expanded="false" aria-controls="sidebarDashboards" class="side-nav-link">
                                 <i class="uil-home-alt"></i>
+                                <span class="badge bg-success float-end">4</span>
                                 <span> Dashboards </span>
                             </a>
+                            <div class="collapse" id="sidebarDashboards">
+                                <ul class="side-nav-second-level">
+                                    <li>
+                                        <a href="dashboard-analytics.html">Analytics</a>
+                                    </li>
+                                    <li>
+                                        <a href="index.html">Ecommerce</a>
+                                    </li>
+                                    <li>
+                                        <a href="dashboard-projects.html">Projects</a>
+                                    </li>
+                                    <li>
+                                        <a href="dashboard-wallet.html">E-Wallet <span class="badge rounded bg-danger font-10 float-end">New</span></a>
+                                    </li>
+                                </ul>
+                            </div>
                         </li>
 
-                        <li class="side-nav-title side-nav-item">PROJECT & SCHEDULE</li>
+                        <li class="side-nav-title side-nav-item">Apps</li>
 
                         <li class="side-nav-item">
                             <a href="apps-calendar.html" class="side-nav-link">
@@ -178,13 +238,12 @@ if (!isset($_SESSION['username'])) {
                             </a>
                             <div class="collapse" id="sidebarProjects">
                                 <ul class="side-nav-second-level">
-                                <li>
-                                        <a href="../Customer/view.php">Details</a>
+                                    <li>
+                                        <a href="apps-projects-list.html">List</a>
                                     </li>
                                     <li>
-                                        <a href="../Project/tambah_part.php">Project</a>
+                                        <a href="apps-projects-details.html">Details</a>
                                     </li>
-                                  
                                     <li>
                                         <a href="apps-projects-gantt.html">Gantt <span class="badge rounded-pill bg-light text-dark font-10 float-end">New</span></a>
                                     </li>
@@ -281,7 +340,7 @@ if (!isset($_SESSION['username'])) {
                                                     <a href="pages-logout.html">Logout</a>
                                                 </li>
                                                 <li>
-                                                    <a href="../../login.php">Logout 2</a>
+                                                    <a href="pages-logout-2.html">Logout 2</a>
                                                 </li>
                                                 <li>
                                                     <a href="pages-recoverpw.html">Recover Password</a>
@@ -967,7 +1026,7 @@ if (!isset($_SESSION['username'])) {
                                         <img src="../../assets/images/users/avatar-1.jpg" alt="user-image" class="rounded-circle">
                                     </span>
                                     <span>
-                                        <span class="account-user-name"> <?= $_SESSION['username']; ?></span>
+                                        <span class="account-user-name">Dominic Keller</span>
                                         <span class="account-position">Founder</span>
                                     </span>
                                 </a>
@@ -978,7 +1037,31 @@ if (!isset($_SESSION['username'])) {
                                     </div>
 
                                     <!-- item-->
-                                    <a href="../../login.php" class="dropdown-item notify-item">
+                                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                        <i class="mdi mdi-account-circle me-1"></i>
+                                        <span>My Account</span>
+                                    </a>
+
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                        <i class="mdi mdi-account-edit me-1"></i>
+                                        <span>Settings</span>
+                                    </a>
+
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                        <i class="mdi mdi-lifebuoy me-1"></i>
+                                        <span>Support</span>
+                                    </a>
+
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                        <i class="mdi mdi-lock-outline me-1"></i>
+                                        <span>Lock Screen</span>
+                                    </a>
+
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item notify-item">
                                         <i class="mdi mdi-logout me-1"></i>
                                         <span>Logout</span>
                                     </a>
@@ -1061,296 +1144,154 @@ if (!isset($_SESSION['username'])) {
                         <!-- start page title -->
                         <div class="row">
                             <div class="col-12">
-                               
-                                    <h4 class="page-title">Projects</h4>
+                                <div class="page-title-box">
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Hyper</a></li>
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Projects</a></li>
+                                            <li class="breadcrumb-item active">Project Details</li>
+                                        </ol>
+                                    </div>
+                                    <h4 class="page-title">Project Details</h4>
                                 </div>
                             </div>
                         </div>
                         <!-- end page title --> 
 
                         <div class="row">
-                            <div class="col-12">
-                                <div class="card widget-inline">
-                                    <div class="card-body p-0">
-                                        <div class="row g-0">
-                                            <div class="col-sm-6 col-lg-3">
-                                                <div class="card shadow-none m-0">
-                                                    <div class="card-body text-center">
-                                                        <i class="dripicons-briefcase text-muted" style="font-size: 24px;"></i>
-                                                        <h3><span>29</span></h3>
-                                                        <p class="text-muted font-15 mb-0">Total Projects</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                
-                                            <div class="col-sm-6 col-lg-3">
-                                                <div class="card shadow-none m-0 border-start">
-                                                    <div class="card-body text-center">
-                                                        <i class="dripicons-checklist text-muted" style="font-size: 24px;"></i>
-                                                        <h3><span>715</span></h3>
-                                                        <p class="text-muted font-15 mb-0">Total Tasks</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                
-                                            <div class="col-sm-6 col-lg-3">
-                                                <div class="card shadow-none m-0 border-start">
-                                                    <div class="card-body text-center">
-                                                        <i class="dripicons-user-group text-muted" style="font-size: 24px;"></i>
-                                                        <h3><span>31</span></h3>
-                                                        <p class="text-muted font-15 mb-0">Members</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                
-                                            <div class="col-sm-6 col-lg-3">
-                                                <div class="card shadow-none m-0 border-start">
-                                                    <div class="card-body text-center">
-                                                        <i class="dripicons-graph-line text-muted" style="font-size: 24px;"></i>
-                                                        <h3><span>93%</span> </h3>
-                                                        <p class="text-muted font-15 mb-0">Productivity</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                
-                                        </div> <!-- end row -->
-                                    </div>
-                                </div> <!-- end card-box-->
-                            </div> <!-- end col-->
-                        </div>
-                        <!-- end row-->
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <?php if (isset($_SESSION['message'])): ?>
+                                        <div class="alert alert-<?php echo $_SESSION['message_type']; ?> alert-dismissible fade show" role="alert">
+                                            <?php echo $_SESSION['message']; ?>
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        </div>
+                                        <?php unset($_SESSION['message']); unset($_SESSION['message_type']); ?>
+                                    <?php endif; ?>
 
-
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <h4 class="header-title">Project Status</h4>
-                                            <div class="dropdown">
-                                                <a href="#" class="dropdown-toggle arrow-none card-drop" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="mdi mdi-dots-vertical"></i>
-                                                </a>
-                                                <div class="dropdown-menu dropdown-menu-end">
-                                                    <!-- item-->
-                                                    <a href="javascript:void(0);" class="dropdown-item">Weekly Report</a>
-                                                    <!-- item-->
-                                                    <a href="javascript:void(0);" class="dropdown-item">Monthly Report</a>
-                                                    <!-- item-->
-                                                    <a href="javascript:void(0);" class="dropdown-item">Action</a>
-                                                    <!-- item-->
-                                                    <a href="javascript:void(0);" class="dropdown-item">Settings</a>
+                                    <?php if (isset($_GET['detail'])): ?>
+                                        <!-- Detail View -->
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <h6 class="text-uppercase fw-bold">Customer Information</h6>
+                                                    <table class="table table-sm">
+                                                        <tr>
+                                                            <th width="130">ID Customer</th>
+                                                            <td>: <?php echo htmlspecialchars($detail_data['id_customer']); ?></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Name</th>
+                                                            <td>: <?php echo htmlspecialchars($detail_data['nama_customer']); ?></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Project</th>
+                                                            <td>: <?php echo htmlspecialchars($detail_data['project']); ?></td>
+                                                        </tr>
+                                                    </table>
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <div class="mt-3 mb-4 chartjs-chart" style="height: 207px;">
-                                            <canvas id="project-status-chart" data-colors="#0acf97,#727cf5,#fa5c7c"></canvas>
+                                        <div class="mt-4">
+                                            <a href="view.php" class="btn btn-secondary">
+                                                <i class="mdi mdi-arrow-left"></i> Back
+                                            </a>
+                                            <a href="view.php?edit=<?php echo $detail_data['id_customer']; ?>" class="btn btn-info">
+                                                <i class="mdi mdi-pencil"></i> Edit
+                                            </a>
                                         </div>
-
-                                        <div class="row text-center mt-2 py-2">
-                                            <div class="col-sm-4">
-                                                <div class="my-2 my-sm-0">
-                                                        <i class="mdi mdi-trending-up text-success mt-3 h3"></i>
-                                                    <h3 class="fw-normal">
-                                                        <span>64%</span>
-                                                    </h3>
-                                                    <p class="text-muted mb-0">Completed</p>
-                                                </div>
-                                                
+                                    <?php elseif (isset($_GET['edit'])): ?>
+                                        <!-- Edit Form -->
+                                        <form action="action.php" method="post">
+                                            <input type="hidden" name="id_customer" value="<?php echo htmlspecialchars($edit_data['id_customer']); ?>">
+                                            <input type="hidden" name="update" value="true">
+                                            <div class="mb-3">
+                                                <label for="nama_customer" class="form-label">Customer Name</label>
+                                                <input type="text" class="form-control" id="nama_customer" name="nama_customer" value="<?php echo htmlspecialchars($edit_data['nama_customer']); ?>" required>
                                             </div>
-                                            <div class="col-sm-4">
-                                                <div class="my-2 my-sm-0">
-                                                        <i class="mdi mdi-trending-down text-primary mt-3 h3"></i>
-                                                    <h3 class="fw-normal">
-                                                        <span>26%</span>
-                                                    </h3>
-                                                    <p class="text-muted mb-0"> In-progress</p>
-                                                </div>
-                                                
+                                            <div class="mb-3">
+                                                <label for="project" class="form-label">Project</label>
+                                                <input type="text" class="form-control" id="project" name="project" value="<?php echo htmlspecialchars($edit_data['project']); ?>" required>
                                             </div>
-                                            <div class="col-sm-4">
-                                                <div class="my-2 my-sm-0">
-                                                        <i class="mdi mdi-trending-down text-danger mt-3 h3"></i>
-                                                    <h3 class="fw-normal">
-                                                        <span>10%</span>
-                                                    </h3>
-                                                    <p class="text-muted mb-0"> Behind</p>
-                                                </div>
-                                                
+                                            <button type="submit" class="btn btn-primary">Update</button>
+                                        </form>
+                                    <?php elseif (isset($_GET['insert'])): ?>
+                                        <!-- Insert Form -->
+                                        <form action="action.php" method="post">
+                                            <input type="hidden" name="submit" value="true">
+                                            <div class="mb-3">
+                                                <label for="nama_customer" class="form-label">Customer Name</label>
+                                                <input type="text" class="form-control" id="nama_customer" name="nama_customer" required>
                                             </div>
-                                        </div>
-                                        <!-- end row-->
-
-                                    </div> <!-- end card body-->
-                                </div> <!-- end card -->
-                            </div><!-- end col-->
-
-                            <div class="col-lg-8">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="d-flex justify-content-between align-items-center mb-2">
-                                            <h4 class="header-title">Tasks</h4>
-                                            <div class="dropdown">
-                                                <a href="#" class="dropdown-toggle arrow-none card-drop" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="mdi mdi-dots-vertical"></i>
-                                                </a>
-                                                <div class="dropdown-menu dropdown-menu-end">
-                                                    <!-- item-->
-                                                    <a href="javascript:void(0);" class="dropdown-item">Weekly Report</a>
-                                                    <!-- item-->
-                                                    <a href="javascript:void(0);" class="dropdown-item">Monthly Report</a>
-                                                    <!-- item-->
-                                                    <a href="javascript:void(0);" class="dropdown-item">Action</a>
-                                                    <!-- item-->
-                                                    <a href="javascript:void(0);" class="dropdown-item">Settings</a>
-                                                </div>
+                                            <div class="mb-3">
+                                                <label for="project" class="form-label">Project</label>
+                                                <input type="text" class="form-control" id="project" name="project" required>
                                             </div>
-                                        </div>
-
-                                        <p><b>107</b> Tasks completed out of 195</p>
-
+                                            <button type="submit" class="btn btn-primary">Insert</button>
+                                        </form>
+                                    <?php else: ?>
+                                        <!-- Display Records Table -->
                                         <div class="table-responsive">
-                                            <table class="table table-centered table-nowrap table-hover mb-0">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>No</th>
+                                                        <th>Name</th>
+                                                        <th>Project</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td>
-                                                            <h5 class="font-14 my-1"><a href="javascript:void(0);" class="text-body">Coffee detail page - Main Page</a></h5>
-                                                            <span class="text-muted font-13">Due in 3 days</span>
-                                                        </td>
-                                                        <td>
-                                                            <span class="text-muted font-13">Status</span> <br/>
-                                                            <span class="badge badge-warning-lighten">In-progress</span>
-                                                        </td>
-                                                        <td>
-                                                            <span class="text-muted font-13">Assigned to</span>
-                                                            <h5 class="font-14 mt-1 fw-normal">Logan R. Cohn</h5>
-                                                        </td>
-                                                        <td>
-                                                            <span class="text-muted font-13">Total time spend</span>
-                                                            <h5 class="font-14 mt-1 fw-normal">3h 20min</h5>
-                                                        </td>
-                                                        <td class="table-action" style="width: 90px;">
-                                                            <a href="javascript: void(0);" class="action-icon"> <i class="mdi mdi-pencil"></i></a>
-                                                            <a href="javascript: void(0);" class="action-icon"> <i class="mdi mdi-delete"></i></a>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <h5 class="font-14 my-1"><a href="javascript:void(0);" class="text-body">Drinking bottle graphics</a></h5>
-                                                            <span class="text-muted font-13">Due in 27 days</span>
-                                                        </td>
-                                                        <td>
-                                                            <span class="text-muted font-13">Status</span> <br/>
-                                                            <span class="badge badge-danger-lighten">Outdated</span>
-                                                        </td>
-                                                        <td>
-                                                            <span class="text-muted font-13">Assigned to</span>
-                                                            <h5 class="font-14 mt-1 fw-normal">Jerry F. Powell</h5>
-                                                        </td>
-                                                        <td>
-                                                            <span class="text-muted font-13">Total time spend</span>
-                                                            <h5 class="font-14 mt-1 fw-normal">12h 21min</h5>
-                                                        </td>
-                                                        <td class="table-action" style="width: 90px;">
-                                                            <a href="javascript: void(0);" class="action-icon"> <i class="mdi mdi-pencil"></i></a>
-                                                            <a href="javascript: void(0);" class="action-icon"> <i class="mdi mdi-delete"></i></a>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <h5 class="font-14 my-1"><a href="javascript:void(0);" class="text-body">App design and development</a></h5>
-                                                            <span class="text-muted font-13">Due in 7 days</span>
-                                                        </td>
-                                                        <td>
-                                                            <span class="text-muted font-13">Status</span> <br/>
-                                                            <span class="badge badge-success-lighten">Completed</span>
-                                                        </td>
-                                                        <td>
-                                                            <span class="text-muted font-13">Assigned to</span>
-                                                            <h5 class="font-14 mt-1 fw-normal">Scot M. Smith</h5>
-                                                        </td>
-                                                        <td>
-                                                            <span class="text-muted font-13">Total time spend</span>
-                                                            <h5 class="font-14 mt-1 fw-normal">78h 05min</h5>
-                                                        </td>
-                                                        <td class="table-action" style="width: 90px;">
-                                                            <a href="javascript: void(0);" class="action-icon"> <i class="mdi mdi-pencil"></i></a>
-                                                            <a href="javascript: void(0);" class="action-icon"> <i class="mdi mdi-delete"></i></a>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <h5 class="font-14 my-1"><a href="javascript:void(0);" class="text-body">Poster illustation design</a></h5>
-                                                            <span class="text-muted font-13">Due in 5 days</span>
-                                                        </td>
-                                                        <td>
-                                                            <span class="text-muted font-13">Status</span> <br/>
-                                                            <span class="badge badge-warning-lighten">In-progress</span>
-                                                        </td>
-                                                        <td>
-                                                            <span class="text-muted font-13">Assigned to</span>
-                                                            <h5 class="font-14 mt-1 fw-normal">John P. Ritter</h5>
-                                                        </td>
-                                                        <td>
-                                                            <span class="text-muted font-13">Total time spend</span>
-                                                            <h5 class="font-14 mt-1 fw-normal">26h 58min</h5>
-                                                        </td>
-                                                        <td class="table-action" style="width: 90px;">
-                                                            <a href="javascript: void(0);" class="action-icon"> <i class="mdi mdi-pencil"></i></a>
-                                                            <a href="javascript: void(0);" class="action-icon"> <i class="mdi mdi-delete"></i></a>
-                                                        </td>
-                                                    </tr>
-                                                    
+                                                    <?php
+                                                    $sql = "SELECT * FROM customer ORDER BY id_customer ASC";
+                                                    $result = $conn->query($sql);
+                                                    $no = 1;
+                                                    while ($row = $result->fetch_assoc()): ?>
+                                                        <tr>
+                                                            <td><?php echo $no++; ?></td>
+                                                            <td><?php echo htmlspecialchars($row['nama_customer']); ?></td>
+                                                            <td><?php echo htmlspecialchars($row['project']); ?></td>
+                                                            <td>
+                                                                <div class="btn-group">
+                                                                    <a href="view.php?edit=<?php echo $row['id_customer']; ?>" 
+                                                                       class="btn btn-info btn-sm" 
+                                                                       data-bs-toggle="tooltip" 
+                                                                       title="Edit">
+                                                                        <i class="mdi mdi-pencil"></i>
+                                                                    </a>
+                                                                    <a href="action.php?delete=<?php echo $row['id_customer']; ?>" 
+                                                                       class="btn btn-danger btn-sm" 
+                                                                       onclick="return confirm('Are you sure you want to delete this record?');"
+                                                                       data-bs-toggle="tooltip" 
+                                                                       title="Delete">
+                                                                        <i class="mdi mdi-delete"></i>
+                                                                    </a>
+                                                                    <a href="view.php?detail=<?php echo $row['id_customer']; ?>" 
+                                                                       class="btn btn-primary btn-sm" 
+                                                                       data-bs-toggle="tooltip" 
+                                                                       title="Detail">
+                                                                        <i class="mdi mdi-eye"></i>
+                                                                    </a>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    <?php endwhile; ?>
                                                 </tbody>
                                             </table>
-                                        </div> <!-- end table-responsive-->
-
-                                    </div> <!-- end card body-->
-                                </div> <!-- end card -->
-                            </div><!-- end col-->
-                        </div>
-                        <!-- end row-->
-
-
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="d-flex justify-content-between align-items-center mb-2">
-                                            <h4 class="header-title">Tasks Overview</h4>
-                                            <div class="dropdown">
-                                                <a href="#" class="dropdown-toggle arrow-none card-drop" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="mdi mdi-dots-vertical"></i>
-                                                </a>
-                                                <div class="dropdown-menu dropdown-menu-end">
-                                                    <!-- item-->
-                                                    <a href="javascript:void(0);" class="dropdown-item">Weekly Report</a>
-                                                    <!-- item-->
-                                                    <a href="javascript:void(0);" class="dropdown-item">Monthly Report</a>
-                                                    <!-- item-->
-                                                    <a href="javascript:void(0);" class="dropdown-item">Action</a>
-                                                    <!-- item-->
-                                                    <a href="javascript:void(0);" class="dropdown-item">Settings</a>
-                                                </div>
-                                            </div>
                                         </div>
-
-                                        <div dir="ltr">
-                                            <div class="mt-3 chartjs-chart" style="height: 320px;">
-                                                <canvas id="task-area-chart" data-bgColor="#727cf5" data-borderColor="#727cf5"></canvas>
-                                            </div>
+                                        <div class="mt-3">
+                                            <a href="view.php?insert=true" class="btn btn-success">
+                                                <i class="mdi mdi-plus"></i> Insert New Customer
+                                            </a>
                                         </div>
-
-                                    </div> <!-- end card body-->
-                                </div> <!-- end card -->
-                            </div><!-- end col-->
+                                    <?php endif; ?>
+                                </div>
+                            </div>
                         </div>
-                        <!-- end row-->
-
-
-             
-
+                    </div>
+                      
+                        <!-- end row -->
                         
                     </div> <!-- container -->
 
@@ -1479,6 +1420,7 @@ if (!isset($_SESSION['username'])) {
         <div class="rightbar-overlay"></div>
         <!-- /End-bar -->
 
+
         <!-- bundle -->
         <script src="../../assets/js/vendor.min.js"></script>
         <script src="../../assets/js/app.min.js"></script>
@@ -1488,12 +1430,10 @@ if (!isset($_SESSION['username'])) {
         <!-- third party js ends -->
 
         <!-- demo app -->
-        <script src="../../assets/js/pages/demo.dashboard-projects.js"></script>
+        <script src="../../assets/js/pages/demo.project-detail.js"></script>
         <!-- end demo js-->
 
     </body>
 
-<!-- Mirrored from coderthemes.com/hyper/saas/dashboard-projects.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 29 Jul 2022 10:20:36 GMT -->
+<!-- Mirrored from coderthemes.com/hyper/saas/apps-projects-details.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 29 Jul 2022 10:21:06 GMT -->
 </html>
-
-
