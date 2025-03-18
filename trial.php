@@ -239,7 +239,7 @@ if (isset($_GET['detail'])) {
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>Create Trial | Hyper - Responsive Bootstrap 5 Admin Dashboard</title>
+    <title>Create Trial | TRIAL & REPORT | PE STAMPING </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
     <meta content="Coderthemes" name="author" />
@@ -584,8 +584,7 @@ if (isset($_GET['detail'])) {
                                                                                 <?php echo htmlspecialchars_decode($detail_data['accuracy_part']); ?>
                                                                             </div>
                                                                             
-                                                                            <h6 class="mt-3">Part Accuracy:</h6>
-                                                                            <p><?php echo htmlspecialchars($detail_data['accuracy_part']); ?></p>
+                                                                   
                                                                         </div>
                                                                     </div>
                                                                 </div>
