@@ -1,5 +1,5 @@
 <?php
-include_once('../../Database/koneksi.php');
+include_once('Database/koneksi.php');
 session_start();
 include('action.php');
 ?>
@@ -8,29 +8,72 @@ include('action.php');
 <!DOCTYPE html>
 <html lang="en">
     
-<!-- Mirrored from coderthemes.com/hyper/saas/tables-datatable.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 29 Jul 2022 10:21:55 GMT -->
+<!-- Mirrored from coderthemes.com/hyper/saas/apps-projects-details.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 29 Jul 2022 10:21:06 GMT -->
 <head>
         <meta charset="utf-8" />
-        <title>Datatables | Hyper - Responsive Bootstrap 5 Admin Dashboard</title>
+        <title>Project Overview | Hyper - Responsive Bootstrap 5 Admin Dashboard</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
         <meta content="Coderthemes" name="author" />
         <!-- App favicon -->
         <link rel="shortcut icon" href="../../assets/images/favicon.ico">
 
-        <!-- third party css -->
-        <link href="../../assets/css/vendor/dataTables.bootstrap5.css" rel="stylesheet" type="text/css" />
-        <link href="../../assets/css/vendor/responsive.bootstrap5.css" rel="stylesheet" type="text/css" />
-        <link href="../../assets/css/vendor/buttons.bootstrap5.css" rel="stylesheet" type="text/css" />
-        <link href="../../assets/css/vendor/select.bootstrap5.css" rel="stylesheet" type="text/css" />
-        <link href="../../assets/css/vendor/fixedHeader.bootstrap5.css" rel="stylesheet" type="text/css" />
-        <link href="../../assets/css/vendor/fixedColumns.bootstrap5.css" rel="stylesheet" type="text/css" />
-        <!-- third party css end -->
-
         <!-- App css -->
         <link href="../../assets/css/icons.min.css" rel="stylesheet" type="text/css" />
         <link href="../../assets/css/app.min.css" rel="stylesheet" type="text/css" id="app-style"/>
+        <link rel="shortcut icon" href="../../assets/images/favicon.ico">
 
+
+    <style>
+.timeline {
+    position: relative;
+    padding: 10px 0;
+}
+
+.timeline-item {
+    position: relative;
+    padding-left: 30px;
+    margin-bottom: 15px;
+}
+
+.timeline-item:before {
+    content: '';
+    position: absolute;
+    left: 11px;
+    top: 0;
+    height: 100%;
+    width: 2px;
+    background: #e3e6f0;
+}
+
+.timeline-item:last-child:before {
+    display: none;
+}
+
+.timeline-item i {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border-radius: 50%;
+}
+
+.timeline-item .time {
+    display: block;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.timeline-item p {
+    margin: 0;
+    font-weight: 500;
+}
+</style>
     </head>
 
     <body class="loading" data-layout-color="light" data-leftbar-theme="dark" data-layout-mode="fluid" data-rightbar-onstart="true">
@@ -381,7 +424,355 @@ include('action.php');
                             </div>
                         </li>
             
-                        
+                        <li class="side-nav-title side-nav-item mt-1">Components</li>
+
+                        <li class="side-nav-item">
+                            <a data-bs-toggle="collapse" href="#sidebarBaseUI" aria-expanded="false" aria-controls="sidebarBaseUI" class="side-nav-link">
+                                <i class="uil-box"></i>
+                                <span> Base UI </span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <div class="collapse" id="sidebarBaseUI">
+                                <ul class="side-nav-second-level">
+                                    <li>
+                                        <a href="ui-accordions.html">Accordions</a>
+                                    </li>
+                                    <li>
+                                        <a href="ui-alerts.html">Alerts</a>
+                                    </li>
+                                    <li>
+                                        <a href="ui-avatars.html">Avatars</a>
+                                    </li>
+                                    <li>
+                                        <a href="ui-badges.html">Badges</a>
+                                    </li>
+                                    <li>
+                                        <a href="ui-breadcrumb.html">Breadcrumb</a>
+                                    </li>
+                                    <li>
+                                        <a href="ui-buttons.html">Buttons</a>
+                                    </li>
+                                    <li>
+                                        <a href="ui-cards.html">Cards</a>
+                                    </li>
+                                    <li>
+                                        <a href="ui-carousel.html">Carousel</a>
+                                    </li>
+                                    <li>
+                                        <a href="ui-dropdowns.html">Dropdowns</a>
+                                    </li>
+                                    <li>
+                                        <a href="ui-embed-video.html">Embed Video</a>
+                                    </li>
+                                    <li>
+                                        <a href="ui-grid.html">Grid</a>
+                                    </li>
+                                    <li>
+                                        <a href="ui-list-group.html">List Group</a>
+                                    </li>
+                                    <li>
+                                        <a href="ui-modals.html">Modals</a>
+                                    </li>
+                                    <li>
+                                        <a href="ui-notifications.html">Notifications</a>
+                                    </li>
+                                    <li>
+                                        <a href="ui-offcanvas.html">Offcanvas</a>
+                                    </li>
+                                    <li>
+                                        <a href="ui-placeholders.html">Placeholders</a>
+                                    </li>
+                                    <li>
+                                        <a href="ui-pagination.html">Pagination</a>
+                                    </li>
+                                    <li>
+                                        <a href="ui-popovers.html">Popovers</a>
+                                    </li>
+                                    <li>
+                                        <a href="ui-progress.html">Progress</a>
+                                    </li>
+                                    <li>
+                                        <a href="ui-ribbons.html">Ribbons</a>
+                                    </li>
+                                    <li>
+                                        <a href="ui-spinners.html">Spinners</a>
+                                    </li>
+                                    <li>
+                                        <a href="ui-tabs.html">Tabs</a>
+                                    </li>
+                                    <li>
+                                        <a href="ui-tooltips.html">Tooltips</a>
+                                    </li>
+                                    <li>
+                                        <a href="ui-typography.html">Typography</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="side-nav-item">
+                            <a data-bs-toggle="collapse" href="#sidebarExtendedUI" aria-expanded="false" aria-controls="sidebarExtendedUI" class="side-nav-link">
+                                <i class="uil-package"></i>
+                                <span> Extended UI </span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <div class="collapse" id="sidebarExtendedUI">
+                                <ul class="side-nav-second-level">
+                                    <li>
+                                        <a href="extended-dragula.html">Dragula</a>
+                                    </li>
+                                    <li>
+                                        <a href="extended-range-slider.html">Range Slider</a>
+                                    </li>
+                                    <li>
+                                        <a href="extended-ratings.html">Ratings</a>
+                                    </li>
+                                    <li>
+                                        <a href="extended-scrollbar.html">Scrollbar</a>
+                                    </li>
+                                    <li>
+                                        <a href="extended-scrollspy.html">Scrollspy</a>
+                                    </li>
+                                    <li>
+                                        <a href="extended-treeview.html">Treeview</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="side-nav-item">
+                            <a href="widgets.html" class="side-nav-link">
+                                <i class="uil-layer-group"></i>
+                                <span> Widgets </span>
+                            </a>
+                        </li>
+
+                        <li class="side-nav-item">
+                            <a data-bs-toggle="collapse" href="#sidebarIcons" aria-expanded="false" aria-controls="sidebarIcons" class="side-nav-link">
+                                <i class="uil-streering"></i>
+                                <span> Icons </span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <div class="collapse" id="sidebarIcons">
+                                <ul class="side-nav-second-level">
+                                    <li>
+                                        <a href="icons-dripicons.html">Dripicons</a>
+                                    </li>
+                                    <li>
+                                        <a href="icons-mdi.html">Material Design</a>
+                                    </li>
+                                    <li>
+                                        <a href="icons-unicons.html">Unicons</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="side-nav-item">
+                            <a data-bs-toggle="collapse" href="#sidebarForms" aria-expanded="false" aria-controls="sidebarForms" class="side-nav-link">
+                                <i class="uil-document-layout-center"></i>
+                                <span> Forms </span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <div class="collapse" id="sidebarForms">
+                                <ul class="side-nav-second-level">
+                                    <li>
+                                        <a href="form-elements.html">Basic Elements</a>
+                                    </li>
+                                    <li>
+                                        <a href="form-advanced.html">Form Advanced</a>
+                                    </li>
+                                    <li>
+                                        <a href="form-validation.html">Validation</a>
+                                    </li>
+                                    <li>
+                                        <a href="form-wizard.html">Wizard</a>
+                                    </li>
+                                    <li>
+                                        <a href="form-fileuploads.html">File Uploads</a>
+                                    </li>
+                                    <li>
+                                        <a href="form-editors.html">Editors</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="side-nav-item">
+                            <a data-bs-toggle="collapse" href="#sidebarCharts" aria-expanded="false" aria-controls="sidebarCharts" class="side-nav-link">
+                                <i class="uil-chart"></i>
+                                <span> Charts </span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <div class="collapse" id="sidebarCharts">
+                                <ul class="side-nav-second-level">
+                                    <li class="side-nav-item">
+                                        <a data-bs-toggle="collapse" href="#sidebarApexCharts" aria-expanded="false" aria-controls="sidebarApexCharts">
+                                            <span> Apex Charts </span>
+                                            <span class="menu-arrow"></span>
+                                        </a>
+                                        <div class="collapse" id="sidebarApexCharts">
+                                            <ul class="side-nav-third-level">
+                                                <li>
+                                                    <a href="charts-apex-area.html">Area</a>
+                                                </li>
+                                                <li>
+                                                    <a href="charts-apex-bar.html">Bar</a>
+                                                </li>
+                                                <li>
+                                                    <a href="charts-apex-bubble.html">Bubble</a>
+                                                </li>
+                                                <li>
+                                                    <a href="charts-apex-candlestick.html">Candlestick</a>
+                                                </li>
+                                                <li>
+                                                    <a href="charts-apex-column.html">Column</a>
+                                                </li>
+                                                <li>
+                                                    <a href="charts-apex-heatmap.html">Heatmap</a>
+                                                </li>
+                                                <li>
+                                                    <a href="charts-apex-line.html">Line</a>
+                                                </li>
+                                                <li>
+                                                    <a href="charts-apex-mixed.html">Mixed</a>
+                                                </li>
+                                                <li>
+                                                    <a href="charts-apex-pie.html">Pie</a>
+                                                </li>
+                                                <li>
+                                                    <a href="charts-apex-radar.html">Radar</a>
+                                                </li>
+                                                <li>
+                                                    <a href="charts-apex-radialbar.html">RadialBar</a>
+                                                </li>
+                                                <li>
+                                                    <a href="charts-apex-scatter.html">Scatter</a>
+                                                </li>
+                                                <li>
+                                                    <a href="charts-apex-sparklines.html">Sparklines</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <a href="charts-brite.html">Britecharts</a>
+                                    </li>
+                                    <li>
+                                        <a href="charts-chartjs.html">Chartjs</a>
+                                    </li>
+                                    <li>
+                                        <a href="charts-sparkline.html">Sparklines</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="side-nav-item">
+                            <a data-bs-toggle="collapse" href="#sidebarTables" aria-expanded="false" aria-controls="sidebarTables" class="side-nav-link">
+                                <i class="uil-table"></i>
+                                <span> Tables </span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <div class="collapse" id="sidebarTables">
+                                <ul class="side-nav-second-level">
+                                    <li>
+                                        <a href="tables-basic.html">Basic Tables</a>
+                                    </li>
+                                    <li>
+                                        <a href="tables-datatable.html">Data Tables</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="side-nav-item">
+                            <a data-bs-toggle="collapse" href="#sidebarMaps" aria-expanded="false" aria-controls="sidebarMaps" class="side-nav-link">
+                                <i class="uil-location-point"></i>
+                                <span> Maps </span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <div class="collapse" id="sidebarMaps">
+                                <ul class="side-nav-second-level">
+                                    <li>
+                                        <a href="maps-google.html">Google Maps</a>
+                                    </li>
+                                    <li>
+                                        <a href="maps-vector.html">Vector Maps</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="side-nav-item">
+                            <a data-bs-toggle="collapse" href="#sidebarMultiLevel" aria-expanded="false" aria-controls="sidebarMultiLevel" class="side-nav-link">
+                                <i class="uil-folder-plus"></i>
+                                <span> Multi Level </span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <div class="collapse" id="sidebarMultiLevel">
+                                <ul class="side-nav-second-level">
+                                    <li class="side-nav-item">
+                                        <a data-bs-toggle="collapse" href="#sidebarSecondLevel" aria-expanded="false" aria-controls="sidebarSecondLevel">
+                                            <span> Second Level </span>
+                                            <span class="menu-arrow"></span>
+                                        </a>
+                                        <div class="collapse" id="sidebarSecondLevel">
+                                            <ul class="side-nav-third-level">
+                                                <li>
+                                                    <a href="javascript: void(0);">Item 1</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript: void(0);">Item 2</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li class="side-nav-item">
+                                        <a data-bs-toggle="collapse" href="#sidebarThirdLevel" aria-expanded="false" aria-controls="sidebarThirdLevel">
+                                            <span> Third Level </span>
+                                            <span class="menu-arrow"></span>
+                                        </a>
+                                        <div class="collapse" id="sidebarThirdLevel">
+                                            <ul class="side-nav-third-level">
+                                                <li>
+                                                    <a href="javascript: void(0);">Item 1</a>
+                                                </li>
+                                                <li class="side-nav-item">
+                                                    <a data-bs-toggle="collapse" href="#sidebarFourthLevel" aria-expanded="false" aria-controls="sidebarFourthLevel">
+                                                        <span> Item 2 </span>
+                                                        <span class="menu-arrow"></span>
+                                                    </a>
+                                                    <div class="collapse" id="sidebarFourthLevel">
+                                                        <ul class="side-nav-forth-level">
+                                                            <li>
+                                                                <a href="javascript: void(0);">Item 2.1</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="javascript: void(0);">Item 2.2</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <!-- Help Box -->
+                    <div class="help-box text-white text-center">
+                        <a href="javascript: void(0);" class="float-end close-btn text-white">
+                            <i class="mdi mdi-close"></i>
+                        </a>
+                        <img src="../../assets/images/help-icon.svg" height="90" alt="Helper Icon Image" />
+                        <h5 class="mt-3">Unlimited Access</h5>
+                        <p class="mb-3">Upgrade to plan to get access to unlimited reports</p>
+                        <a href="javascript: void(0);" class="btn btn-secondary btn-sm">Upgrade</a>
+                    </div>
+                    <!-- end Help Box -->
                     <!-- End Sidebar -->
 
                     <div class="clearfix"></div>
@@ -401,7 +792,233 @@ include('action.php');
                     <!-- Topbar Start -->
                     <div class="navbar-custom">
                         <ul class="list-unstyled topbar-menu float-end mb-0">
-                        
+                            <li class="dropdown notification-list d-lg-none">
+                                <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                    <i class="dripicons-search noti-icon"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-animated dropdown-lg p-0">
+                                    <form class="p-3">
+                                        <input type="text" class="form-control" placeholder="Search ..." aria-label="Recipient's username">
+                                    </form>
+                                </div>
+                            </li>
+                            <li class="dropdown notification-list topbar-dropdown">
+                                <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                    <img src="../../assets/images/flags/us.jpg" alt="user-image" class="me-0 me-sm-1" height="12"> 
+                                    <span class="align-middle d-none d-sm-inline-block">English</span> <i class="mdi mdi-chevron-down d-none d-sm-inline-block align-middle"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated topbar-dropdown-menu">
+
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                        <img src="../../assets/images/flags/germany.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">German</span>
+                                    </a>
+
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                        <img src="../../assets/images/flags/italy.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Italian</span>
+                                    </a>
+                
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                        <img src="../../assets/images/flags/spain.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Spanish</span>
+                                    </a>
+
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                        <img src="../../assets/images/flags/russia.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Russian</span>
+                                    </a>
+
+                                </div>
+                            </li>
+
+                            <li class="dropdown notification-list">
+                                <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                    <i class="dripicons-bell noti-icon"></i>
+                                    <span class="noti-icon-badge"></span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated dropdown-lg">
+
+                                    <!-- item-->
+                                    <div class="dropdown-item noti-title px-3">
+                                        <h5 class="m-0">
+                                            <span class="float-end">
+                                                <a href="javascript: void(0);" class="text-dark">
+                                                    <small>Clear All</small>
+                                                </a>
+                                            </span>Notification
+                                        </h5>
+                                    </div>
+
+                                    <div class="px-3" style="max-height: 300px;" data-simplebar>
+
+                                        <h5 class="text-muted font-13 fw-normal mt-0">Today</h5>
+                                        <!-- item-->
+                                        <a href="javascript:void(0);" class="dropdown-item p-0 notify-item card unread-noti shadow-none mb-2">
+                                            <div class="card-body">
+                                                <span class="float-end noti-close-btn text-muted"><i class="mdi mdi-close"></i></span>   
+                                                <div class="d-flex align-items-center">
+                                                    <div class="flex-shrink-0">
+                                                        <div class="notify-icon bg-primary">
+                                                            <i class="mdi mdi-comment-account-outline"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="flex-grow-1 text-truncate ms-2">
+                                                        <h5 class="noti-item-title fw-semibold font-14">Datacorp <small class="fw-normal text-muted ms-1">1 min ago</small></h5>
+                                                        <small class="noti-item-subtitle text-muted">Caleb Flakelar commented on Admin</small>
+                                                    </div>
+                                                  </div>
+                                            </div>
+                                        </a>
+
+                                        <!-- item-->
+                                        <a href="javascript:void(0);" class="dropdown-item p-0 notify-item card read-noti shadow-none mb-2">
+                                            <div class="card-body">
+                                                <span class="float-end noti-close-btn text-muted"><i class="mdi mdi-close"></i></span>   
+                                                <div class="d-flex align-items-center">
+                                                    <div class="flex-shrink-0">
+                                                        <div class="notify-icon bg-info">
+                                                            <i class="mdi mdi-account-plus"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="flex-grow-1 text-truncate ms-2">
+                                                        <h5 class="noti-item-title fw-semibold font-14">Admin <small class="fw-normal text-muted ms-1">1 hours ago</small></h5>
+                                                        <small class="noti-item-subtitle text-muted">New user registered</small>
+                                                    </div>
+                                                  </div>
+                                            </div>
+                                        </a>
+
+                                        <h5 class="text-muted font-13 fw-normal mt-0">Yesterday</h5>
+
+                                        <!-- item-->
+                                        <a href="javascript:void(0);" class="dropdown-item p-0 notify-item card read-noti shadow-none mb-2">
+                                            <div class="card-body">
+                                                <span class="float-end noti-close-btn text-muted"><i class="mdi mdi-close"></i></span>   
+                                                <div class="d-flex align-items-center">
+                                                    <div class="flex-shrink-0">
+                                                        <div class="notify-icon">
+                                                            <img src="../../assets/images/users/avatar-2.jpg" class="img-fluid rounded-circle" alt="" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="flex-grow-1 text-truncate ms-2">
+                                                        <h5 class="noti-item-title fw-semibold font-14">Cristina Pride <small class="fw-normal text-muted ms-1">1 day ago</small></h5>
+                                                        <small class="noti-item-subtitle text-muted">Hi, How are you? What about our next meeting</small>
+                                                    </div>
+                                                  </div>
+                                            </div>
+                                        </a>
+
+                                        <h5 class="text-muted font-13 fw-normal mt-0">30 Dec 2021</h5>
+
+                                        <!-- item-->
+                                        <a href="javascript:void(0);" class="dropdown-item p-0 notify-item card read-noti shadow-none mb-2">
+                                            <div class="card-body">
+                                                <span class="float-end noti-close-btn text-muted"><i class="mdi mdi-close"></i></span>   
+                                                <div class="d-flex align-items-center">
+                                                    <div class="flex-shrink-0">
+                                                        <div class="notify-icon bg-primary">
+                                                            <i class="mdi mdi-comment-account-outline"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="flex-grow-1 text-truncate ms-2">
+                                                        <h5 class="noti-item-title fw-semibold font-14">Datacorp</h5>
+                                                        <small class="noti-item-subtitle text-muted">Caleb Flakelar commented on Admin</small>
+                                                    </div>
+                                                  </div>
+                                            </div>
+                                        </a>
+
+                                         <!-- item-->
+                                         <a href="javascript:void(0);" class="dropdown-item p-0 notify-item card read-noti shadow-none mb-2">
+                                            <div class="card-body">
+                                                <span class="float-end noti-close-btn text-muted"><i class="mdi mdi-close"></i></span>   
+                                                <div class="d-flex align-items-center">
+                                                    <div class="flex-shrink-0">
+                                                        <div class="notify-icon">
+                                                            <img src="../../assets/images/users/avatar-4.jpg" class="img-fluid rounded-circle" alt="" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="flex-grow-1 text-truncate ms-2">
+                                                        <h5 class="noti-item-title fw-semibold font-14">Karen Robinson</h5>
+                                                        <small class="noti-item-subtitle text-muted">Wow ! this admin looks good and awesome design</small>
+                                                    </div>
+                                                  </div>
+                                            </div>
+                                        </a>
+
+                                        <div class="text-center">
+                                            <i class="mdi mdi-dots-circle mdi-spin text-muted h3 mt-0"></i>
+                                        </div>
+                                    </div>
+
+                                    <!-- All-->
+                                    <a href="javascript:void(0);" class="dropdown-item text-center text-primary notify-item border-top border-light py-2">
+                                        View All
+                                    </a>
+
+                                </div>
+                            </li>
+
+                            <li class="dropdown notification-list d-none d-sm-inline-block">
+                                <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                                    <i class="dripicons-view-apps noti-icon"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated dropdown-lg p-0">
+
+                                    <div class="p-2">
+                                        <div class="row g-0">
+                                            <div class="col">
+                                                <a class="dropdown-icon-item" href="#">
+                                                    <img src="../../assets/images/brands/slack.png" alt="slack">
+                                                    <span>Slack</span>
+                                                </a>
+                                            </div>
+                                            <div class="col">
+                                                <a class="dropdown-icon-item" href="#">
+                                                    <img src="../../assets/images/brands/github.png" alt="Github">
+                                                    <span>GitHub</span>
+                                                </a>
+                                            </div>
+                                            <div class="col">
+                                                <a class="dropdown-icon-item" href="#">
+                                                    <img src="../../assets/images/brands/dribbble.png" alt="dribbble">
+                                                    <span>Dribbble</span>
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <div class="row g-0">
+                                            <div class="col">
+                                                <a class="dropdown-icon-item" href="#">
+                                                    <img src="../../assets/images/brands/bitbucket.png" alt="bitbucket">
+                                                    <span>Bitbucket</span>
+                                                </a>
+                                            </div>
+                                            <div class="col">
+                                                <a class="dropdown-icon-item" href="#">
+                                                    <img src="../../assets/images/brands/dropbox.png" alt="dropbox">
+                                                    <span>Dropbox</span>
+                                                </a>
+                                            </div>
+                                            <div class="col">
+                                                <a class="dropdown-icon-item" href="#">
+                                                    <img src="../../assets/images/brands/g-suite.png" alt="G Suite">
+                                                    <span>G Suite</span>
+                                                </a>
+                                            </div>
+                                        </div> <!-- end row-->
+                                    </div>
+
+                                </div>
+                            </li>
+
+                            <li class="notification-list">
+                                <a class="nav-link end-bar-toggle" href="javascript: void(0);">
+                                    <i class="dripicons-gear noti-icon"></i>
+                                </a>
+                            </li>
+
                             <li class="dropdown notification-list">
                                 <a class="nav-link dropdown-toggle nav-user arrow-none me-0" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false"
                                     aria-expanded="false">
@@ -464,7 +1081,59 @@ include('action.php');
                                 </div>
                             </form>
 
-                        
+                            <div class="dropdown-menu dropdown-menu-animated dropdown-lg" id="search-dropdown">
+                                <!-- item-->
+                                <div class="dropdown-header noti-title">
+                                    <h5 class="text-overflow mb-2">Found <span class="text-danger">17</span> results</h5>
+                                </div>
+
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                    <i class="uil-notes font-16 me-1"></i>
+                                    <span>Analytics Report</span>
+                                </a>
+
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                    <i class="uil-life-ring font-16 me-1"></i>
+                                    <span>How can I help you?</span>
+                                </a>
+
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                    <i class="uil-cog font-16 me-1"></i>
+                                    <span>User profile settings</span>
+                                </a>
+
+                                <!-- item-->
+                                <div class="dropdown-header noti-title">
+                                    <h6 class="text-overflow mb-2 text-uppercase">Users</h6>
+                                </div>
+
+                                <div class="notification-list">
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                        <div class="d-flex">
+                                            <img class="d-flex me-2 rounded-circle" src="../../assets/images/users/avatar-2.jpg" alt="Generic placeholder image" height="32">
+                                            <div class="w-100">
+                                                <h5 class="m-0 font-14">Erwin Brown</h5>
+                                                <span class="font-12 mb-0">UI Designer</span>
+                                            </div>
+                                        </div>
+                                    </a>
+
+                                    <!-- item-->
+                                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                        <div class="d-flex">
+                                            <img class="d-flex me-2 rounded-circle" src="../../assets/images/users/avatar-5.jpg" alt="Generic placeholder image" height="32">
+                                            <div class="w-100">
+                                                <h5 class="m-0 font-14">Jacob Deo</h5>
+                                                <span class="font-12 mb-0">Developer</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <!-- end Topbar -->
@@ -479,166 +1148,151 @@ include('action.php');
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
                                             <li class="breadcrumb-item"><a href="javascript: void(0);">Hyper</a></li>
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Tables</a></li>
-                                            <li class="breadcrumb-item active">Data Tables</li>
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Projects</a></li>
+                                            <li class="breadcrumb-item active">Project Details</li>
                                         </ol>
                                     </div>
-                                    <h4 class="page-title">Data Tables Customers</h4>
+                                    <h4 class="page-title">Project Details</h4>
                                 </div>
                             </div>
                         </div>
                         <!-- end page title --> 
 
-                        <!-- Star Content disini -->
                         <div class="row">
-                            <div class="col-12">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h4 class="header-title">Customers</h4>
-                                        
-                                        <?php if (isset($_SESSION['message'])): ?>
-                                            <div class="alert alert-<?php echo $_SESSION['message_type']; ?> alert-dismissible fade show" role="alert">
-                                                <?php echo $_SESSION['message']; ?>
-                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                            </div>
-                                            <?php unset($_SESSION['message']); unset($_SESSION['message_type']); ?>
-                                        <?php endif; ?>
-                                       
-                                        <ul class="nav nav-tabs nav-bordered mb-3">
-                                            <li class="nav-item">
-                                                <a href="#basic-datatable-preview" data-bs-toggle="tab" aria-expanded="false" class="nav-link active">
-                                                    Preview
-                                                </a>
-                                            </li>
-                                        </ul> <!-- end nav-->
-                                        <div class="tab-content">
-                                            <div class="tab-pane show active" id="basic-datatable-preview">
-                                                <?php if (isset($_GET['detail'])): ?>
-                                                    <!-- Detail View -->
-                                                    <div class="row">
-                                                        <div class="col-md-6">
-                                                            <div class="mb-3">
-                                                                <h6 class="text-uppercase fw-bold">Customer Information</h6>
-                                                                <table class="table table-sm">
-                                                                    <tr>
-                                                                        <th width="130">ID Customer</th>
-                                                                        <td>: <?php echo htmlspecialchars($detail_data['id_customer']); ?></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <th>Name</th>
-                                                                        <td>: <?php echo htmlspecialchars($detail_data['nama_customer']); ?></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <th>Project</th>
-                                                                        <td>: <?php echo htmlspecialchars($detail_data['project']); ?></td>
-                                                                    </tr>
-                                                                </table>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="mt-4">
-                                                        <a href="view.php" class="btn btn-secondary">
-                                                            <i class="mdi mdi-arrow-left"></i> Back
-                                                        </a>
-                                                        <a href="view.php?edit=<?php echo $detail_data['id_customer']; ?>" class="btn btn-info">
-                                                            <i class="mdi mdi-pencil"></i> Edit
-                                                        </a>
-                                                    </div>
-                                                <?php elseif (isset($_GET['edit'])): ?>
-                                                    <!-- Edit Form -->
-                                                    <form action="view.php" method="post">
-                                                        <input type="hidden" name="id_customer" value="<?php echo htmlspecialchars($edit_data['id_customer']); ?>">
-                                                        <input type="hidden" name="update" value="true">
-                                                        <div class="mb-3">
-                                                            <label for="nama_customer" class="form-label">Customer Name</label>
-                                                            <input type="text" class="form-control" id="nama_customer" name="nama_customer" value="<?php echo htmlspecialchars($edit_data['nama_customer']); ?>" required>
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label for="project" class="form-label">Project</label>
-                                                            <input type="text" class="form-control" id="project" name="project" value="<?php echo htmlspecialchars($edit_data['project']); ?>" required>
-                                                        </div>
-                                                        <button type="submit" class="btn btn-primary">Update</button>
-                                                        <a href="view.php" class="btn btn-secondary">Cancel</a>
-                                                    </form>
-                                                <?php elseif (isset($_GET['insert'])): ?>
-                                                    <!-- Insert Form -->
-                                                    <form action="view.php" method="post">
-                                                        <input type="hidden" name="submit" value="true">
-                                                        <div class="mb-3">
-                                                            <label for="nama_customer" class="form-label">Customer Name</label>
-                                                            <input type="text" class="form-control" id="nama_customer" name="nama_customer" required>
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label for="project" class="form-label">Project</label>
-                                                            <input type="text" class="form-control" id="project" name="project" required>
-                                                        </div>
-                                                        <button type="submit" class="btn btn-primary">Insert</button>
-                                                        <a href="view.php" class="btn btn-secondary">Cancel</a>
-                                                    </form>
-                                                <?php else: ?>
-                                                    <!-- Add New Button -->
-                                                    <div class="mb-3">
-                                                        <a href="view.php?insert=true" class="btn btn-success">
-                                                            <i class="mdi mdi-plus"></i> Insert New Customer
-                                                        </a>
-                                                    </div>
-                                                    <!-- Display Records Table -->
-                                                    <table id="basic-datatable" class="table table-striped dt-responsive nowrap w-100">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>No</th>
-                                                                <th>Name</th>
-                                                                <th>Project</th>
-                                                                <th>Actions</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <?php
-                                                            $sql = "SELECT * FROM customer ORDER BY id_customer ASC";
-                                                            $result = $conn->query($sql);
-                                                            $no = 1;
-                                                            while ($row = $result->fetch_assoc()): 
-                                                            ?>
-                                                                <tr>
-                                                                    <td><?php echo $no++; ?></td>
-                                                                    <td><?php echo htmlspecialchars($row['nama_customer']); ?></td>
-                                                                    <td><?php echo htmlspecialchars($row['project']); ?></td>
-                                                                    <td>
-                                                                        <div class="btn-group">
-                                                                            <a href="view.php?edit=<?php echo $row['id_customer']; ?>" 
-                                                                               class="btn btn-info btn-sm" 
-                                                                               data-bs-toggle="tooltip" 
-                                                                               title="Edit">
-                                                                                <i class="mdi mdi-pencil"></i>
-                                                                            </a>
-                                                                            <a href="view.php?delete=<?php echo $row['id_customer']; ?>" 
-                                                                               class="btn btn-danger btn-sm" 
-                                                                               onclick="return confirm('Are you sure you want to delete this record?');"
-                                                                               data-bs-toggle="tooltip" 
-                                                                               title="Delete">
-                                                                                <i class="mdi mdi-delete"></i>
-                                                                            </a>
-                                                                            <a href="view.php?detail=<?php echo $row['id_customer']; ?>" 
-                                                                               class="btn btn-primary btn-sm" 
-                                                                               data-bs-toggle="tooltip" 
-                                                                               title="Detail">
-                                                                                <i class="mdi mdi-eye"></i>
-                                                                            </a>
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-                                                            <?php endwhile; ?>
-                                                        </tbody>
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <?php if (isset($_SESSION['message'])): ?>
+                                        <div class="alert alert-<?php echo $_SESSION['message_type']; ?> alert-dismissible fade show" role="alert">
+                                            <?php echo $_SESSION['message']; ?>
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        </div>
+                                        <?php unset($_SESSION['message']); unset($_SESSION['message_type']); ?>
+                                    <?php endif; ?>
+
+                                    <?php if (isset($_GET['detail'])): ?>
+                                        <!-- Detail View -->
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <h6 class="text-uppercase fw-bold">Customer Information</h6>
+                                                    <table class="table table-sm">
+                                                        <tr>
+                                                            <th width="130">ID Customer</th>
+                                                            <td>: <?php echo htmlspecialchars($detail_data['id_customer']); ?></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Name</th>
+                                                            <td>: <?php echo htmlspecialchars($detail_data['nama_customer']); ?></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Project</th>
+                                                            <td>: <?php echo htmlspecialchars($detail_data['project']); ?></td>
+                                                        </tr>
                                                     </table>
-                                                <?php endif; ?>                                           
-                                            </div> <!-- end preview-->
-                                        
-                                            
-                                        </div> <!-- end tab-content-->
-                                    </div> <!-- end card body-->
-                                </div> <!-- end card -->
-                            </div><!-- end col-->
-                        </div> <!-- end row-->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-4">
+                                            <a href="view.php" class="btn btn-secondary">
+                                                <i class="mdi mdi-arrow-left"></i> Back
+                                            </a>
+                                            <a href="view.php?edit=<?php echo $detail_data['id_customer']; ?>" class="btn btn-info">
+                                                <i class="mdi mdi-pencil"></i> Edit
+                                            </a>
+                                        </div>
+                                    <?php elseif (isset($_GET['edit'])): ?>
+                                        <!-- Edit Form -->
+                                        <form action="action.php" method="post">
+                                            <input type="hidden" name="id_customer" value="<?php echo htmlspecialchars($edit_data['id_customer']); ?>">
+                                            <input type="hidden" name="update" value="true">
+                                            <div class="mb-3">
+                                                <label for="nama_customer" class="form-label">Customer Name</label>
+                                                <input type="text" class="form-control" id="nama_customer" name="nama_customer" value="<?php echo htmlspecialchars($edit_data['nama_customer']); ?>" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="project" class="form-label">Project</label>
+                                                <input type="text" class="form-control" id="project" name="project" value="<?php echo htmlspecialchars($edit_data['project']); ?>" required>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Update</button>
+                                        </form>
+                                    <?php elseif (isset($_GET['insert'])): ?>
+                                        <!-- Insert Form -->
+                                        <form action="action.php" method="post">
+                                            <input type="hidden" name="submit" value="true">
+                                            <div class="mb-3">
+                                                <label for="nama_customer" class="form-label">Customer Name</label>
+                                                <input type="text" class="form-control" id="nama_customer" name="nama_customer" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="project" class="form-label">Project</label>
+                                                <input type="text" class="form-control" id="project" name="project" required>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Insert</button>
+                                        </form>
+                                    <?php else: ?>
+                                        <!-- Display Records Table -->
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>No</th>
+                                                        <th>Name</th>
+                                                        <th>Project</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php
+                                                    $sql = "SELECT * FROM customer ORDER BY id_customer ASC";
+                                                    $result = $conn->query($sql);
+                                                    $no = 1;
+                                                    while ($row = $result->fetch_assoc()): ?>
+                                                        <tr>
+                                                            <td><?php echo $no++; ?></td>
+                                                            <td><?php echo htmlspecialchars($row['nama_customer']); ?></td>
+                                                            <td><?php echo htmlspecialchars($row['project']); ?></td>
+                                                            <td>
+                                                                <div class="btn-group">
+                                                                    <a href="view.php?edit=<?php echo $row['id_customer']; ?>" 
+                                                                       class="btn btn-info btn-sm" 
+                                                                       data-bs-toggle="tooltip" 
+                                                                       title="Edit">
+                                                                        <i class="mdi mdi-pencil"></i>
+                                                                    </a>
+                                                                    <a href="action.php?delete=<?php echo $row['id_customer']; ?>" 
+                                                                       class="btn btn-danger btn-sm" 
+                                                                       onclick="return confirm('Are you sure you want to delete this record?');"
+                                                                       data-bs-toggle="tooltip" 
+                                                                       title="Delete">
+                                                                        <i class="mdi mdi-delete"></i>
+                                                                    </a>
+                                                                    <a href="view.php?detail=<?php echo $row['id_customer']; ?>" 
+                                                                       class="btn btn-primary btn-sm" 
+                                                                       data-bs-toggle="tooltip" 
+                                                                       title="Detail">
+                                                                        <i class="mdi mdi-eye"></i>
+                                                                    </a>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    <?php endwhile; ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="mt-3">
+                                            <a href="view.php?insert=true" class="btn btn-success">
+                                                <i class="mdi mdi-plus"></i> Insert New Customer
+                                            </a>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                      
+                        <!-- end row -->
+                        
                     </div> <!-- container -->
 
                 </div> <!-- content -->
@@ -772,28 +1426,14 @@ include('action.php');
         <script src="../../assets/js/app.min.js"></script>
 
         <!-- third party js -->
-        <script src="../../assets/js/vendor/jquery.dataTables.min.js"></script>
-        <script src="../../assets/js/vendor/dataTables.bootstrap5.js"></script>
-        <script src="../../assets/js/vendor/dataTables.responsive.min.js"></script>
-        <script src="../../assets/js/vendor/responsive.bootstrap5.min.js"></script>
-        <script src="../../assets/js/vendor/dataTables.buttons.min.js"></script>
-        <script src="../../assets/js/vendor/buttons.bootstrap5.min.js"></script>
-        <script src="../../assets/js/vendor/buttons.html5.min.js"></script>
-        <script src="../../assets/js/vendor/buttons.flash.min.js"></script>
-        <script src="../../assets/js/vendor/buttons.print.min.js"></script>
-        <script src="../../assets/js/vendor/dataTables.keyTable.min.js"></script>
-        <script src="../../assets/js/vendor/dataTables.select.min.js"></script>
-        <script src="../../assets/js/vendor/fixedColumns.bootstrap5.min.js"></script>
-        <script src="../../assets/js/vendor/fixedHeader.bootstrap5.min.js"></script>
+        <script src="../../assets/js/vendor/chart.min.js"></script>
         <!-- third party js ends -->
 
         <!-- demo app -->
-        <script src="../../assets/js/pages/demo.datatable-init.js"></script>
+        <script src="../../assets/js/pages/demo.project-detail.js"></script>
         <!-- end demo js-->
 
     </body>
 
-<!-- Mirrored from coderthemes.com/hyper/saas/tables-datatable.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 29 Jul 2022 10:22:01 GMT -->
+<!-- Mirrored from coderthemes.com/hyper/saas/apps-projects-details.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 29 Jul 2022 10:21:06 GMT -->
 </html>
-
-
