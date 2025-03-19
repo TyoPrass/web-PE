@@ -1,3 +1,10 @@
+<?php
+include_once('../../database/koneksi.php');
+session_start();
+include('action.php');
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
     
@@ -497,7 +504,6 @@
 
                     <!-- Start Content-->
                     <div class="container-fluid">
-                        
                         <!-- start page title -->
                         <div class="row">
                             <div class="col-12">
@@ -506,72 +512,151 @@
                                         <ol class="breadcrumb m-0">
                                             <li class="breadcrumb-item"><a href="javascript: void(0);">Hyper</a></li>
                                             <li class="breadcrumb-item"><a href="javascript: void(0);">Tables</a></li>
-                                            <li class="breadcrumb-item active">Data Tables</li>
+                                            <li class="breadcrumb-item active">Customer Data</li>
                                         </ol>
                                     </div>
-                                    <h4 class="page-title">Data Tables</h4>
+                                    <h4 class="page-title">Customer Data</h4>
                                 </div>
                             </div>
                         </div>
-                        <!-- end page title --> 
-
+                        <!-- end page title -->
 
                         <div class="row">
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h4 class="header-title">Basic Data Table</h4>
-                                      
-                                        <ul class="nav nav-tabs nav-bordered mb-3">
-                                        
-                                           
-                                        </ul> <!-- end nav-->
-                                        <div class="tab-content">
-                                            <div class="tab-pane show active" id="basic-datatable-preview">
+                                        <?php if (isset($_SESSION['message'])): ?>
+                                            <div class="alert alert-<?php echo $_SESSION['message_type']; ?> alert-dismissible fade show" role="alert">
+                                                <?php echo $_SESSION['message']; ?>
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                            <?php unset($_SESSION['message'], $_SESSION['message_type']); ?>
+                                        <?php endif; ?>
+
+                                        <?php if (isset($_GET['detail'])): ?>
+                                            <!-- Detail View -->
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <h6 class="text-uppercase fw-bold">Customer Information</h6>
+                                                        <table class="table table-sm">
+                                                            <tr>
+                                                                <th width="130">ID Customer</th>
+                                                                <td>: <?php echo htmlspecialchars($detail_data['id_customer']); ?></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Name</th>
+                                                                <td>: <?php echo htmlspecialchars($detail_data['nama_customer']); ?></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Project</th>
+                                                                <td>: <?php echo htmlspecialchars($detail_data['project']); ?></td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mt-4">
+                                                <a href="customer.php" class="btn btn-secondary">
+                                                    <i class="mdi mdi-arrow-left"></i> Back
+                                                </a>
+                                                <a href="customer.php?edit=<?php echo $detail_data['id_customer']; ?>" class="btn btn-info">
+                                                    <i class="mdi mdi-pencil"></i> Edit
+                                                </a>
+                                            </div>
+                                        <?php elseif (isset($_GET['edit'])): ?>
+                                            <!-- Edit Form -->
+                                            <form action="action.php" method="post">
+                                                <input type="hidden" name="id_customer" value="<?php echo htmlspecialchars($edit_data['id_customer']); ?>">
+                                                <input type="hidden" name="action" value="update">
+                                                <div class="mb-3">
+                                                    <label for="nama_customer" class="form-label">Customer Name</label>
+                                                    <input type="text" class="form-control" id="nama_customer" name="nama_customer" value="<?php echo htmlspecialchars($edit_data['nama_customer']); ?>" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="project" class="form-label">Project</label>
+                                                    <input type="text" class="form-control" id="project" name="project" value="<?php echo htmlspecialchars($edit_data['project']); ?>" required>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary">Update</button>
+                                            </form>
+                                        <?php elseif (isset($_GET['insert'])): ?>
+                                            <!-- Insert Form -->
+                                            <form action="action.php" method="post">
+                                                <input type="hidden" name="action" value="insert">
+                                                <div class="mb-3">
+                                                    <label for="nama_customer" class="form-label">Customer Name</label>
+                                                    <input type="text" class="form-control" id="nama_customer" name="nama_customer" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="project" class="form-label">Project</label>
+                                                    <input type="text" class="form-control" id="project" name="project" required>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary">Insert</button>
+                                            </form>
+                                        <?php else: ?>
+                                            <!-- Display Records Table -->
+                                            <div class="table-responsive">
                                                 <table id="basic-datatable" class="table table-striped dt-responsive nowrap w-100">
                                                     <thead>
                                                         <tr>
+                                                            <th>No</th>
                                                             <th>Name</th>
-                                                            <th>Position</th>
-                                                            <th>Office</th>
-                                                            <th>Age</th>
-                                                            <th>Start date</th>
-                                                            <th>Salary</th>
+                                                            <th>Project</th>
+                                                            <th>Actions</th>
                                                         </tr>
                                                     </thead>
-                                                
-                                                
                                                     <tbody>
-                                                
+                                                        <?php
+                                                        $sql = "SELECT * FROM customer ORDER BY id_customer ASC";
+                                                        $result = $conn->query($sql);
+                                                        $no = 1;
+                                                        while ($row = $result->fetch_assoc()): ?>
+                                                            <tr>
+                                                                <td><?php echo $no++; ?></td>
+                                                                <td><?php echo htmlspecialchars($row['nama_customer']); ?></td>
+                                                                <td><?php echo htmlspecialchars($row['project']); ?></td>
+                                                                <td>
+                                                                    <div class="btn-group">
+                                                                        <a href="customer.php?edit=<?php echo $row['id_customer']; ?>" 
+                                                                           class="btn btn-info btn-sm" 
+                                                                           data-bs-toggle="tooltip" 
+                                                                           title="Edit">
+                                                                            <i class="mdi mdi-pencil"></i>
+                                                                        </a>
+                                                                        <a href="action.php?action=delete&id_customer=<?php echo $row['id_customer']; ?>" 
+                                                                           class="btn btn-danger btn-sm" 
+                                                                           onclick="return confirm('Are you sure you want to delete this record?');"
+                                                                           data-bs-toggle="tooltip" 
+                                                                           title="Delete">
+                                                                            <i class="mdi mdi-delete"></i>
+                                                                        </a>
+                                                                        <a href="customer.php?detail=<?php echo $row['id_customer']; ?>" 
+                                                                           class="btn btn-primary btn-sm" 
+                                                                           data-bs-toggle="tooltip" 
+                                                                           title="Detail">
+                                                                            <i class="mdi mdi-eye"></i>
+                                                                        </a>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        <?php endwhile; ?>
                                                     </tbody>
-                                                </table>                                           
-                                            </div> <!-- end preview-->
-                                        </div> <!-- end tab-content-->
-                                    </div> <!-- end card body-->
-                                </div> <!-- end card -->
-                            </div><!-- end col-->
-                        </div> <!-- end row-->
-                    </div> <!-- container -->
-                </div> <!-- content -->
-
-                <!-- Footer Start -->
-                <footer class="footer">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <script>document.write(new Date().getFullYear())</script> © Hyper - Coderthemes.com
-                            </div>
-                            <div class="col-md-6">
-                                <div class="text-md-end footer-links d-none d-md-block">
-                                    <a href="javascript: void(0);">About</a>
-                                    <a href="javascript: void(0);">Support</a>
-                                    <a href="javascript: void(0);">Contact Us</a>
+                                                </table>
+                                            </div>
+                                            <div class="mt-3">
+                                                <a href="customer.php?insert=true" class="btn btn-success">
+                                                    <i class="mdi mdi-plus"></i> Insert New Customer
+                                                </a>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </footer>
-                <!-- end Footer -->
+                </div> <!-- content -->
+
+            
 
             </div>
 
