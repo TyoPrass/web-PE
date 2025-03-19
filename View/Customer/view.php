@@ -1,79 +1,29 @@
-<?php
-include_once('Database/koneksi.php');
-session_start();
-include('action.php');
-?>
-
-
 <!DOCTYPE html>
 <html lang="en">
     
-<!-- Mirrored from coderthemes.com/hyper/saas/apps-projects-details.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 29 Jul 2022 10:21:06 GMT -->
+<!-- Mirrored from coderthemes.com/hyper/saas/tables-datatable.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 29 Jul 2022 10:21:55 GMT -->
 <head>
         <meta charset="utf-8" />
-        <title>Project Overview | Hyper - Responsive Bootstrap 5 Admin Dashboard</title>
+        <title>Datatables | Hyper - Responsive Bootstrap 5 Admin Dashboard</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
         <meta content="Coderthemes" name="author" />
         <!-- App favicon -->
-        <link rel="shortcut icon" href="../../assets/images/favicon.ico">
+        <link rel="shortcut icon" href="assets/images/favicon.ico">
+
+        <!-- third party css -->
+        <link href="../../assets/css/vendor/dataTables.bootstrap5.css" rel="stylesheet" type="text/css" />
+        <link href="../../assets/css/vendor/responsive.bootstrap5.css" rel="stylesheet" type="text/css" />
+        <link href="../../assets/css/vendor/buttons.bootstrap5.css" rel="stylesheet" type="text/css" />
+        <link href="../../assets/css/vendor/select.bootstrap5.css" rel="stylesheet" type="text/css" />
+        <link href="../../assets/css/vendor/fixedHeader.bootstrap5.css" rel="stylesheet" type="text/css" />
+        <link href="../../assets/css/vendor/fixedColumns.bootstrap5.css" rel="stylesheet" type="text/css" />
+        <!-- third party css end -->
 
         <!-- App css -->
         <link href="../../assets/css/icons.min.css" rel="stylesheet" type="text/css" />
         <link href="../../assets/css/app.min.css" rel="stylesheet" type="text/css" id="app-style"/>
-        <link rel="shortcut icon" href="../../assets/images/favicon.ico">
 
-
-    <style>
-.timeline {
-    position: relative;
-    padding: 10px 0;
-}
-
-.timeline-item {
-    position: relative;
-    padding-left: 30px;
-    margin-bottom: 15px;
-}
-
-.timeline-item:before {
-    content: '';
-    position: absolute;
-    left: 11px;
-    top: 0;
-    height: 100%;
-    width: 2px;
-    background: #e3e6f0;
-}
-
-.timeline-item:last-child:before {
-    display: none;
-}
-
-.timeline-item i {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 24px;
-    height: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #fff;
-    border-radius: 50%;
-}
-
-.timeline-item .time {
-    display: block;
-    font-size: 0.85rem;
-    color: #666;
-}
-
-.timeline-item p {
-    margin: 0;
-    font-weight: 500;
-}
-</style>
     </head>
 
     <body class="loading" data-layout-color="light" data-leftbar-theme="dark" data-layout-mode="fluid" data-rightbar-onstart="true">
@@ -112,123 +62,11 @@ include('action.php');
                         <li class="side-nav-item">
                             <a data-bs-toggle="collapse" href="#sidebarDashboards" aria-expanded="false" aria-controls="sidebarDashboards" class="side-nav-link">
                                 <i class="uil-home-alt"></i>
-                                <span class="badge bg-success float-end">4</span>
                                 <span> Dashboards </span>
                             </a>
-                            <div class="collapse" id="sidebarDashboards">
-                                <ul class="side-nav-second-level">
-                                    <li>
-                                        <a href="dashboard-analytics.html">Analytics</a>
-                                    </li>
-                                    <li>
-                                        <a href="index.html">Ecommerce</a>
-                                    </li>
-                                    <li>
-                                        <a href="dashboard-projects.html">Projects</a>
-                                    </li>
-                                    <li>
-                                        <a href="dashboard-wallet.html">E-Wallet <span class="badge rounded bg-danger font-10 float-end">New</span></a>
-                                    </li>
-                                </ul>
-                            </div>
                         </li>
 
                         <li class="side-nav-title side-nav-item">Apps</li>
-
-                        <li class="side-nav-item">
-                            <a href="apps-calendar.html" class="side-nav-link">
-                                <i class="uil-calender"></i>
-                                <span> Calendar </span>
-                            </a>
-                        </li>
-
-                        <li class="side-nav-item">
-                            <a href="apps-chat.html" class="side-nav-link">
-                                <i class="uil-comments-alt"></i>
-                                <span> Chat </span>
-                            </a>
-                        </li>
-
-                        <li class="side-nav-item">
-                            <a data-bs-toggle="collapse" href="#sidebarCrm" aria-expanded="false" aria-controls="sidebarCrm" class="side-nav-link">
-                                <i class="uil uil-tachometer-fast"></i>
-                                <span class="badge bg-danger text-white float-end">New</span>
-                                <span> CRM </span>
-                            </a>
-                            <div class="collapse" id="sidebarCrm">
-                                <ul class="side-nav-second-level">
-                                    <li>
-                                        <a href="crm-dashboard.html">Dashboard</a>
-                                    </li>
-                                    <li>
-                                        <a href="crm-projects.html">Project</a>
-                                    </li>
-                                    <li>
-                                        <a href="crm-orders-list.html">Orders List</a>
-                                    </li>
-                                    <li>
-                                        <a href="crm-clients.html">Clients</a>
-                                    </li>
-                                    <li>
-                                        <a href="crm-management.html">Management</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-
-                        <li class="side-nav-item">
-                            <a data-bs-toggle="collapse" href="#sidebarEcommerce" aria-expanded="false" aria-controls="sidebarEcommerce" class="side-nav-link">
-                                <i class="uil-store"></i>
-                                <span> Ecommerce </span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <div class="collapse" id="sidebarEcommerce">
-                                <ul class="side-nav-second-level">
-                                    <li>
-                                        <a href="apps-ecommerce-products.html">Products</a>
-                                    </li>
-                                    <li>
-                                        <a href="apps-ecommerce-products-details.html">Products Details</a>
-                                    </li>
-                                    <li>
-                                        <a href="apps-ecommerce-orders.html">Orders</a>
-                                    </li>
-                                    <li>
-                                        <a href="apps-ecommerce-orders-details.html">Order Details</a>
-                                    </li>
-                                    <li>
-                                        <a href="apps-ecommerce-customers.html">Customers</a>
-                                    </li>
-                                    <li>
-                                        <a href="apps-ecommerce-shopping-cart.html">Shopping Cart</a>
-                                    </li>
-                                    <li>
-                                        <a href="apps-ecommerce-checkout.html">Checkout</a>
-                                    </li>
-                                    <li>
-                                        <a href="apps-ecommerce-sellers.html">Sellers</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-
-                        <li class="side-nav-item">
-                            <a data-bs-toggle="collapse" href="#sidebarEmail" aria-expanded="false" aria-controls="sidebarEmail" class="side-nav-link">
-                                <i class="uil-envelope"></i>
-                                <span> Email </span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <div class="collapse" id="sidebarEmail">
-                                <ul class="side-nav-second-level">
-                                    <li>
-                                        <a href="apps-email-inbox.html">Inbox</a>
-                                    </li>
-                                    <li>
-                                        <a href="apps-email-read.html">Read Email</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
 
                         <li class="side-nav-item">
                             <a data-bs-toggle="collapse" href="#sidebarProjects" aria-expanded="false" aria-controls="sidebarProjects" class="side-nav-link">
@@ -243,9 +81,6 @@ include('action.php');
                                     </li>
                                     <li>
                                         <a href="apps-projects-details.html">Details</a>
-                                    </li>
-                                    <li>
-                                        <a href="apps-projects-gantt.html">Gantt <span class="badge rounded-pill bg-light text-dark font-10 float-end">New</span></a>
                                     </li>
                                     <li>
                                         <a href="apps-projects-add.html">Create Project</a>
@@ -282,484 +117,7 @@ include('action.php');
                             </div>
                         </li>
 
-                        <li class="side-nav-item">
-                            <a href="apps-file-manager.html" class="side-nav-link">
-                                <i class="uil-folder-plus"></i>
-                                <span> File Manager </span>
-                            </a>
-                        </li>
-
-                        <li class="side-nav-title side-nav-item">Custom</li>
-
-                        <li class="side-nav-item">
-                            <a data-bs-toggle="collapse" href="#sidebarPages" aria-expanded="false" aria-controls="sidebarPages" class="side-nav-link">
-                                <i class="uil-copy-alt"></i>
-                                <span> Pages </span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <div class="collapse" id="sidebarPages">
-                                <ul class="side-nav-second-level">
-                                    <li>
-                                        <a href="pages-profile.html">Profile</a>
-                                    </li>
-                                    <li>
-                                        <a href="pages-profile-2.html">Profile 2</a>
-                                    </li>
-                                    <li>
-                                        <a href="pages-invoice.html">Invoice</a>
-                                    </li>
-                                    <li>
-                                        <a href="pages-faq.html">FAQ</a>
-                                    </li>
-                                    <li>
-                                        <a href="pages-pricing.html">Pricing</a>
-                                    </li>
-                                    <li>
-                                        <a href="pages-maintenance.html">Maintenance</a>
-                                    </li>
-                                    <li class="side-nav-item">
-                                        <a data-bs-toggle="collapse" href="#sidebarPagesAuth" aria-expanded="false" aria-controls="sidebarPagesAuth">
-                                            <span> Authentication </span>
-                                            <span class="menu-arrow"></span>
-                                        </a>
-                                        <div class="collapse" id="sidebarPagesAuth">
-                                            <ul class="side-nav-third-level">
-                                                <li>
-                                                    <a href="pages-login.html">Login</a>
-                                                </li>
-                                                <li>
-                                                    <a href="pages-login-2.html">Login 2</a>
-                                                </li>
-                                                <li>
-                                                    <a href="pages-register.html">Register</a>
-                                                </li>
-                                                <li>
-                                                    <a href="pages-register-2.html">Register 2</a>
-                                                </li>
-                                                <li>
-                                                    <a href="pages-logout.html">Logout</a>
-                                                </li>
-                                                <li>
-                                                    <a href="pages-logout-2.html">Logout 2</a>
-                                                </li>
-                                                <li>
-                                                    <a href="pages-recoverpw.html">Recover Password</a>
-                                                </li>
-                                                <li>
-                                                    <a href="pages-recoverpw-2.html">Recover Password 2</a>
-                                                </li>
-                                                <li>
-                                                    <a href="pages-lock-screen.html">Lock Screen</a>
-                                                </li>
-                                                <li>
-                                                    <a href="pages-lock-screen-2.html">Lock Screen 2</a>
-                                                </li>
-                                                <li>
-                                                    <a href="pages-confirm-mail.html">Confirm Mail</a>
-                                                </li>
-                                                <li>
-                                                    <a href="pages-confirm-mail-2.html">Confirm Mail 2</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li class="side-nav-item">
-                                        <a data-bs-toggle="collapse" href="#sidebarPagesError" aria-expanded="false" aria-controls="sidebarPagesError">
-                                            <span> Error </span>
-                                            <span class="menu-arrow"></span>
-                                        </a>
-                                        <div class="collapse" id="sidebarPagesError">
-                                            <ul class="side-nav-third-level">
-                                                <li>
-                                                <a href="pages-404.html">Error 404</a>
-                                            </li>
-                                            <li>
-                                                <a href="pages-404-alt.html">Error 404-alt</a>
-                                            </li>
-                                            <li>
-                                                <a href="pages-500.html">Error 500</a>
-                                            </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <a href="pages-starter.html">Starter Page</a>
-                                    </li>
-                                    <li>
-                                        <a href="pages-preloader.html">With Preloader</a>
-                                    </li>
-                                    <li>
-                                        <a href="pages-timeline.html">Timeline</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-
-                        <li class="side-nav-item">
-                            <a href="landing.html" target="_blank" class="side-nav-link">
-                                <i class="uil-globe"></i>
-                                <span class="badge bg-secondary text-light float-end">New</span>
-                                <span> Landing </span>
-                            </a>
-                        </li>
-
-                        <li class="side-nav-item">
-                            <a data-bs-toggle="collapse" href="#sidebarLayouts" aria-expanded="false" aria-controls="sidebarLayouts" class="side-nav-link">
-                                <i class="uil-window"></i>
-                                <span> Layouts </span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <div class="collapse" id="sidebarLayouts">
-                                <ul class="side-nav-second-level">
-                                    <li>
-                                        <a href="layouts-horizontal.html">Horizontal</a>
-                                    </li>
-                                    <li>
-                                        <a href="layouts-detached.html">Detached</a>
-                                    </li>
-                                    <li>
-                                        <a href="layouts-full.html">Full</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-            
-                        <li class="side-nav-title side-nav-item mt-1">Components</li>
-
-                        <li class="side-nav-item">
-                            <a data-bs-toggle="collapse" href="#sidebarBaseUI" aria-expanded="false" aria-controls="sidebarBaseUI" class="side-nav-link">
-                                <i class="uil-box"></i>
-                                <span> Base UI </span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <div class="collapse" id="sidebarBaseUI">
-                                <ul class="side-nav-second-level">
-                                    <li>
-                                        <a href="ui-accordions.html">Accordions</a>
-                                    </li>
-                                    <li>
-                                        <a href="ui-alerts.html">Alerts</a>
-                                    </li>
-                                    <li>
-                                        <a href="ui-avatars.html">Avatars</a>
-                                    </li>
-                                    <li>
-                                        <a href="ui-badges.html">Badges</a>
-                                    </li>
-                                    <li>
-                                        <a href="ui-breadcrumb.html">Breadcrumb</a>
-                                    </li>
-                                    <li>
-                                        <a href="ui-buttons.html">Buttons</a>
-                                    </li>
-                                    <li>
-                                        <a href="ui-cards.html">Cards</a>
-                                    </li>
-                                    <li>
-                                        <a href="ui-carousel.html">Carousel</a>
-                                    </li>
-                                    <li>
-                                        <a href="ui-dropdowns.html">Dropdowns</a>
-                                    </li>
-                                    <li>
-                                        <a href="ui-embed-video.html">Embed Video</a>
-                                    </li>
-                                    <li>
-                                        <a href="ui-grid.html">Grid</a>
-                                    </li>
-                                    <li>
-                                        <a href="ui-list-group.html">List Group</a>
-                                    </li>
-                                    <li>
-                                        <a href="ui-modals.html">Modals</a>
-                                    </li>
-                                    <li>
-                                        <a href="ui-notifications.html">Notifications</a>
-                                    </li>
-                                    <li>
-                                        <a href="ui-offcanvas.html">Offcanvas</a>
-                                    </li>
-                                    <li>
-                                        <a href="ui-placeholders.html">Placeholders</a>
-                                    </li>
-                                    <li>
-                                        <a href="ui-pagination.html">Pagination</a>
-                                    </li>
-                                    <li>
-                                        <a href="ui-popovers.html">Popovers</a>
-                                    </li>
-                                    <li>
-                                        <a href="ui-progress.html">Progress</a>
-                                    </li>
-                                    <li>
-                                        <a href="ui-ribbons.html">Ribbons</a>
-                                    </li>
-                                    <li>
-                                        <a href="ui-spinners.html">Spinners</a>
-                                    </li>
-                                    <li>
-                                        <a href="ui-tabs.html">Tabs</a>
-                                    </li>
-                                    <li>
-                                        <a href="ui-tooltips.html">Tooltips</a>
-                                    </li>
-                                    <li>
-                                        <a href="ui-typography.html">Typography</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-
-                        <li class="side-nav-item">
-                            <a data-bs-toggle="collapse" href="#sidebarExtendedUI" aria-expanded="false" aria-controls="sidebarExtendedUI" class="side-nav-link">
-                                <i class="uil-package"></i>
-                                <span> Extended UI </span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <div class="collapse" id="sidebarExtendedUI">
-                                <ul class="side-nav-second-level">
-                                    <li>
-                                        <a href="extended-dragula.html">Dragula</a>
-                                    </li>
-                                    <li>
-                                        <a href="extended-range-slider.html">Range Slider</a>
-                                    </li>
-                                    <li>
-                                        <a href="extended-ratings.html">Ratings</a>
-                                    </li>
-                                    <li>
-                                        <a href="extended-scrollbar.html">Scrollbar</a>
-                                    </li>
-                                    <li>
-                                        <a href="extended-scrollspy.html">Scrollspy</a>
-                                    </li>
-                                    <li>
-                                        <a href="extended-treeview.html">Treeview</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-
-                        <li class="side-nav-item">
-                            <a href="widgets.html" class="side-nav-link">
-                                <i class="uil-layer-group"></i>
-                                <span> Widgets </span>
-                            </a>
-                        </li>
-
-                        <li class="side-nav-item">
-                            <a data-bs-toggle="collapse" href="#sidebarIcons" aria-expanded="false" aria-controls="sidebarIcons" class="side-nav-link">
-                                <i class="uil-streering"></i>
-                                <span> Icons </span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <div class="collapse" id="sidebarIcons">
-                                <ul class="side-nav-second-level">
-                                    <li>
-                                        <a href="icons-dripicons.html">Dripicons</a>
-                                    </li>
-                                    <li>
-                                        <a href="icons-mdi.html">Material Design</a>
-                                    </li>
-                                    <li>
-                                        <a href="icons-unicons.html">Unicons</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-
-                        <li class="side-nav-item">
-                            <a data-bs-toggle="collapse" href="#sidebarForms" aria-expanded="false" aria-controls="sidebarForms" class="side-nav-link">
-                                <i class="uil-document-layout-center"></i>
-                                <span> Forms </span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <div class="collapse" id="sidebarForms">
-                                <ul class="side-nav-second-level">
-                                    <li>
-                                        <a href="form-elements.html">Basic Elements</a>
-                                    </li>
-                                    <li>
-                                        <a href="form-advanced.html">Form Advanced</a>
-                                    </li>
-                                    <li>
-                                        <a href="form-validation.html">Validation</a>
-                                    </li>
-                                    <li>
-                                        <a href="form-wizard.html">Wizard</a>
-                                    </li>
-                                    <li>
-                                        <a href="form-fileuploads.html">File Uploads</a>
-                                    </li>
-                                    <li>
-                                        <a href="form-editors.html">Editors</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-
-                        <li class="side-nav-item">
-                            <a data-bs-toggle="collapse" href="#sidebarCharts" aria-expanded="false" aria-controls="sidebarCharts" class="side-nav-link">
-                                <i class="uil-chart"></i>
-                                <span> Charts </span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <div class="collapse" id="sidebarCharts">
-                                <ul class="side-nav-second-level">
-                                    <li class="side-nav-item">
-                                        <a data-bs-toggle="collapse" href="#sidebarApexCharts" aria-expanded="false" aria-controls="sidebarApexCharts">
-                                            <span> Apex Charts </span>
-                                            <span class="menu-arrow"></span>
-                                        </a>
-                                        <div class="collapse" id="sidebarApexCharts">
-                                            <ul class="side-nav-third-level">
-                                                <li>
-                                                    <a href="charts-apex-area.html">Area</a>
-                                                </li>
-                                                <li>
-                                                    <a href="charts-apex-bar.html">Bar</a>
-                                                </li>
-                                                <li>
-                                                    <a href="charts-apex-bubble.html">Bubble</a>
-                                                </li>
-                                                <li>
-                                                    <a href="charts-apex-candlestick.html">Candlestick</a>
-                                                </li>
-                                                <li>
-                                                    <a href="charts-apex-column.html">Column</a>
-                                                </li>
-                                                <li>
-                                                    <a href="charts-apex-heatmap.html">Heatmap</a>
-                                                </li>
-                                                <li>
-                                                    <a href="charts-apex-line.html">Line</a>
-                                                </li>
-                                                <li>
-                                                    <a href="charts-apex-mixed.html">Mixed</a>
-                                                </li>
-                                                <li>
-                                                    <a href="charts-apex-pie.html">Pie</a>
-                                                </li>
-                                                <li>
-                                                    <a href="charts-apex-radar.html">Radar</a>
-                                                </li>
-                                                <li>
-                                                    <a href="charts-apex-radialbar.html">RadialBar</a>
-                                                </li>
-                                                <li>
-                                                    <a href="charts-apex-scatter.html">Scatter</a>
-                                                </li>
-                                                <li>
-                                                    <a href="charts-apex-sparklines.html">Sparklines</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <a href="charts-brite.html">Britecharts</a>
-                                    </li>
-                                    <li>
-                                        <a href="charts-chartjs.html">Chartjs</a>
-                                    </li>
-                                    <li>
-                                        <a href="charts-sparkline.html">Sparklines</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-
-                        <li class="side-nav-item">
-                            <a data-bs-toggle="collapse" href="#sidebarTables" aria-expanded="false" aria-controls="sidebarTables" class="side-nav-link">
-                                <i class="uil-table"></i>
-                                <span> Tables </span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <div class="collapse" id="sidebarTables">
-                                <ul class="side-nav-second-level">
-                                    <li>
-                                        <a href="tables-basic.html">Basic Tables</a>
-                                    </li>
-                                    <li>
-                                        <a href="tables-datatable.html">Data Tables</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-
-                        <li class="side-nav-item">
-                            <a data-bs-toggle="collapse" href="#sidebarMaps" aria-expanded="false" aria-controls="sidebarMaps" class="side-nav-link">
-                                <i class="uil-location-point"></i>
-                                <span> Maps </span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <div class="collapse" id="sidebarMaps">
-                                <ul class="side-nav-second-level">
-                                    <li>
-                                        <a href="maps-google.html">Google Maps</a>
-                                    </li>
-                                    <li>
-                                        <a href="maps-vector.html">Vector Maps</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-
-                        <li class="side-nav-item">
-                            <a data-bs-toggle="collapse" href="#sidebarMultiLevel" aria-expanded="false" aria-controls="sidebarMultiLevel" class="side-nav-link">
-                                <i class="uil-folder-plus"></i>
-                                <span> Multi Level </span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <div class="collapse" id="sidebarMultiLevel">
-                                <ul class="side-nav-second-level">
-                                    <li class="side-nav-item">
-                                        <a data-bs-toggle="collapse" href="#sidebarSecondLevel" aria-expanded="false" aria-controls="sidebarSecondLevel">
-                                            <span> Second Level </span>
-                                            <span class="menu-arrow"></span>
-                                        </a>
-                                        <div class="collapse" id="sidebarSecondLevel">
-                                            <ul class="side-nav-third-level">
-                                                <li>
-                                                    <a href="javascript: void(0);">Item 1</a>
-                                                </li>
-                                                <li>
-                                                    <a href="javascript: void(0);">Item 2</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li class="side-nav-item">
-                                        <a data-bs-toggle="collapse" href="#sidebarThirdLevel" aria-expanded="false" aria-controls="sidebarThirdLevel">
-                                            <span> Third Level </span>
-                                            <span class="menu-arrow"></span>
-                                        </a>
-                                        <div class="collapse" id="sidebarThirdLevel">
-                                            <ul class="side-nav-third-level">
-                                                <li>
-                                                    <a href="javascript: void(0);">Item 1</a>
-                                                </li>
-                                                <li class="side-nav-item">
-                                                    <a data-bs-toggle="collapse" href="#sidebarFourthLevel" aria-expanded="false" aria-controls="sidebarFourthLevel">
-                                                        <span> Item 2 </span>
-                                                        <span class="menu-arrow"></span>
-                                                    </a>
-                                                    <div class="collapse" id="sidebarFourthLevel">
-                                                        <ul class="side-nav-forth-level">
-                                                            <li>
-                                                                <a href="javascript: void(0);">Item 2.1</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="javascript: void(0);">Item 2.2</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
+                        <!-- end of list -->
                     </ul>
 
                     <!-- Help Box -->
@@ -768,9 +126,8 @@ include('action.php');
                             <i class="mdi mdi-close"></i>
                         </a>
                         <img src="../../assets/images/help-icon.svg" height="90" alt="Helper Icon Image" />
-                        <h5 class="mt-3">Unlimited Access</h5>
-                        <p class="mb-3">Upgrade to plan to get access to unlimited reports</p>
-                        <a href="javascript: void(0);" class="btn btn-secondary btn-sm">Upgrade</a>
+                        <h5 class="mt-3">PE-STAMPING</h5>
+                        <p class="mb-3">TES JERAPAHNAIKKUDA</p>
                     </div>
                     <!-- end Help Box -->
                     <!-- End Sidebar -->
@@ -1148,153 +505,53 @@ include('action.php');
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
                                             <li class="breadcrumb-item"><a href="javascript: void(0);">Hyper</a></li>
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Projects</a></li>
-                                            <li class="breadcrumb-item active">Project Details</li>
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Tables</a></li>
+                                            <li class="breadcrumb-item active">Data Tables</li>
                                         </ol>
                                     </div>
-                                    <h4 class="page-title">Project Details</h4>
+                                    <h4 class="page-title">Data Tables</h4>
                                 </div>
                             </div>
                         </div>
                         <!-- end page title --> 
 
-                        <div class="row">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <?php if (isset($_SESSION['message'])): ?>
-                                        <div class="alert alert-<?php echo $_SESSION['message_type']; ?> alert-dismissible fade show" role="alert">
-                                            <?php echo $_SESSION['message']; ?>
-                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                        </div>
-                                        <?php unset($_SESSION['message']); unset($_SESSION['message_type']); ?>
-                                    <?php endif; ?>
 
-                                    <?php if (isset($_GET['detail'])): ?>
-                                        <!-- Detail View -->
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="mb-3">
-                                                    <h6 class="text-uppercase fw-bold">Customer Information</h6>
-                                                    <table class="table table-sm">
-                                                        <tr>
-                                                            <th width="130">ID Customer</th>
-                                                            <td>: <?php echo htmlspecialchars($detail_data['id_customer']); ?></td>
-                                                        </tr>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="header-title">Basic Data Table</h4>
+                                      
+                                        <ul class="nav nav-tabs nav-bordered mb-3">
+                                        
+                                           
+                                        </ul> <!-- end nav-->
+                                        <div class="tab-content">
+                                            <div class="tab-pane show active" id="basic-datatable-preview">
+                                                <table id="basic-datatable" class="table table-striped dt-responsive nowrap w-100">
+                                                    <thead>
                                                         <tr>
                                                             <th>Name</th>
-                                                            <td>: <?php echo htmlspecialchars($detail_data['nama_customer']); ?></td>
+                                                            <th>Position</th>
+                                                            <th>Office</th>
+                                                            <th>Age</th>
+                                                            <th>Start date</th>
+                                                            <th>Salary</th>
                                                         </tr>
-                                                        <tr>
-                                                            <th>Project</th>
-                                                            <td>: <?php echo htmlspecialchars($detail_data['project']); ?></td>
-                                                        </tr>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="mt-4">
-                                            <a href="view.php" class="btn btn-secondary">
-                                                <i class="mdi mdi-arrow-left"></i> Back
-                                            </a>
-                                            <a href="view.php?edit=<?php echo $detail_data['id_customer']; ?>" class="btn btn-info">
-                                                <i class="mdi mdi-pencil"></i> Edit
-                                            </a>
-                                        </div>
-                                    <?php elseif (isset($_GET['edit'])): ?>
-                                        <!-- Edit Form -->
-                                        <form action="action.php" method="post">
-                                            <input type="hidden" name="id_customer" value="<?php echo htmlspecialchars($edit_data['id_customer']); ?>">
-                                            <input type="hidden" name="update" value="true">
-                                            <div class="mb-3">
-                                                <label for="nama_customer" class="form-label">Customer Name</label>
-                                                <input type="text" class="form-control" id="nama_customer" name="nama_customer" value="<?php echo htmlspecialchars($edit_data['nama_customer']); ?>" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="project" class="form-label">Project</label>
-                                                <input type="text" class="form-control" id="project" name="project" value="<?php echo htmlspecialchars($edit_data['project']); ?>" required>
-                                            </div>
-                                            <button type="submit" class="btn btn-primary">Update</button>
-                                        </form>
-                                    <?php elseif (isset($_GET['insert'])): ?>
-                                        <!-- Insert Form -->
-                                        <form action="action.php" method="post">
-                                            <input type="hidden" name="submit" value="true">
-                                            <div class="mb-3">
-                                                <label for="nama_customer" class="form-label">Customer Name</label>
-                                                <input type="text" class="form-control" id="nama_customer" name="nama_customer" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="project" class="form-label">Project</label>
-                                                <input type="text" class="form-control" id="project" name="project" required>
-                                            </div>
-                                            <button type="submit" class="btn btn-primary">Insert</button>
-                                        </form>
-                                    <?php else: ?>
-                                        <!-- Display Records Table -->
-                                        <div class="table-responsive">
-                                            <table class="table table-bordered">
-                                                <thead>
-                                                    <tr>
-                                                        <th>No</th>
-                                                        <th>Name</th>
-                                                        <th>Project</th>
-                                                        <th>Actions</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <?php
-                                                    $sql = "SELECT * FROM customer ORDER BY id_customer ASC";
-                                                    $result = $conn->query($sql);
-                                                    $no = 1;
-                                                    while ($row = $result->fetch_assoc()): ?>
-                                                        <tr>
-                                                            <td><?php echo $no++; ?></td>
-                                                            <td><?php echo htmlspecialchars($row['nama_customer']); ?></td>
-                                                            <td><?php echo htmlspecialchars($row['project']); ?></td>
-                                                            <td>
-                                                                <div class="btn-group">
-                                                                    <a href="view.php?edit=<?php echo $row['id_customer']; ?>" 
-                                                                       class="btn btn-info btn-sm" 
-                                                                       data-bs-toggle="tooltip" 
-                                                                       title="Edit">
-                                                                        <i class="mdi mdi-pencil"></i>
-                                                                    </a>
-                                                                    <a href="action.php?delete=<?php echo $row['id_customer']; ?>" 
-                                                                       class="btn btn-danger btn-sm" 
-                                                                       onclick="return confirm('Are you sure you want to delete this record?');"
-                                                                       data-bs-toggle="tooltip" 
-                                                                       title="Delete">
-                                                                        <i class="mdi mdi-delete"></i>
-                                                                    </a>
-                                                                    <a href="view.php?detail=<?php echo $row['id_customer']; ?>" 
-                                                                       class="btn btn-primary btn-sm" 
-                                                                       data-bs-toggle="tooltip" 
-                                                                       title="Detail">
-                                                                        <i class="mdi mdi-eye"></i>
-                                                                    </a>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    <?php endwhile; ?>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <div class="mt-3">
-                                            <a href="view.php?insert=true" class="btn btn-success">
-                                                <i class="mdi mdi-plus"></i> Insert New Customer
-                                            </a>
-                                        </div>
-                                    <?php endif; ?>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                      
-                        <!-- end row -->
-                        
+                                                    </thead>
+                                                
+                                                
+                                                    <tbody>
+                                                
+                                                    </tbody>
+                                                </table>                                           
+                                            </div> <!-- end preview-->
+                                        </div> <!-- end tab-content-->
+                                    </div> <!-- end card body-->
+                                </div> <!-- end card -->
+                            </div><!-- end col-->
+                        </div> <!-- end row-->
                     </div> <!-- container -->
-
                 </div> <!-- content -->
 
                 <!-- Footer Start -->
@@ -1426,14 +683,26 @@ include('action.php');
         <script src="../../assets/js/app.min.js"></script>
 
         <!-- third party js -->
-        <script src="../../assets/js/vendor/chart.min.js"></script>
+        <script src="../../assets/js/vendor/jquery.dataTables.min.js"></script>
+        <script src="../../assets/js/vendor/dataTables.bootstrap5.js"></script>
+        <script src="../../assets/js/vendor/dataTables.responsive.min.js"></script>
+        <script src="../../assets/js/vendor/responsive.bootstrap5.min.js"></script>
+        <script src="../../assets/js/vendor/dataTables.buttons.min.js"></script>
+        <script src="../../assets/js/vendor/buttons.bootstrap5.min.js"></script>
+        <script src="../../assets/js/vendor/buttons.html5.min.js"></script>
+        <script src="../../assets/js/vendor/buttons.flash.min.js"></script>
+        <script src="../../assets/js/vendor/buttons.print.min.js"></script>
+        <script src="../../assets/js/vendor/dataTables.keyTable.min.js"></script>
+        <script src="../../assets/js/vendor/dataTables.select.min.js"></script>
+        <script src="../../assets/js/vendor/fixedColumns.bootstrap5.min.js"></script>
+        <script src="../../assets/js/vendor/fixedHeader.bootstrap5.min.js"></script>
         <!-- third party js ends -->
 
         <!-- demo app -->
-        <script src="../../assets/js/pages/demo.project-detail.js"></script>
+        <script src="../../assets/js/pages/demo.datatable-init.js"></script>
         <!-- end demo js-->
 
     </body>
 
-<!-- Mirrored from coderthemes.com/hyper/saas/apps-projects-details.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 29 Jul 2022 10:21:06 GMT -->
+<!-- Mirrored from coderthemes.com/hyper/saas/tables-datatable.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 29 Jul 2022 10:22:01 GMT -->
 </html>
