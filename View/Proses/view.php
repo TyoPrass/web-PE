@@ -726,13 +726,19 @@ include('action.php');
                                 </div> <!-- end card -->
                             </div><!-- end col-->
                         </div>
-                       
+
                     </div> <!-- container -->
 
                 </div> <!-- content -->
 
+
                 <!-- Footer Start -->
-                <footer class="footer">
+              
+                <!-- end Footer -->
+
+            </div>
+
+            <footer class="footer">
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-6">
@@ -748,9 +754,6 @@ include('action.php');
                         </div>
                     </div>
                 </footer>
-                <!-- end Footer -->
-
-            </div>
 
             <!-- ============================================================== -->
             <!-- End Page content -->

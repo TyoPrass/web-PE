@@ -1203,6 +1203,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                          
                           
                         </div>
+                                    
                     </div>
                             </div>
                         </div>
@@ -1215,6 +1216,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 </div> <!-- end card-->
                             </div> <!-- end col-->
                         </div>
+                                    </div>
+                                </div>
+                            </div>
                         <!-- end row-->
                         
                     </div> <!-- container -->
