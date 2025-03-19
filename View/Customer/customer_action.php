@@ -2,6 +2,8 @@
 include_once('../../Database/koneksi.php');
 session_start();
 
+
+
 // Handle delete operation
 if (isset($_GET['delete'])) {
     $id_customer = $_GET['delete'];
@@ -26,7 +28,6 @@ if (isset($_POST['update'])) {
     $nama_customer = $_POST['nama_customer'];
     $project = $_POST['project'];
 
-    // Update data in database
     $sql = "UPDATE customer SET nama_customer = ?, project = ? WHERE id_customer = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ssi", $nama_customer, $project, $id_customer);
@@ -49,7 +50,6 @@ if (isset($_POST['submit'])) {
     $nama_customer = $_POST['nama_customer'];
     $project = $_POST['project'];
 
-    // Insert data into database
     $sql = "INSERT INTO customer (nama_customer, project) VALUES (?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ss", $nama_customer, $project);

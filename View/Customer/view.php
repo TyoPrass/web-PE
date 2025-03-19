@@ -1,9 +1,7 @@
 <?php
-include_once('../../database/koneksi.php');
-session_start();
-include('action.php');
+include_once('../../Database/koneksi.php');
+include('customer_action.php');
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -504,6 +502,7 @@ include('action.php');
 
                     <!-- Start Content-->
                     <div class="container-fluid">
+                        
                         <!-- start page title -->
                         <div class="row">
                             <div class="col-12">
@@ -512,25 +511,32 @@ include('action.php');
                                         <ol class="breadcrumb m-0">
                                             <li class="breadcrumb-item"><a href="javascript: void(0);">Hyper</a></li>
                                             <li class="breadcrumb-item"><a href="javascript: void(0);">Tables</a></li>
-                                            <li class="breadcrumb-item active">Customer Data</li>
+                                            <li class="breadcrumb-item active">Data Tables</li>
                                         </ol>
                                     </div>
-                                    <h4 class="page-title">Customer Data</h4>
+                                    <h4 class="page-title">Data Tables</h4>
                                 </div>
                             </div>
                         </div>
-                        <!-- end page title -->
+                        <!-- end page title --> 
+
 
                         <div class="row">
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-body">
+                                        <h4 class="header-title">Customer Management</h4>
+                                        
+                                        <?php
+                                        include_once('customer_action.php');
+                                        ?>
+                                        
                                         <?php if (isset($_SESSION['message'])): ?>
                                             <div class="alert alert-<?php echo $_SESSION['message_type']; ?> alert-dismissible fade show" role="alert">
                                                 <?php echo $_SESSION['message']; ?>
                                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                             </div>
-                                            <?php unset($_SESSION['message'], $_SESSION['message_type']); ?>
+                                            <?php unset($_SESSION['message']); unset($_SESSION['message_type']); ?>
                                         <?php endif; ?>
 
                                         <?php if (isset($_GET['detail'])): ?>
@@ -557,18 +563,18 @@ include('action.php');
                                                 </div>
                                             </div>
                                             <div class="mt-4">
-                                                <a href="customer.php" class="btn btn-secondary">
+                                                <a href="view.php" class="btn btn-secondary">
                                                     <i class="mdi mdi-arrow-left"></i> Back
                                                 </a>
-                                                <a href="customer.php?edit=<?php echo $detail_data['id_customer']; ?>" class="btn btn-info">
+                                                <a href="view.php?edit=<?php echo $detail_data['id_customer']; ?>" class="btn btn-info">
                                                     <i class="mdi mdi-pencil"></i> Edit
                                                 </a>
                                             </div>
                                         <?php elseif (isset($_GET['edit'])): ?>
                                             <!-- Edit Form -->
-                                            <form action="action.php" method="post">
+                                            <form action="view.php" method="post">
                                                 <input type="hidden" name="id_customer" value="<?php echo htmlspecialchars($edit_data['id_customer']); ?>">
-                                                <input type="hidden" name="action" value="update">
+                                                <input type="hidden" name="update" value="true">
                                                 <div class="mb-3">
                                                     <label for="nama_customer" class="form-label">Customer Name</label>
                                                     <input type="text" class="form-control" id="nama_customer" name="nama_customer" value="<?php echo htmlspecialchars($edit_data['nama_customer']); ?>" required>
@@ -578,11 +584,12 @@ include('action.php');
                                                     <input type="text" class="form-control" id="project" name="project" value="<?php echo htmlspecialchars($edit_data['project']); ?>" required>
                                                 </div>
                                                 <button type="submit" class="btn btn-primary">Update</button>
+                                                <a href="view.php" class="btn btn-secondary">Cancel</a>
                                             </form>
                                         <?php elseif (isset($_GET['insert'])): ?>
                                             <!-- Insert Form -->
-                                            <form action="action.php" method="post">
-                                                <input type="hidden" name="action" value="insert">
+                                            <form action="view.php" method="post">
+                                                <input type="hidden" name="submit" value="true">
                                                 <div class="mb-3">
                                                     <label for="nama_customer" class="form-label">Customer Name</label>
                                                     <input type="text" class="form-control" id="nama_customer" name="nama_customer" required>
@@ -592,9 +599,15 @@ include('action.php');
                                                     <input type="text" class="form-control" id="project" name="project" required>
                                                 </div>
                                                 <button type="submit" class="btn btn-primary">Insert</button>
+                                                <a href="view.php" class="btn btn-secondary">Cancel</a>
                                             </form>
                                         <?php else: ?>
                                             <!-- Display Records Table -->
+                                            <div class="mt-3 mb-3">
+                                                <a href="view.php?insert=true" class="btn btn-success">
+                                                    <i class="mdi mdi-plus"></i> Insert New Customer
+                                                </a>
+                                            </div>
                                             <div class="table-responsive">
                                                 <table id="basic-datatable" class="table table-striped dt-responsive nowrap w-100">
                                                     <thead>
@@ -617,20 +630,20 @@ include('action.php');
                                                                 <td><?php echo htmlspecialchars($row['project']); ?></td>
                                                                 <td>
                                                                     <div class="btn-group">
-                                                                        <a href="customer.php?edit=<?php echo $row['id_customer']; ?>" 
+                                                                        <a href="view.php?edit=<?php echo $row['id_customer']; ?>" 
                                                                            class="btn btn-info btn-sm" 
                                                                            data-bs-toggle="tooltip" 
                                                                            title="Edit">
                                                                             <i class="mdi mdi-pencil"></i>
                                                                         </a>
-                                                                        <a href="action.php?action=delete&id_customer=<?php echo $row['id_customer']; ?>" 
+                                                                        <a href="view.php?delete=<?php echo $row['id_customer']; ?>" 
                                                                            class="btn btn-danger btn-sm" 
                                                                            onclick="return confirm('Are you sure you want to delete this record?');"
                                                                            data-bs-toggle="tooltip" 
                                                                            title="Delete">
                                                                             <i class="mdi mdi-delete"></i>
                                                                         </a>
-                                                                        <a href="customer.php?detail=<?php echo $row['id_customer']; ?>" 
+                                                                        <a href="view.php?detail=<?php echo $row['id_customer']; ?>" 
                                                                            class="btn btn-primary btn-sm" 
                                                                            data-bs-toggle="tooltip" 
                                                                            title="Detail">
@@ -643,20 +656,54 @@ include('action.php');
                                                     </tbody>
                                                 </table>
                                             </div>
-                                            <div class="mt-3">
-                                                <a href="customer.php?insert=true" class="btn btn-success">
-                                                    <i class="mdi mdi-plus"></i> Insert New Customer
-                                                </a>
-                                            </div>
                                         <?php endif; ?>
-                                    </div>
+
+                                    </div> <!-- end card body-->
+                                </div> <!-- end card -->
+                            </div><!-- end col-->
+                        </div> <!-- end row-->
+                                                
+                        <script>
+                            // Initialize tooltips
+                            document.addEventListener('DOMContentLoaded', function() {
+                                var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+                                var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                                    return new bootstrap.Tooltip(tooltipTriggerEl)
+                                });
+                                
+                                // Configure DataTable to prevent footer overlap
+                                if($.fn.dataTable.isDataTable('#basic-datatable')) {
+                                    $('#basic-datatable').DataTable({
+                                        responsive: true,
+                                        scrollY: '50vh',
+                                        scrollCollapse: true,
+                                        paging: true,
+                                        pageLength: 10
+                                    });
+                                }
+                            });
+                        </script>
+                    </div> <!-- container -->
+                </div> <!-- content -->
+
+                <!-- Footer Start -->
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <script>document.write(new Date().getFullYear())</script> © Hyper - Coderthemes.com
+                            </div>
+                            <div class="col-md-6">
+                                <div class="text-md-end footer-links d-none d-md-block">
+                                    <a href="javascript: void(0);">About</a>
+                                    <a href="javascript: void(0);">Support</a>
+                                    <a href="javascript: void(0);">Contact Us</a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div> <!-- content -->
-
-            
+                </footer>
+                <!-- end Footer -->
 
             </div>
 
