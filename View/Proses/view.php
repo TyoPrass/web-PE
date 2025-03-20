@@ -64,7 +64,7 @@ include_once('action.php');
                         <li class="side-nav-title side-nav-item">Navigation</li>
 
                         <li class="side-nav-item">
-                            <a data-bs-toggle="collapse" href="#sidebarDashboards" aria-expanded="false" aria-controls="sidebarDashboards" class="side-nav-link">
+                            <a data-bs-toggle="collapse" href="../Dashboard/dashboard.php" aria-expanded="false" aria-controls="sidebarDashboards" class="side-nav-link">
                                 <i class="uil-home-alt"></i>
                                 <span> Dashboards </span>
                             </a>
@@ -81,13 +81,16 @@ include_once('action.php');
                             <div class="collapse" id="sidebarProjects">
                                 <ul class="side-nav-second-level">
                                     <li>
-                                        <a href="apps-projects-list.html">List</a>
+                                        <a href="../Customer/view.php">Customer</a>
                                     </li>
                                     <li>
-                                        <a href="apps-projects-details.html">Details</a>
+                                        <a href="../Project/view.php">Project</a>
                                     </li>
                                     <li>
-                                        <a href="apps-projects-add.html">Create Project</a>
+                                        <a href="#">Proses</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Create Project</a>
                                     </li>
                                 </ul>
                             </div>
