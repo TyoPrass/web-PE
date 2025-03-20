@@ -527,7 +527,7 @@ include_once('action.php');
                                         <h4 class="header-title">Basic Data Table</h4>
 
                                         <div class="mt-2">
-                                                <a href="view.php?insert" class="btn btn-primary">
+                                                <a href="view.php?insert" class="btn btn-success">
                                                     <i class="mdi mdi-plus"></i>  Insert New Proses
                                                 </a>
                                             </div>
