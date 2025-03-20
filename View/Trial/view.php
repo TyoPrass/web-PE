@@ -1843,13 +1843,6 @@ include('action.php');
 </script>
 <?php else: ?>
 <!-- This part will show if not in insert mode -->
-<?php endif; ?>
-<?php endif; ?>
-</div>
-</div>
-</div>
-</div>
-<?php if (!isset($_GET['detail']) && !isset($_GET['edit'])): ?>
 <div class="row">
     <div class="col-12">
         <div class="card">
@@ -1906,6 +1899,7 @@ include('action.php');
         </div>
     </div>
 </div>
+<?php endif; ?>
 <?php endif; ?>
                                     </div> <!-- end card body-->
                                 </div> <!-- end card -->
