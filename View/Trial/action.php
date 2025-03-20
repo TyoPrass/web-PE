@@ -16,7 +16,7 @@ if (isset($_GET['delete'])) {
         $_SESSION['message_type'] = 'danger';
     }
     $stmt->close();
-    header('Location: trial.php');
+    header('Location: view.php');
     exit();
 }
 
@@ -73,7 +73,7 @@ if (isset($_POST['update'])) {
     if ($stmt->execute()) {
         $_SESSION['message'] = 'Trial updated successfully.';
         $_SESSION['message_type'] = 'success';
-        echo "<script>alert('Trial updated successfully.'); window.location.href='trial.php';</script>";
+        echo "<script>alert('Trial updated successfully.'); window.location.href='view.php';</script>";
         exit();
     } else {
         $_SESSION['message'] = 'Error: ' . $stmt->error;

@@ -84,13 +84,16 @@ include('action.php');
                             <div class="collapse" id="sidebarProjects">
                                 <ul class="side-nav-second-level">
                                     <li>
-                                        <a href="apps-projects-list.html">List</a>
+                                        <a href="../Customer/view.php">Customer</a>
                                     </li>
                                     <li>
-                                        <a href="apps-projects-details.html">Details</a>
+                                        <a href="../Project/view.php">Part</a>
                                     </li>
                                     <li>
-                                        <a href="apps-projects-add.html">Create Project</a>
+                                        <a href="../Proses/view.php">Proses</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Trial & Report</a>
                                     </li>
                                 </ul>
                             </div>

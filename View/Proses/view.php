@@ -84,7 +84,7 @@ include_once('action.php');
                                         <a href="../Customer/view.php">Customer</a>
                                     </li>
                                     <li>
-                                        <a href="../Project/view.php">Project</a>
+                                        <a href="../Project/view.php">Part</a>
                                     </li>
                                     <li>
                                         <a href="#">Proses</a>
