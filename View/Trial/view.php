@@ -67,7 +67,7 @@ include('action.php');
                         <li class="side-nav-title side-nav-item">Navigation</li>
 
                         <li class="side-nav-item">
-                            <a data-bs-toggle="collapse" href="#sidebarDashboards" aria-expanded="false" aria-controls="sidebarDashboards" class="side-nav-link">
+                            <a href="../Dashboard/dashboard.php" class="side-nav-link">
                                 <i class="uil-home-alt"></i>
                                 <span> Dashboards </span>
                             </a>
@@ -100,7 +100,7 @@ include('action.php');
                         </li>
 
                         <li class="side-nav-item">
-                            <a href="apps-social-feed.html" class="side-nav-link">
+                            <a href="#" class="side-nav-link">
                                 <i class="uil-rss"></i>
                                 <span> Social Feed </span>
                             </a>
@@ -115,13 +115,13 @@ include('action.php');
                             <div class="collapse" id="sidebarTasks">
                                 <ul class="side-nav-second-level">
                                     <li>
-                                        <a href="apps-tasks.html">List</a>
+                                        <a href="#">List</a>
                                     </li>
                                     <li>
-                                        <a href="apps-tasks-details.html">Details</a>
+                                        <a href="#">Details</a>
                                     </li>
                                     <li>
-                                        <a href="apps-kanban.html">Kanban Board</a>
+                                        <a href="#">Kanban Board</a>
                                     </li>
                                 </ul>
                             </div>
@@ -393,7 +393,7 @@ include('action.php');
                                         <img src="../../assets/images/users/avatar-1.jpg" alt="user-image" class="rounded-circle">
                                     </span>
                                     <span>
-                                        <span class="account-user-name">Dominic Keller</span>
+                                        <span class="account-user-name"><?= $_SESSION['username'];?></span>
                                         <span class="account-position">Founder</span>
                                     </span>
                                 </a>
@@ -428,7 +428,7 @@ include('action.php');
                                     </a>
 
                                     <!-- item-->
-                                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                    <a href="../../login.php" class="dropdown-item notify-item">
                                         <i class="mdi mdi-logout me-1"></i>
                                         <span>Logout</span>
                                     </a>

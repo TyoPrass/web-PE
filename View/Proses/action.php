@@ -2,6 +2,11 @@
 include_once('../../Database/koneksi.php');
 session_start();
 
+if (!isset($_SESSION['username'])) {
+    header("Location: ../../login.php"); // Redirect ke halaman login
+    exit();
+}
+
 // Handle delete operation
 if (isset($_GET['delete'])) {
     $id_proses = $_GET['delete'];
