@@ -196,7 +196,7 @@ if (isset($_POST['submit'])) {
     if ($stmt->execute()) {
         $_SESSION['message'] = 'Trial inserted successfully.';
         $_SESSION['message_type'] = 'success';
-        echo "<script>alert('Trial inserted successfully.'); window.location.href='trial.php';</script>";
+        echo "<script>alert('Trial inserted successfully.'); window.location.href='view.php';</script>";
         exit();
     } else {
         $_SESSION['message'] = 'Error: ' . $stmt->error;
