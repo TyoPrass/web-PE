@@ -924,13 +924,7 @@ include('action.php');
                                                                     <select class="form-select" id="part_no" name="part_no" required>
                                                                         <option value="">Select Part No</option>
                                                                         <?php
-                                                                        // Get part_no from proses table based on selected id_part
-                                                                        $sql_part_no = "SELECT DISTINCT p.part_no 
-                                                                                        FROM proses p 
-                                                                                        INNER JOIN data_part dp ON p.id_part = dp.id_part";
-                                                                        if (!empty($edit_data['id_part'])) {
-                                                                            $sql_part_no .= " WHERE p.id_part = " . $edit_data['id_part'];
-                                                                        }
+                                                                    
                                                                         $result_part_no = $conn->query($sql_part_no);
                                                                         while ($row = $result_part_no->fetch_assoc()) {
                                                                             $selected = ($edit_data['part_no'] == $row['part_no']) ? 'selected' : '';
@@ -1817,11 +1811,14 @@ include('action.php');
                 theme: 'snow',
                 modules: {
                     toolbar: [
+                        [{ font: [] }, { size: [] }],
                         ['bold', 'italic', 'underline', 'strike'],
-                        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-                        [{ 'indent': '-1' }, { 'indent': '+1' }],
-                        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-                        [{ 'color': [] }, { 'background': [] }],
+                        [{ color: [] }, { background: [] }],
+                        [{ script: 'super' }, { script: 'sub' }],
+                        [{ header: [false, 1, 2, 3, 4, 5, 6] }, 'blockquote', 'code-block'],
+                        [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
+                        ['direction', { align: [] }],
+                        ['link', 'image', 'video'],
                         ['clean']
                     ]
                 }
