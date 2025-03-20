@@ -1,6 +1,6 @@
 <?php
 include_once('../../Database/koneksi.php');
-include('customer_action.php');
+include_once('action.php');
 ?>
 
 <!DOCTYPE html>
@@ -525,11 +525,15 @@ include('customer_action.php');
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h4 class="header-title">Customer Management</h4>
-                                        
-                                        <?php
-                                        include_once('customer_action.php');
-                                        ?>
+                                        <h4 class="header-title">Basic Data Table</h4>
+                                        <div class="mt-3">
+                                                        <a href="view.php?insert=true" class="btn btn-success">
+                                                            <i class="mdi mdi-plus"></i> Insert New Record
+                                                        </a>
+                                                    </div>
+                                                    <br>
+                                      
+                               
                                         
                                         <?php if (isset($_SESSION['message'])): ?>
                                             <div class="alert alert-<?php echo $_SESSION['message_type']; ?> alert-dismissible fade show" role="alert">
@@ -544,145 +548,246 @@ include('customer_action.php');
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="mb-3">
-                                                        <h6 class="text-uppercase fw-bold">Customer Information</h6>
+                                                        <h6 class="text-uppercase fw-bold">Part Information</h6>
                                                         <table class="table table-sm">
                                                             <tr>
-                                                                <th width="130">ID Customer</th>
-                                                                <td>: <?php echo htmlspecialchars($detail_data['id_customer']); ?></td>
-                                                            </tr>
-                                                            <tr>
                                                                 <th>Name</th>
-                                                                <td>: <?php echo htmlspecialchars($detail_data['nama_customer']); ?></td>
+                                                                <td>: <?php echo htmlspecialchars($detail_data['nama_part']); ?></td>
                                                             </tr>
                                                             <tr>
-                                                                <th>Project</th>
+                                                                <th>Start Date</th>
+                                                                <td>: <?php echo date('d M Y', strtotime($detail_data['tanggal'])); ?></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Due Date</th>
+                                                                <td>: <?php echo date('d M Y', strtotime($detail_data['tgl_selesai'])); ?></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Created</th>
+                                                                <td>: <?php echo date('d M Y H:i:s', strtotime($detail_data['created_at'] ?? 'now')); ?></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Customer</th>
                                                                 <td>: <?php echo htmlspecialchars($detail_data['project']); ?></td>
                                                             </tr>
                                                         </table>
                                                     </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <h6 class="text-uppercase fw-bold">Status Timeline</h6>
+                                                    <div class="timeline">
+                                                        <div class="timeline-item">
+                                                            <i class="mdi mdi-clock-outline text-primary"></i>
+                                                            <span class="time">Start: <?php echo date('d M Y', strtotime($detail_data['tanggal'])); ?></span>
+                                                            <p>Project Started</p>
+                                                        </div>
+                                                        <div class="timeline-item">
+                                                            <i class="mdi mdi-timer-sand text-warning"></i>
+                                                            <span class="time">Due: <?php echo date('d M Y', strtotime($detail_data['tgl_selesai'])); ?></span>
+                                                            <p>Expected Completion</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="mt-4">
+                                                <h6 class="text-uppercase fw-bold">Part Images</h6>
+                                                <div class="row g-2">
+                                                    <?php
+                                                    if (!empty($detail_data['gambar_part'])) {
+                                                        $images = explode(',', $detail_data['gambar_part']);
+                                                        foreach ($images as $image) {
+                                                            if (file_exists('uploads/' . $image)) {
+                                                                echo '<div class="col-md-4">
+                                                                        <div class="card">
+                                                                            <img src="uploads/' . htmlspecialchars($image) . '" 
+                                                                                 alt="Part Image" 
+                                                                                 class="card-img-top"
+                                                                                 style="height: 200px; object-fit: cover;">
+                                                                            <div class="card-body p-2">
+                                                                                <p class="card-text small text-muted mb-0">' . htmlspecialchars($image) . '</p>
+                                                                                <a href="uploads/' . htmlspecialchars($image) . '" 
+                                                                                   class="btn btn-sm btn-primary mt-1"
+                                                                                   target="_blank">
+                                                                                    <i class="mdi mdi-eye"></i> View Full
+                                                                                </a>
+                                                                            </div>
+                                                                        </div>
+                                                                      </div>';
+                                                            }
+                                                        }
+                                                    } else {
+                                                        echo '<div class="col-12">
+                                                                <div class="alert alert-info mb-0">
+                                                                    <i class="mdi mdi-information-outline me-1"></i>
+                                                                    No images available for this part.
+                                                                </div>
+                                                              </div>';
+                                                    }
+                                                    ?>
                                                 </div>
                                             </div>
                                             <div class="mt-4">
                                                 <a href="view.php" class="btn btn-secondary">
                                                     <i class="mdi mdi-arrow-left"></i> Back
                                                 </a>
-                                                <a href="view.php?edit=<?php echo $detail_data['id_customer']; ?>" class="btn btn-info">
+                                                <a href="view.php?edit=<?php echo $detail_data['id_part']; ?>" class="btn btn-info">
                                                     <i class="mdi mdi-pencil"></i> Edit
                                                 </a>
                                             </div>
                                         <?php elseif (isset($_GET['edit'])): ?>
                                             <!-- Edit Form -->
-                                            <form action="view.php" method="post">
-                                                <input type="hidden" name="id_customer" value="<?php echo htmlspecialchars($edit_data['id_customer']); ?>">
+                                            <form action="action.php" method="post" enctype="multipart/form-data">
+                                                <input type="hidden" name="id_part" value="<?php echo htmlspecialchars($edit_data['id_part']); ?>">
                                                 <input type="hidden" name="update" value="true">
                                                 <div class="mb-3">
-                                                    <label for="nama_customer" class="form-label">Customer Name</label>
-                                                    <input type="text" class="form-control" id="nama_customer" name="nama_customer" value="<?php echo htmlspecialchars($edit_data['nama_customer']); ?>" required>
+                                                    <label for="projectname" class="form-label">Project Name</label>
+                                                    <input type="text" class="form-control" id="projectname" name="projectname" value="<?php echo htmlspecialchars($edit_data['nama_part']); ?>" required>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="project" class="form-label">Project</label>
-                                                    <input type="text" class="form-control" id="project" name="project" value="<?php echo htmlspecialchars($edit_data['project']); ?>" required>
+                                                    <label for="startdate" class="form-label">Start Date</label>
+                                                    <input type="date" class="form-control" id="startdate" name="startdate" value="<?php echo htmlspecialchars($edit_data['tanggal']); ?>" required>
                                                 </div>
-                                                <button type="submit" class="btn btn-primary">Update</button>
-                                                <a href="view.php" class="btn btn-secondary">Cancel</a>
+                                                <div class="mb-3">
+                                                    <label for="duedate" class="form-label">Due Date</label>
+                                                    <input type="date" class="form-control" id="duedate" name="duedate" value="<?php echo htmlspecialchars($edit_data['tgl_selesai']); ?>" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="id_customer" class="form-label">Customer</label>
+                                                    <select class="form-control" id="id_customer" name="id_customer" required>
+                                                        <?php
+                                                        $sql = "SELECT id_customer, project FROM customer";
+                                                        $result = $conn->query($sql);
+                                                        while ($customer = $result->fetch_assoc()) {
+                                                            $selected = $customer['id_customer'] == $edit_data['id_customer'] ? 'selected' : '';
+                                                            echo "<option value='{$customer['id_customer']}' $selected>{$customer['project']}</option>";
+                                                        }
+                                                        ?>
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="file" class="form-label">Upload Images</label>
+                                                    <input type="file" class="form-control" id="file" name="file[]" multiple>
+                                                </div>
+                                                <div class="mt-3">
+                                                    <a href="view.php" class="btn btn-secondary">
+                                                        <i class="mdi mdi-arrow-left"></i> Back
+                                                    </a>
+                                                    <button type="submit" class="btn btn-primary">Update</button>
+                                                </div>
                                             </form>
                                         <?php elseif (isset($_GET['insert'])): ?>
                                             <!-- Insert Form -->
-                                            <form action="view.php" method="post">
+                                            <form action="action.php" method="post" enctype="multipart/form-data">
                                                 <input type="hidden" name="submit" value="true">
                                                 <div class="mb-3">
-                                                    <label for="nama_customer" class="form-label">Customer Name</label>
-                                                    <input type="text" class="form-control" id="nama_customer" name="nama_customer" required>
+                                                    <label for="projectname" class="form-label">Project Name</label>
+                                                    <input type="text" class="form-control" id="projectname" name="projectname" required>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="project" class="form-label">Project</label>
-                                                    <input type="text" class="form-control" id="project" name="project" required>
+                                                    <label for="startdate" class="form-label">Start Date</label>
+                                                    <input type="date" class="form-control" id="startdate" name="startdate" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="duedate" class="form-label">Due Date</label>
+                                                    <input type="date" class="form-control" id="duedate" name="duedate" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="id_customer" class="form-label">Customer</label>
+                                                    <select class="form-control" id="id_customer" name="id_customer" required>
+                                                        <?php
+                                                        $sql = "SELECT id_customer, project FROM customer";
+                                                        $result = $conn->query($sql);
+                                                        while ($customer = $result->fetch_assoc()) {
+                                                            echo "<option value='{$customer['id_customer']}'>{$customer['project']}</option>";
+                                                        }
+                                                        ?>
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="file" class="form-label">Upload Images</label>
+                                                    <input type="file" class="form-control" id="file" name="file[]" multiple>
                                                 </div>
                                                 <button type="submit" class="btn btn-primary">Insert</button>
-                                                <a href="view.php" class="btn btn-secondary">Cancel</a>
                                             </form>
                                         <?php else: ?>
                                             <!-- Display Records Table -->
-                                            <div class="mt-3 mb-3">
-                                                <a href="view.php?insert=true" class="btn btn-success">
-                                                    <i class="mdi mdi-plus"></i> Insert New Customer
-                                                </a>
-                                            </div>
-                                            <div class="table-responsive">
-                                                <table id="basic-datatable" class="table table-striped dt-responsive nowrap w-100">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>No</th>
-                                                            <th>Name</th>
-                                                            <th>Project</th>
-                                                            <th>Actions</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <?php
-                                                        $sql = "SELECT * FROM customer ORDER BY id_customer ASC";
-                                                        $result = $conn->query($sql);
-                                                        $no = 1;
-                                                        while ($row = $result->fetch_assoc()): ?>
-                                                            <tr>
-                                                                <td><?php echo $no++; ?></td>
-                                                                <td><?php echo htmlspecialchars($row['nama_customer']); ?></td>
-                                                                <td><?php echo htmlspecialchars($row['project']); ?></td>
-                                                                <td>
-                                                                    <div class="btn-group">
-                                                                        <a href="view.php?edit=<?php echo $row['id_customer']; ?>" 
-                                                                           class="btn btn-info btn-sm" 
-                                                                           data-bs-toggle="tooltip" 
-                                                                           title="Edit">
-                                                                            <i class="mdi mdi-pencil"></i>
-                                                                        </a>
-                                                                        <a href="view.php?delete=<?php echo $row['id_customer']; ?>" 
-                                                                           class="btn btn-danger btn-sm" 
-                                                                           onclick="return confirm('Are you sure you want to delete this record?');"
-                                                                           data-bs-toggle="tooltip" 
-                                                                           title="Delete">
-                                                                            <i class="mdi mdi-delete"></i>
-                                                                        </a>
-                                                                        <a href="view.php?detail=<?php echo $row['id_customer']; ?>" 
-                                                                           class="btn btn-primary btn-sm" 
-                                                                           data-bs-toggle="tooltip" 
-                                                                           title="Detail">
-                                                                            <i class="mdi mdi-eye"></i>
-                                                                        </a>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                        <?php endwhile; ?>
-                                                    </tbody>
-                                                </table>
+                                            <div class="tab-content">
+                                                <div class="tab-pane show active" id="basic-datatable-preview">
+                                                    <div class="table-responsive">
+                                                        <table id="basic-datatable" class="table table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>No</th>
+                                                                    <th>Name</th>
+                                                                    <th>Gambar Part</th>
+                                                                    <th>Start Date</th>
+                                                                    <th>Due Date</th>
+                                                                    <th>Project</th>
+                                                                    <th>Actions</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <?php
+                                                                $sql = "SELECT dp.*, c.project FROM data_part dp JOIN customer c ON dp.id_customer = c.id_customer ORDER BY dp.id_part ASC";
+                                                                $result = $conn->query($sql);
+                                                                $no = 1;
+                                                                while ($row = $result->fetch_assoc()): ?>
+                                                                    <tr>
+                                                                        <td><?php echo $no++; ?></td>
+                                                                        <td><?php echo htmlspecialchars($row['nama_part']); ?></td>
+                                                                        <td>
+                                                                            <?php
+                                                                            if (!empty($row['gambar_part'])) {
+                                                                                $images = explode(',', $row['gambar_part']);
+                                                                                foreach ($images as $image) {
+                                                                                    if (file_exists('uploads/' . $image)) {
+                                                                                        echo '<img src="uploads/' . htmlspecialchars($image) . '" alt="Part Image" 
+                                                                                              class="rounded" style="width: 50px; height: 50px; object-fit: cover; margin-right: 5px;">';
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                            ?>
+                                                                        </td>
+                                                                        <td><?php echo date('d M Y', strtotime($row['tanggal'])); ?></td>
+                                                                        <td><?php echo date('d M Y', strtotime($row['tgl_selesai'])); ?></td>
+                                                                        <td><?php echo htmlspecialchars($row['project']); ?></td>
+                                                                        <td>
+                                                                            <div class="btn-group">
+                                                                                <a href="view.php?edit=<?php echo $row['id_part']; ?>" 
+                                                                                   class="btn btn-info btn-sm" 
+                                                                                   data-bs-toggle="tooltip" 
+                                                                                   title="Edit">
+                                                                                    <i class="mdi mdi-pencil"></i>
+                                                                                </a>
+                                                                                <a href="view.php?delete=<?php echo $row['id_part']; ?>" 
+                                                                                   class="btn btn-danger btn-sm" 
+                                                                                   onclick="return confirm('Are you sure you want to delete this record?');"
+                                                                                   data-bs-toggle="tooltip" 
+                                                                                   title="Delete">
+                                                                                    <i class="mdi mdi-delete"></i>
+                                                                                </a>
+                                                                                <a href="view.php?detail=<?php echo $row['id_part']; ?>" 
+                                                                                   class="btn btn-primary btn-sm" 
+                                                                                   data-bs-toggle="tooltip" 
+                                                                                   title="Detail">
+                                                                                    <i class="mdi mdi-eye"></i>
+                                                                                </a>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                <?php endwhile; ?>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                 
+                                                </div>
                                             </div>
                                         <?php endif; ?>
-
                                     </div> <!-- end card body-->
                                 </div> <!-- end card -->
                             </div><!-- end col-->
                         </div> <!-- end row-->
-                                                
-                        <script>
-                            // Initialize tooltips
-                            document.addEventListener('DOMContentLoaded', function() {
-                                var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-                                var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-                                    return new bootstrap.Tooltip(tooltipTriggerEl)
-                                });
-                                
-                                // Configure DataTable to prevent footer overlap
-                                if($.fn.dataTable.isDataTable('#basic-datatable')) {
-                                    $('#basic-datatable').DataTable({
-                                        responsive: true,
-                                        scrollY: '50vh',
-                                        scrollCollapse: true,
-                                        paging: true,
-                                        pageLength: 10
-                                    });
-                                }
-                            });
-                        </script>
                     </div> <!-- container -->
                 </div> <!-- content -->
 
