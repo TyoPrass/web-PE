@@ -937,395 +937,463 @@ include('action.php');
                                                                     </select>
                                                                 </div>
 
-                                                <!-- Nama Project -->
-                                                <div class="mb-3">
-                                                    <label for="project" class="form-label">Nama Project</label>
-                                                    <select class="form-select" id="project" name="project" required>
-                                                        <option value="">Nama Project</option>
-                                                        <?php
-                                                        // Get project from customer table based on selected id_customer
-                                                        $sql_project = "SELECT DISTINCT c.project 
-                                                                       FROM customer c 
-                                                                       INNER JOIN data_part dp ON c.id_customer = dp.id_customer";
-                                                        if (!empty($edit_data['id_customer'])) {
-                                                            $sql_project .= " WHERE c.id_customer = " . $edit_data['id_customer'];
-                                                        }
-                                                        $result_project = $conn->query($sql_project);
-                                                        while ($row = $result_project->fetch_assoc()) {
-                                                            $selected = ($edit_data['project'] == $row['project']) ? 'selected' : '';
-                                                            echo '<option value="' . htmlspecialchars($row['project']) . '" ' . $selected . '>' . htmlspecialchars($row['project']) . '</option>';
-                                                        }
-                                                        ?>
-                                                    </select>
-                                                </div>
+                                                                <!-- Nama Project -->
+                                                                <div class="mb-3">
+                                                                    <label for="project" class="form-label">Nama Project</label>
+                                                                    <select class="form-select" id="project" name="project" required>
+                                                                        <option value="">Nama Project</option>
+                                                                        <?php
+                                                                        // Get project from customer table based on selected id_customer
+                                                                        $sql_project = "SELECT DISTINCT c.project 
+                                                                                       FROM customer c 
+                                                                                       INNER JOIN data_part dp ON c.id_customer = dp.id_customer";
+                                                                        if (!empty($edit_data['id_customer'])) {
+                                                                            $sql_project .= " WHERE c.id_customer = " . $edit_data['id_customer'];
+                                                                        }
+                                                                        $result_project = $conn->query($sql_project);
+                                                                        while ($row = $result_project->fetch_assoc()) {
+                                                                            $selected = ($edit_data['project'] == $row['project']) ? 'selected' : '';
+                                                                            echo '<option value="' . htmlspecialchars($row['project']) . '" ' . $selected . '>' . htmlspecialchars($row['project']) . '</option>';
+                                                                        }
+                                                                        ?>
+                                                                    </select>
+                                                                </div>
 
-                                                <!-- Mat Spec -->
-                                                <div class="mb-3">
-                                                    <label for="mat_spec" class="form-label">Mat Spec</label>
-                                                    <select class="form-select" id="mat_spec" name="mat_spec" required>
-                                                        <option value="">Mat Spec</option>
-                                                        <?php
-                                                        // Get mat_spec from proses table based on selected id_part
-                                                        $sql_mat_spec = "SELECT DISTINCT p.mat_spec 
-                                                                        FROM proses p 
-                                                                        INNER JOIN data_part dp ON p.id_part = dp.id_part";
-                                                        if (!empty($edit_data['id_part'])) {
-                                                            $sql_mat_spec .= " WHERE p.id_part = " . $edit_data['id_part'];
-                                                        }
-                                                        $result_mat_spec = $conn->query($sql_mat_spec);
-                                                        while ($row = $result_mat_spec->fetch_assoc()) {
-                                                            $selected = ($edit_data['mat_spec'] == $row['mat_spec']) ? 'selected' : '';
-                                                            echo '<option value="' . htmlspecialchars($row['mat_spec']) . '" ' . $selected . '>' . htmlspecialchars($row['mat_spec']) . '</option>';
-                                                        }
-                                                        ?>
-                                                    </select>
-                                                </div>
+                                                                <!-- Mat Spec -->
+                                                                <div class="mb-3">
+                                                                    <label for="mat_spec" class="form-label">Mat Spec</label>
+                                                                    <select class="form-select" id="mat_spec" name="mat_spec" required>
+                                                                        <option value="">Mat Spec</option>
+                                                                        <?php
+                                                                        // Get mat_spec from proses table based on selected id_part
+                                                                        $sql_mat_spec = "SELECT DISTINCT p.mat_spec 
+                                                                                        FROM proses p 
+                                                                                        INNER JOIN data_part dp ON p.id_part = dp.id_part";
+                                                                        if (!empty($edit_data['id_part'])) {
+                                                                            $sql_mat_spec .= " WHERE p.id_part = " . $edit_data['id_part'];
+                                                                        }
+                                                                        $result_mat_spec = $conn->query($sql_mat_spec);
+                                                                        while ($row = $result_mat_spec->fetch_assoc()) {
+                                                                            $selected = ($edit_data['mat_spec'] == $row['mat_spec']) ? 'selected' : '';
+                                                                            echo '<option value="' . htmlspecialchars($row['mat_spec']) . '" ' . $selected . '>' . htmlspecialchars($row['mat_spec']) . '</option>';
+                                                                        }
+                                                                        ?>
+                                                                    </select>
+                                                                </div>
 
-                                                <!-- Mat Size -->
-                                                <div class="mb-3">
-                                                    <label for="mat_size" class="form-label">Mat Size</label>
-                                                    <select class="form-select" id="mat_size" name="mat_size" required>
-                                                        <option value="">Mat Size</option>
-                                                        <?php
-                                                        // Get mat_size from proses table based on selected id_part
-                                                        $sql_mat_size = "SELECT DISTINCT p.mat_size 
-                                                                        FROM proses p 
-                                                                        INNER JOIN data_part dp ON p.id_part = dp.id_part";
-                                                        if (!empty($edit_data['id_part'])) {
-                                                            $sql_mat_size .= " WHERE p.id_part = " . $edit_data['id_part'];
-                                                        }
-                                                        $result_mat_size = $conn->query($sql_mat_size);
-                                                        while ($row = $result_mat_size->fetch_assoc()) {
-                                                            $selected = ($edit_data['mat_size'] == $row['mat_size']) ? 'selected' : '';
-                                                            echo '<option value="' . htmlspecialchars($row['mat_size']) . '" ' . $selected . '>' . htmlspecialchars($row['mat_size']) . '</option>';
-                                                        }
-                                                        ?>
-                                                    </select>
-                                                </div>
+                                                                <!-- Mat Size -->
+                                                                <div class="mb-3">
+                                                                    <label for="mat_size" class="form-label">Mat Size</label>
+                                                                    <select class="form-select" id="mat_size" name="mat_size" required>
+                                                                        <option value="">Mat Size</option>
+                                                                        <?php
+                                                                        // Get mat_size from proses table based on selected id_part
+                                                                        $sql_mat_size = "SELECT DISTINCT p.mat_size 
+                                                                                        FROM proses p 
+                                                                                        INNER JOIN data_part dp ON p.id_part = dp.id_part";
+                                                                        if (!empty($edit_data['id_part'])) {
+                                                                            $sql_mat_size .= " WHERE p.id_part = " . $edit_data['id_part'];
+                                                                        }
+                                                                        $result_mat_size = $conn->query($sql_mat_size);
+                                                                        while ($row = $result_mat_size->fetch_assoc()) {
+                                                                            $selected = ($edit_data['mat_size'] == $row['mat_size']) ? 'selected' : '';
+                                                                            echo '<option value="' . htmlspecialchars($row['mat_size']) . '" ' . $selected . '>' . htmlspecialchars($row['mat_size']) . '</option>';
+                                                                        }
+                                                                        ?>
+                                                                    </select>
+                                                                </div>
 
-                                                <script>
-                                                // Add event listener for id_part change to update related fields
-                                                document.getElementById('id_part').addEventListener('change', function() {
-                                                    const id_part = this.value;
-                                                    if (id_part) {
-                                                        // Update Part No dropdown
-                                                        fetch(`get_part_data.php?type=part_no&id_part=${id_part}`)
-                                                            .then(response => response.json())
-                                                            .then(data => {
-                                                                updateDropdown('part_no', data);
-                                                            });
+                                                                <script>
+                                                                // Add event listener for id_part change to update related fields
+                                                                document.getElementById('id_part').addEventListener('change', function() {
+                                                                    const id_part = this.value;
+                                                                    if (id_part) {
+                                                                        // Update Part No dropdown
+                                                                        fetch(`get_part_data.php?type=part_no&id_part=${id_part}`)
+                                                                            .then(response => response.json())
+                                                                            .then(data => {
+                                                                                updateDropdown('part_no', data);
+                                                                            });
+                                                                        
+                                                                        // Update Mat Spec dropdown
+                                                                        fetch(`get_part_data.php?type=mat_spec&id_part=${id_part}`)
+                                                                            .then(response => response.json())
+                                                                            .then(data => {
+                                                                                updateDropdown('mat_spec', data);
+                                                                            });
+                                                                        
+                                                                        // Update Mat Size dropdown
+                                                                        fetch(`get_part_data.php?type=mat_size&id_part=${id_part}`)
+                                                                            .then(response => response.json())
+                                                                            .then(data => {
+                                                                                updateDropdown('mat_size', data);
+                                                                            });
+                                                                    }
+                                                                });
+
+                                                                // Add event listener for id_customer change to update project field
+                                                                document.getElementById('id_customer').addEventListener('change', function() {
+                                                                    const id_customer = this.value;
+                                                                    if (id_customer) {
+                                                                        fetch(`get_part_data.php?type=project&id_customer=${id_customer}`)
+                                                                            .then(response => response.json())
+                                                                            .then(data => {
+                                                                                updateDropdown('project', data);
+                                                                            });
+                                                                    }
+                                                                });
+
+                                                                // Helper function to update dropdowns
+                                                                function updateDropdown(dropdownId, data) {
+                                                                    const dropdown = document.getElementById(dropdownId);
+                                                                    dropdown.innerHTML = '<option value="">Select ' + dropdownId.replace('_', ' ') + '</option>';
+                                                                    data.forEach(item => {
+                                                                        const option = document.createElement('option');
+                                                                        option.value = item;
+                                                                        option.textContent = item;
+                                                                        dropdown.appendChild(option);
+                                                                    });
+                                                                }
+                                                                </script>
+
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="card mb-3">
+                                                            <div class="card-body">
+                                                                <h5 class="card-title">Trial</h5>
+                                                                <div class="mb-3">
+                                                                    <label for="trial" class="form-label">Trial</label>
+                                                                    <input type="text" class="form-control" id="trial" name="trial" required
+                                                                           value="<?php echo htmlspecialchars($edit_data['trial']); ?>">
+                                                                </div>
+
+                                                                <div class="mb-3">
+                                                                    <label for="tanggal" class="form-label">Tanggal</label>
+                                                                    <input type="date" class="form-control" id="tanggal" name="tanggal" required
+                                                                           value="<?php echo htmlspecialchars($edit_data['tanggal']); ?>">
+                                                                </div>
+
+                                                                <div class="mb-3">
+                                                                    <label for="jam_start" class="form-label">Jam Start</label>
+                                                                    <input type="time" class="form-control" id="jam_start" name="jam_start" required
+                                                                           value="<?php echo htmlspecialchars($edit_data['jam_start']); ?>">
+                                                                </div>
+
+                                                                <div class="mb-3">
+                                                                    <label for="jam_finish" class="form-label">Jam Finish</label>
+                                                                    <input type="time" class="form-control" id="jam_finish" name="jam_finish" required
+                                                                           value="<?php echo htmlspecialchars($edit_data['jam_finish']); ?>">
+                                                                </div>
+
+                                                                <div class="mb-3">
+                                                                    <label for="mc_name" class="form-label">M/C Name</label>
+                                                                    <input type="text" class="form-control" id="mc_name" name="mc_name" required
+                                                                           value="<?php echo htmlspecialchars($edit_data['mc_name']); ?>">
+                                                                </div>
+
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <label for="kapasitas" class="form-label">Kapasitas</label>
+                                                                        <input type="text" class="form-control" id="kapasitas" name="kapasitas" required
+                                                                               value="<?php echo htmlspecialchars($edit_data['kapasitas']); ?>">
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <label for="cush_prec" class="form-label">Cush Prec</label>
+                                                                        <input type="text" class="form-control" id="cush_prec" name="cush_prec" required
+                                                                               value="<?php echo htmlspecialchars($edit_data['cush_prec']); ?>">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="row mt-3">
+                                                                    <div class="col-md-6">
+                                                                        <label for="die_dim" class="form-label">Die Dim</label>
+                                                                        <input type="text" class="form-control" id="die_dim" name="die_dim" required
+                                                                               value="<?php echo htmlspecialchars($edit_data['die_dim']); ?>">
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <label for="die_height" class="form-label">Die Height</label>
+                                                                        <input type="text" class="form-control" id="die_height" name="die_height" required
+                                                                               value="<?php echo htmlspecialchars($edit_data['die_height']); ?>">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="row mt-3">
+                                                                    <div class="col-md-4">
+                                                                        <label for="pin_cus_qtt" class="form-label">Pin Cus Qtt</label>
+                                                                        <input type="text" class="form-control" id="pin_cus_qtt" name="pin_cus_qtt" required
+                                                                               value="<?php echo htmlspecialchars($edit_data['pin_cus_qtt']); ?>">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="row mt-3">
+                                                                    <div class="col-md-4">
+                                                                        <label for="qty_trial" class="form-label">Qty Trial</label>
+                                                                        <input type="text" class="form-control" id="qty_trial" name="qty_trial" required
+                                                                               value="<?php echo htmlspecialchars($edit_data['qty_trial']); ?>">
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <label for="jumlah_ok" class="form-label">Jumlah OK</label>
+                                                                        <input type="text" class="form-control" id="jumlah_ok" name="jumlah_ok" required
+                                                                               value="<?php echo htmlspecialchars($edit_data['jumlah_ok']); ?>">
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <label for="jumlah_ng" class="form-label">Jumlah NG</label>
+                                                                        <input type="text" class="form-control" id="jumlah_ng" name="jumlah_ng" required
+                                                                               value="<?php echo htmlspecialchars($edit_data['jumlah_ng']); ?>">
+                                                                    </div>
+                                                                </div>
+                                                                
+                                                           
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Problem Tool Section -->
+                                                        <div class="card mb-3">
+                                                            <div class="card-body">
+                                                                <h5 class="card-title">Problem Tool</h5>
+
+                                                                <div class="mb-3">
+                                                                    <label for="problem_tool_editor" class="form-label">Problem Tool</label>
+                                                                    <div id="problem_tool_editor" style="height: 300px;"><?php echo htmlspecialchars_decode($edit_data['problem_tool'] ?? ''); ?></div>
+                                                                    <input type="hidden" name="problem_tool" id="problem_tool_input" value="<?php echo htmlspecialchars($edit_data['problem_tool'] ?? ''); ?>">
+                                                                </div>
+
+                                                                <div class="mb-3">
+                                                                    <label for="analisa_sebab_tool_editor" class="form-label">Analisa Sebab Tool</label>
+                                                                    <div id="analisa_sebab_tool_editor" style="height: 300px;"><?php echo htmlspecialchars_decode($edit_data['analisa_sebab_tool'] ?? ''); ?></div>
+                                                                    <input type="hidden" name="analisa_sebab_tool" id="analisa_sebab_tool_input" value="<?php echo htmlspecialchars($edit_data['analisa_sebab_tool'] ?? ''); ?>">
+                                                                </div>
+
+                                                                <div class="mb-3">
+                                                                    <label for="counter_measure_tool_editor" class="form-label">Counter Measure Tool</label>
+                                                                    <div id="counter_measure_tool_editor" style="height: 300px;"><?php echo htmlspecialchars_decode($edit_data['counter_measure_tool'] ?? ''); ?></div>
+                                                                    <input type="hidden" name="counter_measure_tool" id="counter_measure_tool_input" value="<?php echo htmlspecialchars($edit_data['counter_measure_tool'] ?? ''); ?>">
+                                                                </div>
+                                                                
+                                                                <!-- Form fields for tool section -->
+                                                                <div class="mb-3">
+                                                                    <label for="pic_tool_editor" class="form-label">PIC Tool</label>
+                                                                    <div id="pic_tool_editor" style="height: 300px;"><?php echo htmlspecialchars_decode($edit_data['pic_tool'] ?? ''); ?></div>
+                                                                    <input type="hidden" name="pic_tool" id="pic_tool_input" value="<?php echo htmlspecialchars($edit_data['pic_tool'] ?? ''); ?>">
+                                                                </div>
+                                                                
+                                                                <div class="mb-3">
+                                                                    <label for="target_tool_editor" class="form-label">Target Tool</label>
+                                                                    <div id="target_tool_editor" style="height: 300px;"><?php echo htmlspecialchars_decode($edit_data['target_tool'] ?? ''); ?></div>
+                                                                    <input type="hidden" name="target_tool" id="target_tool_input" value="<?php echo htmlspecialchars($edit_data['target_tool'] ?? ''); ?>">
+                                                                </div>
+                                                                
+                                                                <div class="mb-3">
+                                                                    <label for="keterangan_tool_editor" class="form-label">Keterangan Tool</label>
+                                                                    <div id="keterangan_tool_editor" style="height: 300px;"><?php echo htmlspecialchars_decode($edit_data['keterangan_tool'] ?? ''); ?></div>
+                                                                    <input type="hidden" name="keterangan_tool" id="keterangan_tool_input" value="<?php echo htmlspecialchars($edit_data['keterangan_tool'] ?? ''); ?>">
+                                                                </div>
+
+                                                                <div class="mb-3">
+                                                                    <label for="kelengkapan_dies" class="form-label">Kelengkapan Dies</label>
+                                                                    <input type="text" class="form-control" id="kelengkapan_dies" name="kelengkapan_dies" required
+                                                                           value="<?php echo htmlspecialchars($edit_data['kelengkapan_dies']); ?>">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="card mb-3">
+                                                            <div class="card-body">
+                                                                <h5 class="card-title">Problem Part</h5>
+
+                                                                <div class="mb-3">
+                                                                    <label for="problem_part_editor" class="form-label">Problem Part</label>
+                                                                    <div id="problem_part_editor" style="height: 300px;"><?php echo htmlspecialchars_decode($edit_data['problem_part']); ?></div>
+                                                                    <input type="hidden" name="problem_part" id="problem_part_input" value="<?php echo htmlspecialchars($edit_data['problem_part']); ?>">
+                                                                </div>
+
+                                                                <div class="mb-3">
+                                                                    <label for="analisa_sebab_part_editor" class="form-label">Analisa Sebab Part</label>
+                                                                    <div id="analisa_sebab_part_editor" style="height: 300px;"><?php echo htmlspecialchars_decode($edit_data['analisa_sebab_part']); ?></div>
+                                                                    <input type="hidden" name="analisa_sebab_part" id="analisa_sebab_part_input" value="<?php echo htmlspecialchars($edit_data['analisa_sebab_part']); ?>">
+                                                                </div>
+
+                                                                <div class="mb-3">
+                                                                    <label for="counter_measure_part_editor" class="form-label">Counter Measure Part</label>
+                                                                    <div id="counter_measure_part_editor" style="height: 300px;"><?php echo htmlspecialchars_decode($edit_data['counter_measure_part']); ?></div>
+                                                                    <input type="hidden" name="counter_measure_part" id="counter_measure_part_input" value="<?php echo htmlspecialchars($edit_data['counter_measure_part']); ?>">
+                                                                </div>
+                                                                
+                                                                <!-- Tidak bisa di update bagian part -->
+                                                                <div class="mb-3">
+                                                                    <label for="PIC_editor" class="form-label">PIC</label>
+                                                                    <div id="PIC_editor" style="height: 300px;"><?php echo htmlspecialchars_decode($edit_data['PIC']); ?></div>
+                                                                    <input type="hidden" name="PIC" id="PIC_input" value="<?php echo htmlspecialchars($edit_data['PIC']); ?>">
+                                                                </div>
+
+                                                                <div class="mb-3">
+                                                                    <label for="target_editor" class="form-label">Target</label>
+                                                                    <div id="target_editor" style="height: 300px;"><?php echo htmlspecialchars_decode($edit_data['target']); ?></div>
+                                                                    <input type="hidden" name="target" id="target_input" value="<?php echo htmlspecialchars($edit_data['target']); ?>">
+                                                                </div>
+
+                                                                <div class="mb-3">
+                                                                    <label for="keterangan_editor" class="form-label">Keterangan</label>
+                                                                    <div id="keterangan_editor" style="height: 300px;"><?php echo htmlspecialchars_decode($edit_data['keterangan']); ?></div>
+                                                                    <input type="hidden" name="keterangan" id="keterangan_input" value="<?php echo htmlspecialchars($edit_data['keterangan']); ?>">
+                                                                </div>
+
+                                                                <div class="mb-3">
+                                                                    <label for="accuracy_part" class="form-label">Accuracy Part</label>
+                                                                    <input type="text" class="form-control" id="accuracy_part" name="accuracy_part" required value="<?php echo htmlspecialchars($edit_data['accuracy_part']); ?>">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Result Section -->
+                                                        <div class="card mb-3">
+                                                            <div class="card-body">
+                                                                <h5 class="card-title">Result</h5>
+                                                                <div class="mb-3">
+                                                                    <label for="visual" class="form-label">Visual</label>
+                                                                    <select class="form-select" id="visual" name="visual" required>
+                                                                        <option value="OK" <?php echo ($edit_data['visual'] == 'OK') ? 'selected' : ''; ?>>OK</option>
+                                                                        <option value="NG" <?php echo ($edit_data['visual'] == 'NG') ? 'selected' : ''; ?>>NG</option>
+                                                                    </select>
+                                                                </div>
+
+                                                                <div class="mb-3">
+                                                                    <label for="dimensi" class="form-label">Dimensi</label>
+                                                                    <select class="form-select" id="dimensi" name="dimensi" required>
+                                                                        <option value="OK" <?php echo ($edit_data['dimensi'] == 'OK') ? 'selected' : ''; ?>>OK</option>
+                                                                        <option value="NG" <?php echo ($edit_data['dimensi'] == 'NG') ? 'selected' : ''; ?>>NG</option>
+                                                                    </select>
+                                                                </div>
+
+                                                                <div class="mb-3">
+                                                                    <label for="fungsi" class="form-label">Fungsi</label>
+                                                                    <select class="form-select" id="fungsi" name="fungsi" required>
+                                                                        <option value="OK" <?php echo ($edit_data['fungsi'] == 'OK') ? 'selected' : ''; ?>>OK</option>
+                                                                        <option value="NG" <?php echo ($edit_data['fungsi'] == 'NG') ? 'selected' : ''; ?>>NG</option>
+                                                                    </select>
+                                                                </div>
+
+                                                                <div class="mb-3">
+                                                                    <label for="judgement" class="form-label">Judgement</label>
+                                                                    <select class="form-select" id="judgement" name="judgement" required>
+                                                                        <option value="OK" <?php echo ($edit_data['judgement'] == 'OK') ? 'selected' : ''; ?>>OK</option>
+                                                                        <option value="NG" <?php echo ($edit_data['judgement'] == 'NG') ? 'selected' : ''; ?>>NG</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Approval Section -->
+                                                        <div class="card mb-3">
+                                                            <div class="card-body">
+                                                                <h5 class="card-title">Approval</h5>
+                                                                <div class="mb-3">
+                                                                    <label for="dibuat" class="form-label">Dibuat Oleh</label>
+                                                                    <input type="text" class="form-control" id="dibuat" name="dibuat" required
+                                                                           value="<?php echo htmlspecialchars($edit_data['dibuat']); ?>">
+                                                                </div>
+
+                                                                <div class="mb-3">
+                                                                    <label for="diperiksa" class="form-label">Diperiksa Oleh</label>
+                                                                    <input type="text" class="form-control" id="diperiksa" name="diperiksa" required
+                                                                           value="<?php echo htmlspecialchars($edit_data['diperiksa']); ?>">
+                                                                </div>
+
+                                                                <div class="mb-3">
+                                                                    <label for="diketahui" class="form-label">Diketahui Oleh</label>
+                                                                    <input type="text" class="form-control" id="diketahui" name="diketahui" required
+                                                                           value="<?php echo htmlspecialchars($edit_data['diketahui']); ?>">
+                                                                </div>
+
+                                                                <div class="mb-3">
+                                                                    <label for="peserta" class="form-label">Peserta</label>
+                                                                    <input type="text" class="form-control" id="peserta" name="peserta" required
+                                                                           value="<?php echo htmlspecialchars($edit_data['peserta']); ?>">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="mb-3">
+                                                            <button type="submit" class="btn btn-primary">Update</button>
+                                                            <a href="view.php" class="btn btn-secondary">Cancel</a>
+                                                        </div>
+                                                    </form>
+
+                                                    <!-- Add necessary Quill CSS -->
+                                                    <link href="../../assets/css/vendor/quill.snow.css" rel="stylesheet" type="text/css" />
+                                                    <link href="../../assets/css/vendor/quill.bubble.css" rel="stylesheet" type="text/css" />
+
+                                                    <!-- Add Quill JS library -->
+                                                    <script src="../../assets/js/vendor/quill.min.js"></script>
+
+                                                    <script>
+                                                    document.addEventListener('DOMContentLoaded', function () {
+                                                        // Configure Quill toolbar
+                                                        const toolbarOptions = [
+                                                            [{ font: [] }, { size: [] }],
+                                                            ['bold', 'italic', 'underline', 'strike'],
+                                                            [{ color: [] }, { background: [] }],
+                                                            [{ script: 'super' }, { script: 'sub' }],
+                                                            [{ header: [false, 1, 2, 3, 4, 5, 6] }, 'blockquote', 'code-block'],
+                                                            [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
+                                                            ['direction', { align: [] }],
+                                                            ['link', 'image', 'video'],
+                                                            ['clean']
+                                                        ];
                                                         
-                                                        // Update Mat Spec dropdown
-                                                        fetch(`get_part_data.php?type=mat_spec&id_part=${id_part}`)
-                                                            .then(response => response.json())
-                                                            .then(data => {
-                                                                updateDropdown('mat_spec', data);
-                                                            });
+                                                        // Initialize Quill editors for edit form
+                                                        const editorMappings = [
+                                                            { editor: 'problem_tool_editor', input: 'problem_tool_input' },
+                                                            { editor: 'analisa_sebab_tool_editor', input: 'analisa_sebab_tool_input' },
+                                                            { editor: 'counter_measure_tool_editor', input: 'counter_measure_tool_input' },
+                                                            { editor: 'pic_tool_editor', input: 'pic_tool_input' },
+                                                            { editor: 'target_tool_editor', input: 'target_tool_input' },
+                                                            { editor: 'keterangan_tool_editor', input: 'keterangan_tool_input' },
+                                                            { editor: 'problem_part_editor', input: 'problem_part_input' },
+                                                            { editor: 'analisa_sebab_part_editor', input: 'analisa_sebab_part_input' },
+                                                            { editor: 'counter_measure_part_editor', input: 'counter_measure_part_input' },
+                                                            { editor: 'PIC_editor', input: 'PIC_input' },
+                                                            { editor: 'target_editor', input: 'target_input' },
+                                                            { editor: 'keterangan_editor', input: 'keterangan_input' }
+                                                        ];
                                                         
-                                                        // Update Mat Size dropdown
-                                                        fetch(`get_part_data.php?type=mat_size&id_part=${id_part}`)
-                                                            .then(response => response.json())
-                                                            .then(data => {
-                                                                updateDropdown('mat_size', data);
+                                                        // Initialize all editors
+                                                        editorMappings.forEach(mapping => {
+                                                            const editorElement = document.getElementById(mapping.editor);
+                                                            if (editorElement) {
+                                                                const quill = new Quill('#' + mapping.editor, {
+                                                                    theme: 'snow',
+                                                                    modules: {
+                                                                        toolbar: toolbarOptions
+                                                                    }
+                                                                });
+                                                                
+                                                                // When editor content changes, update the hidden input
+                                                                quill.on('text-change', function() {
+                                                                    const input = document.getElementById(mapping.input);
+                                                                    input.value = quill.root.innerHTML;
+                                                                });
+                                                            }
+                                                        });
+                                                        
+                                                        // Ensure form values are captured on submit
+                                                        const form = document.getElementById('edit-form');
+                                                        if (form) {
+                                                            form.addEventListener('submit', function(e) {
+                                                                // No need to prevent default, as we're updating inputs in real-time
+                                                                // The event listeners above will have updated the hidden inputs already
+                                                                console.log('Form submitted with Quill content captured');
                                                             });
-                                                    }
-                                                });
-
-                                                // Add event listener for id_customer change to update project field
-                                                document.getElementById('id_customer').addEventListener('change', function() {
-                                                    const id_customer = this.value;
-                                                    if (id_customer) {
-                                                        fetch(`get_part_data.php?type=project&id_customer=${id_customer}`)
-                                                            .then(response => response.json())
-                                                            .then(data => {
-                                                                updateDropdown('project', data);
-                                                            });
-                                                    }
-                                                });
-
-                                                // Helper function to update dropdowns
-                                                function updateDropdown(dropdownId, data) {
-                                                    const dropdown = document.getElementById(dropdownId);
-                                                    dropdown.innerHTML = '<option value="">Select ' + dropdownId.replace('_', ' ') + '</option>';
-                                                    data.forEach(item => {
-                                                        const option = document.createElement('option');
-                                                        option.value = item;
-                                                        option.textContent = item;
-                                                        dropdown.appendChild(option);
+                                                        }
                                                     });
-                                                }
-                                                </script>
-
-                                            </div>
-                                        </div>
-
-                                        <div class="card mb-3">
-                                            <div class="card-body">
-                                                <h5 class="card-title">Trial</h5>
-                                                <div class="mb-3">
-                                                    <label for="trial" class="form-label">Trial</label>
-                                                    <input type="text" class="form-control" id="trial" name="trial" required
-                                                           value="<?php echo htmlspecialchars($edit_data['trial']); ?>">
-                                                </div>
-
-                                                <div class="mb-3">
-                                                    <label for="tanggal" class="form-label">Tanggal</label>
-                                                    <input type="date" class="form-control" id="tanggal" name="tanggal" required
-                                                           value="<?php echo htmlspecialchars($edit_data['tanggal']); ?>">
-                                                </div>
-
-                                                <div class="mb-3">
-                                                    <label for="jam_start" class="form-label">Jam Start</label>
-                                                    <input type="time" class="form-control" id="jam_start" name="jam_start" required
-                                                           value="<?php echo htmlspecialchars($edit_data['jam_start']); ?>">
-                                                </div>
-
-                                                <div class="mb-3">
-                                                    <label for="jam_finish" class="form-label">Jam Finish</label>
-                                                    <input type="time" class="form-control" id="jam_finish" name="jam_finish" required
-                                                           value="<?php echo htmlspecialchars($edit_data['jam_finish']); ?>">
-                                                </div>
-
-                                                <div class="mb-3">
-                                                    <label for="mc_name" class="form-label">M/C Name</label>
-                                                    <input type="text" class="form-control" id="mc_name" name="mc_name" required
-                                                           value="<?php echo htmlspecialchars($edit_data['mc_name']); ?>">
-                                                </div>
-
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <label for="kapasitas" class="form-label">Kapasitas</label>
-                                                        <input type="text" class="form-control" id="kapasitas" name="kapasitas" required
-                                                               value="<?php echo htmlspecialchars($edit_data['kapasitas']); ?>">
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <label for="cush_prec" class="form-label">Cush Prec</label>
-                                                        <input type="text" class="form-control" id="cush_prec" name="cush_prec" required
-                                                               value="<?php echo htmlspecialchars($edit_data['cush_prec']); ?>">
-                                                    </div>
-                                                </div>
-
-                                                <div class="row mt-3">
-                                                    <div class="col-md-6">
-                                                        <label for="die_dim" class="form-label">Die Dim</label>
-                                                        <input type="text" class="form-control" id="die_dim" name="die_dim" required
-                                                               value="<?php echo htmlspecialchars($edit_data['die_dim']); ?>">
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <label for="die_height" class="form-label">Die Height</label>
-                                                        <input type="text" class="form-control" id="die_height" name="die_height" required
-                                                               value="<?php echo htmlspecialchars($edit_data['die_height']); ?>">
-                                                    </div>
-                                                </div>
-
-                                                <div class="row mt-3">
-                                                    <div class="col-md-4">
-                                                        <label for="pin_cus_qtt" class="form-label">Pin Cus Qtt</label>
-                                                        <input type="text" class="form-control" id="pin_cus_qtt" name="pin_cus_qtt" required
-                                                               value="<?php echo htmlspecialchars($edit_data['pin_cus_qtt']); ?>">
-                                                    </div>
-                                                </div>
-
-                                                <div class="row mt-3">
-                                                    <div class="col-md-4">
-                                                        <label for="qty_trial" class="form-label">Qty Trial</label>
-                                                        <input type="text" class="form-control" id="qty_trial" name="qty_trial" required
-                                                               value="<?php echo htmlspecialchars($edit_data['qty_trial']); ?>">
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <label for="jumlah_ok" class="form-label">Jumlah OK</label>
-                                                        <input type="text" class="form-control" id="jumlah_ok" name="jumlah_ok" required
-                                                               value="<?php echo htmlspecialchars($edit_data['jumlah_ok']); ?>">
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <label for="jumlah_ng" class="form-label">Jumlah NG</label>
-                                                        <input type="text" class="form-control" id="jumlah_ng" name="jumlah_ng" required
-                                                               value="<?php echo htmlspecialchars($edit_data['jumlah_ng']); ?>">
-                                                    </div>
-                                                </div>
-                                                
-                                           
-                                            </div>
-                                        </div>
-
-                                        <!-- Problem Tool Section -->
-                                        <div class="card mb-3">
-                                            <div class="card-body">
-                                                <h5 class="card-title">Problem Tool</h5>
-
-                                                <div class="mb-3">
-                                                    <label for="problem_tool_editor" class="form-label">Problem Tool</label>
-                                                    <div id="problem_tool_editor" style="height: 300px;"><?php echo htmlspecialchars_decode($edit_data['problem_tool'] ?? ''); ?></div>
-                                                    <input type="hidden" name="problem_tool" id="problem_tool_input" value="<?php echo htmlspecialchars($edit_data['problem_tool'] ?? ''); ?>">
-                                                </div>
-
-                                                <div class="mb-3">
-                                                    <label for="analisa_sebab_tool_editor" class="form-label">Analisa Sebab Tool</label>
-                                                    <div id="analisa_sebab_tool_editor" style="height: 300px;"><?php echo htmlspecialchars_decode($edit_data['analisa_sebab_tool'] ?? ''); ?></div>
-                                                    <input type="hidden" name="analisa_sebab_tool" id="analisa_sebab_tool_input" value="<?php echo htmlspecialchars($edit_data['analisa_sebab_tool'] ?? ''); ?>">
-                                                </div>
-
-                                                <div class="mb-3">
-                                                    <label for="counter_measure_tool_editor" class="form-label">Counter Measure Tool</label>
-                                                    <div id="counter_measure_tool_editor" style="height: 300px;"><?php echo htmlspecialchars_decode($edit_data['counter_measure_tool'] ?? ''); ?></div>
-                                                    <input type="hidden" name="counter_measure_tool" id="counter_measure_tool_input" value="<?php echo htmlspecialchars($edit_data['counter_measure_tool'] ?? ''); ?>">
-                                                </div>
-                                                
-                                                <!-- Form fields for tool section -->
-                                                <div class="mb-3">
-                                                    <label for="pic_tool_editor" class="form-label">PIC Tool</label>
-                                                    <div id="pic_tool_editor" style="height: 300px;"><?php echo htmlspecialchars_decode($edit_data['pic_tool'] ?? ''); ?></div>
-                                                    <input type="hidden" name="pic_tool" id="pic_tool_input" value="<?php echo htmlspecialchars($edit_data['pic_tool'] ?? ''); ?>">
-                                                </div>
-                                                
-                                                <div class="mb-3">
-                                                    <label for="target_tool_editor" class="form-label">Target Tool</label>
-                                                    <div id="target_tool_editor" style="height: 300px;"><?php echo htmlspecialchars_decode($edit_data['target_tool'] ?? ''); ?></div>
-                                                    <input type="hidden" name="target_tool" id="target_tool_input" value="<?php echo htmlspecialchars($edit_data['target_tool'] ?? ''); ?>">
-                                                </div>
-                                                
-                                                <div class="mb-3">
-                                                    <label for="keterangan_tool_editor" class="form-label">Keterangan Tool</label>
-                                                    <div id="keterangan_tool_editor" style="height: 300px;"><?php echo htmlspecialchars_decode($edit_data['keterangan_tool'] ?? ''); ?></div>
-                                                    <input type="hidden" name="keterangan_tool" id="keterangan_tool_input" value="<?php echo htmlspecialchars($edit_data['keterangan_tool'] ?? ''); ?>">
-                                                </div>
-
-                                                <div class="mb-3">
-                                                    <label for="kelengkapan_dies" class="form-label">Kelengkapan Dies</label>
-                                                    <input type="text" class="form-control" id="kelengkapan_dies" name="kelengkapan_dies" required
-                                                           value="<?php echo htmlspecialchars($edit_data['kelengkapan_dies']); ?>">
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="card mb-3">
-                                            <div class="card-body">
-                                                <h5 class="card-title">Problem Part</h5>
-
-                                                <div class="mb-3">
-                                                    <label for="problem_part_editor" class="form-label">Problem Part</label>
-                                                    <div id="problem_part_editor" style="height: 300px;"><?php echo htmlspecialchars_decode($edit_data['problem_part']); ?></div>
-                                                    <input type="hidden" name="problem_part" id="problem_part_input" value="<?php echo htmlspecialchars($edit_data['problem_part']); ?>">
-                                                </div>
-
-                                                <div class="mb-3">
-                                                    <label for="analisa_sebab_part_editor" class="form-label">Analisa Sebab Part</label>
-                                                    <div id="analisa_sebab_part_editor" style="height: 300px;"><?php echo htmlspecialchars_decode($edit_data['analisa_sebab_part']); ?></div>
-                                                    <input type="hidden" name="analisa_sebab_part" id="analisa_sebab_part_input" value="<?php echo htmlspecialchars($edit_data['analisa_sebab_part']); ?>">
-                                                </div>
-
-                                                <div class="mb-3">
-                                                    <label for="counter_measure_part_editor" class="form-label">Counter Measure Part</label>
-                                                    <div id="counter_measure_part_editor" style="height: 300px;"><?php echo htmlspecialchars_decode($edit_data['counter_measure_part']); ?></div>
-                                                    <input type="hidden" name="counter_measure_part" id="counter_measure_part_input" value="<?php echo htmlspecialchars($edit_data['counter_measure_part']); ?>">
-                                                </div>
-                                                
-                                                <!-- Tidak bisa di update bagian part -->
-                                                <div class="mb-3">
-                                                    <label for="PIC_editor" class="form-label">PIC</label>
-                                                    <div id="PIC_editor" style="height: 300px;"><?php echo htmlspecialchars_decode($edit_data['PIC']); ?></div>
-                                                    <input type="hidden" name="PIC" id="PIC_input" value="<?php echo htmlspecialchars($edit_data['PIC']); ?>">
-                                                </div>
-
-                                                <div class="mb-3">
-                                                    <label for="target_editor" class="form-label">Target</label>
-                                                    <div id="target_editor" style="height: 300px;"><?php echo htmlspecialchars_decode($edit_data['target']); ?></div>
-                                                    <input type="hidden" name="target" id="target_input" value="<?php echo htmlspecialchars($edit_data['target']); ?>">
-                                                </div>
-
-                                                <div class="mb-3">
-                                                    <label for="keterangan_editor" class="form-label">Keterangan</label>
-                                                    <div id="keterangan_editor" style="height: 300px;"><?php echo htmlspecialchars_decode($edit_data['keterangan']); ?></div>
-                                                    <input type="hidden" name="keterangan" id="keterangan_input" value="<?php echo htmlspecialchars($edit_data['keterangan']); ?>">
-                                                </div>
-
-                                                <div class="mb-3">
-                                                    <label for="accuracy_part" class="form-label">Accuracy Part</label>
-                                                    <input type="text" class="form-control" id="accuracy_part" name="accuracy_part" required value="<?php echo htmlspecialchars($edit_data['accuracy_part']); ?>">
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <!-- Result Section -->
-                                        <div class="card mb-3">
-                                            <div class="card-body">
-                                                <h5 class="card-title">Result</h5>
-                                                <div class="mb-3">
-                                                    <label for="visual" class="form-label">Visual</label>
-                                                    <select class="form-select" id="visual" name="visual" required>
-                                                        <option value="OK" <?php echo ($edit_data['visual'] == 'OK') ? 'selected' : ''; ?>>OK</option>
-                                                        <option value="NG" <?php echo ($edit_data['visual'] == 'NG') ? 'selected' : ''; ?>>NG</option>
-                                                    </select>
-                                                </div>
-
-                                                <div class="mb-3">
-                                                    <label for="dimensi" class="form-label">Dimensi</label>
-                                                    <select class="form-select" id="dimensi" name="dimensi" required>
-                                                        <option value="OK" <?php echo ($edit_data['dimensi'] == 'OK') ? 'selected' : ''; ?>>OK</option>
-                                                        <option value="NG" <?php echo ($edit_data['dimensi'] == 'NG') ? 'selected' : ''; ?>>NG</option>
-                                                    </select>
-                                                </div>
-
-                                                <div class="mb-3">
-                                                    <label for="fungsi" class="form-label">Fungsi</label>
-                                                    <select class="form-select" id="fungsi" name="fungsi" required>
-                                                        <option value="OK" <?php echo ($edit_data['fungsi'] == 'OK') ? 'selected' : ''; ?>>OK</option>
-                                                        <option value="NG" <?php echo ($edit_data['fungsi'] == 'NG') ? 'selected' : ''; ?>>NG</option>
-                                                    </select>
-                                                </div>
-
-                                                <div class="mb-3">
-                                                    <label for="judgement" class="form-label">Judgement</label>
-                                                    <select class="form-select" id="judgement" name="judgement" required>
-                                                        <option value="OK" <?php echo ($edit_data['judgement'] == 'OK') ? 'selected' : ''; ?>>OK</option>
-                                                        <option value="NG" <?php echo ($edit_data['judgement'] == 'NG') ? 'selected' : ''; ?>>NG</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <!-- Approval Section -->
-                                        <div class="card mb-3">
-                                            <div class="card-body">
-                                                <h5 class="card-title">Approval</h5>
-                                                <div class="mb-3">
-                                                    <label for="dibuat" class="form-label">Dibuat Oleh</label>
-                                                    <input type="text" class="form-control" id="dibuat" name="dibuat" required
-                                                           value="<?php echo htmlspecialchars($edit_data['dibuat']); ?>">
-                                                </div>
-
-                                                <div class="mb-3">
-                                                    <label for="diperiksa" class="form-label">Diperiksa Oleh</label>
-                                                    <input type="text" class="form-control" id="diperiksa" name="diperiksa" required
-                                                           value="<?php echo htmlspecialchars($edit_data['diperiksa']); ?>">
-                                                </div>
-
-                                                <div class="mb-3">
-                                                    <label for="diketahui" class="form-label">Diketahui Oleh</label>
-                                                    <input type="text" class="form-control" id="diketahui" name="diketahui" required
-                                                           value="<?php echo htmlspecialchars($edit_data['diketahui']); ?>">
-                                                </div>
-
-                                                <div class="mb-3">
-                                                    <label for="peserta" class="form-label">Peserta</label>
-                                                    <input type="text" class="form-control" id="peserta" name="peserta" required
-                                                           value="<?php echo htmlspecialchars($edit_data['peserta']); ?>">
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="mb-3">
-                                            <button type="submit" class="btn btn-primary">Update</button>
-                                            <a href="view.php" class="btn btn-secondary">Cancel</a>
-                                        </div>
-                                    </form>
-
-                                 
-                                        <?php else: ?>
+                                                    </script>
+                                                    <?php else: ?>
 <!-- Button untuk menampilkan form -->
 
 <!-- Form Insert -->
-<form action="action.php" method="post" id="insert-form" style="display: none;">
+<?php if (isset($_GET['insert'])): ?>
+<form action="action.php" method="post" id="insert-form">
     <input type="hidden" name="submit" value="true">
 
     <div class="card mb-3">
@@ -1431,7 +1499,58 @@ include('action.php');
                 </select>
             </div>
 
+            <script>
+            // Add event listener for id_part change to update related fields
+            document.getElementById('id_part').addEventListener('change', function() {
+                const id_part = this.value;
+                if (id_part) {
+                    // Update Part No dropdown
+                    fetch(`get_part_data.php?type=part_no&id_part=${id_part}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            updateDropdown('part_no', data);
+                        });
+                    
+                    // Update Mat Spec dropdown
+                    fetch(`get_part_data.php?type=mat_spec&id_part=${id_part}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            updateDropdown('mat_spec', data);
+                        });
+                    
+                    // Update Mat Size dropdown
+                    fetch(`get_part_data.php?type=mat_size&id_part=${id_part}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            updateDropdown('mat_size', data);
+                        });
+                }
+            });
 
+            // Add event listener for id_customer change to update project field
+            document.getElementById('id_customer').addEventListener('change', function() {
+                const id_customer = this.value;
+                if (id_customer) {
+                    fetch(`get_part_data.php?type=project&id_customer=${id_customer}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            updateDropdown('project', data);
+                        });
+                }
+            });
+
+            // Helper function to update dropdowns
+            function updateDropdown(dropdownId, data) {
+                const dropdown = document.getElementById(dropdownId);
+                dropdown.innerHTML = '<option value="">Select ' + dropdownId.replace('_', ' ') + '</option>';
+                data.forEach(item => {
+                    const option = document.createElement('option');
+                    option.value = item;
+                    option.textContent = item;
+                    dropdown.appendChild(option);
+                });
+            }
+            </script>
 
         </div>
     </div>
@@ -1446,7 +1565,7 @@ include('action.php');
 
             <div class="mb-3">
                 <label for="tanggal" class="form-label">Tanggal</label>
-                <input type="date" class="form-control" id="tanggal" name="tanggal" required>
+                <input type="date" class="form-control" id="tanggal" name="tanggal" value="<?php echo date('Y-m-d'); ?>" required>
             </div>
             
             <div class="mb-3">
@@ -1465,44 +1584,45 @@ include('action.php');
             </div>
             
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-6 mb-3">
                     <label for="kapasitas" class="form-label">Kapasitas</label>
                     <input type="text" class="form-control" id="kapasitas" name="kapasitas" required>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 mb-3">
                     <label for="cush_prec" class="form-label">Cush Prec</label>
                     <input type="text" class="form-control" id="cush_prec" name="cush_prec" required>
-                </div>
-                <div class="col-md-6">
-                    <label for="die_dim" class="form-label">Die Dim</label>
-                    <input type="text" class="form-control" id="die_dim" name="die_dim" required>
                 </div>
             </div>
             
             <div class="row">
-                <div class="col-md-6">
-                    <label for="pin_cus_qtt" class="form-label">Pin Cus Qtt</label>
-                    <input type="text" class="form-control" id="pin_cus_qtt" name="pin_cus_qtt" required>
+                <div class="col-md-6 mb-3">
+                    <label for="die_dim" class="form-label">Die Dim</label>
+                    <input type="text" class="form-control" id="die_dim" name="die_dim" required>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 mb-3">
                     <label for="die_height" class="form-label">Die Height</label>
                     <input type="text" class="form-control" id="die_height" name="die_height" required>
                 </div>
+            </div>
+            
+            <div class="mb-3">
+                <label for="pin_cus_qtt" class="form-label">Pin Cus Qtt</label>
+                <input type="text" class="form-control" id="pin_cus_qtt" name="pin_cus_qtt" required>
+            </div>
 
-                <div class="mb-3">
+            <div class="mb-3">
                 <label for="qty_trial" class="form-label">Qty Trial/Total Produksi</label>
                 <input type="text" class="form-control" id="qty_trial" name="qty_trial" required>
-                </div>
+            </div>
     
-                <div class="row">
-                    <div class="col-md-4">
-                        <label for="jumlah_ok" class="form-label">Jumlah OK</label>
-                        <input type="text" class="form-control" id="jumlah_ok" name="jumlah_ok" required>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="jumlah_ng" class="form-label">Jumlah NG</label>
-                        <input type="text" class="form-control" id="jumlah_ng" name="jumlah_ng" required>
-                    </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="jumlah_ok" class="form-label">Jumlah OK</label>
+                    <input type="text" class="form-control" id="jumlah_ok" name="jumlah_ok" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="jumlah_ng" class="form-label">Jumlah NG</label>
+                    <input type="text" class="form-control" id="jumlah_ng" name="jumlah_ng" required>
                 </div>
             </div>
         </div>
@@ -1512,138 +1632,93 @@ include('action.php');
         <div class="card-body">
             <h5 class="card-title">Problem Tool</h5>
 
-
-        
-         <!-- Uji Coba -->
-         <div class="card mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Problem Tools</h5>
-                        <div id="snow-editor" style="height: 300px;">
-                        </div>
-                         <!-- Add hidden input to store Quill content -->
-                        <input type="hidden" name="problem_tool" id="problem_tool">
-                    </div>
-                 </div>  
-
-                <!-- Uji Coba  -->
-                 <div class="card mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">Problem Analisa Penyebab</h5>
-                    <div id="snow-editor2" style="height: 300px;">
-                    </div>
-                    <!-- Add hidden input to store Quill content -->
-                    <input type="hidden" name="analisa_sebab_tool" id="analisa_sebab_tool">
-                </div>
+            <div class="mb-3">
+                <label for="snow-editor" class="form-label">Problem Tool</label>
+                <div id="snow-editor" style="height: 300px;"></div>
+                <input type="hidden" name="problem_tool" id="problem_tool">
             </div>
-      
-            <!-- Uji Coba  -->
-                 <div class="card mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">Counter Meassure</h5>
-                    <div id="snow-editor3" style="height: 300px;">
-                    </div>
-                    <!-- Add hidden input to store Quill content -->
-                    <input type="hidden" name="counter_measure_tool" id="counter_measure_tool">
-                </div>
-            </div>
-          
-            <!-- Uji Coba  -->
-                 <div class="card mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">PIC Tools</h5>
-                    <div id="snow-editor4" style="height: 300px;">
-                    </div>
-                    <!-- Add hidden input to store Quill content -->
-                    <input type="hidden" name="pic_tool" id="pic_tool">
-                </div>
-            </div>
-            <!-- Uji Coba  -->
-                 <div class="card mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">Target</h5>
-                    <div id="snow-editor5" style="height: 300px;">
-                    </div>
-                    <!-- Add hidden input to store Quill content -->
-                    <input type="hidden" name="target_tool" id="target_tool">
-                </div>
-            </div>
-            <!-- Uji Coba  -->
-                 <div class="card mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">Keterangan</h5>
-                    <div id="snow-editor6" style="height: 300px;">
-                    </div>
-                    <!-- Add hidden input to store Quill content -->
-                    <input type="hidden" name="keterangan_tool" id="keterangan_tool">
-                </div>
-                </div>
 
             <div class="mb-3">
-            <label for="kelengkapan_dies" class="form-label">Kelengkapan Dies</label>
-            <input type="text" class="form-control" id="kelengkapan_dies" name="kelengkapan_dies" required>
+                <label for="snow-editor2" class="form-label">Analisa Penyebab</label>
+                <div id="snow-editor2" style="height: 300px;"></div>
+                <input type="hidden" name="analisa_sebab_tool" id="analisa_sebab_tool">
             </div>
-    
+      
+            <div class="mb-3">
+                <label for="snow-editor3" class="form-label">Counter Measure</label>
+                <div id="snow-editor3" style="height: 300px;"></div>
+                <input type="hidden" name="counter_measure_tool" id="counter_measure_tool">
+            </div>
+          
+            <div class="mb-3">
+                <label for="snow-editor4" class="form-label">PIC Tools</label>
+                <div id="snow-editor4" style="height: 300px;"></div>
+                <input type="hidden" name="pic_tool" id="pic_tool">
+            </div>
+
+            <div class="mb-3">
+                <label for="snow-editor5" class="form-label">Target</label>
+                <div id="snow-editor5" style="height: 300px;"></div>
+                <input type="hidden" name="target_tool" id="target_tool">
+            </div>
+
+            <div class="mb-3">
+                <label for="snow-editor6" class="form-label">Keterangan</label>
+                <div id="snow-editor6" style="height: 300px;"></div>
+                <input type="hidden" name="keterangan_tool" id="keterangan_tool">
+            </div>
+
+            <div class="mb-3">
+                <label for="kelengkapan_dies" class="form-label">Kelengkapan Dies</label>
+                <input type="text" class="form-control" id="kelengkapan_dies" name="kelengkapan_dies" required>
+            </div>
         </div>
     </div>
     
     <div class="card mb-3">
         <div class="card-body">
             <h5 class="card-title">Problem Part</h5>
-                    <!-- Uji 3 Ini -->
-
-                    <div class="card mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Problem Part</h5>
-                        <div id="snow-editor7" style="height: 300px;"></div>
-                        <input type="hidden" name="problem_part" id="problem_part">
-                    </div>
-                </div>
-
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Analisa Penyebab Part</h5>
-                        <div id="snow-editor8" style="height: 300px;"></div>
-                        <input type="hidden" name="analisa_sebab_part" id="analisa_sebab_part">
-                    </div>
-                </div>
-
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Counter Meassure Part</h5>
-                        <div id="snow-editor9" style="height: 300px;"></div>
-                        <input type="hidden" name="counter_measure_part" id="counter_measure_part">
-                    </div>
-                </div>
-
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">PIC</h5>
-                        <div id="snow-editor10" style="height: 300px;"></div>
-                        <input type="hidden" name="PIC" id="PIC">
-                    </div>
-                </div>
-
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Target</h5>
-                        <div id="snow-editor11" style="height: 300px;"></div>
-                        <input type="hidden" name="target" id="target">
-                    </div>
-                </div>
-
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Keterangan</h5>
-                        <div id="snow-editor12" style="height: 300px;"></div>
-                        <input type="hidden" name="keterangan" id="keterangan">
-                    </div>
-                </div>
 
             <div class="mb-3">
-            <label for="accuracy_part" class="form-label">Accuracy Part</label>
-            <input type="text" class="form-control" id="accuracy_part" name="accuracy_part" required>
+                <label for="snow-editor7" class="form-label">Problem Part</label>
+                <div id="snow-editor7" style="height: 300px;"></div>
+                <input type="hidden" name="problem_part" id="problem_part">
             </div>
-    
+
+            <div class="mb-3">
+                <label for="snow-editor8" class="form-label">Analisa Penyebab Part</label>
+                <div id="snow-editor8" style="height: 300px;"></div>
+                <input type="hidden" name="analisa_sebab_part" id="analisa_sebab_part">
+            </div>
+
+            <div class="mb-3">
+                <label for="snow-editor9" class="form-label">Counter Measure Part</label>
+                <div id="snow-editor9" style="height: 300px;"></div>
+                <input type="hidden" name="counter_measure_part" id="counter_measure_part">
+            </div>
+
+            <div class="mb-3">
+                <label for="snow-editor10" class="form-label">PIC</label>
+                <div id="snow-editor10" style="height: 300px;"></div>
+                <input type="hidden" name="PIC" id="PIC">
+            </div>
+
+            <div class="mb-3">
+                <label for="snow-editor11" class="form-label">Target</label>
+                <div id="snow-editor11" style="height: 300px;"></div>
+                <input type="hidden" name="target" id="target">
+            </div>
+
+            <div class="mb-3">
+                <label for="snow-editor12" class="form-label">Keterangan</label>
+                <div id="snow-editor12" style="height: 300px;"></div>
+                <input type="hidden" name="keterangan" id="keterangan">
+            </div>
+
+            <div class="mb-3">
+                <label for="accuracy_part" class="form-label">Accuracy Part</label>
+                <input type="text" class="form-control" id="accuracy_part" name="accuracy_part" required>
+            </div>
         </div>
     </div>
 
@@ -1711,9 +1786,64 @@ include('action.php');
     
     <div class="mb-3">
         <button type="submit" class="btn btn-primary">Submit</button>
-        <button type="button" class="btn btn-secondary" id="hide-insert-form">Back</button>
+        <a href="view.php" class="btn btn-secondary">Back</a>
     </div>
 </form>
+
+<!-- Initialize Quill editors -->
+<link href="../../assets/css/vendor/quill.snow.css" rel="stylesheet" type="text/css" />
+<script src="../../assets/js/vendor/quill.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize all Quill editors
+        const editorIds = [
+            'snow-editor', 'snow-editor2', 'snow-editor3', 'snow-editor4', 
+            'snow-editor5', 'snow-editor6', 'snow-editor7', 'snow-editor8',
+            'snow-editor9', 'snow-editor10', 'snow-editor11', 'snow-editor12'
+        ];
+        
+        const hiddenInputIds = [
+            'problem_tool', 'analisa_sebab_tool', 'counter_measure_tool', 'pic_tool',
+            'target_tool', 'keterangan_tool', 'problem_part', 'analisa_sebab_part',
+            'counter_measure_part', 'PIC', 'target', 'keterangan'
+        ];
+        
+        // Create Quill instances and set up form submission
+        const quills = editorIds.map((id, index) => {
+            const quill = new Quill(`#${id}`, {
+                theme: 'snow',
+                modules: {
+                    toolbar: [
+                        ['bold', 'italic', 'underline', 'strike'],
+                        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                        [{ 'indent': '-1' }, { 'indent': '+1' }],
+                        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+                        [{ 'color': [] }, { 'background': [] }],
+                        ['clean']
+                    ]
+                }
+            });
+            
+            // Update hidden input when editor content changes
+            quill.on('text-change', function() {
+                document.getElementById(hiddenInputIds[index]).value = quill.root.innerHTML;
+            });
+            
+            return quill;
+        });
+        
+        // Handle form submission - ensure data is captured from Quill editors
+        document.getElementById('insert-form').addEventListener('submit', function(e) {
+            // Update all hidden inputs with Quill content before submission
+            quills.forEach((quill, index) => {
+                document.getElementById(hiddenInputIds[index]).value = quill.root.innerHTML;
+            });
+        });
+    });
+</script>
+<?php else: ?>
+<!-- This part will show if not in insert mode -->
+<?php endif; ?>
 <?php endif; ?>
 </div>
 </div>
@@ -1725,7 +1855,7 @@ include('action.php');
         <div class="card">
             <div class="card-body" id="table-container">
                 <h4 class="card-title">Trial List</h4>
-                <button class="btn btn-primary" id="show-insert-form">Insert New Trial</button>
+                <a href="view.php?insert" class="btn btn-primary">Insert New Trial</a>
                 <div class="table-responsive mt-3">
                     <table id="basic-datatable" class="table table-striped dt-responsive nowrap w-100">
                         <thead>
@@ -1906,7 +2036,7 @@ include('action.php');
 
         <div class="rightbar-overlay"></div>
         <!-- /End-bar -->
-
+                            
 
         <!-- bundle -->
         <script src="../../assets/js/vendor.min.js"></script>
