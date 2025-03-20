@@ -91,7 +91,7 @@ include('customer_action.php');
                                         <a href="../Proses/view.php">Proses</a>
                                     </li>
                                     <li>
-                                        <a href="#">Create Project</a>
+                                        <a href="../Trial/view.php">Trial & Report</a>
                                     </li>
                                 </ul>
                             </div>

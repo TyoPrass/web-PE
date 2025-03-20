@@ -90,7 +90,7 @@ include_once('action.php');
                                         <a href="#">Proses</a>
                                     </li>
                                     <li>
-                                        <a href="#">Create Project</a>
+                                        <a href="../Trial/view.php">Trial & Report</a>
                                     </li>
                                 </ul>
                             </div>
