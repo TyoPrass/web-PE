@@ -917,18 +917,78 @@ include('action.php');
                                                                         ?>
                                                                     </select>
                                                                 </div>
-
+                                                                
                                                                 <!-- Part No -->
                                                                 <div class="mb-3">
                                                                     <label for="part_no" class="form-label">Part No</label>
                                                                     <select class="form-select" id="part_no" name="part_no" required>
                                                                         <option value="">Select Part No</option>
                                                                         <?php
-                                                                    
+                                                                        $sql_part_no = "SELECT DISTINCT part_no FROM proses";
+                                                                        if (!empty($edit_data['id_part'])) {
+                                                                            $sql_part_no .= " WHERE id_part = " . $edit_data['id_part'];
+                                                                        }
                                                                         $result_part_no = $conn->query($sql_part_no);
                                                                         while ($row = $result_part_no->fetch_assoc()) {
                                                                             $selected = ($edit_data['part_no'] == $row['part_no']) ? 'selected' : '';
                                                                             echo '<option value="' . htmlspecialchars($row['part_no']) . '" ' . $selected . '>' . htmlspecialchars($row['part_no']) . '</option>';
+                                                                        }
+                                                                        ?>
+                                                                    </select>
+                                                                </div>
+
+                                                                <!-- Nama Project -->
+                                                                <div class="mb-3">
+                                                                    <label for="project" class="form-label">Project No</label>
+                                                                    <select class="form-select" id="project" name="project" required>
+                                                                        <option value="">Nama Project</option>
+                                                                        <?php
+                                                                        $sql_project = "SELECT DISTINCT project FROM customer";
+                                                                        if (!empty($edit_data['id_customer'])) {
+                                                                            $sql_project .= " WHERE id_customer = " . $edit_data['id_customer'];
+                                                                        }
+                                                                        $result_project = $conn->query($sql_project);
+                                                                        while ($row = $result_project->fetch_assoc()) {
+                                                                            $selected = ($edit_data['project'] == $row['project']) ? 'selected' : '';
+                                                                            echo '<option value="' . htmlspecialchars($row['project']) . '" ' . $selected . '>' . htmlspecialchars($row['project']) . '</option>';
+                                                                        }
+                                                                        ?>
+                                                                    </select>
+                                                                </div>
+
+                                                                <!-- Mat Spec -->
+                                                                <div class="mb-3">
+                                                                    <label for="mat_spec" class="form-label">Mat Spec</label>
+                                                                    <select class="form-select" id="mat_spec" name="mat_spec" required>
+                                                                        <option value="">Mat Spec</option>
+                                                                        <?php
+                                                                        $sql_mat_spec = "SELECT DISTINCT mat_spec FROM proses";
+                                                                        if (!empty($edit_data['id_part'])) {
+                                                                            $sql_mat_spec .= " WHERE id_part = " . $edit_data['id_part'];
+                                                                        }
+                                                                        $result_mat_spec = $conn->query($sql_mat_spec);
+                                                                        while ($row = $result_mat_spec->fetch_assoc()) {
+                                                                            $selected = ($edit_data['mat_spec'] == $row['mat_spec']) ? 'selected' : '';
+                                                                            echo '<option value="' . htmlspecialchars($row['mat_spec']) . '" ' . $selected . '>' . htmlspecialchars($row['mat_spec']) . '</option>';
+                                                                        }
+                                                                        ?>
+                                                                    </select>
+                                                                </div>
+
+                                                                <!-- Mat Size -->
+                                                                <div class="mb-3">
+                                                                    <label for="mat_size" class="form-label">Mat Size</label>
+                                                                    <select class="form-select" id="mat_size" name="mat_size" required>
+                                                                        <option value="">Mat Size</option>
+                                                                        <?php
+                                                                        $sql_mat_size = "SELECT DISTINCT mat_size FROM proses";
+                                                                        if (!empty($edit_data['id_part'])) {
+                                                                            $sql_mat_size .= " WHERE id_part = " . $edit_data['id_part'];
+                                                                        }
+                                                                        $result_mat_size = $conn->query($sql_mat_size);
+                                                                        while ($row = $result_mat_size->fetch_assoc()) {
+                                                                            $selected = ($edit_data['mat_size'] == $row['mat_size']) ? 'selected' : '';
+                                                                            echo '<option value="' . htmlspecialchars($row['mat_size']) . '" ' . $selected . '>' . htmlspecialchars($row['mat_size']) . '</option>';
                                                                         }
                                                                         ?>
                                                                     </select>
