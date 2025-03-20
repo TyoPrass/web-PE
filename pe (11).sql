@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Mar 12, 2025 at 04:06 AM
+-- Generation Time: Mar 20, 2025 at 03:57 AM
 -- Server version: 8.4.3
 -- PHP Version: 8.3.16
 
@@ -38,8 +38,18 @@ CREATE TABLE `customer` (
 --
 
 INSERT INTO `customer` (`id_customer`, `nama_customer`, `project`) VALUES
-(1, 'PT. SUZUKI INDONESIA MOTORS', 'YTB'),
-(2, 'ATESAN', 'FPF');
+(1, 'PT. SUZUKI INDONESIA MOTORS', 'jbk'),
+(2, 'ATESAN', 'FPF'),
+(3, 'PT KMI', 'CMK'),
+(4, 'PT. IMASEN', 'IMS'),
+(5, 'PT. MARUGO', 'MRG'),
+(6, 'PT. FTS', 'SS'),
+(7, 'asdfa', 'asdfsaf'),
+(8, 'asdfas', 'asdfafd'),
+(9, 'asdfasf', 'asdfaf'),
+(10, 'ss', 'ss'),
+(11, 'asdf', 'asdfa'),
+(12, 'JOJO', '123');
 
 -- --------------------------------------------------------
 
@@ -61,8 +71,22 @@ CREATE TABLE `data_part` (
 --
 
 INSERT INTO `data_part` (`id_part`, `nama_part`, `gambar_part`, `tanggal`, `tgl_selesai`, `id_customer`) VALUES
-(18, 'YTB-MM09', 'Screenshot (7).png', '2025-03-05', '2025-03-21', 1),
-(19, 'REINF INNER FR L', 'Screenshot (8).png', '2025-03-14', '2025-03-29', 2);
+(33, 'YTB-MM09', 'id-11134207-7rasb-m3n4unqvgqalf6.jpg', '2025-03-20', '2025-03-29', 1),
+(36, 'www', 'images.jpg', '2025-03-20', '2025-03-20', 1),
+(37, 'RETAINER FULL GAUGE', 'images.jpg', '2025-03-20', '2025-03-20', 1),
+(38, 'www', 'images.jpg', '2025-03-20', '2025-03-20', 12);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jawal`
+--
+
+CREATE TABLE `jawal` (
+  `id_jadwal` int NOT NULL,
+  `nama_part` varchar(255) NOT NULL,
+  `id_part` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -87,8 +111,8 @@ CREATE TABLE `proses` (
 --
 
 INSERT INTO `proses` (`id_proses`, `part_no`, `Proses`, `mat_spec`, `mat_size`, `part_sketch`, `layout_sketch`, `target_trial`, `id_part`) VALUES
-(1, '77100T400', '1/5 DRAW 2', 'ASDFAS', '1.0 X 44 X 1260', 'logo_sjm.png', 'Thumbnail_22_0000000-removebg-preview.png', 'SAMPAI SELESAI', 19),
-(2, '77100T400', '1/5 DRAW 1', 'JJK', '1.0 X 44 X 1260', 'logo_sjm.png', 'logo_sjm.png', 'SAMPAI SELESAI', 19);
+(4, '77100T400', '1/5 DRAW 1', 'ASDFAS', '1.0 X 44 X 1260', 'id-11134207-7rasb-m3n4unqvgqalf6.jpg', 'images.jpg', 'SAMPAI SELESAI', 33),
+(5, '77100T400', '1/5 DRAW 1', 'ASDFAS', '1.0 X 44 X 1260', 'id-11134207-7rasb-m3n4unqvgqalf6.jpg', 'id-11134207-7rasb-m3n4unqvgqalf6.jpg', 'SAMPAI SELESAI', 33);
 
 -- --------------------------------------------------------
 
@@ -102,32 +126,48 @@ CREATE TABLE `trial` (
   `jam_start` varchar(25) NOT NULL,
   `jam_finish` varchar(25) NOT NULL,
   `mc_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `trial` varchar(255) NOT NULL,
   `kapasitas` varchar(50) NOT NULL,
   `cush_prec` varchar(50) NOT NULL,
   `pin_cus_qtt` varchar(50) NOT NULL,
   `die_height` varchar(50) NOT NULL,
   `die_dim` varchar(50) NOT NULL,
-  `problem_tool` varchar(255) NOT NULL,
-  `analisa_sebab_tool` varchar(255) NOT NULL,
-  `counter_measure_tool` varchar(255) NOT NULL,
-  `problem_part` varchar(255) NOT NULL,
-  `analisa_sebab_part` varchar(255) NOT NULL,
-  `counter_measure_part` varchar(255) NOT NULL,
-  `PIC` varchar(50) NOT NULL,
-  `target` varchar(50) NOT NULL,
-  `keterangan` varchar(50) NOT NULL,
+  `problem_tool` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `analisa_sebab_tool` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `counter_measure_tool` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `pic_tool` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `target_tool` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `keterangan_tool` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `problem_part` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `analisa_sebab_part` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `counter_measure_part` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `PIC` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `target` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `keterangan` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `kelengkapan_dies` varchar(50) NOT NULL,
   `accuracy_part` varchar(50) NOT NULL,
-  `id_proses` int NOT NULL
+  `id_proses` int NOT NULL,
+  `id_part` int NOT NULL,
+  `id_customer` int NOT NULL,
+  `qty_trial` varchar(255) NOT NULL,
+  `jumlah_ok` varchar(255) NOT NULL,
+  `jumlah_ng` varchar(255) NOT NULL,
+  `visual` varchar(255) NOT NULL,
+  `dimensi` varchar(255) NOT NULL,
+  `fungsi` varchar(255) NOT NULL,
+  `judgement` varchar(255) NOT NULL,
+  `dibuat` varchar(255) NOT NULL,
+  `diperiksa` varchar(255) NOT NULL,
+  `diketahui` varchar(255) NOT NULL,
+  `peserta` varchar(255) NOT NULL,
+  `part_no` varchar(255) NOT NULL,
+  `project` varchar(255) NOT NULL,
+  `mat_spec` varchar(255) NOT NULL,
+  `mat_size` varchar(255) NOT NULL,
+  `nama_customer` varchar(255) NOT NULL,
+  `nama_part` varchar(255) NOT NULL,
+  `Proses` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `trial`
---
-
-INSERT INTO `trial` (`id_trial`, `tanggal`, `jam_start`, `jam_finish`, `mc_name`, `kapasitas`, `cush_prec`, `pin_cus_qtt`, `die_height`, `die_dim`, `problem_tool`, `analisa_sebab_tool`, `counter_measure_tool`, `problem_part`, `analisa_sebab_part`, `counter_measure_part`, `PIC`, `target`, `keterangan`, `kelengkapan_dies`, `accuracy_part`, `id_proses`) VALUES
-(2, '2025-03-21', '08:00', '12:00', 'asfa', '0', '0', '0', '0', '123', '123', '123', '123', '123', '123', '123', '123', '123', '123', '123', '123', 1),
-(3, '2025-03-21', '08:00', '12:00', 'asfa', '0', '0', '0', '0', '213', '123', '123', '123', '123', '123', '123', '123', '123', '123', '123', '123', 1);
 
 -- --------------------------------------------------------
 
@@ -167,6 +207,12 @@ ALTER TABLE `data_part`
   ADD KEY `id_customer` (`id_customer`);
 
 --
+-- Indexes for table `jawal`
+--
+ALTER TABLE `jawal`
+  ADD PRIMARY KEY (`id_jadwal`);
+
+--
 -- Indexes for table `proses`
 --
 ALTER TABLE `proses`
@@ -178,7 +224,9 @@ ALTER TABLE `proses`
 --
 ALTER TABLE `trial`
   ADD PRIMARY KEY (`id_trial`),
-  ADD KEY `id_proses` (`id_proses`);
+  ADD KEY `id_proses` (`id_proses`),
+  ADD KEY `id_part` (`id_part`),
+  ADD KEY `id_customer` (`id_customer`);
 
 --
 -- Indexes for table `user`
@@ -194,25 +242,31 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `id_customer` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_customer` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `data_part`
 --
 ALTER TABLE `data_part`
-  MODIFY `id_part` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id_part` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+
+--
+-- AUTO_INCREMENT for table `jawal`
+--
+ALTER TABLE `jawal`
+  MODIFY `id_jadwal` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `proses`
 --
 ALTER TABLE `proses`
-  MODIFY `id_proses` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_proses` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `trial`
 --
 ALTER TABLE `trial`
-  MODIFY `id_trial` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_trial` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `user`
@@ -240,7 +294,9 @@ ALTER TABLE `proses`
 -- Constraints for table `trial`
 --
 ALTER TABLE `trial`
-  ADD CONSTRAINT `trial_ibfk_1` FOREIGN KEY (`id_proses`) REFERENCES `proses` (`id_proses`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `trial_ibfk_1` FOREIGN KEY (`id_proses`) REFERENCES `proses` (`id_proses`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `trial_ibfk_2` FOREIGN KEY (`id_part`) REFERENCES `data_part` (`id_part`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `trial_ibfk_3` FOREIGN KEY (`id_customer`) REFERENCES `customer` (`id_customer`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
