@@ -150,19 +150,15 @@ for ($i = 0; $i < count($checklist); $i++) {
     <title>Checklist Katakanesha</title>
     <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
     <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
+     
         th, td {
-            border: 1px solid #000;
-            padding: 5px;
             text-align: center;
         }
-        th {
-            background-color: #f2f2f2;
-        }
+   
     </style>
+    <!-- Datatables css -->
+    <link href="assets/css/vendor/dataTables.bootstrap5.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/vendor/responsive.bootstrap5.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <div class="container">
@@ -183,40 +179,42 @@ for ($i = 0; $i < count($checklist); $i++) {
 
             <!-- Read -->
             <h3>Checklist Data</h3>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Part No</th>
-                        <th>Part Name</th>
-                        <th>Date</th>
-                        <th>Process</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php if ($result->num_rows > 0): ?>
-                        <?php while ($row = $result->fetch_assoc()): ?>
-                            <tr>
-                                <td><?php echo $row['id']; ?></td>
-                                <td><?php echo $row['part_no']; ?></td>
-                                <td><?php echo $row['part_name']; ?></td>
-                                <td><?php echo $row['date']; ?></td>
-                                <td><?php echo $row['process']; ?></td>
-                                <td>
-                                    <a href="katakensha.php?view=<?php echo $row['id']; ?>" class="btn btn-info btn-sm">View</a>
-                                    <a href="katakensha.php?edit=<?php echo $row['id']; ?>" class="btn btn-warning btn-sm">Edit</a>
-                                    <a href="katakensha.php?delete=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</a>
-                                </td>
-                            </tr>
-                        <?php endwhile; ?>
-                    <?php else: ?>
+            <div class="table-responsive">
+                <table id="basic-datatable" class="table table-striped dt-responsive nowrap w-100">
+                    <thead>
                         <tr>
-                            <td colspan="6">No data available</td>
+                            <th>ID</th>
+                            <th>Part No</th>
+                            <th>Part Name</th>
+                            <th>Date</th>
+                            <th>Process</th>
+                            <th>Actions</th>
                         </tr>
-                    <?php endif; ?>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <?php if ($result->num_rows > 0): ?>
+                            <?php while ($row = $result->fetch_assoc()): ?>
+                                <tr>
+                                    <td><?php echo $row['id']; ?></td>
+                                    <td><?php echo $row['part_no']; ?></td>
+                                    <td><?php echo $row['part_name']; ?></td>
+                                    <td><?php echo $row['date']; ?></td>
+                                    <td><?php echo $row['process']; ?></td>
+                                    <td>
+                                        <a href="katakensha.php?view=<?php echo $row['id']; ?>" class="btn btn-info btn-sm">View</a>
+                                        <a href="katakensha.php?edit=<?php echo $row['id']; ?>" class="btn btn-warning btn-sm">Edit</a>
+                                        <a href="katakensha.php?delete=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</a>
+                                    </td>
+                                </tr>
+                            <?php endwhile; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="6">No data available</td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
 
         <?php elseif (isset($_GET['view'])): ?>
             <!-- View Detail -->
@@ -262,7 +260,7 @@ for ($i = 0; $i < count($checklist); $i++) {
                 </div>
 
                 <h4>Checklist Details</h4>
-                <table class="table">
+                <table class="table table-bordered table-centered mb-0">
                     <thead>
                         <tr>
                             <th>Group</th>
@@ -331,7 +329,7 @@ for ($i = 0; $i < count($checklist); $i++) {
                         </div>
 
                         <h4>Checklist</h4>
-                        <table class="table">
+                        <table class="table table-bordered table-centered mb-0">
                             <thead>
                                 <tr>
                                     <th>Group</th>
@@ -399,5 +397,13 @@ for ($i = 0; $i < count($checklist); $i++) {
             </div>
         <?php endif; ?>
     </div>
+
+    <!-- Datatables js -->
+<script src="assets/js/vendor/jquery.dataTables.min.js"></script>
+<script src="assets/js/vendor/dataTables.bootstrap5.js"></script>
+<script src="assets/js/vendor/dataTables.responsive.min.js"></script>
+<script src="assets/js/vendor/responsive.bootstrap5.min.js"></script>
+<!-- Datatable Init js -->
+<script src="assets/js/pages/demo.datatable-init.js"></script>
 </body>
 </html>
