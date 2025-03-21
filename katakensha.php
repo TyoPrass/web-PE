@@ -1,32 +1,90 @@
 <?php
-// filepath: c:\laragon\www\coba\schedulu.php
+// filepath: c:\laragon\www\coba\katakensha.php
 include_once('Database/koneksi.php');
 session_start();
 
+// Handle Create and Update
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Ambil data dari form
+    $id = isset($_POST['id']) ? $_POST['id'] : null;
     $part_no = $_POST['part_no'];
     $part_name = $_POST['part_name'];
     $date = $_POST['date'];
     $process = $_POST['process'];
-    $checklist_data = json_encode($_POST['checklist']); // Simpan checklist sebagai JSON
+    $checklist_data = json_encode($_POST['checklist']);
 
-    // Simpan ke database
-    $sql = "INSERT INTO checklist_katakanesha (part_no, part_name, date, process, checklist_data) VALUES (?, ?, ?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssss", $part_no, $part_name, $date, $process, $checklist_data);
+    if ($id) {
+        // Update
+        $sql = "UPDATE checklist_katakanesha SET part_no = ?, part_name = ?, date = ?, process = ?, checklist_data = ? WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sssssi", $part_no, $part_name, $date, $process, $checklist_data, $id);
+    } else {
+        // Create
+        $sql = "INSERT INTO checklist_katakanesha (part_no, part_name, date, process, checklist_data) VALUES (?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sssss", $part_no, $part_name, $date, $process, $checklist_data);
+    }
 
     if ($stmt->execute()) {
-        $_SESSION['message'] = 'Checklist saved successfully.';
+        $_SESSION['message'] = $id ? 'Checklist updated successfully.' : 'Checklist saved successfully.';
         $_SESSION['message_type'] = 'success';
     } else {
         $_SESSION['message'] = 'Error: ' . $stmt->error;
         $_SESSION['message_type'] = 'danger';
     }
     $stmt->close();
-    header('Location: schedulu.php');
+    header('Location: katakensha.php');
     exit();
 }
+
+// Handle Delete
+if (isset($_GET['delete'])) {
+    $id = $_GET['delete'];
+    $sql = "DELETE FROM checklist_katakanesha WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id);
+
+    if ($stmt->execute()) {
+        $_SESSION['message'] = 'Checklist deleted successfully.';
+        $_SESSION['message_type'] = 'success';
+    } else {
+        $_SESSION['message'] = 'Error: ' . $stmt->error;
+        $_SESSION['message_type'] = 'danger';
+    }
+    $stmt->close();
+    header('Location: katakensha.php');
+    exit();
+}
+
+// Fetch data for read
+$sql = "SELECT * FROM checklist_katakanesha";
+$result = $conn->query($sql);
+
+// Prepare edit data if needed
+$editData = null;
+if (isset($_GET['edit'])) {
+    $id = $_GET['edit'];
+    $sql = "SELECT * FROM checklist_katakanesha WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $editResult = $stmt->get_result();
+    $editData = $editResult->fetch_assoc();
+    $stmt->close();
+}
+
+// Define checklist structure
+$checklist = [
+    ['group' => 'A-Indicate Die', 'no' => '1', 'point' => 'Part No / Name'],
+    ['group' => 'A-Indicate Die', 'no' => '2', 'point' => 'Process No / Name'],
+    ['group' => 'A-Indicate Die', 'no' => '3', 'point' => 'Dies Code No'],
+    ['group' => 'A-Indicate Die', 'no' => '4', 'point' => 'Die Maker'],
+    ['group' => 'A-Indicate Die', 'no' => '5', 'point' => 'Tahun Maker'],
+    ['group' => 'A-Indicate Die', 'no' => '1', 'point' => 'Part No / Name'],
+    ['group' => 'A-Indicate Die', 'no' => '2', 'point' => 'Process No / Name'],
+    ['group' => 'A-Indicate Die', 'no' => '3', 'point' => 'Dies Code No'],
+    ['group' => 'A-Indicate Die', 'no' => '4', 'point' => 'Die Maker'],
+    ['group' => 'A-Indicate Die', 'no' => '5', 'point' => 'Tahun Maker'],
+];
 ?>
 
 <!DOCTYPE html>
@@ -62,144 +120,216 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php unset($_SESSION['message']); unset($_SESSION['message_type']); ?>
         <?php endif; ?>
 
-        <form action="schedulu.php" method="POST">
+        <?php if (!isset($_GET['insert']) && !isset($_GET['edit'])): ?>
+            <!-- Main List View -->
             <div class="mb-3">
-                <label for="part_no" class="form-label">Part No</label>
-                <input type="text" class="form-control" id="part_no" name="part_no" required>
-            </div>
-            <div class="mb-3">
-                <label for="part_name" class="form-label">Part Name</label>
-                <input type="text" class="form-control" id="part_name" name="part_name" required>
-            </div>
-            <div class="mb-3">
-                <label for="date" class="form-label">Date</label>
-                <input type="date" class="form-control" id="date" name="date" required>
-            </div>
-            <div class="mb-3">
-                <label for="process" class="form-label">Process</label>
-                <input type="text" class="form-control" id="process" name="process" required>
+                <a href="katakensha.php?insert" class="btn btn-success">Add New Checklist</a>
             </div>
 
-            <h4>Checklist</h4>
-            <div class="row">
-                <div class="col-md-6">
-                    <table class="table table-bordered">
-                        <thead>
+            <!-- Read -->
+            <h3>Checklist Data</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Part No</th>
+                        <th>Part Name</th>
+                        <th>Date</th>
+                        <th>Process</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if ($result->num_rows > 0): ?>
+                        <?php while ($row = $result->fetch_assoc()): ?>
                             <tr>
-                                <th>Group</th>
-                                <th>Point Check</th>
-                                <th>P1</th>
-                                <th>P2</th>
-                                <th>P3</th>
-                                <th>Keterangan</th>
+                                <td><?php echo $row['id']; ?></td>
+                                <td><?php echo $row['part_no']; ?></td>
+                                <td><?php echo $row['part_name']; ?></td>
+                                <td><?php echo $row['date']; ?></td>
+                                <td><?php echo $row['process']; ?></td>
+                                <td>
+                                    <a href="katakensha.php?view=<?php echo $row['id']; ?>" class="btn btn-info btn-sm">View</a>
+                                    <a href="katakensha.php?edit=<?php echo $row['id']; ?>" class="btn btn-warning btn-sm">Edit</a>
+                                    <a href="katakensha.php?delete=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</a>
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            // Contoh data checklist berdasarkan gambar
-                            $checklist = [
-                                ['group' => 'A', 'point' => 'Part No/Name'],
-                                ['group' => 'B', 'point' => 'Drawing No/Name'],
-                                ['group' => 'C', 'point' => 'Upper plate sudah di Chamfer'],
-                                ['group' => 'D', 'point' => 'Hook sudah dibuat'],
-                                ['group' => 'E', 'point' => 'Stroke Cam sudah sesuai spesifikasi'],
-                                ['group' => 'F', 'point' => 'PAD sudah berfungsi dengan baik'],
-                                ['group' => 'G', 'point' => 'Guide Post sudah sesuai posisi center'],
-                                ['group' => 'H', 'point' => 'Die sudah dipainting'],
-                                ['group' => 'I', 'point' => 'Pengecekan dimensi produk'],
-                                ['group' => 'J', 'point' => 'Kesesuaian material'],
-                                ['group' => 'K', 'point' => 'Kerataan permukaan die'],
-                                ['group' => 'L', 'point' => 'Ketajaman cutting edge'],
-                                ['group' => 'M', 'point' => 'Kondisi spring'],
-                                ['group' => 'N', 'point' => 'Pelumasan komponen'],
-                                ['group' => 'O', 'point' => 'Kebersihan area kerja'],
-                                ['group' => 'P', 'point' => 'Setting parameter mesin'],
-                                ['group' => 'Q', 'point' => 'Pengecekan keamanan die'],
-                                ['group' => 'R', 'point' => 'Inspeksi visual produk'],
-                                ['group' => 'S', 'point' => 'Pengecekan pilot pin'],
-                                ['group' => 'T', 'point' => 'Kondisi stopper'],
-                                ['group' => 'U', 'point' => 'Pengecekan sensor'],
-                                ['group' => 'V', 'point' => 'Kalibrasi alat ukur'],
-                            ];
+                        <?php endwhile; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="6">No data available</td>
+                        </tr>
+                    <?php endif; ?>
+                </tbody>
+            </table>
 
-                            foreach ($checklist as $index => $item) {
-                                echo "<tr>
-                                    <td>{$item['group']}</td>
-                                    <td>{$item['point']}</td>
-                                    <td><input type='text' name='checklist[{$index}][P1]' class='form-control'></td>
-                                    <td><input type='text' name='checklist[{$index}][P2]' class='form-control'></td>
-                                    <td><input type='text' name='checklist[{$index}][P3]' class='form-control'></td>
-                                    <td><input type='text' name='checklist[{$index}][keterangan]' class='form-control'></td>
-                                </tr>";
-                            }
-                            ?>
-                        </tbody>
-                    </table>
+        <?php elseif (isset($_GET['view'])): ?>
+            <!-- View Detail -->
+            <?php
+            $id = $_GET['view'];
+            $sql = "SELECT * FROM checklist_katakanesha WHERE id = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+            $viewResult = $stmt->get_result();
+            $viewData = $viewResult->fetch_assoc();
+            $stmt->close();
+
+            if ($viewData):
+                $checklist_data = json_decode($viewData['checklist_data'], true);
+            ?>
+                <div class="mb-3">
+                    <a href="katakensha.php" class="btn btn-secondary">Back to List</a>
                 </div>
-                <div class="col-md-6">
-                    <table class="table table-bordered">
-                        <thead>
+
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h3>Checklist Details</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-md-3"><strong>Part No:</strong></div>
+                            <div class="col-md-9"><?php echo htmlspecialchars($viewData['part_no']); ?></div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-3"><strong>Part Name:</strong></div>
+                            <div class="col-md-9"><?php echo htmlspecialchars($viewData['part_name']); ?></div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-3"><strong>Date:</strong></div>
+                            <div class="col-md-9"><?php echo htmlspecialchars($viewData['date']); ?></div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-3"><strong>Process:</strong></div>
+                            <div class="col-md-9"><?php echo htmlspecialchars($viewData['process']); ?></div>
+                        </div>
+                    </div>
+                </div>
+
+                <h4>Checklist Details</h4>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Group</th>
+                            <th>No</th>
+                            <th>Point Check</th>
+                            <th>P1</th>
+                            <th>P2</th>
+                            <th>P3</th>
+                            <th>Keterangan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($checklist as $index => $item): ?>
                             <tr>
-                                <th>Group</th>
-                                <th>Point Check</th>
-                                <th>P1</th>
-                                <th>P2</th>
-                                <th>P3</th>
-                                <th>Keterangan</th>
+                                <td><?php echo $item['group']; ?></td>
+                                <td><?php echo $item['no']; ?></td>
+                                <td><?php echo $item['point']; ?></td>
+                                <td><?php echo htmlspecialchars($checklist_data[$index]['P1'] ?? ''); ?></td>
+                                <td><?php echo htmlspecialchars($checklist_data[$index]['P2'] ?? ''); ?></td>
+                                <td><?php echo htmlspecialchars($checklist_data[$index]['P3'] ?? ''); ?></td>
+                                <td><?php echo htmlspecialchars($checklist_data[$index]['keterangan'] ?? ''); ?></td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            // Contoh data checklist berdasarkan gambar (lanjutan)
-                            $checklist2 = [
-                                ['group' => 'W', 'point' => 'Pengecekan hydraulic system'],
-                                ['group' => 'X', 'point' => 'Kondisi pneumatic system'],
-                                ['group' => 'Y', 'point' => 'Pengecekan cooling system'],
-                                ['group' => 'Z', 'point' => 'Kondisi electrical system'],
-                                ['group' => 'AA', 'point' => 'Pengecekan emergency stop'],
-                                ['group' => 'AB', 'point' => 'Setup waktu cycle'],
-                                ['group' => 'AC', 'point' => 'Pengecekan kebisingan mesin'],
-                                ['group' => 'AD', 'point' => 'Kondisi belt conveyor'],
-                                ['group' => 'AE', 'point' => 'Pengecekan material handling'],
-                                ['group' => 'AF', 'point' => 'Setting parameter produksi'],
-                                ['group' => 'AG', 'point' => 'Pengecekan scrap handling'],
-                                ['group' => 'AH', 'point' => 'Dokumentasi proses'],
-                                ['group' => 'AI', 'point' => 'Training operator'],
-                                ['group' => 'AJ', 'point' => 'Pengecekan SOP'],
-                                ['group' => 'AK', 'point' => 'Kalibrasi sensor'],
-                                ['group' => 'AL', 'point' => 'Kondisi robot arm'],
-                                ['group' => 'AM', 'point' => 'Pengecekan tempat penyimpanan'],
-                                ['group' => 'AN', 'point' => 'Ketepatan waktu produksi'],
-                                ['group' => 'AO', 'point' => 'Pengecekan quality control'],
-                                ['group' => 'AP', 'point' => 'Kondisi alat bantu'],
-                                ['group' => 'AQ', 'point' => 'Pengecekan sistem otomasi'],
-                                ['group' => 'AR', 'point' => 'Identifikasi risiko keamanan'],
-                                ['group' => 'AS', 'point' => 'Pengecekan packaging'],
-                                ['group' => 'AT', 'point' => 'Evaluasi performa produksi'],
-                                ['group' => 'AU', 'point' => 'Pengecekan sistem pelaporan']
-                            ];
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            <?php else: ?>
+                <div class="alert alert-danger">Checklist not found.</div>
+                <a href="katakensha.php" class="btn btn-secondary">Back to List</a>
+            <?php endif; ?>
 
-                            foreach ($checklist2 as $index => $item) {
-                                $realIndex = $index + count($checklist);
-                                echo "<tr>
-                                    <td>{$item['group']}</td>
-                                    <td>{$item['point']}</td>
-                                    <td><input type='text' name='checklist[{$realIndex}][P1]' class='form-control'></td>
-                                    <td><input type='text' name='checklist[{$realIndex}][P2]' class='form-control'></td>
-                                    <td><input type='text' name='checklist[{$realIndex}][P3]' class='form-control'></td>
-                                    <td><input type='text' name='checklist[{$realIndex}][keterangan]' class='form-control'></td>
-                                </tr>";
-                            }
-                            ?>
-                        </tbody>
-                    </table>
+        <?php else: ?>
+            <!-- Insert/Edit Form -->
+            <div class="mb-3">
+                <a href="katakensha.php" class="btn btn-secondary">Back to List</a>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3><?php echo isset($_GET['edit']) ? 'Edit Checklist' : 'Add New Checklist'; ?></h3>
+                </div>
+                <div class="card-body">
+                    <form action="katakensha.php" method="POST">
+                        <?php if (isset($_GET['edit']) && $editData): ?>
+                            <input type="hidden" name="id" value="<?php echo $editData['id']; ?>">
+                        <?php endif; ?>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="part_no" class="form-label">Part No</label>
+                                <input type="text" class="form-control" id="part_no" name="part_no" value="<?php echo isset($editData) ? htmlspecialchars($editData['part_no']) : ''; ?>" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="part_name" class="form-label">Part Name</label>
+                                <input type="text" class="form-control" id="part_name" name="part_name" value="<?php echo isset($editData) ? htmlspecialchars($editData['part_name']) : ''; ?>" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="date" class="form-label">Date</label>
+                                <input type="date" class="form-control" id="date" name="date" value="<?php echo isset($editData) ? htmlspecialchars($editData['date']) : ''; ?>" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="process" class="form-label">Process</label>
+                                <input type="text" class="form-control" id="process" name="process" value="<?php echo isset($editData) ? htmlspecialchars($editData['process']) : ''; ?>" required>
+                            </div>
+                        </div>
+
+                        <h4>Checklist</h4>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Group</th>
+                                    <th>No</th>
+                                    <th>Point Check</th>
+                                    <th>P1</th>
+                                    <th>P2</th>
+                                    <th>P3</th>
+                                    <th>Keterangan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php 
+                                $checklist_data = isset($editData) ? json_decode($editData['checklist_data'], true) : [];
+                                
+                                foreach ($checklist as $index => $item): 
+                                ?>
+                                    <tr>
+                                        <td><?php echo $item['group']; ?></td>
+                                        <td><?php echo $item['no']; ?></td>
+                                        <td><?php echo $item['point']; ?></td>
+                                        <td>
+                                            <input type="text" name="checklist[<?php echo $index; ?>][P1]" 
+                                                class="form-control" 
+                                                value="<?php echo isset($checklist_data[$index]) ? htmlspecialchars($checklist_data[$index]['P1'] ?? '') : ''; ?>">
+                                        </td>
+                                        <td>
+                                            <input type="text" name="checklist[<?php echo $index; ?>][P2]" 
+                                                class="form-control"
+                                                value="<?php echo isset($checklist_data[$index]) ? htmlspecialchars($checklist_data[$index]['P2'] ?? '') : ''; ?>">
+                                        </td>
+                                        <td>
+                                            <input type="text" name="checklist[<?php echo $index; ?>][P3]" 
+                                                class="form-control"
+                                                value="<?php echo isset($checklist_data[$index]) ? htmlspecialchars($checklist_data[$index]['P3'] ?? '') : ''; ?>">
+                                        </td>
+                                        <td>
+                                            <input type="text" name="checklist[<?php echo $index; ?>][keterangan]" 
+                                                class="form-control"
+                                                value="<?php echo isset($checklist_data[$index]) ? htmlspecialchars($checklist_data[$index]['keterangan'] ?? '') : ''; ?>">
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+
+                        <div class="mt-3">
+                            <button type="submit" class="btn btn-primary"><?php echo isset($_GET['edit']) ? 'Update' : 'Save'; ?> Checklist</button>
+                        </div>
+                    </form>
                 </div>
             </div>
-
-            <div class="mt-3">
-                <button type="submit" class="btn btn-primary">Save Checklist</button>
-            </div>
-        </form>
+        <?php endif; ?>
     </div>
 </body>
 </html>
