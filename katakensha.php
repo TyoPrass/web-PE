@@ -74,17 +74,72 @@ if (isset($_GET['edit'])) {
 
 // Define checklist structure
 $checklist = [
+    // A-Indicate Die
     ['group' => 'A-Indicate Die', 'no' => '1', 'point' => 'Part No / Name'],
     ['group' => 'A-Indicate Die', 'no' => '2', 'point' => 'Process No / Name'],
     ['group' => 'A-Indicate Die', 'no' => '3', 'point' => 'Dies Code No'],
     ['group' => 'A-Indicate Die', 'no' => '4', 'point' => 'Die Maker'],
     ['group' => 'A-Indicate Die', 'no' => '5', 'point' => 'Tahun Maker'],
-    ['group' => 'A-Indicate Die', 'no' => '1', 'point' => 'Part No / Name'],
-    ['group' => 'A-Indicate Die', 'no' => '2', 'point' => 'Process No / Name'],
-    ['group' => 'A-Indicate Die', 'no' => '3', 'point' => 'Dies Code No'],
-    ['group' => 'A-Indicate Die', 'no' => '4', 'point' => 'Die Maker'],
-    ['group' => 'A-Indicate Die', 'no' => '5', 'point' => 'Tahun Maker'],
+    
+    // B-Material
+    ['group' => 'B-Material', 'no' => '1', 'point' => 'Material Type'],
+    ['group' => 'B-Material', 'no' => '2', 'point' => 'Material Thickness'],
+    ['group' => 'B-Material', 'no' => '3', 'point' => 'Surface Treatment'],
+    ['group' => 'B-Material', 'no' => '4', 'point' => 'Mechanical Properties'],
+    ['group' => 'B-Material', 'no' => '5', 'point' => 'Chemical Composition'],
+    
+    // C-Die Condition
+    ['group' => 'C-Die Condition', 'no' => '1', 'point' => 'Wear and Tear'],
+    ['group' => 'C-Die Condition', 'no' => '2', 'point' => 'Lubrication Status'],
+    ['group' => 'C-Die Condition', 'no' => '3', 'point' => 'Cleanliness'],
+    ['group' => 'C-Die Condition', 'no' => '4', 'point' => 'Damage Inspection'],
+    ['group' => 'C-Die Condition', 'no' => '5', 'point' => 'Alignment Check'],
+    
+    // D-Maintenance
+    ['group' => 'D-Maintenance', 'no' => '1', 'point' => 'Last Maintenance Date'],
+    ['group' => 'D-Maintenance', 'no' => '2', 'point' => 'Next Maintenance Schedule'],
+    ['group' => 'D-Maintenance', 'no' => '3', 'point' => 'Responsible Person'],
+    ['group' => 'D-Maintenance', 'no' => '4', 'point' => 'Replacement Parts'],
+    ['group' => 'D-Maintenance', 'no' => '5', 'point' => 'Maintenance Record'],
+    
+    // E-Quality
+    ['group' => 'E-Quality', 'no' => '1', 'point' => 'Surface Finish'],
+    ['group' => 'E-Quality', 'no' => '2', 'point' => 'Dimensional Accuracy'],
+    ['group' => 'E-Quality', 'no' => '3', 'point' => 'Burr Formation'],
+    ['group' => 'E-Quality', 'no' => '4', 'point' => 'Visual Defects'],
+    ['group' => 'E-Quality', 'no' => '5', 'point' => 'Reject Rate'],
+    
+    // F-Safety
+    ['group' => 'F-Safety', 'no' => '1', 'point' => 'Safety Guards'],
+    ['group' => 'F-Safety', 'no' => '2', 'point' => 'Emergency Stops'],
+    ['group' => 'F-Safety', 'no' => '3', 'point' => 'Operator Training'],
+    ['group' => 'F-Safety', 'no' => '4', 'point' => 'PPE Requirements'],
+    ['group' => 'F-Safety', 'no' => '5', 'point' => 'Safety Documentation'],
+    
+    // G-Productivity
+    ['group' => 'G-Productivity', 'no' => '1', 'point' => 'Cycle Time'],
+    ['group' => 'G-Productivity', 'no' => '2', 'point' => 'Output Rate'],
+    ['group' => 'G-Productivity', 'no' => '3', 'point' => 'Machine Uptime'],
+    ['group' => 'G-Productivity', 'no' => '4', 'point' => 'Tool Changeover Time'],
+    ['group' => 'G-Productivity', 'no' => '5', 'point' => 'Production Efficiency'],
+    
+    // H-Documentation
+    ['group' => 'H-Documentation', 'no' => '1', 'point' => 'Technical Drawings'],
+    ['group' => 'H-Documentation', 'no' => '2', 'point' => 'Process Specifications'],
+    ['group' => 'H-Documentation', 'no' => '3', 'point' => 'Quality Standards'],
+    ['group' => 'H-Documentation', 'no' => '4', 'point' => 'Revision History'],
+    ['group' => 'H-Documentation', 'no' => '5', 'point' => 'Storage Location']
 ];
+
+// Add an attribute to identify the last item in each group
+$currentGroup = '';
+for ($i = 0; $i < count($checklist); $i++) {
+    if ($i < count($checklist) - 1 && $checklist[$i]['group'] !== $checklist[$i + 1]['group']) {
+        $checklist[$i]['is_last_in_group'] = true;
+    } else {
+        $checklist[$i]['is_last_in_group'] = false;
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -111,7 +166,7 @@ $checklist = [
 </head>
 <body>
     <div class="container">
-        <h2>Checklist Katakanesha</h2>
+        <h2>Checklist Katakanesha Dinamis</h2>
         <?php if (isset($_SESSION['message'])): ?>
             <div class="alert alert-<?php echo $_SESSION['message_type']; ?> alert-dismissible fade show" role="alert">
                 <?php echo $_SESSION['message']; ?>
@@ -291,9 +346,17 @@ $checklist = [
                             <tbody>
                                 <?php 
                                 $checklist_data = isset($editData) ? json_decode($editData['checklist_data'], true) : [];
+                                $currentGroup = '';
                                 
                                 foreach ($checklist as $index => $item): 
+                                    // Add group header row if new group starts
+                                    if ($currentGroup != $item['group']):
+                                        $currentGroup = $item['group'];
                                 ?>
+                                    <tr class="table-secondary">
+                                        <td colspan="7"><strong><?php echo htmlspecialchars($currentGroup); ?></strong></td>
+                                    </tr>
+                                <?php endif; ?>
                                     <tr>
                                         <td><?php echo $item['group']; ?></td>
                                         <td><?php echo $item['no']; ?></td>
@@ -319,6 +382,11 @@ $checklist = [
                                                 value="<?php echo isset($checklist_data[$index]) ? htmlspecialchars($checklist_data[$index]['keterangan'] ?? '') : ''; ?>">
                                         </td>
                                     </tr>
+                                    <?php if ($item['is_last_in_group']): ?>
+                                    <tr class="table-light">
+                                        <td colspan="7"></td>
+                                    </tr>
+                                    <?php endif; ?>
                                 <?php endforeach; ?>
                             </tbody>
                         </table>
