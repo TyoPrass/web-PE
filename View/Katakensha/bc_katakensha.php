@@ -174,13 +174,13 @@ include 'action.php';
             </div>
             <?php else: ?>
             <div class="alert alert-danger">Checklist not found.</div>
-            <a href="view.php" class="btn btn-secondary">Back to List</a>
+            <a href="katakensha.php" class="btn btn-secondary">Back to List</a>
             <?php endif; ?>
 
         <?php else: ?>
             <!-- Insert/Edit Form -->
             <div class="mb-3">
-                <a href="view.php" class="btn btn-secondary">Back to List</a>
+                <a href="action.php" class="btn btn-secondary">Back to List</a>
             </div>
 
             <div class="card">

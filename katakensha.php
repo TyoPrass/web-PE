@@ -171,7 +171,7 @@ for ($i = 0; $i < count($checklist); $i++) {
             <?php unset($_SESSION['message']); unset($_SESSION['message_type']); ?>
         <?php endif; ?>
 
-        <?php if (!isset($_GET['insert']) && !isset($_GET['edit'])): ?>
+        <?php if (!isset($_GET['insert']) && !isset($_GET['edit']) && !isset($_GET['view'])): ?>
             <!-- Main List View -->
             <div class="mb-3">
                 <a href="katakensha.php?insert" class="btn btn-success">Add New Checklist</a>
@@ -179,8 +179,9 @@ for ($i = 0; $i < count($checklist); $i++) {
 
             <!-- Read -->
             <h3>Checklist Data</h3>
+            
             <div class="table-responsive">
-                <table id="basic-datatable" class="table table-striped dt-responsive nowrap w-100">
+                <table id="dinamis-datatable" class="table table-striped dt-responsive nowrap w-100">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -229,66 +230,135 @@ for ($i = 0; $i < count($checklist); $i++) {
             $stmt->close();
 
             if ($viewData):
-                $checklist_data = json_decode($viewData['checklist_data'], true);
+            $checklist_data = json_decode($viewData['checklist_data'], true);
             ?>
-                <div class="mb-3">
-                    <a href="katakensha.php" class="btn btn-secondary">Back to List</a>
-                </div>
-
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <h3>Checklist Details</h3>
-                    </div>
-                    <div class="card-body">
-                        <div class="row mb-3">
-                            <div class="col-md-3"><strong>Part No:</strong></div>
-                            <div class="col-md-9"><?php echo htmlspecialchars($viewData['part_no']); ?></div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-md-3"><strong>Part Name:</strong></div>
-                            <div class="col-md-9"><?php echo htmlspecialchars($viewData['part_name']); ?></div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-md-3"><strong>Date:</strong></div>
-                            <div class="col-md-9"><?php echo htmlspecialchars($viewData['date']); ?></div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-md-3"><strong>Process:</strong></div>
-                            <div class="col-md-9"><?php echo htmlspecialchars($viewData['process']); ?></div>
-                        </div>
-                    </div>
-                </div>
-
-                <h4>Checklist Details</h4>
-                <table class="table table-bordered table-centered mb-0">
-                    <thead>
-                        <tr>
-                            <th>Group</th>
-                            <th>No</th>
-                            <th>Point Check</th>
-                            <th>P1</th>
-                            <th>P2</th>
-                            <th>P3</th>
-                            <th>Keterangan</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($checklist as $index => $item): ?>
-                            <tr>
-                                <td><?php echo $item['group']; ?></td>
-                                <td><?php echo $item['no']; ?></td>
-                                <td><?php echo $item['point']; ?></td>
-                                <td><?php echo htmlspecialchars($checklist_data[$index]['P1'] ?? ''); ?></td>
-                                <td><?php echo htmlspecialchars($checklist_data[$index]['P2'] ?? ''); ?></td>
-                                <td><?php echo htmlspecialchars($checklist_data[$index]['P3'] ?? ''); ?></td>
-                                <td><?php echo htmlspecialchars($checklist_data[$index]['keterangan'] ?? ''); ?></td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            <?php else: ?>
-                <div class="alert alert-danger">Checklist not found.</div>
+            <div class="mb-3">
                 <a href="katakensha.php" class="btn btn-secondary">Back to List</a>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3>View Checklist</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Part No</label>
+                            <p class="form-control-static"><?php echo htmlspecialchars($viewData['part_no']); ?></p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Part Name</label>
+                            <p class="form-control-static"><?php echo htmlspecialchars($viewData['part_name']); ?></p>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Date</label>
+                            <p class="form-control-static"><?php echo htmlspecialchars($viewData['date']); ?></p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Process</label>
+                            <p class="form-control-static"><?php echo htmlspecialchars($viewData['process']); ?></p>
+                        </div>
+                    </div>
+
+                    <ul class="nav nav-tabs mb-3">
+                        <li class="nav-item">
+                            <a href="#checklist-data" data-bs-toggle="tab" aria-expanded="true" class="nav-link active">
+                                <i class="mdi mdi-clipboard-check d-md-none d-block"></i>
+                                <span class="d-none d-md-block">Checklist Data</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#standard-items" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+                                <i class="mdi mdi-format-list-bulleted d-md-none d-block"></i>
+                                <span class="d-none d-md-block">Standard Items</span>
+                            </a>
+                        </li>
+                    </ul>
+                    
+                    <div class="tab-content">
+                        <div class="tab-pane show active" id="checklist-data">
+                            <table class="table table-bordered table-centered mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Group</th>
+                                        <th>No</th>
+                                        <th>Point Check</th>
+                                        <th>P1</th>
+                                        <th>P2</th>
+                                        <th>P3</th>
+                                        <th>Keterangan</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <?php 
+                                $currentGroup = '';
+                                
+                                foreach ($checklist as $index => $item): 
+                                    // Add group header row if new group starts
+                                    if ($currentGroup != $item['group']):
+                                    $currentGroup = $item['group'];
+                                ?>
+                                    <tr class="table-secondary">
+                                    <td colspan="7"><strong><?php echo htmlspecialchars($currentGroup); ?></strong></td>
+                                    </tr>
+                                <?php endif; ?>
+                                    <tr>
+                                    <td><?php echo $item['group']; ?></td>
+                                    <td><?php echo $item['no']; ?></td>
+                                    <td><?php echo $item['point']; ?></td>
+                                    <td><?php echo htmlspecialchars($checklist_data[$index]['P1'] ?? ''); ?></td>
+                                    <td><?php echo htmlspecialchars($checklist_data[$index]['P2'] ?? ''); ?></td>
+                                    <td><?php echo htmlspecialchars($checklist_data[$index]['P3'] ?? ''); ?></td>
+                                    <td><?php echo htmlspecialchars($checklist_data[$index]['keterangan'] ?? ''); ?></td>
+                                    </tr>
+                                    <?php if ($item['is_last_in_group']): ?>
+                                    <tr class="table-light">
+                                    <td colspan="7"></td>
+                                    </tr>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane" id="standard-items">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Group</th>
+                                            <th>No</th>
+                                            <th>Point Check</th>
+                                            <th>Description</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php 
+                                        $currentGroup = '';
+                                        foreach ($checklist as $item): 
+                                            // Add group header row if new group starts
+                                            if ($currentGroup != $item['group']):
+                                                $currentGroup = $item['group'];
+                                            endif; 
+                                        ?>
+                                            <tr>
+                                                <td><?php echo $item['group']; ?></td>
+                                                <td><?php echo $item['no']; ?></td>
+                                                <td><?php echo $item['point']; ?></td>
+                                                <td>Standard checklist item</td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <?php else: ?>
+            <div class="alert alert-danger">Checklist not found.</div>
+            <a href="katakensha.php" class="btn btn-secondary">Back to List</a>
             <?php endif; ?>
 
         <?php else: ?>
@@ -328,67 +398,121 @@ for ($i = 0; $i < count($checklist); $i++) {
                             </div>
                         </div>
 
-                        <h4>Checklist</h4>
-                        <table class="table table-bordered table-centered mb-0">
-                            <thead>
-                                <tr>
-                                    <th>Group</th>
-                                    <th>No</th>
-                                    <th>Point Check</th>
-                                    <th>P1</th>
-                                    <th>P2</th>
-                                    <th>P3</th>
-                                    <th>Keterangan</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php 
-                                $checklist_data = isset($editData) ? json_decode($editData['checklist_data'], true) : [];
-                                $currentGroup = '';
-                                
-                                foreach ($checklist as $index => $item): 
-                                    // Add group header row if new group starts
-                                    if ($currentGroup != $item['group']):
-                                        $currentGroup = $item['group'];
-                                ?>
-                                    <tr class="table-secondary">
-                                        <td colspan="7"><strong><?php echo htmlspecialchars($currentGroup); ?></strong></td>
-                                    </tr>
-                                <?php endif; ?>
-                                    <tr>
-                                        <td><?php echo $item['group']; ?></td>
-                                        <td><?php echo $item['no']; ?></td>
-                                        <td><?php echo $item['point']; ?></td>
-                                        <td>
-                                            <input type="text" name="checklist[<?php echo $index; ?>][P1]" 
-                                                class="form-control" 
-                                                value="<?php echo isset($checklist_data[$index]) ? htmlspecialchars($checklist_data[$index]['P1'] ?? '') : ''; ?>">
-                                        </td>
-                                        <td>
-                                            <input type="text" name="checklist[<?php echo $index; ?>][P2]" 
-                                                class="form-control"
-                                                value="<?php echo isset($checklist_data[$index]) ? htmlspecialchars($checklist_data[$index]['P2'] ?? '') : ''; ?>">
-                                        </td>
-                                        <td>
-                                            <input type="text" name="checklist[<?php echo $index; ?>][P3]" 
-                                                class="form-control"
-                                                value="<?php echo isset($checklist_data[$index]) ? htmlspecialchars($checklist_data[$index]['P3'] ?? '') : ''; ?>">
-                                        </td>
-                                        <td>
-                                            <input type="text" name="checklist[<?php echo $index; ?>][keterangan]" 
-                                                class="form-control"
-                                                value="<?php echo isset($checklist_data[$index]) ? htmlspecialchars($checklist_data[$index]['keterangan'] ?? '') : ''; ?>">
-                                        </td>
-                                    </tr>
-                                    <?php if ($item['is_last_in_group']): ?>
-                                    <tr class="table-light">
-                                        <td colspan="7"></td>
-                                    </tr>
-                                    <?php endif; ?>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
-
+                        <ul class="nav nav-tabs mb-3">
+                            <li class="nav-item">
+                                <a href="#form-data" data-bs-toggle="tab" aria-expanded="true" class="nav-link active">
+                                    <i class="mdi mdi-pencil-box d-md-none d-block"></i>
+                                    <span class="d-none d-md-block">Dinamis</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#reference-data" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+                                    <i class="mdi mdi-information-outline d-md-none d-block"></i>
+                                    <span class="d-none d-md-block">Statis</span>
+                                </a>
+                            </li>
+                        </ul>
+                        
+                        <div class="tab-content">
+                            <div class="tab-pane show active" id="form-data">
+                                <h4>Checklist</h4>
+                                <table class="table table-bordered table-centered mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Group</th>
+                                            <th>No</th>
+                                            <th>Point Check</th>
+                                            <th>P1</th>
+                                            <th>P2</th>
+                                            <th>P3</th>
+                                            <th>Keterangan</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php 
+                                        $checklist_data = isset($editData) ? json_decode($editData['checklist_data'], true) : [];
+                                        $currentGroup = '';
+                                        
+                                        foreach ($checklist as $index => $item): 
+                                            // Add group header row if new group starts
+                                            if ($currentGroup != $item['group']):
+                                                $currentGroup = $item['group'];
+                                        ?>
+                                            <tr class="table-secondary">
+                                                <td colspan="7"><strong><?php echo htmlspecialchars($currentGroup); ?></strong></td>
+                                            </tr>
+                                        <?php endif; ?>
+                                            <tr>
+                                                <td><?php echo $item['group']; ?></td>
+                                                <td><?php echo $item['no']; ?></td>
+                                                <td><?php echo $item['point']; ?></td>
+                                                <td>
+                                                    <input type="text" name="checklist[<?php echo $index; ?>][P1]" 
+                                                        class="form-control" 
+                                                        value="<?php echo isset($checklist_data[$index]) ? htmlspecialchars($checklist_data[$index]['P1'] ?? '') : ''; ?>">
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="checklist[<?php echo $index; ?>][P2]" 
+                                                        class="form-control"
+                                                        value="<?php echo isset($checklist_data[$index]) ? htmlspecialchars($checklist_data[$index]['P2'] ?? '') : ''; ?>">
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="checklist[<?php echo $index; ?>][P3]" 
+                                                        class="form-control"
+                                                        value="<?php echo isset($checklist_data[$index]) ? htmlspecialchars($checklist_data[$index]['P3'] ?? '') : ''; ?>">
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="checklist[<?php echo $index; ?>][keterangan]" 
+                                                        class="form-control"
+                                                        value="<?php echo isset($checklist_data[$index]) ? htmlspecialchars($checklist_data[$index]['keterangan'] ?? '') : ''; ?>">
+                                                </td>
+                                            </tr>
+                                            <?php if ($item['is_last_in_group']): ?>
+                                            <tr class="table-light">
+                                                <td colspan="7"></td>
+                                            </tr>
+                                            <?php endif; ?>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane" id="reference-data">
+                                <h4>Standard Checklist Items</h4>
+                                <div class="alert alert-info">
+                                    <p>This tab shows reference information for each checklist item.</p>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Group</th>
+                                                <th>No</th>
+                                                <th>Point Check</th>
+                                                <th>Description</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php 
+                                            $currentGroup = '';
+                                            foreach ($checklist as $item): 
+                                                // Add group header row if new group starts
+                                                if ($currentGroup != $item['group']):
+                                                    $currentGroup = $item['group'];
+                                                endif; 
+                                            ?>
+                                                <tr>
+                                                    <td><?php echo $item['group']; ?></td>
+                                                    <td><?php echo $item['no']; ?></td>
+                                                    <td><?php echo $item['point']; ?></td>
+                                                    <td>Standard checklist item</td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        
                         <div class="mt-3">
                             <button type="submit" class="btn btn-primary"><?php echo isset($_GET['edit']) ? 'Update' : 'Save'; ?> Checklist</button>
                         </div>
@@ -399,11 +523,29 @@ for ($i = 0; $i < count($checklist); $i++) {
     </div>
 
     <!-- Datatables js -->
+<!-- Add jQuery if not already included -->
+<script src="assets/js/vendor/jquery.min.js"></script>
+<!-- Bootstrap Bundle with Popper -->
+<script src="assets/js/vendor/bootstrap.bundle.min.js"></script>
+<!-- Datatables js -->
 <script src="assets/js/vendor/jquery.dataTables.min.js"></script>
 <script src="assets/js/vendor/dataTables.bootstrap5.js"></script>
 <script src="assets/js/vendor/dataTables.responsive.min.js"></script>
 <script src="assets/js/vendor/responsive.bootstrap5.min.js"></script>
 <!-- Datatable Init js -->
 <script src="assets/js/pages/demo.datatable-init.js"></script>
+<script>
+    // Initialize tabs
+    document.addEventListener('DOMContentLoaded', function() {
+        var triggerTabList = [].slice.call(document.querySelectorAll('a[data-bs-toggle="tab"]'));
+        triggerTabList.forEach(function(triggerEl) {
+            triggerEl.addEventListener('click', function(event) {
+                event.preventDefault();
+                var tabTrigger = new bootstrap.Tab(triggerEl);
+                tabTrigger.show();
+            });
+        });
+    });
+</script>
 </body>
 </html>
