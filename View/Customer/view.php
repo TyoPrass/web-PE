@@ -85,7 +85,7 @@ include('customer_action.php');
                                         <a href="#">Customer</a>
                                     </li>
                                     <li>
-                                        <a href="../Project/view.php">Project</a>
+                                        <a href="../Project/view.php">Part</a>
                                     </li>
                                     <li>
                                         <a href="../Proses/view.php">Proses</a>

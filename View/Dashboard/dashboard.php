@@ -121,7 +121,7 @@ if (!isset($_SESSION['username'])) {
                                 <span class="menu-arrow"></span>
                             </a>
                             <div class="collapse" id="sidebarTasks">
-                                <ul class="#">
+                                <ul class="side-nav-second-level">
                                     <li>
                                         <a href="#">List</a>
                                     </li>
@@ -134,7 +134,6 @@ if (!isset($_SESSION['username'])) {
                                 </ul>
                             </div>
                         </li>
-
                         <!-- end of list -->
                     </ul>
 
