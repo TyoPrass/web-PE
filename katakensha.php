@@ -398,25 +398,27 @@ for ($i = 0; $i < count($checklist); $i++) {
                             </div>
                         </div>
 
-                        <ul class="nav nav-tabs mb-3">
-                            <li class="nav-item">
-                                <a href="#form-data" data-bs-toggle="tab" aria-expanded="true" class="nav-link active">
-                                    <i class="mdi mdi-pencil-box d-md-none d-block"></i>
+                        <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="dinamis-tab" data-bs-toggle="tab" data-bs-target="#dinamis" type="button" role="tab" aria-controls="dinamis" aria-selected="true">
                                     <span class="d-none d-md-block">Dinamis</span>
-                                </a>
+                                    <i class="mdi mdi-pencil-box d-md-none d-block"></i>
+                                </button>
                             </li>
-                            <li class="nav-item">
-                                <a href="#reference-data" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
-                                    <i class="mdi mdi-information-outline d-md-none d-block"></i>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="statis-tab" data-bs-toggle="tab" data-bs-target="#statis" type="button" role="tab" aria-controls="statis" aria-selected="false">
                                     <span class="d-none d-md-block">Statis</span>
-                                </a>
+                                    <i class="mdi mdi-information-outline d-md-none d-block"></i>
+                                </button>
                             </li>
                         </ul>
                         
-                        <div class="tab-content">
-                            <div class="tab-pane show active" id="form-data">
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="dinamis" role="tabpanel" aria-labelledby="dinamis-tab">
+                                <!-- Dinamis content -->
                                 <h4>Checklist</h4>
                                 <table class="table table-bordered table-centered mb-0">
+                                    <!-- Your existing dinamis table code -->
                                     <thead>
                                         <tr>
                                             <th>Group</th>
@@ -434,7 +436,6 @@ for ($i = 0; $i < count($checklist); $i++) {
                                         $currentGroup = '';
                                         
                                         foreach ($checklist as $index => $item): 
-                                            // Add group header row if new group starts
                                             if ($currentGroup != $item['group']):
                                                 $currentGroup = $item['group'];
                                         ?>
@@ -476,7 +477,8 @@ for ($i = 0; $i < count($checklist); $i++) {
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="tab-pane" id="reference-data">
+                            <div class="tab-pane fade" id="statis" role="tabpanel" aria-labelledby="statis-tab">
+                                <!-- Statis content -->
                                 <h4>Standard Checklist Items</h4>
                                 <div class="alert alert-info">
                                     <p>This tab shows reference information for each checklist item.</p>
@@ -494,12 +496,14 @@ for ($i = 0; $i < count($checklist); $i++) {
                                         <tbody>
                                             <?php 
                                             $currentGroup = '';
-                                            foreach ($checklist as $item): 
-                                                // Add group header row if new group starts
+                                            foreach ($checklist as $index => $item): 
                                                 if ($currentGroup != $item['group']):
                                                     $currentGroup = $item['group'];
-                                                endif; 
                                             ?>
+                                                <tr class="table-secondary">
+                                                    <td colspan="4"><strong><?php echo htmlspecialchars($currentGroup); ?></strong></td>
+                                                </tr>
+                                            <?php endif; ?>
                                                 <tr>
                                                     <td><?php echo $item['group']; ?></td>
                                                     <td><?php echo $item['no']; ?></td>
@@ -507,6 +511,7 @@ for ($i = 0; $i < count($checklist); $i++) {
                                                     <td>Standard checklist item</td>
                                                 </tr>
                                             <?php endforeach; ?>
+                                        </tbody>
                                         </tbody>
                                     </table>
                                 </div>
@@ -534,18 +539,20 @@ for ($i = 0; $i < count($checklist); $i++) {
 <script src="assets/js/vendor/responsive.bootstrap5.min.js"></script>
 <!-- Datatable Init js -->
 <script src="assets/js/pages/demo.datatable-init.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 <script>
-    // Initialize tabs
-    document.addEventListener('DOMContentLoaded', function() {
-        var triggerTabList = [].slice.call(document.querySelectorAll('a[data-bs-toggle="tab"]'));
-        triggerTabList.forEach(function(triggerEl) {
-            triggerEl.addEventListener('click', function(event) {
-                event.preventDefault();
-                var tabTrigger = new bootstrap.Tab(triggerEl);
-                tabTrigger.show();
-            });
-        });
-    });
+document.addEventListener("DOMContentLoaded", function() {
+    var triggerTabList = [].slice.call(document.querySelectorAll('#myTab button'))
+    triggerTabList.forEach(function(triggerEl) {
+        var tabTrigger = new bootstrap.Tab(triggerEl)
+        triggerEl.addEventListener('click', function(event) {
+            event.preventDefault()
+            tabTrigger.show()
+        })
+    })
+})
 </script>
+
 </body>
 </html>

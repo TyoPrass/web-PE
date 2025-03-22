@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['message_type'] = 'danger';
     }
     $stmt->close();
-    header('Location: katakensha.php');
+    header('Location: view.php');
     exit();
 }
 
@@ -51,7 +51,7 @@ if (isset($_GET['delete'])) {
         $_SESSION['message_type'] = 'danger';
     }
     $stmt->close();
-    header('Location: katakensha.php');
+    header('Location: view.php');
     exit();
 }
 
