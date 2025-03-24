@@ -203,6 +203,8 @@ $checklist2 = [
     ['group' => 'K-Cover', 'no' => '2', 'point' => 'Cover spring CAM sudah terpasang'],
 
 
+
+
     // Additional groups can be added here...
 ];
 
@@ -234,6 +236,50 @@ $checklist3 = [
     ['group' => 'O-Pilot Pin', 'no' => '1', 'point' => 'Posisi Pillot Pin sudah satu sumbu ( Center )'],
     ['group' => 'O-Pilot Pin', 'no' => '2', 'point' => 'Posisi masuk Pillot Pin sudah standart'],
 
+    // P-Pin Ejector
+    ['group' => 'P-Pin Ejector', 'no' => '1', 'point' => 'Penempatan Ejector Pin sudah pada posisi yang benar'],
+    ['group' => 'P-Pin Ejector', 'no' => '2', 'point' => 'Jumlah Ejector PIN sudah sesuai kebutuhan'],
+
+    // Q-Dandori
+    ['group' => 'Q-Dandori', 'no' => '1', 'point' => 'Pada Die Dipasang stopper Dandori'],
+
+    // R-Cam
+    ['group' => 'R-Cam', 'no' => '1', 'point' => 'Slide Cam sudah sesuai spesifikasi'],
+    ['group' => 'R-Cam', 'no' => '2', 'point' => 'Cam sudah dibaut dan di Pin'],
+    ['group' => 'R-Cam', 'no' => '3', 'point' => 'Stroke Cam sesuai dengan kebutuhan'],
+
+    // S-Cut
+    ['group' => 'S-Cut', 'no' => '1', 'point' => 'Prinsip kerja Cut / Blank sudah seperti gunting'],
+
+    // T-Punch
+    ['group' => 'T-Punch', 'no' => '1', 'point' => 'Bentuk Punch sudah standart kontruksi'],
+    ['group' => 'T-Punch', 'no' => '2', 'point' => 'Pada penempatan Punch dipasang Back Up'],
+    ['group' => 'T-Punch', 'no' => '3', 'point' => 'Jarak antara Baut dengan Blank Line sudah aman'],
+    ['group' => 'T-Punch', 'no' => '4', 'point' => 'Penempatan Insert, Back Up sudah siku benar'],
+    ['group' => 'T-Punch', 'no' => '5', 'point' => 'Tebal Back Up sudah standar ( 70% )'],
+
+    // U-Ringstroke
+    ['group' => 'U', 'no' => '1', 'point' => 'Ringstroke sudah dipasang'],
+    ['group' => 'U', 'no' => '2', 'point' => 'Tinggi Ringstroke sesuai kebutuhan'],
+    ['group' => 'U', 'no' => '3', 'point' => 'Ringstroke sudah dibaut ke Guide Post'],
+    ['group' => 'U', 'no' => '4', 'point' => 'Ringstroke sudah dipainting kuning'],
+
+    // V-End Block
+    ['group' => 'V-End Block', 'no' => '1', 'point' => 'End blok sudah dipasang'],
+    ['group' => 'V-End Block', 'no' => '2', 'point' => 'Tinggi End blok sesuai kebutuhan'],
+    ['group' => 'V-End Block', 'no' => '3', 'point' => 'End blok sudah dibaut'],
+    ['group' => 'V-End Block', 'no' => '4', 'point' => 'End blok sudah dipainting kuning'],
+
+    // W-Safety
+    ['group' => 'W-Safety', 'no' => '1', 'point' => 'Safety stroke sudah terpasang'],
+    ['group' => 'W-Safety', 'no' => '2', 'point' => 'Tinggi safety sudah sesuai kebutuhan'],
+    ['group' => 'W-Safety', 'no' => '3', 'point' => 'Safety stroke sudah di ikat'],
+    ['group' => 'W-Safety', 'no' => '4', 'point' => 'Safety stroke sudah dipainting Merah'],
+    ['group' => 'W-Safety', 'no' => '5', 'point' => 'Safety sensor sudah terpasang'],
+
+    // X-Painting
+    ['group' => 'X-Painting', 'no' => '1', 'point' => 'Dies sudah dipainting'],
+    ['group' => 'X-Painting', 'no' => '2', 'point' => 'Painting dies sesuai permintaan Customer'],
 
     // Additional groups can be added here...
 ];
