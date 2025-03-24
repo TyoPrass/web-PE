@@ -206,48 +206,38 @@ $checklist2 = [
     // Additional groups can be added here...
 ];
 
-// Define checklist3 structure
+// CheckList 3
 $checklist3 = [
-    // A-Inspection
-    ['group' => 'A-Inspection', 'no' => '1', 'point' => 'Visual Inspection'],
-    ['group' => 'A-Inspection', 'no' => '2', 'point' => 'Dimensional Check'],
-    ['group' => 'A-Inspection', 'no' => '3', 'point' => 'Surface Quality'],
-    ['group' => 'A-Inspection', 'no' => '4', 'point' => 'Material Verification'],
-    ['group' => 'A-Inspection', 'no' => '5', 'point' => 'Welding Quality'],
+ 
+    // L-Chamfer
+    ['group' => 'L-Chamfer', 'no' => '1', 'point' => 'Upper plate sudah di Chamfer'],
+    ['group' => 'L-Chamfer', 'no' => '2', 'point' => 'Lower plate sudah di Chamfer'],
+    ['group' => 'L-Chamfer', 'no' => '3', 'point' => 'Pada semua sudut sudah di Chamfer'],
+    ['group' => 'L-Chamfer', 'no' => '4', 'point' => 'Semua hole baut & PIN sudah di Chamfer'],
 
-    // B-Assembly
-    ['group' => 'B-Assembly', 'no' => '1', 'point' => 'Component Fit'],
-    ['group' => 'B-Assembly', 'no' => '2', 'point' => 'Bolt Tightening'],
-    ['group' => 'B-Assembly', 'no' => '3', 'point' => 'Alignment Check'],
-    ['group' => 'B-Assembly', 'no' => '4', 'point' => 'Seal Integrity'],
-    ['group' => 'B-Assembly', 'no' => '5', 'point' => 'Final Assembly Check'],
+    // M-Hook
+    ['group' => 'M-Hook', 'no' => '1', 'point' => 'Hook sudah dibaut'],
+    ['group' => 'M-Hook', 'no' => '2', 'point' => 'Hook sudah diwelding'],
+    ['group' => 'M-Hook', 'no' => '3', 'point' => 'Hook ditambah safety behel'],
 
-    // C-Testing
-    ['group' => 'C-Testing', 'no' => '1', 'point' => 'Load Test'],
-    ['group' => 'C-Testing', 'no' => '2', 'point' => 'Pressure Test'],
-    ['group' => 'C-Testing', 'no' => '3', 'point' => 'Functionality Test'],
-    ['group' => 'C-Testing', 'no' => '4', 'point' => 'Safety Test'],
-    ['group' => 'C-Testing', 'no' => '5', 'point' => 'Performance Test'],
+    // N-Shutter
+    ['group' => 'N-Shutter', 'no' => '1', 'point' => 'Scrap shutter sudah ada & dipasang'],
+    ['group' => 'N-Shutter', 'no' => '2', 'point' => 'Kemiringan shutter membuat scrap mudah jatuh'],
+    ['group' => 'N-Shutter', 'no' => '3', 'point' => 'Pemasangan shutter sudah benar'],
+    ['group' => 'N-Shutter', 'no' => '4', 'point' => 'Check apakah scrap mudah jatuh ( pada bagian dlm Die )'],
+    ['group' => 'N-Shutter', 'no' => '5', 'point' => 'Check shutter tidak mengganggu operator dalam bekerja'],
+    ['group' => 'N-Shutter', 'no' => '6', 'point' => 'Scrap Cam Pie dapat jatuh dengan mudah'],
+    ['group' => 'N-Shutter', 'no' => '7', 'point' => 'Box scrap sudah ada'],
+    ['group' => 'N-Shutter', 'no' => '8', 'point' => 'Arah jatuh scrap dengan arah jatuh Part berlainan'],
 
-    // D-Packaging
-    ['group' => 'D-Packaging', 'no' => '1', 'point' => 'Packaging Material'],
-    ['group' => 'D-Packaging', 'no' => '2', 'point' => 'Labeling'],
-    ['group' => 'D-Packaging', 'no' => '3', 'point' => 'Sealing'],
-    ['group' => 'D-Packaging', 'no' => '4', 'point' => 'Handling Instructions'],
-    ['group' => 'D-Packaging', 'no' => '5', 'point' => 'Final Inspection'],
+    // O-Pilot Pin
+    ['group' => 'O-Pilot Pin', 'no' => '1', 'point' => 'Posisi Pillot Pin sudah satu sumbu ( Center )'],
+    ['group' => 'O-Pilot Pin', 'no' => '2', 'point' => 'Posisi masuk Pillot Pin sudah standart'],
+
 
     // Additional groups can be added here...
 ];
 
-// Add an attribute to identify the last item in each group for checklist3
-$currentGroup = '';
-for ($i = 0; $i < count($checklist3); $i++) {
-    if ($i < count($checklist3) - 1 && $checklist3[$i]['group'] !== $checklist3[$i + 1]['group']) {
-        $checklist3[$i]['is_last_in_group'] = true;
-    } else {
-        $checklist3[$i]['is_last_in_group'] = false;
-    }
-}
 
 // Add an attribute to identify the last item in each group
 $currentGroup = '';
@@ -616,11 +606,14 @@ for ($i = 0; $i < count($checklist); $i++) {
                                     </thead>
                                     <tbody>
                                         <?php 
-                                        $checklist_data2 = isset($editData) ? json_decode($editData['checklist_data'], true) : [];
+                                        $checklist_data_combined = isset($editData) ? json_decode($editData['checklist_data'], true) : [];
                                         $currentGroup = '';
-                                        $startIndex = count($checklist); // Start index for checklist2 after the main checklist
+                                        $startIndex = count($checklist); // Start index for checklist2 and checklist3 after the main checklist
                                         
-                                        foreach ($checklist2 as $i => $item): 
+                                        // Combine checklist2 and checklist3
+                                        $combinedChecklists = array_merge($checklist2, $checklist3);
+
+                                        foreach ($combinedChecklists as $i => $item): 
                                             $index = $startIndex + $i; // Calculate actual index in the combined data
                                             if ($currentGroup != $item['group']):
                                                 $currentGroup = $item['group'];
@@ -636,22 +629,22 @@ for ($i = 0; $i < count($checklist); $i++) {
                                                 <td>
                                                     <input type="text" name="checklist[<?php echo $index; ?>][P1]" 
                                                         class="form-control" 
-                                                        value="<?php echo isset($checklist_data2[$index]) ? htmlspecialchars($checklist_data2[$index]['P1'] ?? '') : ''; ?>">
+                                                        value="<?php echo isset($checklist_data_combined[$index]) ? htmlspecialchars($checklist_data_combined[$index]['P1'] ?? '') : ''; ?>">
                                                 </td>
                                                 <td>
                                                     <input type="text" name="checklist[<?php echo $index; ?>][P2]" 
                                                         class="form-control"
-                                                        value="<?php echo isset($checklist_data2[$index]) ? htmlspecialchars($checklist_data2[$index]['P2'] ?? '') : ''; ?>">
+                                                        value="<?php echo isset($checklist_data_combined[$index]) ? htmlspecialchars($checklist_data_combined[$index]['P2'] ?? '') : ''; ?>">
                                                 </td>
                                                 <td>
                                                     <input type="text" name="checklist[<?php echo $index; ?>][P3]" 
                                                         class="form-control"
-                                                        value="<?php echo isset($checklist_data2[$index]) ? htmlspecialchars($checklist_data2[$index]['P3'] ?? '') : ''; ?>">
+                                                        value="<?php echo isset($checklist_data_combined[$index]) ? htmlspecialchars($checklist_data_combined[$index]['P3'] ?? '') : ''; ?>">
                                                 </td>
                                                 <td>
                                                     <input type="text" name="checklist[<?php echo $index; ?>][keterangan]" 
                                                         class="form-control"
-                                                        value="<?php echo isset($checklist_data2[$index]) ? htmlspecialchars($checklist_data2[$index]['keterangan'] ?? '') : ''; ?>">
+                                                        value="<?php echo isset($checklist_data_combined[$index]) ? htmlspecialchars($checklist_data_combined[$index]['keterangan'] ?? '') : ''; ?>">
                                                 </td>
                                             </tr>
                                         <?php endforeach; ?>
