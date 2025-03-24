@@ -131,6 +131,32 @@ $checklist = [
     ['group' => 'H-Documentation', 'no' => '5', 'point' => 'Storage Location']
 ];
 
+// Define checklist2 structure
+$checklist2 = [
+    // A-Indicate Die
+    ['group' => 'A-Indicate Die', 'no' => '1', 'point' => 'Die Material'],
+    ['group' => 'A-Indicate Die', 'no' => '2', 'point' => 'Die Hardness'],
+    ['group' => 'A-Indicate Die', 'no' => '3', 'point' => 'Die Coating'],
+    ['group' => 'A-Indicate Die', 'no' => '4', 'point' => 'Die Dimensions'],
+    ['group' => 'A-Indicate Die', 'no' => '5', 'point' => 'Die Weight'],
+
+    // B-Material
+    ['group' => 'B-Material', 'no' => '1', 'point' => 'Material Supplier'],
+    ['group' => 'B-Material', 'no' => '2', 'point' => 'Material Grade'],
+    ['group' => 'B-Material', 'no' => '3', 'point' => 'Material Certification'],
+    ['group' => 'B-Material', 'no' => '4', 'point' => 'Material Storage'],
+    ['group' => 'B-Material', 'no' => '5', 'point' => 'Material Handling'],
+
+    // C-Die Condition
+    ['group' => 'C-Die Condition', 'no' => '1', 'point' => 'Die Temperature'],
+    ['group' => 'C-Die Condition', 'no' => '2', 'point' => 'Die Pressure'],
+    ['group' => 'C-Die Condition', 'no' => '3', 'point' => 'Die Alignment'],
+    ['group' => 'C-Die Condition', 'no' => '4', 'point' => 'Die Surface Finish'],
+    ['group' => 'C-Die Condition', 'no' => '5', 'point' => 'Die Cleanliness'],
+
+    // Additional groups can be added here...
+];
+
 // Add an attribute to identify the last item in each group
 $currentGroup = '';
 for ($i = 0; $i < count($checklist); $i++) {
@@ -140,6 +166,10 @@ for ($i = 0; $i < count($checklist); $i++) {
         $checklist[$i]['is_last_in_group'] = false;
     }
 }
+
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -496,7 +526,7 @@ for ($i = 0; $i < count($checklist); $i++) {
                                         <tbody>
                                             <?php 
                                             $currentGroup = '';
-                                            foreach ($checklist as $index => $item): 
+                                            foreach ($checklist2 as $index => $item): 
                                                 if ($currentGroup != $item['group']):
                                                     $currentGroup = $item['group'];
                                             ?>
