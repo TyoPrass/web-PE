@@ -134,28 +134,120 @@ $checklist = [
 // Define checklist2 structure
 $checklist2 = [
     // A-Indicate Die
-    ['group' => 'A-Indicate Die', 'no' => '1', 'point' => 'Die Material'],
-    ['group' => 'A-Indicate Die', 'no' => '2', 'point' => 'Die Hardness'],
-    ['group' => 'A-Indicate Die', 'no' => '3', 'point' => 'Die Coating'],
-    ['group' => 'A-Indicate Die', 'no' => '4', 'point' => 'Die Dimensions'],
-    ['group' => 'A-Indicate Die', 'no' => '5', 'point' => 'Die Weight'],
+    ['group' => 'A-Indicate Die', 'no' => '1', 'point' => 'Part No / Name'],
+    ['group' => 'A-Indicate Die', 'no' => '2', 'point' => 'Process No / Name'],
+    ['group' => 'A-Indicate Die', 'no' => '3', 'point' => 'Dies Code No'],
+    ['group' => 'A-Indicate Die', 'no' => '4', 'point' => 'Die Maker'],
+    ['group' => 'A-Indicate Die', 'no' => '5', 'point' => 'Tahun Maker'],
+    ['group' => 'A-Indicate Die', 'no' => '6', 'point' => 'Tanda F'],
+    ['group' => 'A-Indicate Die', 'no' => '7', 'point' => 'Tanda Insert'],
+    ['group' => 'A-Indicate Die', 'no' => '8', 'point' => 'Posisi Insert'],
+    ['group' => 'A-Indicate Die', 'no' => '9', 'point' => 'Die Height'],
+    ['group' => 'A-Indicate Die', 'no' => '10', 'point' => 'Cushion Posision'],
+    ['group' => 'A-Indicate Die', 'no' => '11', 'point' => 'Tinggi Cushion'],
+    ['group' => 'A-Indicate Die', 'no' => '12', 'point' => 'Presure Cushion'],
 
-    // B-Material
-    ['group' => 'B-Material', 'no' => '1', 'point' => 'Material Supplier'],
-    ['group' => 'B-Material', 'no' => '2', 'point' => 'Material Grade'],
-    ['group' => 'B-Material', 'no' => '3', 'point' => 'Material Certification'],
-    ['group' => 'B-Material', 'no' => '4', 'point' => 'Material Storage'],
-    ['group' => 'B-Material', 'no' => '5', 'point' => 'Material Handling'],
+    // B-Stopper
+    ['group' => 'Stopper', 'no' => '1', 'point' => 'Apakah stamping dimulai setelah pad menekan panel'],
+    ['group' => 'Stopper', 'no' => '2', 'point' => 'Posisi Material'],
+    ['group' => 'Stopper', 'no' => '3', 'point' => 'Dowel Pin Stopper'],
 
-    // C-Die Condition
-    ['group' => 'C-Die Condition', 'no' => '1', 'point' => 'Die Temperature'],
-    ['group' => 'C-Die Condition', 'no' => '2', 'point' => 'Die Pressure'],
-    ['group' => 'C-Die Condition', 'no' => '3', 'point' => 'Die Alignment'],
-    ['group' => 'C-Die Condition', 'no' => '4', 'point' => 'Die Surface Finish'],
-    ['group' => 'C-Die Condition', 'no' => '5', 'point' => 'Die Cleanliness'],
+    // C-Clearence
+    ['group' => 'C-Clearence', 'no' => '1', 'point' => 'Clearance sudah sesuai Standart'],
+    ['group' => 'C-Clearence', 'no' => '2', 'point' => 'Apakah ada Ventilasi Udara'],
+    ['group' => 'C-Clearence', 'no' => '3', 'point' => 'Surface Die / Punch'],
+
+    // D-Spring/Urethane
+    ['group' => 'D-Spring/Urethane', 'no' => '1', 'point' => 'Stroke Spring / Urethane sudah benar'],
+    ['group' => 'D-Spring/Urethane', 'no' => '2', 'point' => 'Kekuatan Spring / Urethane sudah benar'],
+    ['group' => 'D-Spring/Urethane', 'no' => '3', 'point' => 'Penempatan Urethane / Spring sudah benar'],
+    ['group' => 'D-Spring/Urethane', 'no' => '4', 'point' => 'Posisi Striper Bolt sudah benar'],
+    ['group' => 'D-Spring/Urethane', 'no' => '5', 'point' => 'Retainer Pinset sudah benar'],
+
+    // E-Pad
+    ['group' => 'E-Pad', 'no' => '1', 'point' => 'Slide PAD sudah sesuai spesifikasi'],
+    ['group' => 'E-Pad', 'no' => '2', 'point' => 'Clearence PAD sesuai kebutuhan'],
+    ['group' => 'E-Pad', 'no' => '3', 'point' => 'Sudut tajam sudah dihilangkan'],
+    ['group' => 'E-Pad', 'no' => '4', 'point' => 'PAD sudah berfungsi dengan baik'],
+
+    // F-Hardent
+    ['group' => 'F-Hardent', 'no' => '1', 'point' => 'Punch sudah dihardent'],
+    ['group' => 'F-Hardent', 'no' => '2', 'point' => 'Die sudah dihardent'],
+    ['group' => 'F-Hardent', 'no' => '3', 'point' => 'Check Insert Die / Punch tidak boleh retak'],
+
+    // G-Dowel Pin
+    ['group' => 'G-Dowel Pin', 'no' => '1', 'point' => 'Dowel PIN sudah terpasang sesuai kebutuhan'],
+    ['group' => 'G-Dowel Pin', 'no' => '2', 'point' => 'Dowel PIN Upper Die terpasang Screw Plug'],
+    ['group' => 'G-Dowel Pin', 'no' => '3', 'point' => 'Penempatan posisi Dowel PIN sudah benar'],
+
+    // H-Rip
+    ['group' => 'H-Rip', 'no' => '1', 'point' => 'Rip sudah dibaut'],
+    ['group' => 'H-Rip', 'no' => '2', 'point' => 'Rip sudah diwelding'],
+    ['group' => 'H-Rip', 'no' => '3', 'point' => 'Penempatan Rib sudah sesuai'],
+    ['group' => 'H-Rip', 'no' => '4', 'point' => 'Jarak welding Rib sudah sesuai'],
+
+    // I-Guide Post
+    ['group' => 'I-Guide Post', 'no' => '1', 'point' => 'Pokayoke Guide Post'],
+    ['group' => 'I-Guide Post', 'no' => '2', 'point' => 'Guide Post sudah pada posisi center'],
+    ['group' => 'I-Guide Post', 'no' => '3', 'point' => 'Tinggi Guide Post sudah sesuai'],
+    ['group' => 'I-Guide Post', 'no' => '4', 'point' => 'Jumlah Guide Post sudah sesuai'],
+    ['group' => 'I-Guide Post', 'no' => '5', 'point' => 'Baut & PIN Guide Post sudah dipasang'],
+
+    // J-Bolt
+    ['group' => 'J-Bolt', 'no' => '1', 'point' => 'Dies sudah menggunakan baut standar'],
+    ['group' => 'J-Bolt', 'no' => '2', 'point' => 'Sistem pemasangan baut mudah untuk setting'],
+    ['group' => 'J-Bolt', 'no' => '3', 'point' => 'Semua komponent Dies sudah di Baut dan di PIN'],
+
+    // K-Cover
+    ['group' => 'K-Cover', 'no' => '1', 'point' => 'Cover PAD sudah terpasang'],
+    ['group' => 'K-Cover', 'no' => '2', 'point' => 'Cover spring CAM sudah terpasang'],
+
 
     // Additional groups can be added here...
 ];
+
+// Define checklist3 structure
+$checklist3 = [
+    // A-Inspection
+    ['group' => 'A-Inspection', 'no' => '1', 'point' => 'Visual Inspection'],
+    ['group' => 'A-Inspection', 'no' => '2', 'point' => 'Dimensional Check'],
+    ['group' => 'A-Inspection', 'no' => '3', 'point' => 'Surface Quality'],
+    ['group' => 'A-Inspection', 'no' => '4', 'point' => 'Material Verification'],
+    ['group' => 'A-Inspection', 'no' => '5', 'point' => 'Welding Quality'],
+
+    // B-Assembly
+    ['group' => 'B-Assembly', 'no' => '1', 'point' => 'Component Fit'],
+    ['group' => 'B-Assembly', 'no' => '2', 'point' => 'Bolt Tightening'],
+    ['group' => 'B-Assembly', 'no' => '3', 'point' => 'Alignment Check'],
+    ['group' => 'B-Assembly', 'no' => '4', 'point' => 'Seal Integrity'],
+    ['group' => 'B-Assembly', 'no' => '5', 'point' => 'Final Assembly Check'],
+
+    // C-Testing
+    ['group' => 'C-Testing', 'no' => '1', 'point' => 'Load Test'],
+    ['group' => 'C-Testing', 'no' => '2', 'point' => 'Pressure Test'],
+    ['group' => 'C-Testing', 'no' => '3', 'point' => 'Functionality Test'],
+    ['group' => 'C-Testing', 'no' => '4', 'point' => 'Safety Test'],
+    ['group' => 'C-Testing', 'no' => '5', 'point' => 'Performance Test'],
+
+    // D-Packaging
+    ['group' => 'D-Packaging', 'no' => '1', 'point' => 'Packaging Material'],
+    ['group' => 'D-Packaging', 'no' => '2', 'point' => 'Labeling'],
+    ['group' => 'D-Packaging', 'no' => '3', 'point' => 'Sealing'],
+    ['group' => 'D-Packaging', 'no' => '4', 'point' => 'Handling Instructions'],
+    ['group' => 'D-Packaging', 'no' => '5', 'point' => 'Final Inspection'],
+
+    // Additional groups can be added here...
+];
+
+// Add an attribute to identify the last item in each group for checklist3
+$currentGroup = '';
+for ($i = 0; $i < count($checklist3); $i++) {
+    if ($i < count($checklist3) - 1 && $checklist3[$i]['group'] !== $checklist3[$i + 1]['group']) {
+        $checklist3[$i]['is_last_in_group'] = true;
+    } else {
+        $checklist3[$i]['is_last_in_group'] = false;
+    }
+}
 
 // Add an attribute to identify the last item in each group
 $currentGroup = '';
