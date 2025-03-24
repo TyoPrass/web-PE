@@ -508,43 +508,63 @@ for ($i = 0; $i < count($checklist); $i++) {
                                 </table>
                             </div>
                             <div class="tab-pane fade" id="statis" role="tabpanel" aria-labelledby="statis-tab">
-                                <!-- Statis content -->
-                                <h4>Standard Checklist Items</h4>
-                                <div class="alert alert-info">
-                                    <p>This tab shows reference information for each checklist item.</p>
-                                </div>
-                                <div class="table-responsive">
-                                    <table class="table table-striped table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>Group</th>
-                                                <th>No</th>
-                                                <th>Point Check</th>
-                                                <th>Description</th>
+                                <!-- Statis content - Now editable like dinamis -->
+                                <h4>Statis Checklist Items</h4>
+                                <table class="table table-bordered table-centered mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Group</th>
+                                            <th>No</th>
+                                            <th>Point Check</th>
+                                            <th>P1</th>
+                                            <th>P2</th>
+                                            <th>P3</th>
+                                            <th>Keterangan</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php 
+                                        $checklist_data2 = isset($editData) ? json_decode($editData['checklist_data'], true) : [];
+                                        $currentGroup = '';
+                                        $startIndex = count($checklist); // Start index for checklist2 after the main checklist
+                                        
+                                        foreach ($checklist2 as $i => $item): 
+                                            $index = $startIndex + $i; // Calculate actual index in the combined data
+                                            if ($currentGroup != $item['group']):
+                                                $currentGroup = $item['group'];
+                                        ?>
+                                            <tr class="table-secondary">
+                                                <td colspan="7"><strong><?php echo htmlspecialchars($currentGroup); ?></strong></td>
                                             </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php 
-                                            $currentGroup = '';
-                                            foreach ($checklist2 as $index => $item): 
-                                                if ($currentGroup != $item['group']):
-                                                    $currentGroup = $item['group'];
-                                            ?>
-                                                <tr class="table-secondary">
-                                                    <td colspan="4"><strong><?php echo htmlspecialchars($currentGroup); ?></strong></td>
-                                                </tr>
-                                            <?php endif; ?>
-                                                <tr>
-                                                    <td><?php echo $item['group']; ?></td>
-                                                    <td><?php echo $item['no']; ?></td>
-                                                    <td><?php echo $item['point']; ?></td>
-                                                    <td>Standard checklist item</td>
-                                                </tr>
-                                            <?php endforeach; ?>
-                                        </tbody>
-                                        </tbody>
-                                    </table>
-                                </div>
+                                        <?php endif; ?>
+                                            <tr>
+                                                <td><?php echo $item['group']; ?></td>
+                                                <td><?php echo $item['no']; ?></td>
+                                                <td><?php echo $item['point']; ?></td>
+                                                <td>
+                                                    <input type="text" name="checklist[<?php echo $index; ?>][P1]" 
+                                                        class="form-control" 
+                                                        value="<?php echo isset($checklist_data2[$index]) ? htmlspecialchars($checklist_data2[$index]['P1'] ?? '') : ''; ?>">
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="checklist[<?php echo $index; ?>][P2]" 
+                                                        class="form-control"
+                                                        value="<?php echo isset($checklist_data2[$index]) ? htmlspecialchars($checklist_data2[$index]['P2'] ?? '') : ''; ?>">
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="checklist[<?php echo $index; ?>][P3]" 
+                                                        class="form-control"
+                                                        value="<?php echo isset($checklist_data2[$index]) ? htmlspecialchars($checklist_data2[$index]['P3'] ?? '') : ''; ?>">
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="checklist[<?php echo $index; ?>][keterangan]" 
+                                                        class="form-control"
+                                                        value="<?php echo isset($checklist_data2[$index]) ? htmlspecialchars($checklist_data2[$index]['keterangan'] ?? '') : ''; ?>">
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                         
