@@ -131,6 +131,124 @@ $checklist = [
     ['group' => 'H-Documentation', 'no' => '5', 'point' => 'Storage Location']
 ];
 
+// Define checklist2 structure
+$checklist2 = [
+    // A-Indicate Die
+    ['group' => 'A-Indicate Die', 'no' => '1', 'point' => 'Part No / Name'],
+    ['group' => 'A-Indicate Die', 'no' => '2', 'point' => 'Process No / Name'],
+    ['group' => 'A-Indicate Die', 'no' => '3', 'point' => 'Dies Code No'],
+    ['group' => 'A-Indicate Die', 'no' => '4', 'point' => 'Die Maker'],
+    ['group' => 'A-Indicate Die', 'no' => '5', 'point' => 'Tahun Maker'],
+    ['group' => 'A-Indicate Die', 'no' => '6', 'point' => 'Tanda F'],
+    ['group' => 'A-Indicate Die', 'no' => '7', 'point' => 'Tanda Insert'],
+    ['group' => 'A-Indicate Die', 'no' => '8', 'point' => 'Posisi Insert'],
+    ['group' => 'A-Indicate Die', 'no' => '9', 'point' => 'Die Height'],
+    ['group' => 'A-Indicate Die', 'no' => '10', 'point' => 'Cushion Posision'],
+    ['group' => 'A-Indicate Die', 'no' => '11', 'point' => 'Tinggi Cushion'],
+    ['group' => 'A-Indicate Die', 'no' => '12', 'point' => 'Presure Cushion'],
+
+    // B-Stopper
+    ['group' => 'Stopper', 'no' => '1', 'point' => 'Apakah stamping dimulai setelah pad menekan panel'],
+    ['group' => 'Stopper', 'no' => '2', 'point' => 'Posisi Material'],
+    ['group' => 'Stopper', 'no' => '3', 'point' => 'Dowel Pin Stopper'],
+
+    // C-Clearence
+    ['group' => 'C-Clearence', 'no' => '1', 'point' => 'Clearance sudah sesuai Standart'],
+    ['group' => 'C-Clearence', 'no' => '2', 'point' => 'Apakah ada Ventilasi Udara'],
+    ['group' => 'C-Clearence', 'no' => '3', 'point' => 'Surface Die / Punch'],
+
+    // D-Spring/Urethane
+    ['group' => 'D-Spring/Urethane', 'no' => '1', 'point' => 'Stroke Spring / Urethane sudah benar'],
+    ['group' => 'D-Spring/Urethane', 'no' => '2', 'point' => 'Kekuatan Spring / Urethane sudah benar'],
+    ['group' => 'D-Spring/Urethane', 'no' => '3', 'point' => 'Penempatan Urethane / Spring sudah benar'],
+    ['group' => 'D-Spring/Urethane', 'no' => '4', 'point' => 'Posisi Striper Bolt sudah benar'],
+    ['group' => 'D-Spring/Urethane', 'no' => '5', 'point' => 'Retainer Pinset sudah benar'],
+
+    // E-Pad
+    ['group' => 'E-Pad', 'no' => '1', 'point' => 'Slide PAD sudah sesuai spesifikasi'],
+    ['group' => 'E-Pad', 'no' => '2', 'point' => 'Clearence PAD sesuai kebutuhan'],
+    ['group' => 'E-Pad', 'no' => '3', 'point' => 'Sudut tajam sudah dihilangkan'],
+    ['group' => 'E-Pad', 'no' => '4', 'point' => 'PAD sudah berfungsi dengan baik'],
+
+    // F-Hardent
+    ['group' => 'F-Hardent', 'no' => '1', 'point' => 'Punch sudah dihardent'],
+    ['group' => 'F-Hardent', 'no' => '2', 'point' => 'Die sudah dihardent'],
+    ['group' => 'F-Hardent', 'no' => '3', 'point' => 'Check Insert Die / Punch tidak boleh retak'],
+
+    // G-Dowel Pin
+    ['group' => 'G-Dowel Pin', 'no' => '1', 'point' => 'Dowel PIN sudah terpasang sesuai kebutuhan'],
+    ['group' => 'G-Dowel Pin', 'no' => '2', 'point' => 'Dowel PIN Upper Die terpasang Screw Plug'],
+    ['group' => 'G-Dowel Pin', 'no' => '3', 'point' => 'Penempatan posisi Dowel PIN sudah benar'],
+
+    // H-Rip
+    ['group' => 'H-Rip', 'no' => '1', 'point' => 'Rip sudah dibaut'],
+    ['group' => 'H-Rip', 'no' => '2', 'point' => 'Rip sudah diwelding'],
+    ['group' => 'H-Rip', 'no' => '3', 'point' => 'Penempatan Rib sudah sesuai'],
+    ['group' => 'H-Rip', 'no' => '4', 'point' => 'Jarak welding Rib sudah sesuai'],
+
+    // I-Guide Post
+    ['group' => 'I-Guide Post', 'no' => '1', 'point' => 'Pokayoke Guide Post'],
+    ['group' => 'I-Guide Post', 'no' => '2', 'point' => 'Guide Post sudah pada posisi center'],
+    ['group' => 'I-Guide Post', 'no' => '3', 'point' => 'Tinggi Guide Post sudah sesuai'],
+    ['group' => 'I-Guide Post', 'no' => '4', 'point' => 'Jumlah Guide Post sudah sesuai'],
+    ['group' => 'I-Guide Post', 'no' => '5', 'point' => 'Baut & PIN Guide Post sudah dipasang'],
+
+    // J-Bolt
+    ['group' => 'J-Bolt', 'no' => '1', 'point' => 'Dies sudah menggunakan baut standar'],
+    ['group' => 'J-Bolt', 'no' => '2', 'point' => 'Sistem pemasangan baut mudah untuk setting'],
+    ['group' => 'J-Bolt', 'no' => '3', 'point' => 'Semua komponent Dies sudah di Baut dan di PIN'],
+
+    // K-Cover
+    ['group' => 'K-Cover', 'no' => '1', 'point' => 'Cover PAD sudah terpasang'],
+    ['group' => 'K-Cover', 'no' => '2', 'point' => 'Cover spring CAM sudah terpasang'],
+
+
+    // Additional groups can be added here...
+];
+
+// Define checklist3 structure
+$checklist3 = [
+    // A-Inspection
+    ['group' => 'A-Inspection', 'no' => '1', 'point' => 'Visual Inspection'],
+    ['group' => 'A-Inspection', 'no' => '2', 'point' => 'Dimensional Check'],
+    ['group' => 'A-Inspection', 'no' => '3', 'point' => 'Surface Quality'],
+    ['group' => 'A-Inspection', 'no' => '4', 'point' => 'Material Verification'],
+    ['group' => 'A-Inspection', 'no' => '5', 'point' => 'Welding Quality'],
+
+    // B-Assembly
+    ['group' => 'B-Assembly', 'no' => '1', 'point' => 'Component Fit'],
+    ['group' => 'B-Assembly', 'no' => '2', 'point' => 'Bolt Tightening'],
+    ['group' => 'B-Assembly', 'no' => '3', 'point' => 'Alignment Check'],
+    ['group' => 'B-Assembly', 'no' => '4', 'point' => 'Seal Integrity'],
+    ['group' => 'B-Assembly', 'no' => '5', 'point' => 'Final Assembly Check'],
+
+    // C-Testing
+    ['group' => 'C-Testing', 'no' => '1', 'point' => 'Load Test'],
+    ['group' => 'C-Testing', 'no' => '2', 'point' => 'Pressure Test'],
+    ['group' => 'C-Testing', 'no' => '3', 'point' => 'Functionality Test'],
+    ['group' => 'C-Testing', 'no' => '4', 'point' => 'Safety Test'],
+    ['group' => 'C-Testing', 'no' => '5', 'point' => 'Performance Test'],
+
+    // D-Packaging
+    ['group' => 'D-Packaging', 'no' => '1', 'point' => 'Packaging Material'],
+    ['group' => 'D-Packaging', 'no' => '2', 'point' => 'Labeling'],
+    ['group' => 'D-Packaging', 'no' => '3', 'point' => 'Sealing'],
+    ['group' => 'D-Packaging', 'no' => '4', 'point' => 'Handling Instructions'],
+    ['group' => 'D-Packaging', 'no' => '5', 'point' => 'Final Inspection'],
+
+    // Additional groups can be added here...
+];
+
+// Add an attribute to identify the last item in each group for checklist3
+$currentGroup = '';
+for ($i = 0; $i < count($checklist3); $i++) {
+    if ($i < count($checklist3) - 1 && $checklist3[$i]['group'] !== $checklist3[$i + 1]['group']) {
+        $checklist3[$i]['is_last_in_group'] = true;
+    } else {
+        $checklist3[$i]['is_last_in_group'] = false;
+    }
+}
+
 // Add an attribute to identify the last item in each group
 $currentGroup = '';
 for ($i = 0; $i < count($checklist); $i++) {
@@ -482,43 +600,63 @@ for ($i = 0; $i < count($checklist); $i++) {
                                 </table>
                             </div>
                             <div class="tab-pane fade" id="statis" role="tabpanel" aria-labelledby="statis-tab">
-                                <!-- Statis content -->
-                                <h4>Standard Checklist Items</h4>
-                                <div class="alert alert-info">
-                                    <p>This tab shows reference information for each checklist item.</p>
-                                </div>
-                                <div class="table-responsive">
-                                    <table class="table table-striped table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>Group</th>
-                                                <th>No</th>
-                                                <th>Point Check</th>
-                                                <th>Description</th>
+                                <!-- Statis content - Now editable like dinamis -->
+                                <h4>Statis Checklist Items</h4>
+                                <table class="table table-bordered table-centered mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Group</th>
+                                            <th>No</th>
+                                            <th>Point Check</th>
+                                            <th>P1</th>
+                                            <th>P2</th>
+                                            <th>P3</th>
+                                            <th>Keterangan</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php 
+                                        $checklist_data2 = isset($editData) ? json_decode($editData['checklist_data'], true) : [];
+                                        $currentGroup = '';
+                                        $startIndex = count($checklist); // Start index for checklist2 after the main checklist
+                                        
+                                        foreach ($checklist2 as $i => $item): 
+                                            $index = $startIndex + $i; // Calculate actual index in the combined data
+                                            if ($currentGroup != $item['group']):
+                                                $currentGroup = $item['group'];
+                                        ?>
+                                            <tr class="table-secondary">
+                                                <td colspan="7"><strong><?php echo htmlspecialchars($currentGroup); ?></strong></td>
                                             </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php 
-                                            $currentGroup = '';
-                                            foreach ($checklist as $index => $item): 
-                                                if ($currentGroup != $item['group']):
-                                                    $currentGroup = $item['group'];
-                                            ?>
-                                                <tr class="table-secondary">
-                                                    <td colspan="4"><strong><?php echo htmlspecialchars($currentGroup); ?></strong></td>
-                                                </tr>
-                                            <?php endif; ?>
-                                                <tr>
-                                                    <td><?php echo $item['group']; ?></td>
-                                                    <td><?php echo $item['no']; ?></td>
-                                                    <td><?php echo $item['point']; ?></td>
-                                                    <td>Standard checklist item</td>
-                                                </tr>
-                                            <?php endforeach; ?>
-                                        </tbody>
-                                        </tbody>
-                                    </table>
-                                </div>
+                                        <?php endif; ?>
+                                            <tr>
+                                                <td><?php echo $item['group']; ?></td>
+                                                <td><?php echo $item['no']; ?></td>
+                                                <td><?php echo $item['point']; ?></td>
+                                                <td>
+                                                    <input type="text" name="checklist[<?php echo $index; ?>][P1]" 
+                                                        class="form-control" 
+                                                        value="<?php echo isset($checklist_data2[$index]) ? htmlspecialchars($checklist_data2[$index]['P1'] ?? '') : ''; ?>">
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="checklist[<?php echo $index; ?>][P2]" 
+                                                        class="form-control"
+                                                        value="<?php echo isset($checklist_data2[$index]) ? htmlspecialchars($checklist_data2[$index]['P2'] ?? '') : ''; ?>">
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="checklist[<?php echo $index; ?>][P3]" 
+                                                        class="form-control"
+                                                        value="<?php echo isset($checklist_data2[$index]) ? htmlspecialchars($checklist_data2[$index]['P3'] ?? '') : ''; ?>">
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="checklist[<?php echo $index; ?>][keterangan]" 
+                                                        class="form-control"
+                                                        value="<?php echo isset($checklist_data2[$index]) ? htmlspecialchars($checklist_data2[$index]['keterangan'] ?? '') : ''; ?>">
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                         
