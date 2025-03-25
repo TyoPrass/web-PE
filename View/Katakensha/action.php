@@ -3,6 +3,11 @@
 include_once('../../Database/koneksi.php');
 session_start();
 
+if (!isset($_SESSION['username'])) {
+    header("Location: ../../login.php"); // Redirect ke halaman login
+    exit();
+}
+
 // Handle Create and Update
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id = isset($_POST['id']) ? $_POST['id'] : null;

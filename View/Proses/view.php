@@ -97,9 +97,9 @@ include_once('action.php');
                         </li>
 
                         <li class="side-nav-item">
-                            <a href="#" class="side-nav-link">
+                            <a href="../Katakensha/view.php" class="side-nav-link">
                                 <i class="uil-rss"></i>
-                                <span> Social Feed </span>
+                                <span> Katakensha  </span>
                             </a>
                         </li>
 
@@ -390,7 +390,7 @@ include_once('action.php');
                                         <img src="../../assets/images/users/avatar-1.jpg" alt="user-image" class="rounded-circle">
                                     </span>
                                     <span>
-                                        <span class="account-user-name">Dominic Keller</span>
+                                        <span class="account-user-name"><?= $_SESSION['username'];?></span>
                                         <span class="account-position">Founder</span>
                                     </span>
                                 </a>

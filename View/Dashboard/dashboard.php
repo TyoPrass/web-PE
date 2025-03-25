@@ -108,9 +108,9 @@ if (!isset($_SESSION['username'])) {
                         </li>
 
                         <li class="side-nav-item">
-                            <a href="#" class="side-nav-link">
+                            <a href="../Katakensha/view.php" class="side-nav-link">
                                 <i class="uil-rss"></i>
-                                <span> Social Feed </span>
+                                <span> Katakensha </span>
                             </a>
                         </li>
 

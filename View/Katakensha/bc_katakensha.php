@@ -398,7 +398,7 @@ include_once('action.php');
                                          <img src="../../assets/images/users/avatar-1.jpg" alt="user-image" class="rounded-circle">
                                      </span>
                                      <span>
-                                         <span class="account-user-name">Dominic Keller</span>
+                                         <span class="account-user-name"><?= $_SESSION['username'];?></span>
                                          <span class="account-position">Founder</span>
                                      </span>
                                  </a>
