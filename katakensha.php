@@ -295,9 +295,6 @@ for ($i = 0; $i < count($checklist); $i++) {
     }
 }
 
-
-
-
 ?>
 
 <!DOCTYPE html>

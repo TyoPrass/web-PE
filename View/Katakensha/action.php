@@ -294,4 +294,5 @@ for ($i = 0; $i < count($checklist); $i++) {
         $checklist[$i]['is_last_in_group'] = false;
     }
 }
+
 ?>
