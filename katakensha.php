@@ -295,6 +295,9 @@ for ($i = 0; $i < count($checklist); $i++) {
     }
 }
 
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -533,25 +536,57 @@ for ($i = 0; $i < count($checklist); $i++) {
                         <?php if (isset($_GET['edit']) && $editData): ?>
                             <input type="hidden" name="id" value="<?php echo $editData['id']; ?>">
                         <?php endif; ?>
+
+
+                        <!-- Buat nan -->
                         
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <label for="part_no" class="form-label">Part No</label>
-                                <input type="text" class="form-control" id="part_no" name="part_no" value="<?php echo isset($editData) ? htmlspecialchars($editData['part_no']) : ''; ?>" required>
+                                <label for="id_customer" class="form-label">Customer</label>
+                                <select class="form-control" id="id_customer" name="id_customer" required>
+                                    <option value="">Select Customer</option>
+                                    <?php
+                                    $customerQuery = "SELECT id, name FROM customers"; // Replace 'customers' with your actual table name
+                                    $customerResult = $conn->query($customerQuery);
+                                    while ($customer = $customerResult->fetch_assoc()):
+                                    ?>
+                                        <option value="<?php echo $customer['id']; ?>" <?php echo isset($editData) && $editData['id_customer'] == $customer['id'] ? 'selected' : ''; ?>>
+                                            <?php echo htmlspecialchars($customer['name']); ?>
+                                        </option>
+                                    <?php endwhile; ?>
+                                </select>
                             </div>
                             <div class="col-md-6">
-                                <label for="part_name" class="form-label">Part Name</label>
-                                <input type="text" class="form-control" id="part_name" name="part_name" value="<?php echo isset($editData) ? htmlspecialchars($editData['part_name']) : ''; ?>" required>
+                                <label for="id_part" class="form-label">Part</label>
+                                <select class="form-control" id="id_part" name="id_part" required>
+                                    <option value="">Select Part</option>
+                                    <?php
+                                    $partQuery = "SELECT id, part_name FROM parts"; // Replace 'parts' with your actual table name
+                                    $partResult = $conn->query($partQuery);
+                                    while ($part = $partResult->fetch_assoc()):
+                                    ?>
+                                        <option value="<?php echo $part['id']; ?>" <?php echo isset($editData) && $editData['id_part'] == $part['id'] ? 'selected' : ''; ?>>
+                                            <?php echo htmlspecialchars($part['part_name']); ?>
+                                        </option>
+                                    <?php endwhile; ?>
+                                </select>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <label for="date" class="form-label">Date</label>
-                                <input type="date" class="form-control" id="date" name="date" value="<?php echo isset($editData) ? htmlspecialchars($editData['date']) : ''; ?>" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="process" class="form-label">Process</label>
-                                <input type="text" class="form-control" id="process" name="process" value="<?php echo isset($editData) ? htmlspecialchars($editData['process']) : ''; ?>" required>
+                                <label for="id_proses" class="form-label">Process</label>
+                                <select class="form-control" id="id_proses" name="id_proses" required>
+                                    <option value="">Select Process</option>
+                                    <?php
+                                    $processQuery = "SELECT id, process_name FROM processes"; // Replace 'processes' with your actual table name
+                                    $processResult = $conn->query($processQuery);
+                                    while ($process = $processResult->fetch_assoc()):
+                                    ?>
+                                        <option value="<?php echo $process['id']; ?>" <?php echo isset($editData) && $editData['id_proses'] == $process['id'] ? 'selected' : ''; ?>>
+                                            <?php echo htmlspecialchars($process['process_name']); ?>
+                                        </option>
+                                    <?php endwhile; ?>
+                                </select>
                             </div>
                         </div>
 
