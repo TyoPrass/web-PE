@@ -1,10 +1,3 @@
-<?php
-include_once('../../Database/koneksi.php');
-include_once('action.php');
-
-?>
-
-
 <!DOCTYPE html>
  <html lang="en">
      
@@ -30,14 +23,6 @@ include_once('action.php');
          <!-- App css -->
          <link href="../../assets/css/icons.min.css" rel="stylesheet" type="text/css" />
          <link href="../../assets/css/app.min.css" rel="stylesheet" type="text/css" id="app-style"/>
-
-         <style>
-     
-     th, td {
-         text-align: center;
-     }
-
- </style>
  
      </head>
  
@@ -75,42 +60,39 @@ include_once('action.php');
                          <li class="side-nav-title side-nav-item">Navigation</li>
  
                          <li class="side-nav-item">
-                            <a href="../Dashboard/dashboard.php" class="side-nav-link">
-                                <i class="uil-home-alt"></i>
-                                <span> Dashboards </span>
-                            </a>
-                        </li>
-
-                        <li class="side-nav-title side-nav-item">Apps</li>
-
-                        <li class="side-nav-item">
-                            <a data-bs-toggle="collapse" href="#sidebarProjects" aria-expanded="false" aria-controls="sidebarProjects" class="side-nav-link">
-                                <i class="uil-briefcase"></i>
-                                <span> Projects </span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <div class="collapse" id="sidebarProjects">
-                                <ul class="side-nav-second-level">
-                                    <li>
-                                        <a href="../Customer/view.php">Customer</a>
-                                    </li>
-                                    <li>
-                                        <a href="../Project/view.php">Part</a>
-                                    </li>
-                                    <li>
-                                        <a href="../Proses/view.php">Proses</a>
-                                    </li>
-                                    <li>
-                                        <a href="../Trial/view.php">Trial & Report</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
+                             <a data-bs-toggle="collapse" href="#sidebarDashboards" aria-expanded="false" aria-controls="sidebarDashboards" class="side-nav-link">
+                                 <i class="uil-home-alt"></i>
+                                 <span> Dashboards </span>
+                             </a>
+                         </li>
+ 
+                         <li class="side-nav-title side-nav-item">Apps</li>
  
                          <li class="side-nav-item">
-                             <a href="#" class="side-nav-link">
+                             <a data-bs-toggle="collapse" href="#sidebarProjects" aria-expanded="false" aria-controls="sidebarProjects" class="side-nav-link">
+                                 <i class="uil-briefcase"></i>
+                                 <span> Projects </span>
+                                 <span class="menu-arrow"></span>
+                             </a>
+                             <div class="collapse" id="sidebarProjects">
+                                 <ul class="side-nav-second-level">
+                                     <li>
+                                         <a href="apps-projects-list.html">List</a>
+                                     </li>
+                                     <li>
+                                         <a href="apps-projects-details.html">Details</a>
+                                     </li>
+                                     <li>
+                                         <a href="apps-projects-add.html">Create Project</a>
+                                     </li>
+                                 </ul>
+                             </div>
+                         </li>
+ 
+                         <li class="side-nav-item">
+                             <a href="apps-social-feed.html" class="side-nav-link">
                                  <i class="uil-rss"></i>
-                                 <span> Katakensha </span>
+                                 <span> Social Feed </span>
                              </a>
                          </li>
  
@@ -401,7 +383,7 @@ include_once('action.php');
                                          <img src="../../assets/images/users/avatar-1.jpg" alt="user-image" class="rounded-circle">
                                      </span>
                                      <span>
-                                         <span class="account-user-name"><?= $_SESSION['username'];?></span>
+                                         <span class="account-user-name">Dominic Keller</span>
                                          <span class="account-position">Founder</span>
                                      </span>
                                  </a>
@@ -436,7 +418,7 @@ include_once('action.php');
                                      </a>
  
                                      <!-- item-->
-                                     <a href="../../login.php" class="dropdown-item notify-item">
+                                     <a href="javascript:void(0);" class="dropdown-item notify-item">
                                          <i class="mdi mdi-logout me-1"></i>
                                          <span>Logout</span>
                                      </a>
@@ -535,508 +517,216 @@ include_once('action.php');
  
  
                          <div class="row">
-                             <div class="col-12">
-                                 <div class="card">
-                                     <div class="card-body">
-                                         <h4 class="header-title">Basic Data Table</h4>
-                                       
-                                         <ul class="nav nav-tabs nav-bordered mb-3">
-                                         
+                         <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <!-- start projects-->
+                                    <div class="col-xxl-3 col-lg-4">
+                                        <div class="pe-xl-3">
+                                            <h5 class="mt-0 mb-3">Projects</h5>
+                                            <!-- start search box -->
+                                            <div class="app-search">
+                                                <form>
+                                                    <div class="mb-2 position-relative">
+                                                        <input type="text" class="form-control"
+                                                            placeholder="search by name..." />
+                                                        <span class="mdi mdi-magnify search-icon"></span>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <!-- end search box -->
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="pe-xl-3" data-simplebar style="max-height: 535px;">
+                                                    <a href="javascript:void(0);" class="text-body">
+                                                        <div class="d-flex mt-2 p-2">
+                                                            <div class="avatar-sm d-table">
+                                                                <span class="avatar-title bg-success-lighten rounded-circle text-success">
+                                                                    <i class='uil uil-moonset font-24'></i>
+                                                                </span>
+                                                            </div>
+                                                            <div class="ms-2">
+                                                                <h5 class="mt-0 mb-0">
+                                                                    Lunar
+                                                                    <span class="badge badge-success-lighten ms-1">On Track</span>
+                                                                </h5>
+                                                                <p class="mt-1 mb-0 text-muted">
+                                                                    ID: proj101
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+
+                                                    <a href="javascript:void(0);" class="text-body">
+                                                        <div class="d-flex bg-light p-2">
+                                                            <div class="avatar-sm d-table">
+                                                                <span
+                                                                    class="avatar-title bg-success-lighten rounded-circle text-success">
+                                                                    <i class='uil uil-moon-eclipse font-24'></i>
+                                                                </span>
+                                                            </div>
+                                                            <div class="ms-2">
+                                                                <h5 class="mt-0 mb-0">
+                                                                    Dark Moon
+                                                                    <span class="badge badge-success-lighten ms-1">On
+                                                                        Track</span>
+                                                                </h5>
+                                                                <p class="mt-1 mb-0 text-muted">
+                                                                    ID: proj102
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+
+                                                    <a href="javascript:void(0);" class="text-body">
+                                                        <div class="d-flex mt-1 px-2 py-2">
+                                                            <div class="avatar-sm d-table">
+                                                                <span
+                                                                    class="avatar-title bg-warning-lighten rounded-circle text-warning">
+                                                                    <i class='uil uil-mountains font-24'></i>
+                                                                </span>
+                                                            </div>
+                                                            <div class="ms-2">
+                                                                <h5 class="mt-0 mb-0">
+                                                                    Aurora
+                                                                    <span class="badge badge-warning-lighten ms-1">Locked</span>
+                                                                </h5>
+                                                                <p class="mt-1 mb-0 text-muted">
+                                                                    ID: proj103
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+
+                                                    <a href="javascript:void(0);" class="text-body">
+                                                        <div class="d-flex mt-1 px-2 py-2">
+                                                            <div class="avatar-sm d-table">
+                                                                <span
+                                                                    class="avatar-title bg-warning-lighten rounded-circle text-warning">
+                                                                    <i class='uil uil-moon font-24'></i>
+                                                                </span>
+                                                            </div>
+                                                            <div class="ms-2">
+                                                                <h5 class="mt-0 mb-0">
+                                                                    Blue Moon
+                                                                    <span
+                                                                        class="badge badge-warning-lighten ms-1">Locked</span>
+                                                                </h5>
+                                                                <p class="mt-1 mb-0 text-muted">
+                                                                    ID: proj104
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+
+                                                    <a href="javascript:void(0);" class="text-body">
+                                                        <div class="d-flex mt-1 px-2 py-2">
+                                                            <div class="avatar-sm d-table">
+                                                                <span
+                                                                    class="avatar-title bg-danger-lighten rounded-circle text-danger">
+                                                                    <i class='uil uil-ship font-24'></i>
+                                                                </span>
+                                                            </div>
+                                                            <div class="ms-2">
+                                                                <h5 class="mt-0 mb-0">
+                                                                    Casanova
+                                                                    <span
+                                                                        class="badge badge-danger-lighten ms-1">Delayed</span>
+                                                                </h5>
+                                                                <p class="mt-1 mb-0 text-muted">
+                                                                    ID: proj106
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+
+                                                    <a href="javascript:void(0);" class="text-body">
+                                                        <div class="d-flex mt-1 px-2 py-2">
+                                                            <div class="avatar-sm d-table">
+                                                                <span
+                                                                    class="avatar-title bg-success-lighten rounded-circle text-success">
+                                                                    <i class='uil uil-subway-alt font-24'></i>
+                                                                </span>
+                                                            </div>
+                                                            <div class="ms-2">
+                                                                <h5 class="mt-0 mb-0">
+                                                                    Darwin
+                                                                    <span class="badge badge-success-lighten ms-1">On
+                                                                        Track</span>
+                                                                </h5>
+                                                                <p class="mt-1 mb-0 text-muted">
+                                                                    ID: proj107
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+
+                                                    <a href="javascript:void(0);" class="text-body">
+                                                        <div class="d-flex mt-1 px-2 py-2">
+                                                            <div class="avatar-sm d-table">
+                                                                <span
+                                                                    class="avatar-title bg-danger-lighten rounded-circle text-danger">
+                                                                    <i class='uil uil-gold font-24'></i>
+                                                                </span>
+                                                            </div>
+                                                            <div class="ms-2">
+                                                                <h5 class="mt-0 mb-0">
+                                                                    Eagle
+                                                                    <span class="badge badge-danger-lighten ms-1">Delayed</span>
+                                                                </h5>
+                                                                <p class="mt-1 mb-0 text-muted">
+                                                                    ID: proj108
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- end projects -->
+
+                                    <!-- gantt view -->
+                                    <div class="col-xxl-9 mt-4 mt-xl-0 col-lg-8">
+                                        <div class="ps-xl-3">
+                                            <div class="row">
+                                                <div class="col-auto">
+                                                    <a href="javascript: void(0);" class="btn btn-success btn-sm mb-2">Add New Task</a>
+                                                </div>
+                                                <div class="col text-sm-end">
+                                                    <div class="btn-group btn-group-sm mb-2" data-bs-toggle="buttons" id="modes-filter">
+                                                        <label class="btn btn-primary d-none d-sm-inline-block">
+                                                            <input  class="btn-check" type="radio" name="modes" id="qday" value="Quarter Day"> Quarter Day
+                                                        </label>
+                                                        <label class="btn btn-primary">
+                                                            <input  class="btn-check" type="radio" name="modes" id="hday" value="Half Day"> Half Day
+                                                        </label>
+                                                        <label class="btn btn-primary">
+                                                            <input  class="btn-check" type="radio" name="modes" id="day" value="Day"> Day
+                                                        </label>
+                                                        <label class="btn btn-primary active">
+                                                            <input  class="btn-check" type="radio" name="modes" id="week" value="Week" checked> Week
+                                                        </label>
+                                                        <label class="btn btn-primary">
+                                                            <input  class="btn-check" type="radio" name="modes" id="month" value="Month"> Month
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             
-                                         </ul> <!-- end nav-->
-                                         <div class="tab-content">
-                                         <h2>Checklist Katakanesha</h2>
-        <?php if (isset($_SESSION['message'])): ?>
-            <div class="alert alert-<?php echo $_SESSION['message_type']; ?> alert-dismissible fade show" role="alert">
-                <?php echo $_SESSION['message']; ?>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-            <?php unset($_SESSION['message']); unset($_SESSION['message_type']); ?>
-        <?php endif; ?>
-
-        <?php if (!isset($_GET['insert']) && !isset($_GET['edit']) && !isset($_GET['view'])): ?>
-            <!-- Main List View -->
-            <div class="mb-3">
-                <a href="view.php?insert" class="btn btn-success">Add New Checklist</a>
-            </div>
-
-            <!-- Read -->
-            <h3>Checklist Data</h3>
-            
-            <div class="table-responsive">
-                <table id="basic-datatable" class="table table-striped dt-responsive nowrap w-100">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Part No</th>
-                            <th>Part Name</th>
-                            <th>Date</th>
-                            <th>Process</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $sql = "SELECT checklist_katakanesha.*, customer.nama_customer, data_part.nama_part, proses.proses 
-                                FROM checklist_katakanesha
-                                LEFT JOIN customer ON checklist_katakanesha.id_customer = customer.id_customer
-                                LEFT JOIN data_part ON checklist_katakanesha.id_part = data_part.id_part
-                                LEFT JOIN proses ON checklist_katakanesha.id_proses = proses.id_proses
-                                ORDER BY checklist_katakanesha.id DESC";
-                        $result = $conn->query($sql);
-                        ?>
-                        <?php if ($result->num_rows > 0): ?>
-                            <?php $nomer = 1; ?>
-                            <?php while ($row = $result->fetch_assoc()): ?>
-                                <tr>
-                                    <td><?php echo $nomer++; ?></td>
-                                    <td><?php echo htmlspecialchars($row['nama_customer']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['nama_part']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['date']); ?></td>
-                                    <td><?php echo htmlspecialchars($row['proses']); ?></td>
-                                    <td>
-                                        <a href="view.php?view=<?php echo $row['id']; ?>" class="btn btn-info btn-sm">View</a>
-                                        <a href="view.php?edit=<?php echo $row['id']; ?>" class="btn btn-warning btn-sm">Edit</a>
-                                        <a href="view.php?delete=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</a>
-                                    </td>
-                                </tr>
-                            <?php endwhile; ?>
-                        <?php else: ?>
-                            <tr>
-                                <td colspan="6">No data available</td>
-                            </tr>
-                        <?php endif; ?>
-                    </tbody>
-                </table>
-            </div>
-
-        <?php elseif (isset($_GET['view'])): ?>
-            <!-- View Detail -->
-            <?php
-            $id = $_GET['view'];
-            $sql = "SELECT * FROM checklist_katakanesha WHERE id = ?";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("i", $id);
-            $stmt->execute();
-            $viewResult = $stmt->get_result();
-            $viewData = $viewResult->fetch_assoc();
-            $stmt->close();
-
-            if ($viewData):
-            $checklist_data = json_decode($viewData['checklist_data'], true);
-            ?>
-            <div class="mb-3">
-                <a href="view.php" class="btn btn-secondary">Back to List</a>
-            </div>
-            <div class="card">
-                <div class="card-header">
-                    <h3>View Checklist</h3>
-                </div>
-                <div class="card-body">
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <label class="form-label">Customer</label>
-                            <p class="form-control-static"><?php echo htmlspecialchars($viewData['nama_customer']); ?></p>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Part</label>
-                            <p class="form-control-static"><?php echo htmlspecialchars($viewData['nama_part']); ?></p>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <label class="form-label">Process</label>
-                            <p class="form-control-static"><?php echo htmlspecialchars($viewData['proses']); ?></p>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Date</label>
-                            <p class="form-control-static"><?php echo htmlspecialchars($viewData['date']); ?></p>
-                        </div>
-                    </div>
-
-                    <ul class="nav nav-tabs mb-3" id="viewTab" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="view-dinamis-tab" data-bs-toggle="tab" data-bs-target="#view-dinamis" type="button" role="tab" aria-controls="view-dinamis" aria-selected="true">
-                                <span class="d-none d-md-block">Dinamis</span>
-                                <i class="mdi mdi-pencil-box d-md-none d-block"></i>
-                            </button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="view-statis-tab" data-bs-toggle="tab" data-bs-target="#view-statis" type="button" role="tab" aria-controls="view-statis" aria-selected="false">
-                                <span class="d-none d-md-block">Statis</span>
-                                <i class="mdi mdi-information-outline d-md-none d-block"></i>
-                            </button>
-                        </li>
-                    </ul>
-
-                    <div class="tab-content" id="viewTabContent">
-                        <div class="tab-pane fade show active" id="view-dinamis" role="tabpanel" aria-labelledby="view-dinamis-tab">
-                            <h4>Checklist Dinamis</h4>
-                            <table class="table table-bordered table-centered mb-0">
-                                <thead>
-                                    <tr>
-                                        <th>Group</th>
-                                        <th>No</th>
-                                        <th>Point Check</th>
-                                        <th>P1</th>
-                                        <th>P2</th>
-                                        <th>P3</th>
-                                        <th>Keterangan</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php 
-                                    $currentGroup = '';
-                                    foreach ($checklist as $index => $item): 
-                                        if ($currentGroup != $item['group']):
-                                            $currentGroup = $item['group'];
-                                    ?>
-                                        <tr class="table-secondary">
-                                            <td colspan="7"><strong><?php echo htmlspecialchars($currentGroup); ?></strong></td>
-                                        </tr>
-                                    <?php endif; ?>
-                                        <tr>
-                                            <td><?php echo $item['group']; ?></td>
-                                            <td><?php echo $item['no']; ?></td>
-                                            <td><?php echo $item['point']; ?></td>
-                                            <td><?php echo htmlspecialchars($checklist_data[$index]['P1'] ?? ''); ?></td>
-                                            <td><?php echo htmlspecialchars($checklist_data[$index]['P2'] ?? ''); ?></td>
-                                            <td><?php echo htmlspecialchars($checklist_data[$index]['P3'] ?? ''); ?></td>
-                                            <td><?php echo htmlspecialchars($checklist_data[$index]['keterangan'] ?? ''); ?></td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="tab-pane fade" id="view-statis" role="tabpanel" aria-labelledby="view-statis-tab">
-                            <h4>Checklist Statis</h4>
-                            <table class="table table-bordered table-centered mb-0">
-                                <thead>
-                                    <tr>
-                                        <th>Group</th>
-                                        <th>No</th>
-                                        <th>Point Check</th>
-                                        <th>P1</th>
-                                        <th>P2</th>
-                                        <th>P3</th>
-                                        <th>Keterangan</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php 
-                                    $currentGroup = '';
-                                    $startIndex = count($checklist);
-                                    foreach ($checklist2 as $i => $item): 
-                                        $index = $startIndex + $i;
-                                        if ($currentGroup != $item['group']):
-                                            $currentGroup = $item['group'];
-                                    ?>
-                                        <tr class="table-secondary">
-                                            <td colspan="7"><strong><?php echo htmlspecialchars($currentGroup); ?></strong></td>
-                                        </tr>
-                                    <?php endif; ?>
-                                        <tr>
-                                            <td><?php echo $item['group']; ?></td>
-                                            <td><?php echo $item['no']; ?></td>
-                                            <td><?php echo $item['point']; ?></td>
-                                            <td><?php echo htmlspecialchars($checklist_data[$index]['P1'] ?? ''); ?></td>
-                                            <td><?php echo htmlspecialchars($checklist_data[$index]['P2'] ?? ''); ?></td>
-                                            <td><?php echo htmlspecialchars($checklist_data[$index]['P3'] ?? ''); ?></td>
-                                            <td><?php echo htmlspecialchars($checklist_data[$index]['keterangan'] ?? ''); ?></td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <?php else: ?>
-            <div class="alert alert-danger">Checklist not found.</div>
-            <a href="view.php" class="btn btn-secondary">Back to List</a>
-            <?php endif; ?>
-
-        <?php else: ?>
-            <!-- Insert/Edit Form -->
-            <div class="mb-3">
-                <a href="view.php" class="btn btn-secondary">Back to List</a>
-            </div>
-
-            <div class="card">
-                <div class="card-header">
-                    <h3><?php echo isset($_GET['edit']) ? 'Edit Checklist' : 'Add New Checklist'; ?></h3>
-                </div>
-                <div class="card-body">
-                    <form action="action.php" method="POST">
-                        <?php if (isset($_GET['edit']) && $editData): ?>
-                            <input type="hidden" name="id" value="<?php echo $editData['id']; ?>">
-                        <?php endif; ?>
-                        
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label for="id_customer" class="form-label">Customer</label>
-                                <select class="form-control" id="id_customer" name="id_customer" required>
-                                    <option value="">Select Customer</option>
-                                    <?php
-                                    $customerQuery = "SELECT id_customer, nama_customer FROM customer";
-                                    $customerResult = $conn->query($customerQuery);
-                                    while ($customerRow = $customerResult->fetch_assoc()):
-                                    ?>
-                                        <option value="<?php echo $customerRow['id_customer']; ?>" 
-                                            <?php echo (isset($editData) && $editData['id_customer'] == $customerRow['id_customer']) ? 'selected' : ''; ?>>
-                                            <?php echo htmlspecialchars($customerRow['nama_customer']); ?>
-                                        </option>
-                                    <?php endwhile; ?>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="id_part" class="form-label">Part</label>
-                                <select class="form-control" id="id_part" name="id_part" required>
-                                    <option value="">Select Part</option>
-                                    <?php
-                                    $partQuery = "SELECT id_part, nama_part FROM data_part";
-                                    $partResult = $conn->query($partQuery);
-                                    while ($partRow = $partResult->fetch_assoc()):
-                                    ?>
-                                        <option value="<?php echo $partRow['id_part']; ?>" 
-                                            <?php echo (isset($editData) && $editData['id_part'] == $partRow['id_part']) ? 'selected' : ''; ?>>
-                                            <?php echo htmlspecialchars($partRow['nama_part']); ?>
-                                        </option>
-                                    <?php endwhile; ?>
-                                </select>
+                                            <div class="row">
+                                                <div class="col mt-3">
+                                                    <svg id="tasks-gantt"></svg>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- end gantt view -->
+                                </div>
                             </div>
                         </div>
-            
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label for="id_proses" class="form-label">Process</label>
-                                <select class="form-control" id="id_proses" name="id_proses" required>
-                                    <option value="">Select Process</option>
-                                    <?php
-                                    $processQuery = "SELECT id_proses, proses FROM proses";
-                                    $processResult = $conn->query($processQuery);
-                                    while ($processRow = $processResult->fetch_assoc()):
-                                    ?>
-                                        <option value="<?php echo $processRow['id_proses']; ?>" 
-                                            <?php echo (isset($editData) && $editData['id_proses'] == $processRow['id_proses']) ? 'selected' : ''; ?>>
-                                            <?php echo htmlspecialchars($processRow['proses']); ?>
-                                        </option>
-                                    <?php endwhile; ?>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="date" class="form-label">Date</label>
-                                <input type="date" class="form-control" id="date" name="date" value="<?php echo isset($editData) ? htmlspecialchars($editData['date']) : ''; ?>" required>
-                            </div>
-                        </div>
-
-                        <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="dinamis-tab" data-bs-toggle="tab" data-bs-target="#dinamis" type="button" role="tab" aria-controls="dinamis" aria-selected="true">
-                                    <span class="d-none d-md-block">Dinamis</span>
-                                    <i class="mdi mdi-pencil-box d-md-none d-block"></i>
-                                </button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="statis-tab" data-bs-toggle="tab" data-bs-target="#statis" type="button" role="tab" aria-controls="statis" aria-selected="false">
-                                    <span class="d-none d-md-block">Statis</span>
-                                    <i class="mdi mdi-information-outline d-md-none d-block"></i>
-                                </button>
-                            </li>
-                        </ul>
-                        
-                        <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane fade show active" id="dinamis" role="tabpanel" aria-labelledby="dinamis-tab">
-                                <!-- Dinamis content -->
-                                <h4>Checklist</h4>
-                                <table class="table table-bordered table-centered mb-0">
-                                    <!-- Your existing dinamis table code -->
-                                    <thead>
-                                        <tr>
-                                            <th>Group</th>
-                                            <th>No</th>
-                                            <th>Point Check</th>
-                                            <th>P1</th>
-                                            <th>P2</th>
-                                            <th>P3</th>
-                                            <th>Keterangan</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php 
-                                        $checklist_data = isset($editData) ? json_decode($editData['checklist_data'], true) : [];
-                                        $currentGroup = '';
-                                        
-                                        foreach ($checklist as $index => $item): 
-                                            if ($currentGroup != $item['group']):
-                                                $currentGroup = $item['group'];
-                                        ?>
-                                            <tr class="table-secondary">
-                                                <td colspan="7"><strong><?php echo htmlspecialchars($currentGroup); ?></strong></td>
-                                            </tr>
-                                        <?php endif; ?>
-                                            <tr>
-                                                <td><?php echo $item['group']; ?></td>
-                                                <td><?php echo $item['no']; ?></td>
-                                                <td><?php echo $item['point']; ?></td>
-                                                <td>
-                                                    <input type="text" name="checklist[<?php echo $index; ?>][P1]" 
-                                                        class="form-control" 
-                                                        value="<?php echo isset($checklist_data[$index]) ? htmlspecialchars($checklist_data[$index]['P1'] ?? '') : ''; ?>">
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="checklist[<?php echo $index; ?>][P2]" 
-                                                        class="form-control"
-                                                        value="<?php echo isset($checklist_data[$index]) ? htmlspecialchars($checklist_data[$index]['P2'] ?? '') : ''; ?>">
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="checklist[<?php echo $index; ?>][P3]" 
-                                                        class="form-control"
-                                                        value="<?php echo isset($checklist_data[$index]) ? htmlspecialchars($checklist_data[$index]['P3'] ?? '') : ''; ?>">
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="checklist[<?php echo $index; ?>][keterangan]" 
-                                                        class="form-control"
-                                                        value="<?php echo isset($checklist_data[$index]) ? htmlspecialchars($checklist_data[$index]['keterangan'] ?? '') : ''; ?>">
-                                                </td>
-                                            </tr>
-                                            <?php if ($item['is_last_in_group']): ?>
-                                            <tr class="table-light">
-                                                <td colspan="7"></td>
-                                            </tr>
-                                            <?php endif; ?>
-                                        <?php endforeach; ?>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="tab-pane fade" id="statis" role="tabpanel" aria-labelledby="statis-tab">
-                                <!-- Statis content - Now editable like dinamis -->
-                                <h4>Checklist 2 Items</h4>
-                                <table class="table table-bordered table-centered mb-0">
-                                    <thead>
-                                        <tr>
-                                            <th>Group</th>
-                                            <th>No</th>
-                                            <th>Point Check</th>
-                                            <th>P1</th>
-                                            <th>P2</th>
-                                            <th>P3</th>
-                                            <th>Keterangan</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php 
-                                        $checklist_data_combined = isset($editData) ? json_decode($editData['checklist_data'], true) : [];
-                                        $currentGroup = '';
-                                        $startIndex = count($checklist); // Start index for checklist2
-
-                                        foreach ($checklist2 as $i => $item): 
-                                            $index = $startIndex + $i; // Calculate actual index in the combined data
-                                            if ($currentGroup != $item['group']):
-                                                $currentGroup = $item['group'];
-                                        ?>
-                                            <tr class="table-secondary">
-                                                <td colspan="7"><strong><?php echo htmlspecialchars($currentGroup); ?></strong></td>
-                                            </tr>
-                                        <?php endif; ?>
-                                            <tr>
-                                                <td><?php echo $item['group']; ?></td>
-                                                <td><?php echo $item['no']; ?></td>
-                                                <td><?php echo $item['point']; ?></td>
-                                                <td>
-                                                    <input type="text" name="checklist[<?php echo $index; ?>][P1]" 
-                                                        class="form-control" 
-                                                        value="<?php echo isset($checklist_data_combined[$index]) ? htmlspecialchars($checklist_data_combined[$index]['P1'] ?? '') : ''; ?>">
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="checklist[<?php echo $index; ?>][P2]" 
-                                                        class="form-control"
-                                                        value="<?php echo isset($checklist_data_combined[$index]) ? htmlspecialchars($checklist_data_combined[$index]['P2'] ?? '') : ''; ?>">
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="checklist[<?php echo $index; ?>][P3]" 
-                                                        class="form-control"
-                                                        value="<?php echo isset($checklist_data_combined[$index]) ? htmlspecialchars($checklist_data_combined[$index]['P3'] ?? '') : ''; ?>">
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="checklist[<?php echo $index; ?>][keterangan]" 
-                                                        class="form-control"
-                                                        value="<?php echo isset($checklist_data_combined[$index]) ? htmlspecialchars($checklist_data_combined[$index]['keterangan'] ?? '') : ''; ?>">
-                                                </td>
-                                            </tr>
-                                        <?php endforeach; ?>
-                                    </tbody>
-                                </table>
-
-                                <h4>Checklist 3 Items</h4>
-                                <table class="table table-bordered table-centered mb-0">
-                                    <thead>
-                                        <tr>
-                                            <th>Group</th>
-                                            <th>No</th>
-                                            <th>Point Check</th>
-                                            <th>P1</th>
-                                            <th>P2</th>
-                                            <th>P3</th>
-                                            <th>Keterangan</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php 
-                                        $startIndex += count($checklist2); // Start index for checklist3
-
-                                        foreach ($checklist3 as $i => $item): 
-                                            $index = $startIndex + $i; // Calculate actual index in the combined data
-                                            if ($currentGroup != $item['group']):
-                                                $currentGroup = $item['group'];
-                                        ?>
-                                            <tr class="table-secondary">
-                                                <td colspan="7"><strong><?php echo htmlspecialchars($currentGroup); ?></strong></td>
-                                            </tr>
-                                        <?php endif; ?>
-                                            <tr>
-                                                <td><?php echo $item['group']; ?></td>
-                                                <td><?php echo $item['no']; ?></td>
-                                                <td><?php echo $item['point']; ?></td>
-                                                <td>
-                                                    <input type="text" name="checklist[<?php echo $index; ?>][P1]" 
-                                                        class="form-control" 
-                                                        value="<?php echo isset($checklist_data_combined[$index]) ? htmlspecialchars($checklist_data_combined[$index]['P1'] ?? '') : ''; ?>">
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="checklist[<?php echo $index; ?>][P2]" 
-                                                        class="form-control"
-                                                        value="<?php echo isset($checklist_data_combined[$index]) ? htmlspecialchars($checklist_data_combined[$index]['P2'] ?? '') : ''; ?>">
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="checklist[<?php echo $index; ?>][P3]" 
-                                                        class="form-control"
-                                                        value="<?php echo isset($checklist_data_combined[$index]) ? htmlspecialchars($checklist_data_combined[$index]['P3'] ?? '') : ''; ?>">
-                                                </td>
-                                                <td>
-                                                    <input type="text" name="checklist[<?php echo $index; ?>][keterangan]" 
-                                                        class="form-control"
-                                                        value="<?php echo isset($checklist_data_combined[$index]) ? htmlspecialchars($checklist_data_combined[$index]['keterangan'] ?? '') : ''; ?>">
-                                                </td>
-                                            </tr>
-                                        <?php endforeach; ?>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        
-                        <div class="mt-3">
-                            <button type="submit" class="btn btn-primary"><?php echo isset($_GET['edit']) ? 'Update' : 'Save'; ?> Checklist</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        <?php endif; ?>
-         <!-- end preview-->
-                                         </div> <!-- end tab-content-->
-                                     </div> <!-- end card body-->
-                                 </div> <!-- end card -->
-                             </div><!-- end col-->
                          </div> <!-- end row-->
                      </div> <!-- container -->
                  </div> <!-- content -->
