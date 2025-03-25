@@ -12,16 +12,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $date = $_POST['date'];
     $checklist_data = json_encode($_POST['checklist']);
 
+    // Fetch related names for customer, part, and process
+    $customerQuery = "SELECT nama_customer FROM customer WHERE id_customer = ?";
+    $stmt = $conn->prepare($customerQuery);
+    $stmt->bind_param("i", $id_customer);
+    $stmt->execute();
+    $customerResult = $stmt->get_result();
+    $nama_customer = $customerResult->fetch_assoc()['nama_customer'];
+    $stmt->close();
+
+    $partQuery = "SELECT nama_part FROM data_part WHERE id_part = ?";
+    $stmt = $conn->prepare($partQuery);
+    $stmt->bind_param("i", $id_part);
+    $stmt->execute();
+    $partResult = $stmt->get_result();
+    $nama_part = $partResult->fetch_assoc()['nama_part'];
+    $stmt->close();
+
+    $processQuery = "SELECT proses FROM proses WHERE id_proses = ?";
+    $stmt = $conn->prepare($processQuery);
+    $stmt->bind_param("i", $id_proses);
+    $stmt->execute();
+    $processResult = $stmt->get_result();
+    $proses = $processResult->fetch_assoc()['proses'];
+    $stmt->close();
+
     if ($id) {
         // Update
-        $sql = "UPDATE checklist_katakanesha SET id_customer = ?, id_part = ?, id_proses = ?, date = ?, checklist_data = ? WHERE id = ?";
+        $sql = "UPDATE checklist_katakanesha 
+                SET id_customer = ?, id_part = ?, id_proses = ?, date = ?, checklist_data = ?, 
+                    nama_customer = ?, nama_part = ?, proses = ? 
+                WHERE id = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("iiissi", $id_customer, $id_part, $id_proses, $date, $checklist_data, $id);
+        $stmt->bind_param("iiisssssi", $id_customer, $id_part, $id_proses, $date, $checklist_data, $nama_customer, $nama_part, $proses, $id);
     } else {
         // Create
-        $sql = "INSERT INTO checklist_katakanesha (id_customer, id_part, id_proses, date, checklist_data) VALUES (?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO checklist_katakanesha (id_customer, id_part, id_proses, date, checklist_data, nama_customer, nama_part, proses) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("iiiss", $id_customer, $id_part, $id_proses, $date, $checklist_data);
+        $stmt->bind_param("iiisssss", $id_customer, $id_part, $id_proses, $date, $checklist_data, $nama_customer, $nama_part, $proses);
     }
 
     if ($stmt->execute()) {
