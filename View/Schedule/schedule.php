@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
  <html lang="en">
      
@@ -20,7 +21,7 @@
          <link href="../../assets/css/vendor/fixedColumns.bootstrap5.css" rel="stylesheet" type="text/css" />
          <!-- third party css end -->
 
-         <link href="assets/css/vendor/frappe-gantt.css" rel="stylesheet" type="text/css" />
+         <link href="../../assets/css/vendor/frappe-gantt.css" rel="stylesheet" type="text/css" />
 
  
          <!-- App css -->
@@ -271,12 +272,7 @@
                                             
                                             <div class="row">
                                                 <div class="col mt-3">
-                                                    <h5>Act</h5>
-                                                    <svg id="tasks-gantt-act"></svg>
-                                                </div>
-                                                <div class="col mt-3">
-                                                    <h5>Plant</h5>
-                                                    <svg id="tasks-gantt-plant"></svg>
+                                                    <svg id="tasks-gantt"></svg>
                                                 </div>
                                             </div>
                                         </div>
@@ -398,8 +394,8 @@
          <!-- /End-bar -->
  
  
-  <!-- bundle -->
-  <script src="../../assets/js/vendor.min.js"></script>
+         <!-- bundle -->
+         <script src="../../assets/js/vendor.min.js"></script>
          <script src="../../assets/js/app.min.js"></script>
  
          <!-- third party js -->
@@ -423,48 +419,11 @@
 
 
            <!-- gantt js-->
-        <script src="assets/js/vendor/frappe-gantt.min.js"></script>
+        <script src="../../assets/js/vendor/frappe-gantt.min.js"></script>
 
         <!-- demo app -->
-        <script src="assets/js/pages/demo.project-gantt.js"></script>
+        <script src="../../assets/js/pages/demo.project-gantt.js"></script>
         <!-- end demo js-->
-         <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        // Sample data for Act and Plant
-        const actTasks = [
-            { id: 'Task 1', name: 'Task 1', start: '2023-10-01', end: '2023-10-05', progress: 50 },
-            { id: 'Task 2', name: 'Task 2', start: '2023-10-06', end: '2023-10-10', progress: 75 }
-        ];
-
-        const plantTasks = [
-            { id: 'Task A', name: 'Task A', start: '2023-10-01', end: '2023-10-07', progress: 30 },
-            { id: 'Task B', name: 'Task B', start: '2023-10-08', end: '2023-10-12', progress: 60 }
-        ];
-
-        // Initialize Gantt charts
-        const actGantt = new Gantt("#tasks-gantt-act", actTasks, {
-            view_mode: 'Week',
-            date_format: 'YYYY-MM-DD',
-            custom_popup_html: function (task) {
-                return `<div class="popup"><strong>${task.name}</strong><br>Start: ${task.start}<br>End: ${task.end}</div>`;
-            }
-        });
-
-        const plantGantt = new Gantt("#tasks-gantt-plant", plantTasks, {
-            view_mode: 'Week',
-            date_format: 'YYYY-MM-DD',
-            custom_popup_html: function (task) {
-                return `<div class="popup"><strong>${task.name}</strong><br>Start: ${task.start}<br>End: ${task.end}</div>`;
-            }
-        });
-
-        // Adjust Gantt chart sizes on window resize
-        window.addEventListener("resize", function () {
-            actGantt.refresh(actTasks);
-            plantGantt.refresh(plantTasks);
-        });
-    });
-</script>
          <!-- end demo js-->
  
      </body>
