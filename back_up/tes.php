@@ -11,5 +11,7 @@
  * lalu jadikan semuanya dalam bentuk tampilan template yang terdapat dalam bootstrap
  * jangan lupa dihosting
  * 
+ * 
+ *  Kurang Project Schedule
  */
 ?>
