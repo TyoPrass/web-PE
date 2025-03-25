@@ -574,7 +574,12 @@ include_once('action.php');
                     </thead>
                     <tbody>
                         <?php
-                        $sql = "SELECT * FROM checklist_katakanesha ORDER BY id DESC";
+                        $sql = "SELECT checklist_katakanesha.*, customer.nama_customer, data_part.nama_part, proses.proses 
+                                FROM checklist_katakanesha
+                                LEFT JOIN customer ON checklist_katakanesha.id_customer = customer.id_customer
+                                LEFT JOIN data_part ON checklist_katakanesha.id_part = data_part.id_part
+                                LEFT JOIN proses ON checklist_katakanesha.id_proses = proses.id_proses
+                                ORDER BY checklist_katakanesha.id DESC";
                         $result = $conn->query($sql);
                         ?>
                         <?php if ($result->num_rows > 0): ?>
@@ -582,10 +587,10 @@ include_once('action.php');
                             <?php while ($row = $result->fetch_assoc()): ?>
                                 <tr>
                                     <td><?php echo $nomer++; ?></td>
-                                    <td><?php echo $row['part_no']; ?></td>
-                                    <td><?php echo $row['part_name']; ?></td>
-                                    <td><?php echo $row['date']; ?></td>
-                                    <td><?php echo $row['process']; ?></td>
+                                    <td><?php echo htmlspecialchars($row['nama_customer']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['nama_part']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['date']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['proses']); ?></td>
                                     <td>
                                         <a href="view.php?view=<?php echo $row['id']; ?>" class="btn btn-info btn-sm">View</a>
                                         <a href="view.php?edit=<?php echo $row['id']; ?>" class="btn btn-warning btn-sm">Edit</a>
@@ -627,22 +632,22 @@ include_once('action.php');
                 <div class="card-body">
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <label class="form-label">Part No</label>
-                            <p class="form-control-static"><?php echo htmlspecialchars($viewData['part_no']); ?></p>
+                            <label class="form-label">Customer</label>
+                            <p class="form-control-static"><?php echo htmlspecialchars($viewData['nama_customer']); ?></p>
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label">Part Name</label>
-                            <p class="form-control-static"><?php echo htmlspecialchars($viewData['part_name']); ?></p>
+                            <label class="form-label">Part</label>
+                            <p class="form-control-static"><?php echo htmlspecialchars($viewData['nama_part']); ?></p>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <label class="form-label">Date</label>
-                            <p class="form-control-static"><?php echo htmlspecialchars($viewData['date']); ?></p>
+                            <label class="form-label">Process</label>
+                            <p class="form-control-static"><?php echo htmlspecialchars($viewData['proses']); ?></p>
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label">Process</label>
-                            <p class="form-control-static"><?php echo htmlspecialchars($viewData['process']); ?></p>
+                            <label class="form-label">Date</label>
+                            <p class="form-control-static"><?php echo htmlspecialchars($viewData['date']); ?></p>
                         </div>
                     </div>
 
@@ -766,22 +771,58 @@ include_once('action.php');
                         
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <label for="part_no" class="form-label">Part No</label>
-                                <input type="text" class="form-control" id="part_no" name="part_no" value="<?php echo isset($editData) ? htmlspecialchars($editData['part_no']) : ''; ?>" required>
+                                <label for="id_customer" class="form-label">Customer</label>
+                                <select class="form-control" id="id_customer" name="id_customer" required>
+                                    <option value="">Select Customer</option>
+                                    <?php
+                                    $customerQuery = "SELECT id_customer, nama_customer FROM customer";
+                                    $customerResult = $conn->query($customerQuery);
+                                    while ($customerRow = $customerResult->fetch_assoc()):
+                                    ?>
+                                        <option value="<?php echo $customerRow['id_customer']; ?>" 
+                                            <?php echo (isset($editData) && $editData['id_customer'] == $customerRow['id_customer']) ? 'selected' : ''; ?>>
+                                            <?php echo htmlspecialchars($customerRow['nama_customer']); ?>
+                                        </option>
+                                    <?php endwhile; ?>
+                                </select>
                             </div>
                             <div class="col-md-6">
-                                <label for="part_name" class="form-label">Part Name</label>
-                                <input type="text" class="form-control" id="part_name" name="part_name" value="<?php echo isset($editData) ? htmlspecialchars($editData['part_name']) : ''; ?>" required>
+                                <label for="id_part" class="form-label">Part</label>
+                                <select class="form-control" id="id_part" name="id_part" required>
+                                    <option value="">Select Part</option>
+                                    <?php
+                                    $partQuery = "SELECT id_part, nama_part FROM data_part";
+                                    $partResult = $conn->query($partQuery);
+                                    while ($partRow = $partResult->fetch_assoc()):
+                                    ?>
+                                        <option value="<?php echo $partRow['id_part']; ?>" 
+                                            <?php echo (isset($editData) && $editData['id_part'] == $partRow['id_part']) ? 'selected' : ''; ?>>
+                                            <?php echo htmlspecialchars($partRow['nama_part']); ?>
+                                        </option>
+                                    <?php endwhile; ?>
+                                </select>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <label for="date" class="form-label">Date</label>
-                                <input type="date" class="form-control" id="date" name="date" value="<?php echo isset($editData) ? htmlspecialchars($editData['date']) : ''; ?>" required>
+                                <label for="id_proses" class="form-label">Process</label>
+                                <select class="form-control" id="id_proses" name="id_proses" required>
+                                    <option value="">Select Process</option>
+                                    <?php
+                                    $processQuery = "SELECT id_proses, proses FROM proses";
+                                    $processResult = $conn->query($processQuery);
+                                    while ($processRow = $processResult->fetch_assoc()):
+                                    ?>
+                                        <option value="<?php echo $processRow['id_proses']; ?>" 
+                                            <?php echo (isset($editData) && $editData['id_proses'] == $processRow['id_proses']) ? 'selected' : ''; ?>>
+                                            <?php echo htmlspecialchars($processRow['proses']); ?>
+                                        </option>
+                                    <?php endwhile; ?>
+                                </select>
                             </div>
                             <div class="col-md-6">
-                                <label for="process" class="form-label">Process</label>
-                                <input type="text" class="form-control" id="process" name="process" value="<?php echo isset($editData) ? htmlspecialchars($editData['process']) : ''; ?>" required>
+                                <label for="date" class="form-label">Date</label>
+                                <input type="date" class="form-control" id="date" name="date" value="<?php echo isset($editData) ? htmlspecialchars($editData['date']) : ''; ?>" required>
                             </div>
                         </div>
 

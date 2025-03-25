@@ -6,22 +6,22 @@ session_start();
 // Handle Create and Update
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id = isset($_POST['id']) ? $_POST['id'] : null;
-    $part_no = $_POST['part_no'];
-    $part_name = $_POST['part_name'];
+    $id_customer = $_POST['id_customer'];
+    $id_part = $_POST['id_part'];
+    $id_proses = $_POST['id_proses'];
     $date = $_POST['date'];
-    $process = $_POST['process'];
     $checklist_data = json_encode($_POST['checklist']);
 
     if ($id) {
         // Update
-        $sql = "UPDATE checklist_katakanesha SET part_no = ?, part_name = ?, date = ?, process = ?, checklist_data = ? WHERE id = ?";
+        $sql = "UPDATE checklist_katakanesha SET id_customer = ?, id_part = ?, id_proses = ?, date = ?, checklist_data = ? WHERE id = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sssssi", $part_no, $part_name, $date, $process, $checklist_data, $id);
+        $stmt->bind_param("iiissi", $id_customer, $id_part, $id_proses, $date, $checklist_data, $id);
     } else {
         // Create
-        $sql = "INSERT INTO checklist_katakanesha (part_no, part_name, date, process, checklist_data) VALUES (?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO checklist_katakanesha (id_customer, id_part, id_proses, date, checklist_data) VALUES (?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sssss", $part_no, $part_name, $date, $process, $checklist_data);
+        $stmt->bind_param("iiiss", $id_customer, $id_part, $id_proses, $date, $checklist_data);
     }
 
     if ($stmt->execute()) {
