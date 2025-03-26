@@ -1,74 +1,53 @@
 <?php
-// Start the session
-session_start(); // This must be the very first line of your script
-
-// Database connection setup
-include_once('Database/koneksi.php');
-
-// Check if user is already logged in
-if (isset($_SESSION['user_id'])) {
-    header("Location: View/Dashboard/dashboard.php");
-    exit();
-}
-
-// Process login
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $username = trim($_POST['username']);
-    $password = $_POST['password'];
-
-    // Validate input
-    if (empty($username) || empty($password)) {
-        $error = "Username and password cannot be empty!";
-    } else {
-        // Prepare and execute the SQL statement with proper error handling
-        $sql = "SELECT * FROM user WHERE username = ?";
-        $stmt = $conn->prepare($sql);
-        
-        if ($stmt) {
-            $stmt->bind_param("s", $username);
-            $stmt->execute();
-            $result = $stmt->get_result();
-
-            if ($result->num_rows > 0) {
-                $user = $result->fetch_assoc();
-                // Verify the password
-                if (password_verify($password, $user['password'])) {
-                    // Set session variables
-                    $_SESSION['user_id'] = $user['id'];
-                    $_SESSION['username'] = $user['username'];
-                    $_SESSION['login_time'] = time();
-                    
-                    // Update last login timestamp if needed
-                    $update_sql = "UPDATE user SET last_login = NOW() WHERE id = ?";
-                    $update_stmt = $conn->prepare($update_sql);
-                    if ($update_stmt) {
-                        $update_stmt->bind_param("i", $user['id']);
-                        $update_stmt->execute();
-                        $update_stmt->close();
-                    }
-                    
-                    // Redirect to dashboard
-                    header("Location: View/Dashboard/dashboard.php");
-                    exit();
-                } else {
-                    $error = "Invalid password!";
-                }
-            } else {
-                $error = "Username not found!";
-            }
-            $stmt->close();
-        } else {
-            $error = "Database error. Please try again later.";
-        }
-    }
-}
-
-// If this is the index page being accessed directly, you can add any initialization code here
-if (!isset($_SESSION['visited'])) {
-    $_SESSION['visited'] = true;
-    // Any first-time visitor logic can go here
-}
-?>
+ // Start the session
+ session_start();
+ 
+ // Database connection setup
+ include_once('Database/koneksi.php'); // Include the correct path to your connection file
+ 
+ // Check if user is already logged in
+ if (isset($_SESSION['user_id'])) {
+     header("Location: View/Dashboard/dashboard.php"); // Redirect to dashboard if already logged in
+     exit();
+ }
+ 
+ // Process login
+ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+     $username = $_POST['username'];
+     $password = $_POST['password'];
+ 
+     // Validate input
+     if (empty($username) || empty($password)) {
+         $error = "Username and password cannot be empty!";
+     } else {
+         // Prepare and execute the SQL statement
+         $sql = "SELECT * FROM user WHERE username = ?";
+         $stmt = $conn->prepare($sql);
+         $stmt->bind_param("s", $username);
+         $stmt->execute();
+         $result = $stmt->get_result();
+ 
+         // Check if the user exists
+         if ($result->num_rows > 0) {
+             $user = $result->fetch_assoc();
+             // Verify the password
+             if (password_verify($password, $user['password'])) {
+                 // Set session variables
+                 $_SESSION['user_id'] = $user['id']; // Assuming 'id' is the primary key
+                 $_SESSION['username'] = $user['username'];
+ 
+                 // Redirect to dashboard after successful login
+                 header("Location: View/Dashboard/dashboard.php");
+                 exit();
+             } else {
+                 $error = "Invalid password!";
+             }
+         } else {
+             $error = "Username not found!";
+         }
+     }
+ }
+ ?>
 
 <!DOCTYPE html>
 <html lang="en">
