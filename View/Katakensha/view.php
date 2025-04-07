@@ -1022,6 +1022,56 @@ include_once('action.php');
                                         <?php endforeach; ?>
                                     </tbody>
                                 </table>
+
+                                <h4>Approvment</h4>
+                                <table class="table table-bordered table-centered mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Group</th>
+                                            <th>No</th>
+                                            <th>Point Check</th>
+                                            <th>P1</th>
+                                            <th>P2</th>
+                                            <th>P3</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php 
+                                        $startIndex += count($checklist3); // Start index for checklist4
+
+                                        foreach ($checklist4 as $i => $item): 
+                                            $index = $startIndex + $i; // Calculate actual index in the combined data
+                                            if ($currentGroup != $item['group']):
+                                                $currentGroup = $item['group'];
+                                        ?>
+                                            <tr class="table-secondary">
+                                                <td colspan="7"><strong><?php echo htmlspecialchars($currentGroup); ?></strong></td>
+                                            </tr>
+                                        <?php endif; ?>
+                                            <tr>
+                                                <td><?php echo $item['group']; ?></td>
+                                                <td><?php echo $item['no'] ?? ''; ?></td>
+                                                <td><?php echo $item['point']; ?></td>
+                                                <td>
+                                                    <input type="text" name="checklist[<?php echo $index; ?>][P1]" 
+                                                        class="form-control" 
+                                                        value="<?php echo isset($checklist_data_combined[$index]) ? htmlspecialchars($checklist_data_combined[$index]['P1'] ?? '') : ''; ?>">
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="checklist[<?php echo $index; ?>][P2]" 
+                                                        class="form-control"
+                                                        value="<?php echo isset($checklist_data_combined[$index]) ? htmlspecialchars($checklist_data_combined[$index]['P2'] ?? '') : ''; ?>">
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="checklist[<?php echo $index; ?>][P3]" 
+                                                        class="form-control"
+                                                        value="<?php echo isset($checklist_data_combined[$index]) ? htmlspecialchars($checklist_data_combined[$index]['P3'] ?? '') : ''; ?>">
+                                                </td>
+                                 
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                         

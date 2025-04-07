@@ -1,52 +1,3 @@
-<?php
-include_once('../Database/koneksi.php');
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $action = $_POST['action'] ?? '';
-
-    if ($action === 'save') {
-        $id_jadwal = $_POST['id_jadwal'] ?? null;
-        $nama_customer = $_POST['nama_customer'];
-        $project = $_POST['project'];
-
-        if ($id_jadwal) {
-            // Update existing record
-            $sql = "UPDATE jadwal SET nama_customer = ?, project = ? WHERE id_jadwal = ?";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("ssi", $nama_customer, $project, $id_jadwal);
-        } else {
-            // Insert new record
-            $sql = "INSERT INTO jadwal (nama_customer, project) VALUES (?, ?)";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("ss", $nama_customer, $project);
-        }
-
-        if ($stmt->execute()) {
-            echo json_encode(['success' => true]);
-        } else {
-            echo json_encode(['success' => false, 'message' => 'Failed to save project']);
-        }
-        exit;
-    }
-
-    if ($action === 'delete') {
-        $id_jadwal = $_POST['id_jadwal'];
-        $sql = "DELETE FROM jadwal WHERE id_jadwal = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("i", $id_jadwal);
-
-        if ($stmt->execute()) {
-            echo json_encode(['success' => true]);
-        } else {
-            echo json_encode(['success' => false, 'message' => 'Failed to delete project']);
-        }
-        exit;
-    }
-}
-
-echo json_encode(['success' => false, 'message' => 'Invalid request']);
-?>
-
 
 <!DOCTYPE html>
  <html lang="en">
@@ -59,7 +10,7 @@ echo json_encode(['success' => false, 'message' => 'Invalid request']);
          <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
          <meta content="Coderthemes" name="author" />
          <!-- App favicon -->
-         <link rel="shortcut icon" href="../../assets/images/favicon.ico">
+         <link rel="shortcut icon" href="assets/images/favicon.ico">
  
          <!-- third party css -->
          <link href="../../assets/css/vendor/dataTables.bootstrap5.css" rel="stylesheet" type="text/css" />
@@ -70,7 +21,7 @@ echo json_encode(['success' => false, 'message' => 'Invalid request']);
          <link href="../../assets/css/vendor/fixedColumns.bootstrap5.css" rel="stylesheet" type="text/css" />
          <!-- third party css end -->
 
-         <link href="../../assets/css/vendor/frappe-gantt.css" rel="stylesheet" type="text/css" />
+         <link href="assets/css/vendor/frappe-gantt.css" rel="stylesheet" type="text/css" />
 
  
          <!-- App css -->
@@ -139,42 +90,155 @@ echo json_encode(['success' => false, 'message' => 'Invalid request']);
                                             </div>
                                             <!-- end search box -->
                                         </div>
+
                                         <div class="row">
                                             <div class="col">
                                                 <div class="pe-xl-3" data-simplebar style="max-height: 535px;">
-                                                    <!-- Add New Project Button -->
-                                                    <button type="button" class="btn btn-primary btn-sm mb-3" id="addProjectBtn">Add New Project</button>
-
-                                                    <!-- Project List -->
-                                                    <div id="projectList">
-                                                        <a href="javascript:void(0);" class="text-body">
-                                                            <div class="d-flex mt-1 px-2 py-2">
-                                                                <div class="avatar-sm d-table">
-                                                                    <span class="avatar-title bg-danger-lighten rounded-circle text-danger">
-                                                                        <i class='uil uil-gold font-24'></i>
-                                                                    </span>
-                                                                </div>
-                                                                <div class="ms-2">
-                                                                    <h5 class="mt-0 mb-0">
-                                                                        Eagle
-                                                                        <span class="badge badge-danger-lighten ms-1">Delayed</span>
-                                                                    </h5>
-                                                                    <p class="mt-1 mb-0 text-muted">
-                                                                        ID: proj108
-                                                                    </p>
-                                                                </div>
-                                                                <div class="ms-auto">
-                                                                    <button class="btn btn-sm btn-warning editProjectBtn">Edit</button>
-                                                                    <button class="btn btn-sm btn-danger deleteProjectBtn">Delete</button>
-                                                                </div>
+                                                    <a href="javascript:void(0);" class="text-body">
+                                                        <div class="d-flex mt-2 p-2">
+                                                            <div class="avatar-sm d-table">
+                                                                <span class="avatar-title bg-success-lighten rounded-circle text-success">
+                                                                    <i class='uil uil-moonset font-24'></i>
+                                                                </span>
                                                             </div>
-                                                        </a>
-                                                    </div>
+                                                            <div class="ms-2">
+                                                                <h5 class="mt-0 mb-0">
+                                                                    Lunar
+                                                                    <span class="badge badge-success-lighten ms-1">On Track</span>
+                                                                </h5>
+                                                                <p class="mt-1 mb-0 text-muted">
+                                                                    ID: proj101
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+
+                                                    <a href="javascript:void(0);" class="text-body">
+                                                        <div class="d-flex bg-light p-2">
+                                                            <div class="avatar-sm d-table">
+                                                                <span
+                                                                    class="avatar-title bg-success-lighten rounded-circle text-success">
+                                                                    <i class='uil uil-moon-eclipse font-24'></i>
+                                                                </span>
+                                                            </div>
+                                                            <div class="ms-2">
+                                                                <h5 class="mt-0 mb-0">
+                                                                    Dark Moon
+                                                                    <span class="badge badge-success-lighten ms-1">On
+                                                                        Track</span>
+                                                                </h5>
+                                                                <p class="mt-1 mb-0 text-muted">
+                                                                    ID: proj102
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+
+                                                    <a href="javascript:void(0);" class="text-body">
+                                                        <div class="d-flex mt-1 px-2 py-2">
+                                                            <div class="avatar-sm d-table">
+                                                                <span
+                                                                    class="avatar-title bg-warning-lighten rounded-circle text-warning">
+                                                                    <i class='uil uil-mountains font-24'></i>
+                                                                </span>
+                                                            </div>
+                                                            <div class="ms-2">
+                                                                <h5 class="mt-0 mb-0">
+                                                                    Aurora
+                                                                    <span class="badge badge-warning-lighten ms-1">Locked</span>
+                                                                </h5>
+                                                                <p class="mt-1 mb-0 text-muted">
+                                                                    ID: proj103
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+
+                                                    <a href="javascript:void(0);" class="text-body">
+                                                        <div class="d-flex mt-1 px-2 py-2">
+                                                            <div class="avatar-sm d-table">
+                                                                <span
+                                                                    class="avatar-title bg-warning-lighten rounded-circle text-warning">
+                                                                    <i class='uil uil-moon font-24'></i>
+                                                                </span>
+                                                            </div>
+                                                            <div class="ms-2">
+                                                                <h5 class="mt-0 mb-0">
+                                                                    Blue Moon
+                                                                    <span
+                                                                        class="badge badge-warning-lighten ms-1">Locked</span>
+                                                                </h5>
+                                                                <p class="mt-1 mb-0 text-muted">
+                                                                    ID: proj104
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+
+                                                    <a href="javascript:void(0);" class="text-body">
+                                                        <div class="d-flex mt-1 px-2 py-2">
+                                                            <div class="avatar-sm d-table">
+                                                                <span
+                                                                    class="avatar-title bg-danger-lighten rounded-circle text-danger">
+                                                                    <i class='uil uil-ship font-24'></i>
+                                                                </span>
+                                                            </div>
+                                                            <div class="ms-2">
+                                                                <h5 class="mt-0 mb-0">
+                                                                    Casanova
+                                                                    <span
+                                                                        class="badge badge-danger-lighten ms-1">Delayed</span>
+                                                                </h5>
+                                                                <p class="mt-1 mb-0 text-muted">
+                                                                    ID: proj106
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+
+                                                    <a href="javascript:void(0);" class="text-body">
+                                                        <div class="d-flex mt-1 px-2 py-2">
+                                                            <div class="avatar-sm d-table">
+                                                                <span
+                                                                    class="avatar-title bg-success-lighten rounded-circle text-success">
+                                                                    <i class='uil uil-subway-alt font-24'></i>
+                                                                </span>
+                                                            </div>
+                                                            <div class="ms-2">
+                                                                <h5 class="mt-0 mb-0">
+                                                                    Darwin
+                                                                    <span class="badge badge-success-lighten ms-1">On
+                                                                        Track</span>
+                                                                </h5>
+                                                                <p class="mt-1 mb-0 text-muted">
+                                                                    ID: proj107
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+
+                                                    <a href="javascript:void(0);" class="text-body">
+                                                        <div class="d-flex mt-1 px-2 py-2">
+                                                            <div class="avatar-sm d-table">
+                                                                <span
+                                                                    class="avatar-title bg-danger-lighten rounded-circle text-danger">
+                                                                    <i class='uil uil-gold font-24'></i>
+                                                                </span>
+                                                            </div>
+                                                            <div class="ms-2">
+                                                                <h5 class="mt-0 mb-0">
+                                                                    Eagle
+                                                                    <span class="badge badge-danger-lighten ms-1">Delayed</span>
+                                                                </h5>
+                                                                <p class="mt-1 mb-0 text-muted">
+                                                                    ID: proj108
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
-
-                                    
                                     </div>
                                     <!-- end projects -->
 
@@ -205,7 +269,7 @@ echo json_encode(['success' => false, 'message' => 'Invalid request']);
                                                     </div>
                                                 </div>
                                             </div>
-                                                                                       
+                                            
                                             <div class="row">
                                                 <div class="col mt-3">
                                                     <svg id="tasks-gantt"></svg>
@@ -328,53 +392,6 @@ echo json_encode(['success' => false, 'message' => 'Invalid request']);
  
          <div class="rightbar-overlay"></div>
          <!-- /End-bar -->
-
-         <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    // Open Add Project Modal
-    document.getElementById('addProjectBtn').addEventListener('click', function () {
-        document.getElementById('projectForm').reset();
-        document.getElementById('id_jadwal').value = '';
-        document.getElementById('projectModalLabel').innerText = 'Add New Project';
-        new bootstrap.Modal(document.getElementById('projectModal')).show();
-    });
-
-    // Edit Project
-    document.querySelectorAll('.editProjectBtn').forEach(function (button) {
-        button.addEventListener('click', function () {
-            const projectRow = this.closest('.d-flex');
-            document.getElementById('id_jadwal').value = projectRow.dataset.id;
-            document.getElementById('nama_customer').value = projectRow.dataset.customer;
-            document.getElementById('project').value = projectRow.dataset.project;
-            document.getElementById('projectModalLabel').innerText = 'Edit Project';
-            new bootstrap.Modal(document.getElementById('projectModal')).show();
-        });
-    });
-
-    // Delete Project
-    document.querySelectorAll('.deleteProjectBtn').forEach(function (button) {
-        button.addEventListener('click', function () {
-            if (confirm('Are you sure you want to delete this project?')) {
-                const projectId = this.closest('.d-flex').dataset.id;
-                fetch('actions/jadwal_actions.php', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: `action=delete&id_jadwal=${projectId}`
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            alert('Project deleted successfully!');
-                            location.reload();
-                        } else {
-                            alert('Failed to delete project: ' + data.message);
-                        }
-                    });
-            }
-        });
-    });
-});
-                                        </script>
  
  
          <!-- bundle -->

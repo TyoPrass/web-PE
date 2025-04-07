@@ -315,8 +315,36 @@ $checklist3 = [
     ['group' => 'X-Painting', 'no' => '1', 'point' => 'Dies sudah dipainting'],
     ['group' => 'X-Painting', 'no' => '2', 'point' => 'Painting dies sesuai permintaan Customer'],
 
+
+
     // Additional groups can be added here...
 ];
+
+
+// Untuk Data Statis
+$checklist4 = [
+        // TARGET
+        ['group' => 'TARGET',  'point' => 'Kondisi'],
+        ['group' => 'TARGET',  'point' => 'Total Item Ok'],
+        ['group' => 'TARGET', 'point' => 'Total Item Check'],
+        ['group' => 'TARGET',  'point' => 'Presentase (%)'],
+        ['group' => 'TARGET', 'point' => 'Prepared'],
+        ['group' => 'TARGET', 'point' => 'Checked'],
+    
+];
+
+// Untuk Data Dinamis
+$checklist5 = [
+        // TARGET
+        ['group' => 'TARGET',  'point' => 'Kondisi'],
+        ['group' => 'TARGET',  'point' => 'Total Item Ok'],
+        ['group' => 'TARGET', 'point' => 'Total Item Check'],
+        ['group' => 'TARGET',  'point' => 'Presentase (%)'],
+        ['group' => 'TARGET', 'point' => 'Prepared'],
+        ['group' => 'TARGET', 'point' => 'Checked'],
+    
+];
+
 
 
 // Add an attribute to identify the last item in each group
