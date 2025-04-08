@@ -124,7 +124,7 @@ while ($row = $result->fetch_assoc()) {
                                                 </div>
                                             </form>
                                         </div>
-                                        <div class="container mt-3">
+                                        <div class="container mt-3" style="max-height: 400px; overflow-y: auto;">
                                             <?php if ($action === 'view'): ?>
                                                 <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#taskModal">Add New Project</button>
                                                 <div class="row">
@@ -144,6 +144,9 @@ while ($row = $result->fetch_assoc()) {
                                                 </div>
                                             <?php endif; ?>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
 
                                         <!-- Task Modal -->
                                         <div class="modal fade" id="taskModal" tabindex="-1" aria-labelledby="taskModalLabel" aria-hidden="true">
