@@ -1,3 +1,56 @@
+<?php
+include_once('Database/koneksi.php');
+// Handle CRUD operations
+$action = isset($_GET['action']) ? $_GET['action'] : 'view';
+$id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if ($action === 'add') {
+        $nama_part = $_POST['nama_part'];
+        $no_project = $_POST['no_project'];
+        $status = $_POST['status'];
+        $gantt_data = json_encode([
+            "tasks" => [],
+            "view_mode" => "Week"
+        ]);
+
+        $sql = "INSERT INTO projects (nama_part, no_project, status, gantt_data) VALUES (?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssss", $nama_part, $no_project, $status, $gantt_data);
+        $stmt->execute();
+        header("Location: gant.php");
+        exit();
+    } elseif ($action === 'edit') {
+        $nama_part = $_POST['nama_part'];
+        $no_project = $_POST['no_project'];
+        $status = $_POST['status'];
+        $gantt_data = $_POST['gantt_data'];
+
+        $sql = "UPDATE projects SET nama_part = ?, no_project = ?, status = ?, gantt_data = ? WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssssi", $nama_part, $no_project, $status, $gantt_data, $id);
+        $stmt->execute();
+        header("Location: gant.php");
+        exit();
+    }
+} elseif ($action === 'delete' && $id > 0) {
+    $sql = "DELETE FROM projects WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    header("Location: gant.php");
+    exit();
+}
+
+// Fetch projects for display
+$sql = "SELECT * FROM projects";
+$result = $conn->query($sql);
+$projects = [];
+while ($row = $result->fetch_assoc()) {
+    $projects[] = $row;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -57,179 +110,105 @@
                         </div>
                         <!-- end page title -->
 
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <!-- start projects-->
-                                    <div class="col-xxl-3 col-lg-4">
-                                        <div class="pe-xl-3">
-                                            <h5 class="mt-0 mb-3">Projects</h5>
-                                            <!-- start search box -->
-                                            <div class="app-search">
-                                                <form>
-                                                    <div class="mb-2 position-relative">
-                                                        <input type="text" class="form-control"
-                                                            placeholder="search by name..." />
-                                                        <span class="mdi mdi-magnify search-icon"></span>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            <!-- end search box -->
+                        <div class="row">
+                            <!-- Projects and Gantt Chart Section -->
+                            <div class="col-xxl-6 col-lg-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="mt-0 mb-3">Projects</h5>
+                                        <div class="app-search">
+                                            <form>
+                                                <div class="mb-2 position-relative">
+                                                    <input type="text" class="form-control" placeholder="search by name..." />
+                                                    <span class="mdi mdi-magnify search-icon"></span>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="container mt-3">
+                                            <?php if ($action === 'view'): ?>
+                                                <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#taskModal">Add New Project</button>
+                                                <div class="row">
+                                                    <?php foreach ($projects as $project): ?>
+                                                        <div class="col-md-12">
+                                                            <div class="card mb-3">
+                                                                <div class="card-body">
+                                                                    <h5><?php echo htmlspecialchars($project['nama_part']); ?></h5>
+                                                                    <p>Project No: <?php echo htmlspecialchars($project['no_project']); ?></p>
+                                                                    <p>Status: <?php echo htmlspecialchars($project['status']); ?></p>
+                                                                    <a href="gant.php?action=edit&id=<?php echo $project['id']; ?>" class="btn btn-warning btn-sm">Edit</a>
+                                                                    <a href="gant.php?action=delete&id=<?php echo $project['id']; ?>" class="btn btn-danger btn-sm">Delete</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    <?php endforeach; ?>
+                                                </div>
+                                            <?php endif; ?>
                                         </div>
 
-                                        <div class="row">
-                                            <div class="col">
-                                                <div class="pe-xl-3" data-simplebar style="max-height: 535px;">
-                                                    <a href="javascript:void(0);" class="text-body">
-                                                        <div class="d-flex mt-2 p-2">
-                                                            <div class="avatar-sm d-table">
-                                                                <span class="avatar-title bg-success-lighten rounded-circle text-success">
-                                                                    <i class='uil uil-moonset font-24'></i>
-                                                                </span>
+                                        <!-- Task Modal -->
+                                        <div class="modal fade" id="taskModal" tabindex="-1" aria-labelledby="taskModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <form action="gant.php?action=add" method="POST">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="taskModalLabel">Add New Project</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="mb-3">
+                                                                <label for="nama_part" class="form-label">Nama Part</label>
+                                                                <input type="text" class="form-control" id="nama_part" name="nama_part" required>
                                                             </div>
-                                                            <div class="ms-2">
-                                                                <h5 class="mt-0 mb-0">
-                                                                    Lunar
-                                                                    <span class="badge badge-success-lighten ms-1">On Track</span>
-                                                                </h5>
-                                                                <p class="mt-1 mb-0 text-muted">
-                                                                    ID: proj101
-                                                                </p>
+                                                            <div class="mb-3">
+                                                                <label for="no_project" class="form-label">No Project</label>
+                                                                <input type="text" class="form-control" id="no_project" name="no_project" required>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="status" class="form-label">Status</label>
+                                                                <select class="form-select" id="status" name="status" required>
+                                                                    <option value="Pending">Pending</option>
+                                                                    <option value="In Progress">In Progress</option>
+                                                                    <option value="Completed">Completed</option>
+                                                                </select>
                                                             </div>
                                                         </div>
-                                                    </a>
-
-                                                    <a href="javascript:void(0);" class="text-body">
-                                                        <div class="d-flex bg-light p-2">
-                                                            <div class="avatar-sm d-table">
-                                                                <span
-                                                                    class="avatar-title bg-success-lighten rounded-circle text-success">
-                                                                    <i class='uil uil-moon-eclipse font-24'></i>
-                                                                </span>
-                                                            </div>
-                                                            <div class="ms-2">
-                                                                <h5 class="mt-0 mb-0">
-                                                                    Dark Moon
-                                                                    <span class="badge badge-success-lighten ms-1">On
-                                                                        Track</span>
-                                                                </h5>
-                                                                <p class="mt-1 mb-0 text-muted">
-                                                                    ID: proj102
-                                                                </p>
-                                                            </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            <button type="submit" class="btn btn-primary">Save</button>
                                                         </div>
-                                                    </a>
-
-                                                    <a href="javascript:void(0);" class="text-body">
-                                                        <div class="d-flex mt-1 px-2 py-2">
-                                                            <div class="avatar-sm d-table">
-                                                                <span
-                                                                    class="avatar-title bg-warning-lighten rounded-circle text-warning">
-                                                                    <i class='uil uil-mountains font-24'></i>
-                                                                </span>
-                                                            </div>
-                                                            <div class="ms-2">
-                                                                <h5 class="mt-0 mb-0">
-                                                                    Aurora
-                                                                    <span class="badge badge-warning-lighten ms-1">Locked</span>
-                                                                </h5>
-                                                                <p class="mt-1 mb-0 text-muted">
-                                                                    ID: proj103
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </a>
-
-                                                    <a href="javascript:void(0);" class="text-body">
-                                                        <div class="d-flex mt-1 px-2 py-2">
-                                                            <div class="avatar-sm d-table">
-                                                                <span
-                                                                    class="avatar-title bg-warning-lighten rounded-circle text-warning">
-                                                                    <i class='uil uil-moon font-24'></i>
-                                                                </span>
-                                                            </div>
-                                                            <div class="ms-2">
-                                                                <h5 class="mt-0 mb-0">
-                                                                    Blue Moon
-                                                                    <span
-                                                                        class="badge badge-warning-lighten ms-1">Locked</span>
-                                                                </h5>
-                                                                <p class="mt-1 mb-0 text-muted">
-                                                                    ID: proj104
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </a>
-
-                                                    <a href="javascript:void(0);" class="text-body">
-                                                        <div class="d-flex mt-1 px-2 py-2">
-                                                            <div class="avatar-sm d-table">
-                                                                <span
-                                                                    class="avatar-title bg-danger-lighten rounded-circle text-danger">
-                                                                    <i class='uil uil-ship font-24'></i>
-                                                                </span>
-                                                            </div>
-                                                            <div class="ms-2">
-                                                                <h5 class="mt-0 mb-0">
-                                                                    Casanova
-                                                                    <span
-                                                                        class="badge badge-danger-lighten ms-1">Delayed</span>
-                                                                </h5>
-                                                                <p class="mt-1 mb-0 text-muted">
-                                                                    ID: proj106
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </a>
-
-                                                    <a href="javascript:void(0);" class="text-body">
-                                                        <div class="d-flex mt-1 px-2 py-2">
-                                                            <div class="avatar-sm d-table">
-                                                                <span
-                                                                    class="avatar-title bg-success-lighten rounded-circle text-success">
-                                                                    <i class='uil uil-subway-alt font-24'></i>
-                                                                </span>
-                                                            </div>
-                                                            <div class="ms-2">
-                                                                <h5 class="mt-0 mb-0">
-                                                                    Darwin
-                                                                    <span class="badge badge-success-lighten ms-1">On
-                                                                        Track</span>
-                                                                </h5>
-                                                                <p class="mt-1 mb-0 text-muted">
-                                                                    ID: proj107
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </a>
-
-                                                    <a href="javascript:void(0);" class="text-body">
-                                                        <div class="d-flex mt-1 px-2 py-2">
-                                                            <div class="avatar-sm d-table">
-                                                                <span
-                                                                    class="avatar-title bg-danger-lighten rounded-circle text-danger">
-                                                                    <i class='uil uil-gold font-24'></i>
-                                                                </span>
-                                                            </div>
-                                                            <div class="ms-2">
-                                                                <h5 class="mt-0 mb-0">
-                                                                    Eagle
-                                                                    <span class="badge badge-danger-lighten ms-1">Delayed</span>
-                                                                </h5>
-                                                                <p class="mt-1 mb-0 text-muted">
-                                                                    ID: proj108
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </a>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-6 col-lg-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="mt-0 mb-3">Gantt Chart</h5>
+                                        <svg id="tasks-gantt"></svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <script src="assets/js/vendor/frappe-gantt.min.js"></script>
+                        <script>
+                            <?php if ($action === 'view' && !empty($projects)): ?>
+                            const ganttData = <?php echo $projects[0]['gantt_data']; ?>; // Load Gantt data for the first project
+                            const tasks = ganttData.tasks;
+
+                            const gantt = new Gantt("#tasks-gantt", tasks, {
+                                view_mode: ganttData.view_mode,
+                                date_format: 'YYYY-MM-DD'
+                            });
+                            <?php endif; ?>
+                        </script>
                                     <!-- end projects -->
 
                                     <!-- gantt view -->
-                                    <div class="col-xxl-9 mt-4 mt-xl-0 col-lg-8">
+                                    <!-- <div class="col-xxl-9 mt-4 mt-xl-0 col-lg-8">
                                         <div class="ps-xl-3">
                                             <div class="row">
                                                 <div class="col-auto">
@@ -262,7 +241,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <!-- end gantt view -->
                                 </div>
                             </div>
