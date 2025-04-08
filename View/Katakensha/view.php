@@ -942,17 +942,17 @@ include_once('action.php');
                                                 <td>
                                                     <input type="text" name="checklist[<?php echo $index; ?>][P1]" 
                                                         class="form-control" 
-                                                        value="<?php echo isset($checklist_data_combined[$index]) ? htmlspecialchars($checklist_data_combined[$index]['P1'] ?? '') : ''; ?>">
+                                                        value="<?php echo isset($checklist_data[$index]) ? htmlspecialchars($checklist_data[$index]['P1'] ?? '') : ''; ?>">
                                                 </td>
                                                 <td>
                                                     <input type="text" name="checklist[<?php echo $index; ?>][P2]" 
                                                         class="form-control"
-                                                        value="<?php echo isset($checklist_data_combined[$index]) ? htmlspecialchars($checklist_data_combined[$index]['P2'] ?? '') : ''; ?>">
+                                                        value="<?php echo isset($checklist_data[$index]) ? htmlspecialchars($checklist_data[$index]['P2'] ?? '') : ''; ?>">
                                                 </td>
                                                 <td>
                                                     <input type="text" name="checklist[<?php echo $index; ?>][P3]" 
                                                         class="form-control"
-                                                        value="<?php echo isset($checklist_data_combined[$index]) ? htmlspecialchars($checklist_data_combined[$index]['P3'] ?? '') : ''; ?>">
+                                                        value="<?php echo isset($checklist_data[$index]) ? htmlspecialchars($checklist_data[$index]['P3'] ?? '') : ''; ?>">
                                                 </td>
                                  
                                             </tr>
