@@ -67,7 +67,7 @@
             <div class="col-xxl-4 col-lg-5">
                 <div class="card">
                     <div class="card-header pt-4 pb-4 text-center bg-primary">
-                        <a href="login.php">
+                        <a href="index.php">
                             <span><img src="assets/images/logo.png" alt="" height="18"></span>
                         </a>
                     </div>
@@ -79,7 +79,7 @@
                         </div>
 
                         <!-- Form Login -->
-                        <form action="login.php" method="POST">
+                        <form action="index.php" method="POST">
                             <?php if (isset($error)): ?>
                                 <div class="alert alert-danger"><?= $error; ?></div>
                             <?php endif; ?>

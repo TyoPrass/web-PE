@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stmt_insert->bind_param("ss", $username, $hashed_password);
             if ($stmt_insert->execute()) {
                 // Redirect ke login setelah registrasi berhasil
-                header("Location: login.php");
+                header("Location: index.php");
                 exit();
             } else {
                 $error = "Terjadi kesalahan, coba lagi nanti!";
@@ -104,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 <div class="row mt-3">
                     <div class="col-12 text-center">
-                        <p class="text-muted">Already have an account? <a href="login.php" class="text-muted ms-1"><b>Sign In</b></a></p>
+                        <p class="text-muted">Already have an account? <a href="index.php" class="text-muted ms-1"><b>Sign In</b></a></p>
                     </div> <!-- end col -->
                 </div>
                 <!-- end row -->
