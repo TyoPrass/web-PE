@@ -531,9 +531,9 @@
                                                  <table id="basic-datatable" class="table table-striped dt-responsive nowrap w-100">
                                                      <thead>
                                                          <tr>
-                                                             <th>Nama Customer</th>
-                                                            
-                                                         </tr>
+                                                            <th>Nama Customer </th>
+                                                            <th>Action </th>
+                                                            </tr>
                                                      </thead>
                                                  
                                                  

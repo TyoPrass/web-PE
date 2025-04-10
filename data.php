@@ -1,14 +1,7 @@
 <?php
-include_once('../../Database/koneksi.php');
-session_start();
+include_once('Database/koneksi.php');
 
-// if (!isset($_SESSION['username'])) {
-//     header("Location: ../../login.php"); // Redirect ke halaman login
-//     exit();
-// }
-
-
-// Cek apakah request adalah GET atau POST
+// Mendapatkan metode HTTP
 $method = $_SERVER['REQUEST_METHOD'];
 
 if ($method == 'GET') {
@@ -31,26 +24,8 @@ if ($method == 'POST') {
         $action = $data['action'];
 
         if ($action == 'create') {
-            $text = $_POST['text'];
-            $start_date = $_POST['start_date'];
-            $duration = $_POST['duration'];
-            $progress = $_POST['progress'];
-            $parent = $_POST['parent'];
-
-            // Handle file upload
-            $filePath = null;
-            if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
-                $uploadDir = 'uploads/';
-                if (!is_dir($uploadDir)) {
-                    mkdir($uploadDir, 0777, true);
-                }
-                $filePath = $uploadDir . basename($_FILES['file']['name']);
-                move_uploaded_file($_FILES['file']['tmp_name'], $filePath);
-            }
-
-            // Save task to database (include file path if uploaded)
-            $stmt = $conn->prepare("INSERT INTO tasks (text, start_date, duration, progress, parent, file_path) VALUES (?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("ssidis", $text, $start_date, $duration, $progress, $parent, $filePath);
+            $stmt = $conn->prepare("INSERT INTO tasks (text, start_date, duration, progress, parent) VALUES (?, ?, ?, ?, ?)");
+            $stmt->bind_param("ssidi", $data['text'], $data['start_date'], $data['duration'], $data['progress'], $data['parent']);
             $stmt->execute();
             echo json_encode(["status" => "success", "id" => $conn->insert_id]);
         }
