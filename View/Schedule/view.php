@@ -871,91 +871,90 @@ session_start();
          <!-- end demo js-->
          <script>
             $(document).ready(function () {
-    // Store tasks temporarily
-        let tempTasks = [];
-        
-        if ($("#gantt_here").length > 0) {
-            gantt.config.date_format = "%Y-%m-%d";
-            gantt.init("gantt_here");
-            
-            // Check if we're in edit mode and need to fetch existing data
-            const urlParams = new URLSearchParams(window.location.search);
-            const editMode = urlParams.get('edit');
-            const insertMode = urlParams.get('insert');
-            let currentIdGant = editMode || 'temp';
-            
-            if (editMode) {
-                // Load existing data for editing
-                $.getJSON("action.php?get_tasks=true&id_gant=" + editMode, function (data) {
-                    tempTasks = data || [];
-                    gantt.parse({ data: tempTasks });
-                });
-            } else if (insertMode) {
-                // Start with empty chart for insert
-                tempTasks = [];
-                gantt.parse({ data: [] });
-            }
-            
-            // Add task
-            gantt.attachEvent("onAfterTaskAdd", function (id, task) {
-                // Generate a unique temporary ID
-                const tempId = 'temp_' + new Date().getTime() + '_' + Math.floor(Math.random() * 1000);
+                let tempTasks = [];
                 
-                // Store in our temporary array
-                tempTasks.push({
-                    id: tempId,
-                    text: task.text,
-                    start_date: gantt.date.date_to_str("%Y-%m-%d")(task.start_date),
-                    duration: task.duration,
-                    progress: task.progress,
-                    parent: task.parent
-                });
+                if ($("#gantt_here").length > 0) {
+                    gantt.config.date_format = "%Y-%m-%d";
+                    gantt.init("gantt_here");
+                    
+                    // Check if we're in edit mode and need to fetch existing data
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const editMode = urlParams.get('edit');
+                    const insertMode = urlParams.get('insert');
+                let currentIdGant = editMode || 'temp';
                 
-                // Update hidden form field
-                $("#task_data_json").val(JSON.stringify(tempTasks));
-                
-                // Update gantt chart ID
-                gantt.changeTaskId(id, tempId);
-            });
-            
-            // Update task
-            gantt.attachEvent("onAfterTaskUpdate", function (id, task) {
-                // Update in our temporary array
-                for (let i = 0; i < tempTasks.length; i++) {
-                    if (tempTasks[i].id == id) {
-                        tempTasks[i] = {
-                            id: id,
-                            text: task.text,
-                            start_date: gantt.date.date_to_str("%Y-%m-%d")(task.start_date),
-                            duration: task.duration,
-                            progress: task.progress,
-                            parent: task.parent
-                        };
-                        break;
-                    }
+                if (editMode) {
+                    // Load existing data for editing
+                    $.getJSON("action.php?get_tasks=true&id_gant=" + editMode, function (data) {
+                        tempTasks = data || [];
+                        gantt.parse({ data: tempTasks });
+                    });
+                } else if (insertMode) {
+                    // Start with empty chart for insert
+                    tempTasks = [];
+                    gantt.parse({ data: [] });
                 }
                 
-                // Update hidden form field
-                $("#task_data_json").val(JSON.stringify(tempTasks));
-            });
-            
-            // Delete task
-            gantt.attachEvent("onAfterTaskDelete", function (id) {
-                // Remove from our temporary array
-                tempTasks = tempTasks.filter(task => task.id != id);
-                
-                // Update hidden form field
-                $("#task_data_json").val(JSON.stringify(tempTasks));
-            });
-            
-            // Make sure form submission includes task data
-            $("form").on("submit", function() {
-                // Ensure task data is included
-                if (!$("#task_data_json").val()) {
+                // Add task
+                gantt.attachEvent("onAfterTaskAdd", function (id, task) {
+                    // Generate a unique temporary ID
+                    const tempId = 'temp_' + new Date().getTime() + '_' + Math.floor(Math.random() * 1000);
+                    
+                    // Store in our temporary array
+                    tempTasks.push({
+                        id: tempId,
+                        text: task.text,
+                        start_date: gantt.date.date_to_str("%Y-%m-%d")(task.start_date),
+                        duration: task.duration,
+                        progress: task.progress,
+                        parent: task.parent
+                    });
+                    
+                    // Update hidden form field
                     $("#task_data_json").val(JSON.stringify(tempTasks));
-                }
-                return true;
-            });
+                    
+                    // Update gantt chart ID
+                    gantt.changeTaskId(id, tempId);
+                });
+                
+                // Update task
+                gantt.attachEvent("onAfterTaskUpdate", function (id, task) {
+                    // Update in our temporary array
+                    for (let i = 0; i < tempTasks.length; i++) {
+                        if (tempTasks[i].id == id) {
+                            tempTasks[i] = {
+                                id: id,
+                                text: task.text,
+                                start_date: gantt.date.date_to_str("%Y-%m-%d")(task.start_date),
+                                duration: task.duration,
+                                progress: task.progress,
+                                parent: task.parent
+                            };
+                            break;
+                        }
+                    }
+                    
+                    // Update hidden form field
+                    $("#task_data_json").val(JSON.stringify(tempTasks));
+                });
+                
+                // Delete task
+                gantt.attachEvent("onAfterTaskDelete", function (id) {
+                    // Remove from our temporary array
+                    tempTasks = tempTasks.filter(task => task.id != id);
+                    
+                    // Update hidden form field
+                    $("#task_data_json").val(JSON.stringify(tempTasks));
+                });
+                
+                // Make sure form submission includes task data
+                $("form").on("submit", function() {
+                    // Ensure task data is included
+                    if (!$("#task_data_json").val()) {
+                        $("#task_data_json").val(JSON.stringify(tempTasks));
+                    }
+                    return true;
+                });
         }
     });
 

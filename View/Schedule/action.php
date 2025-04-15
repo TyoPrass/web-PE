@@ -35,14 +35,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SERVER['CONTENT_TYPE']) && 
                 // Modify the tasks array based on the action
                 if ($request['action'] == 'create') {
                     $tasks[] = [
-                        'id' => count($tasks) + 1, // Generate a new ID
+                        'id' => $request['id'] ?? count($tasks) + 1,
                         'text' => $request['text'],
                         'start_date' => $request['start_date'],
                         'duration' => $request['duration'],
                         'progress' => $request['progress'],
                         'parent' => $request['parent']
                     ];
-                    $response = ['success' => true, 'id' => count($tasks)];
+                    $response = ['success' => true, 'id' => end($tasks)['id']];
                 } elseif ($request['action'] == 'update') {
                     foreach ($tasks as &$task) {
                         if ($task['id'] == $request['id']) {
