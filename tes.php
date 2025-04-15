@@ -1,7 +1,5 @@
 <?php
-include_once("../../Database/koneksi.php");
-session_start();
-
+include_once("Database/koneksi.php");
 
 // Initialize session if not already started
 if (session_status() == PHP_SESSION_NONE || !isset($_SESSION)) {
@@ -121,7 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['message_type'] = "danger";
         }
         $stmt->close();
-        header("Location: view.php");
+        header("Location: index.php");
         exit();
     } elseif (isset($_POST['update'])) {
         // Update operation
@@ -152,7 +150,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['message_type'] = "danger";
         }
         $stmt->close();
-        header("Location: view.php");
+        header("Location: index.php");
         exit();
     }
 }
@@ -173,7 +171,7 @@ if (isset($_GET['delete'])) {
         $_SESSION['message_type'] = "danger";
     }
     $stmt->close();
-    header("Location: view.php");
+    header("Location: index.php");
     exit();
 }
 ?>
@@ -191,20 +189,20 @@ if (isset($_GET['delete'])) {
          <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
          <meta content="Coderthemes" name="author" />
          <!-- App favicon -->
-         <link rel="shortcut icon" href="../../assets/images/favicon.ico">
+         <link rel="shortcut icon" href="assets/images/favicon.ico">
  
          <!-- third party css -->
-         <link href="../../assets/css/vendor/dataTables.bootstrap5.css" rel="stylesheet" type="text/css" />
-         <link href="../../assets/css/vendor/responsive.bootstrap5.css" rel="stylesheet" type="text/css" />
-         <link href="../../assets/css/vendor/buttons.bootstrap5.css" rel="stylesheet" type="text/css" />
-         <link href="../../assets/css/vendor/select.bootstrap5.css" rel="stylesheet" type="text/css" />
-         <link href="../../assets/css/vendor/fixedHeader.bootstrap5.css" rel="stylesheet" type="text/css" />
-         <link href="../../assets/css/vendor/fixedColumns.bootstrap5.css" rel="stylesheet" type="text/css" />
+         <link href="assets/css/vendor/dataTables.bootstrap5.css" rel="stylesheet" type="text/css" />
+         <link href="assets/css/vendor/responsive.bootstrap5.css" rel="stylesheet" type="text/css" />
+         <link href="assets/css/vendor/buttons.bootstrap5.css" rel="stylesheet" type="text/css" />
+         <link href="assets/css/vendor/select.bootstrap5.css" rel="stylesheet" type="text/css" />
+         <link href="assets/css/vendor/fixedHeader.bootstrap5.css" rel="stylesheet" type="text/css" />
+         <link href="assets/css/vendor/fixedColumns.bootstrap5.css" rel="stylesheet" type="text/css" />
          <!-- third party css end -->
  
          <!-- App css -->
-         <link href="../../assets/css/icons.min.css" rel="stylesheet" type="text/css" />
-         <link href="../../assets/css/app.min.css" rel="stylesheet" type="text/css" id="app-style"/>
+         <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+         <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" id="app-style"/>
     <!-- Gantt Chart CSS -->
         <link rel="stylesheet" href="https://cdn.dhtmlx.com/gantt/edge/dhtmlxgantt.css">
         <style>
@@ -232,20 +230,20 @@ if (isset($_GET['delete'])) {
                  <!-- LOGO -->
                  <a href="index.html" class="logo text-center logo-light">
                      <span class="logo-lg">
-                         <img src="../../assets/images/logo.png" alt="" height="16">
+                         <img src="assets/images/logo.png" alt="" height="16">
                      </span>
                      <span class="logo-sm">
-                         <img src="../../assets/images/logo_sm.png" alt="" height="16">
+                         <img src="assets/images/logo_sm.png" alt="" height="16">
                      </span>
                  </a>
  
                  <!-- LOGO -->
                  <a href="index.html" class="logo text-center logo-dark">
                      <span class="logo-lg">
-                         <img src="../../assets/images/logo-dark.png" alt="" height="16">
+                         <img src="assets/images/logo-dark.png" alt="" height="16">
                      </span>
                      <span class="logo-sm">
-                         <img src="../../assets/images/logo_sm_dark.png" alt="" height="16">
+                         <img src="assets/images/logo_sm_dark.png" alt="" height="16">
                      </span>
                  </a>
      
@@ -322,7 +320,7 @@ if (isset($_GET['delete'])) {
                          <a href="javascript: void(0);" class="float-end close-btn text-white">
                              <i class="mdi mdi-close"></i>
                          </a>
-                         <img src="../../assets/images/help-icon.svg" height="90" alt="Helper Icon Image" />
+                         <img src="assets/images/help-icon.svg" height="90" alt="Helper Icon Image" />
                          <h5 class="mt-3">PE-STAMPING</h5>
                          <p class="mb-3">TES JERAPAHNAIKKUDA</p>
                      </div>
@@ -358,29 +356,29 @@ if (isset($_GET['delete'])) {
                              </li>
                              <li class="dropdown notification-list topbar-dropdown">
                                  <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                                     <img src="../../assets/images/flags/us.jpg" alt="user-image" class="me-0 me-sm-1" height="12"> 
+                                     <img src="assets/images/flags/us.jpg" alt="user-image" class="me-0 me-sm-1" height="12"> 
                                      <span class="align-middle d-none d-sm-inline-block">English</span> <i class="mdi mdi-chevron-down d-none d-sm-inline-block align-middle"></i>
                                  </a>
                                  <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated topbar-dropdown-menu">
  
                                      <!-- item-->
                                      <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                         <img src="../../assets/images/flags/germany.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">German</span>
+                                         <img src="assets/images/flags/germany.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">German</span>
                                      </a>
  
                                      <!-- item-->
                                      <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                         <img src="../../assets/images/flags/italy.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Italian</span>
+                                         <img src="assets/images/flags/italy.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Italian</span>
                                      </a>
                  
                                      <!-- item-->
                                      <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                         <img src="../../assets/images/flags/spain.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Spanish</span>
+                                         <img src="assets/images/flags/spain.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Spanish</span>
                                      </a>
  
                                      <!-- item-->
                                      <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                         <img src="../../assets/images/flags/russia.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Russian</span>
+                                         <img src="assets/images/flags/russia.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Russian</span>
                                      </a>
  
                                  </div>
@@ -452,7 +450,7 @@ if (isset($_GET['delete'])) {
                                                  <div class="d-flex align-items-center">
                                                      <div class="flex-shrink-0">
                                                          <div class="notify-icon">
-                                                             <img src="../../assets/images/users/avatar-2.jpg" class="img-fluid rounded-circle" alt="" />
+                                                             <img src="assets/images/users/avatar-2.jpg" class="img-fluid rounded-circle" alt="" />
                                                          </div>
                                                      </div>
                                                      <div class="flex-grow-1 text-truncate ms-2">
@@ -490,7 +488,7 @@ if (isset($_GET['delete'])) {
                                                  <div class="d-flex align-items-center">
                                                      <div class="flex-shrink-0">
                                                          <div class="notify-icon">
-                                                             <img src="../../assets/images/users/avatar-4.jpg" class="img-fluid rounded-circle" alt="" />
+                                                             <img src="assets/images/users/avatar-4.jpg" class="img-fluid rounded-circle" alt="" />
                                                          </div>
                                                      </div>
                                                      <div class="flex-grow-1 text-truncate ms-2">
@@ -524,19 +522,19 @@ if (isset($_GET['delete'])) {
                                          <div class="row g-0">
                                              <div class="col">
                                                  <a class="dropdown-icon-item" href="#">
-                                                     <img src="../../assets/images/brands/slack.png" alt="slack">
+                                                     <img src="assets/images/brands/slack.png" alt="slack">
                                                      <span>Slack</span>
                                                  </a>
                                              </div>
                                              <div class="col">
                                                  <a class="dropdown-icon-item" href="#">
-                                                     <img src="../../assets/images/brands/github.png" alt="Github">
+                                                     <img src="assets/images/brands/github.png" alt="Github">
                                                      <span>GitHub</span>
                                                  </a>
                                              </div>
                                              <div class="col">
                                                  <a class="dropdown-icon-item" href="#">
-                                                     <img src="../../assets/images/brands/dribbble.png" alt="dribbble">
+                                                     <img src="assets/images/brands/dribbble.png" alt="dribbble">
                                                      <span>Dribbble</span>
                                                  </a>
                                              </div>
@@ -545,19 +543,19 @@ if (isset($_GET['delete'])) {
                                          <div class="row g-0">
                                              <div class="col">
                                                  <a class="dropdown-icon-item" href="#">
-                                                     <img src="../../assets/images/brands/bitbucket.png" alt="bitbucket">
+                                                     <img src="assets/images/brands/bitbucket.png" alt="bitbucket">
                                                      <span>Bitbucket</span>
                                                  </a>
                                              </div>
                                              <div class="col">
                                                  <a class="dropdown-icon-item" href="#">
-                                                     <img src="../../assets/images/brands/dropbox.png" alt="dropbox">
+                                                     <img src="assets/images/brands/dropbox.png" alt="dropbox">
                                                      <span>Dropbox</span>
                                                  </a>
                                              </div>
                                              <div class="col">
                                                  <a class="dropdown-icon-item" href="#">
-                                                     <img src="../../assets/images/brands/g-suite.png" alt="G Suite">
+                                                     <img src="assets/images/brands/g-suite.png" alt="G Suite">
                                                      <span>G Suite</span>
                                                  </a>
                                              </div>
@@ -577,7 +575,7 @@ if (isset($_GET['delete'])) {
                                  <a class="nav-link dropdown-toggle nav-user arrow-none me-0" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false"
                                      aria-expanded="false">
                                      <span class="account-user-avatar"> 
-                                         <img src="../../assets/images/users/avatar-1.jpg" alt="user-image" class="rounded-circle">
+                                         <img src="assets/images/users/avatar-1.jpg" alt="user-image" class="rounded-circle">
                                      </span>
                                      <span>
                                          <span class="account-user-name">Dominic Keller</span>
@@ -668,7 +666,7 @@ if (isset($_GET['delete'])) {
                                      <!-- item-->
                                      <a href="javascript:void(0);" class="dropdown-item notify-item">
                                          <div class="d-flex">
-                                             <img class="d-flex me-2 rounded-circle" src="../../assets/images/users/avatar-2.jpg" alt="Generic placeholder image" height="32">
+                                             <img class="d-flex me-2 rounded-circle" src="assets/images/users/avatar-2.jpg" alt="Generic placeholder image" height="32">
                                              <div class="w-100">
                                                  <h5 class="m-0 font-14">Erwin Brown</h5>
                                                  <span class="font-12 mb-0">UI Designer</span>
@@ -742,7 +740,7 @@ if (isset($_GET['delete'])) {
                                             if (!$detail_data) {
                                                 $_SESSION['message'] = "Record not found!";
                                                 $_SESSION['message_type'] = "danger";
-                                                header("Location: view.php");
+                                                header("Location: index.php");
                                                 exit();
                                             }
                                         ?>
@@ -768,10 +766,10 @@ if (isset($_GET['delete'])) {
                                                 </div>
                                             </div>
                                             <div class="mt-4">
-                                                <a href="view.php" class="btn btn-secondary">
+                                                <a href="index.php" class="btn btn-secondary">
                                                     <i class="mdi mdi-arrow-left"></i> Back
                                                 </a>
-                                                <a href="view.php?edit=<?php echo $detail_data['id_gant']; ?>" class="btn btn-info">
+                                                <a href="index.php?edit=<?php echo $detail_data['id_gant']; ?>" class="btn btn-info">
                                                     <i class="mdi mdi-pencil"></i> Edit
                                                 </a>
                                             </div>
@@ -789,12 +787,12 @@ if (isset($_GET['delete'])) {
                                             if (!$edit_data) {
                                                 $_SESSION['message'] = "Record not found!";
                                                 $_SESSION['message_type'] = "danger";
-                                                header("Location: view.php");
+                                                header("Location: index.php");
                                                 exit();
                                             }
                                         ?>
                                                                                     <!-- Edit Form -->
-                                                <form action="view.php" method="post">
+                                                <form action="index.php" method="post">
                                                     <input type="hidden" name="id_gant" value="<?php echo htmlspecialchars($edit_data['id_gant']); ?>">
                                                     <input type="hidden" name="update" value="true">
                                                 <div class="mb-3">
@@ -810,11 +808,11 @@ if (isset($_GET['delete'])) {
                                                     <div id="gantt_here"></div>
                                                     </div>
                                                 <button type="submit" class="btn btn-primary">Update</button>
-                                                <a href="view.php" class="btn btn-secondary">Cancel</a>
+                                                <a href="index.php" class="btn btn-secondary">Cancel</a>
                                             </form>
                                             <?php elseif (isset($_GET['insert'])): ?>
                                             <!-- Insert Form -->
-                                            <form action="view.php" method="post">
+                                            <form action="index.php" method="post">
                                                 <input type="hidden" name="submit" value="true">
                                                 <input type="hidden" name="task_data_json" id="task_data_json" value="[]">
                                                 <div class="mb-3">
@@ -830,12 +828,12 @@ if (isset($_GET['delete'])) {
                                                     <div id="gantt_here"></div>
                                                 </div>
                                                 <button type="submit" class="btn btn-primary">Insert</button>
-                                                <a href="view.php" class="btn btn-secondary">Cancel</a>
+                                                <a href="index.php" class="btn btn-secondary">Cancel</a>
                                             </form>
                                         <?php else: ?>
                                             <!-- Display Records Table -->
                                             <div class="mt-3 mb-3">
-                                                <a href="view.php?insert=true" class="btn btn-success">
+                                                <a href="index.php?insert=true" class="btn btn-success">
                                                     <i class="mdi mdi-plus"></i> Insert New Gantt Chart
                                                 </a>
                                             </div>
@@ -851,7 +849,7 @@ if (isset($_GET['delete'])) {
                                                     </thead>
                                                     <tbody>
                                                         <?php
-                                                        $sql = "SELECT * FROM gant_customer ORDER BY id_gant DESC";
+                                                        $sql = "SELECT * FROM gant_customer ORDER BY id_gant ASC";
                                                         $result = $conn->query($sql);
                                                         $no = 1;
                                                         while ($row = $result->fetch_assoc()): ?>
@@ -861,20 +859,20 @@ if (isset($_GET['delete'])) {
                                                                 <td><?php echo htmlspecialchars($row['tanggal']); ?></td>
                                                                 <td>
                                                                     <div class="btn-group">
-                                                                        <a href="view.php?edit=<?php echo $row['id_gant']; ?>" 
+                                                                        <a href="index.php?edit=<?php echo $row['id_gant']; ?>" 
                                                                            class="btn btn-info btn-sm" 
                                                                            data-bs-toggle="tooltip" 
                                                                            title="Edit">
                                                                             <i class="mdi mdi-pencil"></i>
                                                                         </a>
-                                                                        <a href="view.php?delete=<?php echo $row['id_gant']; ?>" 
+                                                                        <a href="index.php?delete=<?php echo $row['id_gant']; ?>" 
                                                                            class="btn btn-danger btn-sm" 
                                                                            onclick="return confirm('Are you sure you want to delete this record?');"
                                                                            data-bs-toggle="tooltip" 
                                                                            title="Delete">
                                                                             <i class="mdi mdi-delete"></i>
                                                                         </a>
-                                                                        <a href="view.php?detail=<?php echo $row['id_gant']; ?>" 
+                                                                        <a href="index.php?detail=<?php echo $row['id_gant']; ?>" 
                                                                            class="btn btn-primary btn-sm" 
                                                                            data-bs-toggle="tooltip" 
                                                                            title="Detail">
@@ -1021,27 +1019,27 @@ if (isset($_GET['delete'])) {
  
  
          <!-- bundle -->
-         <script src="../../assets/js/vendor.min.js"></script>
-         <script src="../../assets/js/app.min.js"></script>
+         <script src="assets/js/vendor.min.js"></script>
+         <script src="assets/js/app.min.js"></script>
  
          <!-- third party js -->
-         <script src="../../assets/js/vendor/jquery.dataTables.min.js"></script>
-         <script src="../../assets/js/vendor/dataTables.bootstrap5.js"></script>
-         <script src="../../assets/js/vendor/dataTables.responsive.min.js"></script>
-         <script src="../../assets/js/vendor/responsive.bootstrap5.min.js"></script>
-         <script src="../../assets/js/vendor/dataTables.buttons.min.js"></script>
-         <script src="../../assets/js/vendor/buttons.bootstrap5.min.js"></script>
-         <script src="../../assets/js/vendor/buttons.html5.min.js"></script>
-         <script src="../../assets/js/vendor/buttons.flash.min.js"></script>
-         <script src="../../assets/js/vendor/buttons.print.min.js"></script>
-         <script src="../../assets/js/vendor/dataTables.keyTable.min.js"></script>
-         <script src="../../assets/js/vendor/dataTables.select.min.js"></script>
-         <script src="../../assets/js/vendor/fixedColumns.bootstrap5.min.js"></script>
-         <script src="../../assets/js/vendor/fixedHeader.bootstrap5.min.js"></script>
+         <script src="assets/js/vendor/jquery.dataTables.min.js"></script>
+         <script src="assets/js/vendor/dataTables.bootstrap5.js"></script>
+         <script src="assets/js/vendor/dataTables.responsive.min.js"></script>
+         <script src="assets/js/vendor/responsive.bootstrap5.min.js"></script>
+         <script src="assets/js/vendor/dataTables.buttons.min.js"></script>
+         <script src="assets/js/vendor/buttons.bootstrap5.min.js"></script>
+         <script src="assets/js/vendor/buttons.html5.min.js"></script>
+         <script src="assets/js/vendor/buttons.flash.min.js"></script>
+         <script src="assets/js/vendor/buttons.print.min.js"></script>
+         <script src="assets/js/vendor/dataTables.keyTable.min.js"></script>
+         <script src="assets/js/vendor/dataTables.select.min.js"></script>
+         <script src="assets/js/vendor/fixedColumns.bootstrap5.min.js"></script>
+         <script src="assets/js/vendor/fixedHeader.bootstrap5.min.js"></script>
          <!-- third party js ends -->
  
          <!-- demo app -->
-         <script src="../../assets/js/pages/demo.datatable-init.js"></script>
+         <script src="assets/js/pages/demo.datatable-init.js"></script>
          <!-- end demo js-->
          <script>
             $(document).ready(function () {
@@ -1060,7 +1058,7 @@ if (isset($_GET['delete'])) {
             
             if (editMode) {
                 // Load existing data for editing
-                $.getJSON("view.php?get_tasks=true&id_gant=" + editMode, function (data) {
+                $.getJSON("index.php?get_tasks=true&id_gant=" + editMode, function (data) {
                     tempTasks = data || [];
                     gantt.parse({ data: tempTasks });
                 });
