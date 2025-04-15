@@ -1,50 +1,58 @@
 <?php
-include_once('Database/koneksi.php');
+$host = 'localhost';
+$dbname = 'web_pe';
+$username = 'root';
+$password = '';
 
-// Mendapatkan metode HTTP
-$method = $_SERVER['REQUEST_METHOD'];
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-if ($method == 'GET') {
-    // Ambil data tugas dari database
-    $sql = "SELECT * FROM tasks";
-    $result = $conn->query($sql);
-    $tasks = [];
+    $input = json_decode(file_get_contents('php://input'), true);
 
-    while ($row = $result->fetch_assoc()) {
-        $tasks[] = $row;
+    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+        $stmt = $pdo->query("SELECT data FROM gantt_chart WHERE id = 1");
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        echo $result ? $result['data'] : json_encode([]);
+    } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $action = $input['action'];
+        $stmt = $pdo->prepare("SELECT data FROM gantt_chart WHERE id = 1");
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $data = $result ? json_decode($result['data'], true) : [];
+
+        if ($action === 'create') {
+            $newTask = [
+                'id' => uniqid(),
+                'text' => $input['text'],
+                'start_date' => $input['start_date'],
+                'duration' => $input['duration'],
+                'progress' => $input['progress'],
+                'parent' => $input['parent']
+            ];
+            $data[] = $newTask;
+        } elseif ($action === 'update') {
+            foreach ($data as &$task) {
+                if ($task['id'] === $input['id']) {
+                    $task['text'] = $input['text'];
+                    $task['start_date'] = $input['start_date'];
+                    $task['duration'] = $input['duration'];
+                    $task['progress'] = $input['progress'];
+                    $task['parent'] = $input['parent'];
+                    break;
+                }
+            }
+        } elseif ($action === 'delete') {
+            $data = array_filter($data, function ($task) use ($input) {
+                return $task['id'] !== $input['id'];
+            });
+        }
+
+        $stmt = $pdo->prepare("INSERT INTO gantt_chart (id, data) VALUES (1, ?) ON DUPLICATE KEY UPDATE data = ?");
+        $stmt->execute([json_encode($data), json_encode($data)]);
+        echo json_encode(['status' => 'success']);
     }
-
-    echo json_encode($tasks);
+} catch (PDOException $e) {
+    echo json_encode(['error' => $e->getMessage()]);
 }
-
-if ($method == 'POST') {
-    $data = json_decode(file_get_contents("php://input"), true);
-    
-    if (isset($data['action'])) {
-        $action = $data['action'];
-
-        if ($action == 'create') {
-            $stmt = $conn->prepare("INSERT INTO tasks (text, start_date, duration, progress, parent) VALUES (?, ?, ?, ?, ?)");
-            $stmt->bind_param("ssidi", $data['text'], $data['start_date'], $data['duration'], $data['progress'], $data['parent']);
-            $stmt->execute();
-            echo json_encode(["status" => "success", "id" => $conn->insert_id]);
-        }
-
-        if ($action == 'update') {
-            $stmt = $conn->prepare("UPDATE tasks SET text=?, start_date=?, duration=?, progress=?, parent=? WHERE id=?");
-            $stmt->bind_param("ssidii", $data['text'], $data['start_date'], $data['duration'], $data['progress'], $data['parent'], $data['id']);
-            $stmt->execute();
-            echo json_encode(["status" => "updated"]);
-        }
-
-        if ($action == 'delete') {
-            $stmt = $conn->prepare("DELETE FROM tasks WHERE id=?");
-            $stmt->bind_param("i", $data['id']);
-            $stmt->execute();
-            echo json_encode(["status" => "deleted"]);
-        }
-    }
-}
-
-$conn->close();
 ?>

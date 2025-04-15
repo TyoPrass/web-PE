@@ -1,0 +1,17 @@
+CREATE DATABASE IF NOT EXISTS web_pe;
+
+USE web_pe;
+
+CREATE TABLE IF NOT EXISTS tasks (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    text VARCHAR(255) NOT NULL,
+    start_date DATE NOT NULL,
+    duration INT NOT NULL,
+    progress FLOAT NOT NULL,
+    parent INT DEFAULT 0
+);
+
+CREATE TABLE IF NOT EXISTS gantt_chart (
+    id INT PRIMARY KEY,
+    data JSON NOT NULL
+);

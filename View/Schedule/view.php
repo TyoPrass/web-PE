@@ -1,3 +1,9 @@
+<?php
+include_once("../../Database/koneksi.php");
+?>
+
+
+
 <!DOCTYPE html>
  <html lang="en">
      
@@ -9,7 +15,7 @@
          <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
          <meta content="Coderthemes" name="author" />
          <!-- App favicon -->
-         <link rel="shortcut icon" href="assets/images/favicon.ico">
+         <link rel="shortcut icon" href="../../assets/images/favicon.ico">
  
          <!-- third party css -->
          <link href="../../assets/css/vendor/dataTables.bootstrap5.css" rel="stylesheet" type="text/css" />
@@ -23,7 +29,22 @@
          <!-- App css -->
          <link href="../../assets/css/icons.min.css" rel="stylesheet" type="text/css" />
          <link href="../../assets/css/app.min.css" rel="stylesheet" type="text/css" id="app-style"/>
- 
+    <!-- Gantt Chart CSS -->
+        <link rel="stylesheet" href="https://cdn.dhtmlx.com/gantt/edge/dhtmlxgantt.css">
+        <style>
+            #gantt_here {
+                width: 100%;
+                height: 500px;
+                background: white;
+                box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            }
+            .card {
+                margin-bottom: 10px;
+            }
+            .navbar {
+                margin-bottom: 20px;
+            }
+        </style>
      </head>
  
      <body class="loading" data-layout-color="light" data-leftbar-theme="dark" data-layout-mode="fluid" data-rightbar-onstart="true">
@@ -516,37 +537,186 @@
                          <!-- end page title --> 
  
  
-                         <div class="row">
-                             <div class="col-12">
-                                 <div class="card">
-                                     <div class="card-body">
-                                         <h4 class="header-title">Basic Data Table</h4>
-                                       
-                                         <ul class="nav nav-tabs nav-bordered mb-3">
-                                         
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="header-title">Gantt Chart Management</h4>
+                                        
+                                        
+                                        <?php if (isset($_SESSION['message'])): ?>
+                                            <div class="alert alert-<?php echo $_SESSION['message_type']; ?> alert-dismissible fade show" role="alert">
+                                                <?php echo $_SESSION['message']; ?>
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                            <?php unset($_SESSION['message']); unset($_SESSION['message_type']); ?>
+                                        <?php endif; ?>
+
+                                        <?php if (isset($_GET['detail'])): 
+                                            // Fetch the record to be viewed
+                                            $id_gant = $_GET['detail'];
+                                            $detail_sql = "SELECT * FROM gant_customer WHERE id_gant = ?";
+                                            $detail_stmt = $conn->prepare($detail_sql);
+                                            $detail_stmt->bind_param("i", $id_gant);
+                                            $detail_stmt->execute();
+                                            $detail_result = $detail_stmt->get_result();
+                                            $detail_data = $detail_result->fetch_assoc();
+                                            $detail_stmt->close();
                                             
-                                         </ul> <!-- end nav-->
-                                         <div class="tab-content">
-                                             <div class="tab-pane show active" id="basic-datatable-preview">
-                                                 <table id="basic-datatable" class="table table-striped dt-responsive nowrap w-100">
-                                                     <thead>
-                                                         <tr>
-                                                            <th>Nama Customer </th>
-                                                            <th>Action </th>
+                                            if (!$detail_data) {
+                                                $_SESSION['message'] = "Record not found!";
+                                                $_SESSION['message_type'] = "danger";
+                                                header("Location: index.php");
+                                                exit();
+                                            }
+                                        ?>
+                                            <!-- Detail View -->
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <h6 class="text-uppercase fw-bold">Gantt Chart Details</h6>
+                                                        <table class="table table-sm">
+                                                            <tr>
+                                                                <th>Nama Customer</th>
+                                                                <td>: <?php echo htmlspecialchars($detail_data['id_customer']); ?></td>
                                                             </tr>
-                                                     </thead>
-                                                 
-                                                 
-                                                     <tbody>
-                                                 
-                                                     </tbody>
-                                                 </table>                                           
-                                             </div> <!-- end preview-->
-                                         </div> <!-- end tab-content-->
-                                     </div> <!-- end card body-->
-                                 </div> <!-- end card -->
-                             </div><!-- end col-->
-                         </div> <!-- end row-->
+                                                            <tr>
+                                                                <th>Date</th>
+                                                                <td>: <?php echo htmlspecialchars($detail_data['tanggal']); ?></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Gantt JSON</th>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mt-4">
+                                                <a href="index.php" class="btn btn-secondary">
+                                                    <i class="mdi mdi-arrow-left"></i> Back
+                                                </a>
+                                                <a href="index.php?edit=<?php echo $detail_data['id_gant']; ?>" class="btn btn-info">
+                                                    <i class="mdi mdi-pencil"></i> Edit
+                                                </a>
+                                            </div>
+                                        <?php elseif (isset($_GET['edit'])): 
+                                            // Fetch the record to be edited
+                                            $id_gant = $_GET['edit'];
+                                            $edit_sql = "SELECT * FROM gant_customer WHERE id_gant = ?";
+                                            $edit_stmt = $conn->prepare($edit_sql);
+                                            $edit_stmt->bind_param("i", $id_gant);
+                                            $edit_stmt->execute();
+                                            $edit_result = $edit_stmt->get_result();
+                                            $edit_data = $edit_result->fetch_assoc();
+                                            $edit_stmt->close();
+                                            
+                                            if (!$edit_data) {
+                                                $_SESSION['message'] = "Record not found!";
+                                                $_SESSION['message_type'] = "danger";
+                                                header("Location: index.php");
+                                                exit();
+                                            }
+                                        ?>
+                                                                                    <!-- Edit Form -->
+                                                <form action="action.php" method="post">
+                                                    <input type="hidden" name="id_gant" value="<?php echo htmlspecialchars($edit_data['id_gant']); ?>">
+                                                    <input type="hidden" name="update" value="true">
+                                                <div class="mb-3">
+                                                    <label for="id_customer" class="form-label">Nama Customer</label>
+                                                    <input type="text" class="form-control" id="id_customer" name="id_customer" value="<?php echo htmlspecialchars($edit_data['id_customer']); ?>" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="tanggal" class="form-label">Date</label>
+                                                    <input type="date" class="form-control" id="tanggal" name="tanggal" value="<?php echo htmlspecialchars($edit_data['tanggal']); ?>" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="gant_json" class="form-label">Gantt JSON</label>
+                                                    <div id="gantt_here"></div>
+                                                    </div>
+                                                <button type="submit" class="btn btn-primary">Update</button>
+                                                <a href="index.php" class="btn btn-secondary">Cancel</a>
+                                            </form>
+                                            <?php elseif (isset($_GET['insert'])): ?>
+                                            <!-- Insert Form -->
+                                            <form action="action.php" method="post">
+                                                <input type="hidden" name="submit" value="true">
+                                                <input type="hidden" name="task_data_json" id="task_data_json" value="[]">
+                                                <div class="mb-3">
+                                                    <label for="id_customer" class="form-label">Nama Customer</label>
+                                                    <input type="text" class="form-control" id="id_customer" name="id_customer" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="tanggal" class="form-label">Date</label>
+                                                    <input type="date" class="form-control" id="tanggal" name="tanggal" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="gant_json" class="form-label">Gantt JSON</label>
+                                                    <div id="gantt_here"></div>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary">Insert</button>
+                                                <a href="index.php" class="btn btn-secondary">Cancel</a>
+                                            </form>
+                                        <?php else: ?>
+                                            <!-- Display Records Table -->
+                                            <div class="mt-3 mb-3">
+                                                <a href="index.php?insert=true" class="btn btn-success">
+                                                    <i class="mdi mdi-plus"></i> Insert New Gantt Chart
+                                                </a>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table id="basic-datatable" class="table table-striped dt-responsive nowrap w-100">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>No</th>
+                                                            <th>Customer ID</th>
+                                                            <th>Date</th>
+                                                            <th>Actions</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <?php
+                                                        $sql = "SELECT * FROM gant_customer ORDER BY id_gant ASC";
+                                                        $result = $conn->query($sql);
+                                                        $no = 1;
+                                                        while ($row = $result->fetch_assoc()): ?>
+                                                            <tr>
+                                                                <td><?php echo $no++; ?></td>
+                                                                <td><?php echo htmlspecialchars($row['id_customer']); ?></td>
+                                                                <td><?php echo htmlspecialchars($row['tanggal']); ?></td>
+                                                                <td>
+                                                                    <div class="btn-group">
+                                                                        <a href="index.php?edit=<?php echo $row['id_gant']; ?>" 
+                                                                           class="btn btn-info btn-sm" 
+                                                                           data-bs-toggle="tooltip" 
+                                                                           title="Edit">
+                                                                            <i class="mdi mdi-pencil"></i>
+                                                                        </a>
+                                                                        <a href="index.php?delete=<?php echo $row['id_gant']; ?>" 
+                                                                           class="btn btn-danger btn-sm" 
+                                                                           onclick="return confirm('Are you sure you want to delete this record?');"
+                                                                           data-bs-toggle="tooltip" 
+                                                                           title="Delete">
+                                                                            <i class="mdi mdi-delete"></i>
+                                                                        </a>
+                                                                        <a href="index.php?detail=<?php echo $row['id_gant']; ?>" 
+                                                                           class="btn btn-primary btn-sm" 
+                                                                           data-bs-toggle="tooltip" 
+                                                                           title="Detail">
+                                                                            <i class="mdi mdi-eye"></i>
+                                                                        </a>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        <?php endwhile; ?>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        <?php endif; ?>
+
+                                    </div> <!-- end card body-->
+                                </div> <!-- end card -->
+                            </div><!-- end col-->
+                        </div> <!-- end row-->
                      </div> <!-- container -->
                  </div> <!-- content -->
  
@@ -676,7 +846,7 @@
  
          <!-- bundle -->
          <script src="../../assets/js/vendor.min.js"></script>
-         <script src="../../assets/js/app.min.js"></script>
+         <script src="assets/js/app.min.js"></script>
  
          <!-- third party js -->
          <script src="../../assets/js/vendor/jquery.dataTables.min.js"></script>
@@ -697,7 +867,100 @@
          <!-- demo app -->
          <script src="../../assets/js/pages/demo.datatable-init.js"></script>
          <!-- end demo js-->
- 
+         <script>
+            $(document).ready(function () {
+    // Store tasks temporarily
+        let tempTasks = [];
+        
+        if ($("#gantt_here").length > 0) {
+            gantt.config.date_format = "%Y-%m-%d";
+            gantt.init("gantt_here");
+            
+            // Check if we're in edit mode and need to fetch existing data
+            const urlParams = new URLSearchParams(window.location.search);
+            const editMode = urlParams.get('edit');
+            const insertMode = urlParams.get('insert');
+            let currentIdGant = editMode || 'temp';
+            
+            if (editMode) {
+                // Load existing data for editing
+                $.getJSON("index.php?get_tasks=true&id_gant=" + editMode, function (data) {
+                    tempTasks = data || [];
+                    gantt.parse({ data: tempTasks });
+                });
+            } else if (insertMode) {
+                // Start with empty chart for insert
+                tempTasks = [];
+                gantt.parse({ data: [] });
+            }
+            
+            // Add task
+            gantt.attachEvent("onAfterTaskAdd", function (id, task) {
+                // Generate a unique temporary ID
+                const tempId = 'temp_' + new Date().getTime() + '_' + Math.floor(Math.random() * 1000);
+                
+                // Store in our temporary array
+                tempTasks.push({
+                    id: tempId,
+                    text: task.text,
+                    start_date: gantt.date.date_to_str("%Y-%m-%d")(task.start_date),
+                    duration: task.duration,
+                    progress: task.progress,
+                    parent: task.parent
+                });
+                
+                // Update hidden form field
+                $("#task_data_json").val(JSON.stringify(tempTasks));
+                
+                // Update gantt chart ID
+                gantt.changeTaskId(id, tempId);
+            });
+            
+            // Update task
+            gantt.attachEvent("onAfterTaskUpdate", function (id, task) {
+                // Update in our temporary array
+                for (let i = 0; i < tempTasks.length; i++) {
+                    if (tempTasks[i].id == id) {
+                        tempTasks[i] = {
+                            id: id,
+                            text: task.text,
+                            start_date: gantt.date.date_to_str("%Y-%m-%d")(task.start_date),
+                            duration: task.duration,
+                            progress: task.progress,
+                            parent: task.parent
+                        };
+                        break;
+                    }
+                }
+                
+                // Update hidden form field
+                $("#task_data_json").val(JSON.stringify(tempTasks));
+            });
+            
+            // Delete task
+            gantt.attachEvent("onAfterTaskDelete", function (id) {
+                // Remove from our temporary array
+                tempTasks = tempTasks.filter(task => task.id != id);
+                
+                // Update hidden form field
+                $("#task_data_json").val(JSON.stringify(tempTasks));
+            });
+            
+            // Make sure form submission includes task data
+            $("form").on("submit", function() {
+                // Ensure task data is included
+                if (!$("#task_data_json").val()) {
+                    $("#task_data_json").val(JSON.stringify(tempTasks));
+                }
+                return true;
+            });
+        }
+    });
+
+        </script>
+        <script src="https://cdn.dhtmlx.com/gantt/edge/dhtmlxgantt.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        
      </body>
  
  <!-- Mirrored from coderthemes.com/hyper/saas/tables-datatable.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 29 Jul 2022 10:22:01 GMT -->
