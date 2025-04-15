@@ -129,20 +129,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $id_customer = $_POST['id_customer'];
         $tanggal = $_POST['tanggal'];
         
-        // Process task_data from the form submission
-        $task_data = isset($_POST['task_data_json']) ? $_POST['task_data_json'] : null;
-        
-        // If task data is provided, update it along with other fields
-        if ($task_data !== null) {
-            $sql = "UPDATE gant_customer SET id_customer = ?, tanggal = ?, task_data = ? WHERE id_gant = ?";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("sssi", $id_customer, $tanggal, $task_data, $id_gant);
+        // Get current task_data if not provided in form
+        // This preserves the Gantt data when updating other fields
+        if (isset($_POST['task_data_json'])) {
+            $task_data = $_POST['task_data_json'];
         } else {
-            // Otherwise, just update the other fields
-            $sql = "UPDATE gant_customer SET id_customer = ?, tanggal = ? WHERE id_gant = ?";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("ssi", $id_customer, $tanggal, $id_gant);
+            // Fetch existing task data
+            $fetch_sql = "SELECT task_data FROM gant_customer WHERE id_gant = ?";
+            $fetch_stmt = $conn->prepare($fetch_sql);
+            $fetch_stmt->bind_param("i", $id_gant);
+            $fetch_stmt->execute();
+            $fetch_result = $fetch_stmt->get_result();
+            $fetch_data = $fetch_result->fetch_assoc();
+            $task_data = $fetch_data ? $fetch_data['task_data'] : '[]';
+            $fetch_stmt->close();
         }
+        
+        $sql = "UPDATE gant_customer SET id_customer = ?, tanggal = ?, task_data = ? WHERE id_gant = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sssi", $id_customer, $tanggal, $task_data, $id_gant);
         
         if ($stmt->execute()) {
             $_SESSION['message'] = "Record updated successfully!";
@@ -160,6 +165,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 if (isset($_GET['delete'])) {
     // Delete operation
     $id_gant = $_GET['delete'];
+    
+    // Validate that id_gant is a number
+    if (!is_numeric($id_gant)) {
+        $_SESSION['message'] = "Invalid ID format!";
+        $_SESSION['message_type'] = "danger";
+        header("Location: view.php");
+        exit();
+    }
+    
+    // Check if the record exists
+    $check_sql = "SELECT id_gant FROM gant_customer WHERE id_gant = ?";
+    $check_stmt = $conn->prepare($check_sql);
+    $check_stmt->bind_param("i", $id_gant);
+    $check_stmt->execute();
+    $check_result = $check_stmt->get_result();
+    
+    if ($check_result->num_rows == 0) {
+        $_SESSION['message'] = "Record not found!";
+        $_SESSION['message_type'] = "danger";
+        $check_stmt->close();
+        header("Location: view.php");
+        exit();
+    }
+    $check_stmt->close();
     
     $sql = "DELETE FROM gant_customer WHERE id_gant = ?";
     $stmt = $conn->prepare($sql);
