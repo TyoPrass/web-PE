@@ -13,70 +13,73 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SERVER['CONTENT_TYPE']) && 
     $request = json_decode(file_get_contents("php://input"), true);
     
     if (isset($request['action'])) {
+        $id_gant = $request['id_gant'];
+        $sql = "SELECT task_data FROM gant_customer WHERE id_gant = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $id_gant);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        $stmt->close();
+        
+        $tasks = [];
+        if ($row && !empty($row['task_data'])) {
+            $tasks = json_decode($row['task_data'], true) ?: [];
+        }
+        
         switch ($request['action']) {
-            case 'create':
             case 'update':
-            case 'delete':
-                // Get the current task_data JSON for the given id_gant
-                $id_gant = $request['id_gant'];
-                $sql = "SELECT task_data FROM gant_customer WHERE id_gant = ?";
-                $stmt = $conn->prepare($sql);
-                $stmt->bind_param("i", $id_gant);
-                $stmt->execute();
-                $result = $stmt->get_result();
-                $row = $result->fetch_assoc();
-                $stmt->close();
+                $taskId = $request['id'];
+                $found = false;
                 
-                $tasks = [];
-                if ($row && !empty($row['task_data'])) {
-                    $tasks = json_decode($row['task_data'], true);
+                // Update existing task or add if it doesn't exist
+                foreach ($tasks as &$task) {
+                    if ($task['id'] == $taskId) {
+                        $task['text'] = $request['text'];
+                        $task['start_date'] = $request['start_date'];
+                        $task['duration'] = $request['duration'];
+                        $task['progress'] = $request['progress'];
+                        $task['parent'] = $request['parent'];
+                        $found = true;
+                        break;
+                    }
                 }
                 
-                // Modify the tasks array based on the action
-                if ($request['action'] == 'create') {
+                // If task wasn't found, add it as new
+                if (!$found) {
                     $tasks[] = [
-                        'id' => $request['id'] ?? count($tasks) + 1,
+                        'id' => $taskId,
                         'text' => $request['text'],
                         'start_date' => $request['start_date'],
                         'duration' => $request['duration'],
                         'progress' => $request['progress'],
                         'parent' => $request['parent']
                     ];
-                    $response = ['success' => true, 'id' => end($tasks)['id']];
-                } elseif ($request['action'] == 'update') {
-                    foreach ($tasks as &$task) {
-                        if ($task['id'] == $request['id']) {
-                            $task['text'] = $request['text'];
-                            $task['start_date'] = $request['start_date'];
-                            $task['duration'] = $request['duration'];
-                            $task['progress'] = $request['progress'];
-                            $task['parent'] = $request['parent'];
-                            break;
-                        }
-                    }
-                    $response = ['success' => true];
-                } elseif ($request['action'] == 'delete') {
-                    foreach ($tasks as $key => $task) {
-                        if ($task['id'] == $request['id']) {
-                            unset($tasks[$key]);
-                            break;
-                        }
-                    }
-                    $tasks = array_values($tasks); // Reindex array
-                    $response = ['success' => true];
                 }
+                break;
                 
-                // Update the task_data JSON in the database
-                $task_data_json = json_encode($tasks);
-                $sql = "UPDATE gant_customer SET task_data = ? WHERE id_gant = ?";
-                $stmt = $conn->prepare($sql);
-                $stmt->bind_param("si", $task_data_json, $id_gant);
-                $stmt->execute();
-                $stmt->close();
-                
-                echo json_encode($response);
-                exit();
+            case 'delete':
+                $taskId = $request['id'];
+                foreach ($tasks as $key => $task) {
+                    if ($task['id'] == $taskId) {
+                        unset($tasks[$key]);
+                        break;
+                    }
+                }
+                $tasks = array_values($tasks); // Reindex array
+                break;
         }
+        
+        // Update the task_data JSON in the database
+        $task_data_json = json_encode($tasks);
+        $sql = "UPDATE gant_customer SET task_data = ? WHERE id_gant = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("si", $task_data_json, $id_gant);
+        $result = $stmt->execute();
+        $stmt->close();
+        
+        echo json_encode(['success' => $result, 'task_count' => count($tasks)]);
+        exit();
     }
 }
 
@@ -114,10 +117,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bind_param("sss", $id_customer, $tanggal, $task_data);
         
         if ($stmt->execute()) {
-            $_SESSION['message'] = "Record inserted successfully!";
+            $_SESSION['message'] = "Gantt chart created successfully!";
             $_SESSION['message_type'] = "success";
         } else {
-            $_SESSION['message'] = "Error inserting record: " . $conn->error;
+            $_SESSION['message'] = "Error creating Gantt chart: " . $conn->error;
             $_SESSION['message_type'] = "danger";
         }
         $stmt->close();
@@ -129,31 +132,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $id_customer = $_POST['id_customer'];
         $tanggal = $_POST['tanggal'];
         
-        // Get current task_data if not provided in form
-        // This preserves the Gantt data when updating other fields
-        if (isset($_POST['task_data_json'])) {
-            $task_data = $_POST['task_data_json'];
+        // Process task_data from the form submission
+        $task_data = isset($_POST['task_data_json']) ? $_POST['task_data_json'] : null;
+        
+        // If task data is provided, update it along with other fields
+        if ($task_data !== null) {
+            $sql = "UPDATE gant_customer SET id_customer = ?, tanggal = ?, task_data = ? WHERE id_gant = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("sssi", $id_customer, $tanggal, $task_data, $id_gant);
         } else {
-            // Fetch existing task data
-            $fetch_sql = "SELECT task_data FROM gant_customer WHERE id_gant = ?";
-            $fetch_stmt = $conn->prepare($fetch_sql);
-            $fetch_stmt->bind_param("i", $id_gant);
-            $fetch_stmt->execute();
-            $fetch_result = $fetch_stmt->get_result();
-            $fetch_data = $fetch_result->fetch_assoc();
-            $task_data = $fetch_data ? $fetch_data['task_data'] : '[]';
-            $fetch_stmt->close();
+            // Otherwise, just update the other fields
+            $sql = "UPDATE gant_customer SET id_customer = ?, tanggal = ? WHERE id_gant = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("ssi", $id_customer, $tanggal, $id_gant);
         }
         
-        $sql = "UPDATE gant_customer SET id_customer = ?, tanggal = ?, task_data = ? WHERE id_gant = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sssi", $id_customer, $tanggal, $task_data, $id_gant);
-        
         if ($stmt->execute()) {
-            $_SESSION['message'] = "Record updated successfully!";
+            $_SESSION['message'] = "Gantt chart updated successfully!";
             $_SESSION['message_type'] = "success";
         } else {
-            $_SESSION['message'] = "Error updating record: " . $conn->error;
+            $_SESSION['message'] = "Error updating Gantt chart: " . $conn->error;
             $_SESSION['message_type'] = "danger";
         }
         $stmt->close();
@@ -166,39 +164,15 @@ if (isset($_GET['delete'])) {
     // Delete operation
     $id_gant = $_GET['delete'];
     
-    // Validate that id_gant is a number
-    if (!is_numeric($id_gant)) {
-        $_SESSION['message'] = "Invalid ID format!";
-        $_SESSION['message_type'] = "danger";
-        header("Location: view.php");
-        exit();
-    }
-    
-    // Check if the record exists
-    $check_sql = "SELECT id_gant FROM gant_customer WHERE id_gant = ?";
-    $check_stmt = $conn->prepare($check_sql);
-    $check_stmt->bind_param("i", $id_gant);
-    $check_stmt->execute();
-    $check_result = $check_stmt->get_result();
-    
-    if ($check_result->num_rows == 0) {
-        $_SESSION['message'] = "Record not found!";
-        $_SESSION['message_type'] = "danger";
-        $check_stmt->close();
-        header("Location: view.php");
-        exit();
-    }
-    $check_stmt->close();
-    
     $sql = "DELETE FROM gant_customer WHERE id_gant = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id_gant);
     
     if ($stmt->execute()) {
-        $_SESSION['message'] = "Record deleted successfully!";
+        $_SESSION['message'] = "Gantt chart deleted successfully!";
         $_SESSION['message_type'] = "success";
     } else {
-        $_SESSION['message'] = "Error deleting record: " . $conn->error;
+        $_SESSION['message'] = "Error deleting Gantt chart: " . $conn->error;
         $_SESSION['message_type'] = "danger";
     }
     $stmt->close();
