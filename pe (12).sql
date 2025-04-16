@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Apr 10, 2025 at 04:21 AM
+-- Generation Time: Apr 16, 2025 at 04:27 AM
 -- Server version: 8.4.3
 -- PHP Version: 8.3.16
 
@@ -96,20 +96,17 @@ INSERT INTO `data_part` (`id_part`, `nama_part`, `gambar_part`, `tanggal`, `tgl_
 
 CREATE TABLE `gant_customer` (
   `id_gant` int NOT NULL,
-  `id_customer` int NOT NULL
+  `id_customer` int NOT NULL,
+  `tanggal` date NOT NULL,
+  `task_data` json NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- --------------------------------------------------------
-
 --
--- Table structure for table `jadwal`
+-- Dumping data for table `gant_customer`
 --
 
-CREATE TABLE `jadwal` (
-  `id_jadwal` int NOT NULL,
-  `nama_customer` varchar(50) NOT NULL,
-  `project` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+INSERT INTO `gant_customer` (`id_gant`, `id_customer`, `tanggal`, `task_data`) VALUES
+(64, 17, '2025-04-16', '[]');
 
 -- --------------------------------------------------------
 
@@ -150,14 +147,6 @@ CREATE TABLE `tasks` (
   `progress` float DEFAULT '0',
   `parent` int DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `tasks`
---
-
-INSERT INTO `tasks` (`id`, `text`, `start_date`, `duration`, `progress`, `parent`) VALUES
-(1, 'New task', '2025-04-09', 1, 0, 0),
-(2, 'New task', '2025-04-07', 1, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -267,12 +256,6 @@ ALTER TABLE `gant_customer`
   ADD KEY `id_customer` (`id_customer`);
 
 --
--- Indexes for table `jadwal`
---
-ALTER TABLE `jadwal`
-  ADD PRIMARY KEY (`id_jadwal`);
-
---
 -- Indexes for table `proses`
 --
 ALTER TABLE `proses`
@@ -326,13 +309,7 @@ ALTER TABLE `data_part`
 -- AUTO_INCREMENT for table `gant_customer`
 --
 ALTER TABLE `gant_customer`
-  MODIFY `id_gant` int NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `jadwal`
---
-ALTER TABLE `jadwal`
-  MODIFY `id_jadwal` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id_gant` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 
 --
 -- AUTO_INCREMENT for table `proses`
