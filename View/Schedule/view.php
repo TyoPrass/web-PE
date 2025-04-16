@@ -1,7 +1,182 @@
 <?php
 include_once("../../Database/koneksi.php");
-session_start();
 
+// Initialize session if not already started
+if (session_status() == PHP_SESSION_NONE || !isset($_SESSION)) {
+    session_start();
+}
+
+// Handle AJAX requests for Gantt chart data
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SERVER['CONTENT_TYPE']) && strpos($_SERVER['CONTENT_TYPE'], 'application/json') !== false) {
+    $request = json_decode(file_get_contents("php://input"), true);
+    
+    if (isset($request['action'])) {
+        $id_gant = $request['id_gant'];
+        $sql = "SELECT task_data FROM gant_customer WHERE id_gant = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $id_gant);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        $stmt->close();
+        
+        $tasks = [];
+        if ($row && !empty($row['task_data'])) {
+            $tasks = json_decode($row['task_data'], true) ?: [];
+        }
+        
+        switch ($request['action']) {
+            case 'update':
+                $taskId = $request['id'];
+                $found = false;
+                
+                // Update existing task or add if it doesn't exist
+                foreach ($tasks as &$task) {
+                    if ($task['id'] == $taskId) {
+                        $task['text'] = $request['text'];
+                        $task['start_date'] = $request['start_date'];
+                        $task['duration'] = $request['duration'];
+                        $task['progress'] = $request['progress'];
+                        $task['parent'] = $request['parent'];
+                        $found = true;
+                        break;
+                    }
+                }
+                
+                // If task wasn't found, add it as new
+                if (!$found) {
+                    $tasks[] = [
+                        'id' => $taskId,
+                        'text' => $request['text'],
+                        'start_date' => $request['start_date'],
+                        'duration' => $request['duration'],
+                        'progress' => $request['progress'],
+                        'parent' => $request['parent']
+                    ];
+                }
+                break;
+                
+            case 'delete':
+                $taskId = $request['id'];
+                foreach ($tasks as $key => $task) {
+                    if ($task['id'] == $taskId) {
+                        unset($tasks[$key]);
+                        break;
+                    }
+                }
+                $tasks = array_values($tasks); // Reindex array
+                break;
+        }
+        
+        // Update the task_data JSON in the database
+        $task_data_json = json_encode($tasks);
+        $sql = "UPDATE gant_customer SET task_data = ? WHERE id_gant = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("si", $task_data_json, $id_gant);
+        $result = $stmt->execute();
+        $stmt->close();
+        
+        echo json_encode(['success' => $result, 'task_count' => count($tasks)]);
+        exit();
+    }
+}
+
+// Fetch Gantt chart data for a specific id_gant
+if (isset($_GET['get_tasks']) && isset($_GET['id_gant'])) {
+    $id_gant = $_GET['id_gant'];
+    $sql = "SELECT task_data FROM gant_customer WHERE id_gant = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id_gant);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    $stmt->close();
+    
+    if ($row && !empty($row['task_data'])) {
+        echo $row['task_data'];
+    } else {
+        echo '[]';
+    }
+    exit();
+}
+
+// Function to handle insert, update, and delete operations
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['submit'])) {
+        // Insert operation
+        $id_customer = $_POST['id_customer'];
+        $tanggal = $_POST['tanggal'];
+        
+        // Process task_data from the form submission
+        $task_data = isset($_POST['task_data_json']) ? $_POST['task_data_json'] : '[]';
+        
+        $sql = "INSERT INTO gant_customer (id_customer, tanggal, task_data) VALUES (?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sss", $id_customer, $tanggal, $task_data);
+        
+        if ($stmt->execute()) {
+            $_SESSION['message'] = "Gantt chart created successfully!";
+            $_SESSION['message_type'] = "success";
+        } else {
+            $_SESSION['message'] = "Error creating Gantt chart: " . $conn->error;
+            $_SESSION['message_type'] = "danger";
+        }
+        $stmt->close();
+        header("Location: view.php");
+        exit();
+    } elseif (isset($_POST['update'])) {
+        // Update operation
+        $id_gant = $_POST['id_gant'];
+        $id_customer = $_POST['id_customer'];
+        $tanggal = $_POST['tanggal'];
+        
+        // Process task_data from the form submission
+        $task_data = isset($_POST['task_data_json']) ? $_POST['task_data_json'] : null;
+        
+        // If task data is provided, update it along with other fields
+        if ($task_data !== null) {
+            $sql = "UPDATE gant_customer SET id_customer = ?, tanggal = ?, task_data = ? WHERE id_gant = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("sssi", $id_customer, $tanggal, $task_data, $id_gant);
+        } else {
+            // Otherwise, just update the other fields
+            $sql = "UPDATE gant_customer SET id_customer = ?, tanggal = ? WHERE id_gant = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("ssi", $id_customer, $tanggal, $id_gant);
+        }
+        
+        if ($stmt->execute()) {
+            $_SESSION['message'] = "Gantt chart updated successfully!";
+            $_SESSION['message_type'] = "success";
+        } else {
+            $_SESSION['message'] = "Error updating Gantt chart: " . $conn->error;
+            $_SESSION['message_type'] = "danger";
+        }
+        $stmt->close();
+        header("Location: view.php");
+        exit();
+    }
+}
+
+if (isset($_GET['delete'])) {
+    // Delete operation
+    $id_gant = $_GET['delete'];
+    
+    $sql = "DELETE FROM gant_customer WHERE id_gant = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id_gant);
+    
+    if ($stmt->execute()) {
+        $_SESSION['message'] = "Gantt chart deleted successfully!";
+        $_SESSION['message_type'] = "success";
+    } else {
+        $_SESSION['message'] = "Error deleting Gantt chart: " . $conn->error;
+        $_SESSION['message_type'] = "danger";
+    }
+    $stmt->close();
+    header("Location: view.php");
+    exit();
+}
 ?>
 
 
@@ -576,31 +751,138 @@ session_start();
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="mb-3">
-                                                        <h6 class="text-uppercase fw-bold">Gantt Chart Details</h6>
-                                                        <table class="table table-sm">
+                                                        <h5 class="text-uppercase fw-bold">Gantt Chart Details</h5>
+                                                        <table class="table table-sm table-bordered">
                                                             <tr>
-                                                                <th>Nama Customer</th>
-                                                                <td>: <?php echo htmlspecialchars($detail_data['id_customer']); ?></td>
+                                                                <th style="width: 35%;">Customer</th>
+                                                                <td>
+                                                                    <?php 
+                                                                        $customer_id = $detail_data['id_customer'];
+                                                                        $customer_sql = "SELECT nama_customer FROM customer WHERE id_customer = ?";
+                                                                        $customer_stmt = $conn->prepare($customer_sql);
+                                                                        $customer_stmt->bind_param("s", $customer_id);
+                                                                        $customer_stmt->execute();
+                                                                        $customer_result = $customer_stmt->get_result();
+                                                                        $customer_data = $customer_result->fetch_assoc();
+                                                                        echo $customer_data ? htmlspecialchars($customer_data['nama_customer']) : htmlspecialchars($customer_id);
+                                                                        $customer_stmt->close();
+                                                                    ?>
+                                                                </td>
                                                             </tr>
                                                             <tr>
                                                                 <th>Date</th>
-                                                                <td>: <?php echo htmlspecialchars($detail_data['tanggal']); ?></td>
+                                                                <td><?php echo date('d F Y', strtotime($detail_data['tanggal'])); ?></td>
                                                             </tr>
                                                             <tr>
-                                                                <th>Gantt JSON</th>
+                                                                <th>Created</th>
+                                                                <td><?php echo date('d M Y H:i', strtotime($detail_data['created_at'] ?? $detail_data['tanggal'])); ?></td>
                                                             </tr>
                                                         </table>
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            <div class="mt-3 mb-4">
+                                                <h5 class="text-uppercase fw-bold">Gantt Chart Visualization</h5>
+                                                <div id="gantt_here" style="height: 500px;"></div>
+                                            </div>
+
+                                            <div class="mt-4">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h5 class="card-title mb-0">Task List</h5>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-centered table-hover table-bordered">
+                                                                <thead class="table-light">
+                                                                    <tr>
+                                                                        <th>#</th>
+                                                                        <th>Task Name</th>
+                                                                        <th>Start Date</th>
+                                                                        <th>Duration (days)</th>
+                                                                        <th>Progress</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <?php
+                                                                    $tasks = json_decode($detail_data['task_data'], true) ?: [];
+                                                                    $counter = 1;
+                                                                    foreach ($tasks as $task):
+                                                                        // Get parent task name
+                                                                        $parent_name = '-';
+                                                                        if (!empty($task['parent']) && $task['parent'] != 0) {
+                                                                            foreach ($tasks as $potential_parent) {
+                                                                                if ($potential_parent['id'] == $task['parent']) {
+                                                                                    $parent_name = $potential_parent['text'];
+                                                                                    break;
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    ?>
+                                                                    <tr>
+                                                                        <td><?php echo $counter++; ?></td>
+                                                                        <td><?php echo htmlspecialchars($task['text']); ?></td>
+                                                                        <td><?php echo htmlspecialchars($task['start_date']); ?></td>
+                                                                        <td><?php echo htmlspecialchars($task['duration']); ?></td>
+                                                                        <td>
+                                                                            <div class="progress" style="height: 20px;">
+                                                                                <div class="progress-bar bg-success" role="progressbar" 
+                                                                                     style="width: <?php echo ($task['progress'] * 100); ?>%" 
+                                                                                     aria-valuenow="<?php echo ($task['progress'] * 100); ?>" 
+                                                                                     aria-valuemin="0" aria-valuemax="100">
+                                                                                    <?php echo round($task['progress'] * 100); ?>%
+                                                                                </div>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <?php endforeach; ?>
+                                                                    <?php if (empty($tasks)): ?>
+                                                                    <tr>
+                                                                        <td colspan="6" class="text-center">No tasks found</td>
+                                                                    </tr>
+                                                                    <?php endif; ?>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                             <div class="mt-4">
                                                 <a href="view.php" class="btn btn-secondary">
-                                                    <i class="mdi mdi-arrow-left"></i> Back
+                                                    <i class="mdi mdi-arrow-left"></i> Back to List
                                                 </a>
                                                 <a href="view.php?edit=<?php echo $detail_data['id_gant']; ?>" class="btn btn-info">
                                                     <i class="mdi mdi-pencil"></i> Edit
                                                 </a>
+                                                <a href="view.php?delete=<?php echo $detail_data['id_gant']; ?>" 
+                                                   class="btn btn-danger"
+                                                   onclick="return confirm('Are you sure you want to delete this Gantt chart?');">
+                                                    <i class="mdi mdi-delete"></i> Delete
+                                                </a>
                                             </div>
+
+                                            <script>
+                                            // Initialize the Gantt chart in read-only mode
+                                            document.addEventListener('DOMContentLoaded', function() {
+                                                if (typeof gantt !== 'undefined') {
+                                                    gantt.config.date_format = "%Y-%m-%d";
+                                                    gantt.config.readonly = true;
+                                                    gantt.init("gantt_here");
+                                                    
+                                                    // Load the tasks
+                                                    fetch("view.php?get_tasks=true&id_gant=<?php echo $detail_data['id_gant']; ?>")
+                                                        .then(response => response.json())
+                                                        .then(data => {
+                                                            gantt.parse({data: data || []});
+                                                        })
+                                                        .catch(error => {
+                                                            console.error("Error loading Gantt data:", error);
+                                                        });
+                                                }
+                                            });
+                                            </script>
                                         <?php elseif (isset($_GET['edit'])): 
                                             // Fetch the record to be edited
                                             $id_gant = $_GET['edit'];
@@ -620,12 +902,22 @@ session_start();
                                             }
                                         ?>
                                                                                     <!-- Edit Form -->
-                                                <form action="action.php" method="post">
+                                                <form action="view.php" method="post">
                                                     <input type="hidden" name="id_gant" value="<?php echo htmlspecialchars($edit_data['id_gant']); ?>">
                                                     <input type="hidden" name="update" value="true">
                                                 <div class="mb-3">
                                                     <label for="id_customer" class="form-label">Nama Customer</label>
-                                                    <input type="text" class="form-control" id="id_customer" name="id_customer" value="<?php echo htmlspecialchars($edit_data['id_customer']); ?>" required>
+                                                    <select class="form-control" id="id_customer" name="id_customer" required>
+                                                        <option value="">-- Select Customer --</option>
+                                                        <?php
+                                                        $customer_sql = "SELECT id_customer, nama_customer FROM customer ORDER BY nama_customer ASC";
+                                                        $customer_result = $conn->query($customer_sql);
+                                                        while ($customer = $customer_result->fetch_assoc()): ?>
+                                                            <option value="<?php echo $customer['id_customer']; ?>" <?php echo ($customer['id_customer'] == $edit_data['id_customer']) ? 'selected' : ''; ?>>
+                                                                <?php echo htmlspecialchars($customer['nama_customer']); ?>
+                                                            </option>
+                                                        <?php endwhile; ?>
+                                                    </select>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="tanggal" class="form-label">Date</label>
@@ -640,12 +932,22 @@ session_start();
                                             </form>
                                             <?php elseif (isset($_GET['insert'])): ?>
                                             <!-- Insert Form -->
-                                            <form action="action.php" method="post">
+                                            <form action="view.php" method="post">
                                                 <input type="hidden" name="submit" value="true">
                                                 <input type="hidden" name="task_data_json" id="task_data_json" value="[]">
                                                 <div class="mb-3">
                                                     <label for="id_customer" class="form-label">Nama Customer</label>
-                                                    <input type="text" class="form-control" id="id_customer" name="id_customer" required>
+                                                    <select class="form-control" id="id_customer" name="id_customer" required>
+                                                        <option value="">-- Select Customer --</option>
+                                                        <?php
+                                                        $customer_sql = "SELECT id_customer, nama_customer FROM customer ORDER BY nama_customer ASC";
+                                                        $customer_result = $conn->query($customer_sql);
+                                                        while ($customer = $customer_result->fetch_assoc()): ?>
+                                                            <option value="<?php echo $customer['id_customer']; ?>">
+                                                                <?php echo htmlspecialchars($customer['nama_customer']); ?>
+                                                            </option>
+                                                        <?php endwhile; ?>
+                                                    </select>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="tanggal" class="form-label">Date</label>
@@ -669,7 +971,7 @@ session_start();
                                                 <table id="basic-datatable" class="table table-striped dt-responsive nowrap w-100">
                                                     <thead>
                                                         <tr>
-                                                            <th>No</th>
+                                                    <th>No</th>
                                                             <th>Customer ID</th>
                                                             <th>Date</th>
                                                             <th>Actions</th>
@@ -683,7 +985,20 @@ session_start();
                                                         while ($row = $result->fetch_assoc()): ?>
                                                             <tr>
                                                                 <td><?php echo $no++; ?></td>
-                                                                <td><?php echo htmlspecialchars($row['id_customer']); ?></td>
+                                                                <td>
+                                                                    <?php 
+                                                                        // Get customer name using customer ID
+                                                                        $customer_id = $row['id_customer'];
+                                                                        $customer_sql = "SELECT nama_customer FROM customer WHERE id_customer = ?";
+                                                                        $customer_stmt = $conn->prepare($customer_sql);
+                                                                        $customer_stmt->bind_param("s", $customer_id);
+                                                                        $customer_stmt->execute();
+                                                                        $customer_result = $customer_stmt->get_result();
+                                                                        $customer_data = $customer_result->fetch_assoc();
+                                                                        echo $customer_data ? htmlspecialchars($customer_data['nama_customer']) : htmlspecialchars($customer_id);
+                                                                        $customer_stmt->close();
+                                                                    ?>
+                                                                </td>
                                                                 <td><?php echo htmlspecialchars($row['tanggal']); ?></td>
                                                                 <td>
                                                                     <div class="btn-group">
@@ -871,92 +1186,143 @@ session_start();
          <!-- end demo js-->
          <script>
             $(document).ready(function () {
-                let tempTasks = [];
-                
-                if ($("#gantt_here").length > 0) {
-                    gantt.config.date_format = "%Y-%m-%d";
-                    gantt.init("gantt_here");
-                    
-                    // Check if we're in edit mode and need to fetch existing data
-                    const urlParams = new URLSearchParams(window.location.search);
-                    const editMode = urlParams.get('edit');
-                    const insertMode = urlParams.get('insert');
-                let currentIdGant = editMode || 'temp';
-                
-                if (editMode) {
-                    // Load existing data for editing
-                    $.getJSON("action.php?get_tasks=true&id_gant=" + editMode, function (data) {
-                        tempTasks = data || [];
-                        gantt.parse({ data: tempTasks });
-                    });
-                } else if (insertMode) {
-                    // Start with empty chart for insert
-                    tempTasks = [];
-                    gantt.parse({ data: [] });
+    // Store tasks temporarily
+        let tempTasks = [];
+        
+        if ($("#gantt_here").length > 0) {
+            gantt.config.date_format = "%Y-%m-%d";
+            gantt.init("gantt_here");
+            
+            // Check if we're in edit mode and need to fetch existing data
+            const urlParams = new URLSearchParams(window.location.search);
+            const editMode = urlParams.get('edit');
+            const insertMode = urlParams.get('insert');
+            let currentIdGant = editMode || 'temp';
+            
+            if (editMode) {
+            // Load existing data for editing
+            $.getJSON("view.php?get_tasks=true&id_gant=" + editMode, function (data) {
+                tempTasks = data || [];
+                gantt.parse({ data: tempTasks });
+            });
+            } else if (insertMode) {
+            // Start with empty chart for insert
+            tempTasks = [];
+            gantt.parse({ data: [] });
+            }
+            
+            // Add task
+            gantt.attachEvent("onAfterTaskAdd", function (id, task) {
+            // Generate a unique temporary ID
+            const tempId = 'temp_' + new Date().getTime() + '_' + Math.floor(Math.random() * 1000);
+            
+            // Store in our temporary array
+            tempTasks.push({
+                id: tempId,
+                text: task.text,
+                start_date: gantt.date.date_to_str("%Y-%m-%d")(task.start_date),
+                duration: task.duration,
+                progress: task.progress,
+                parent: task.parent
+            });
+            
+            // Update hidden form field
+            $("#task_data_json").val(JSON.stringify(tempTasks));
+            
+            // Update gantt chart ID
+            gantt.changeTaskId(id, tempId);
+            });
+            
+            // Update task
+            gantt.attachEvent("onAfterTaskUpdate", function (id, task) {
+            // Update in our temporary array
+            for (let i = 0; i < tempTasks.length; i++) {
+                if (tempTasks[i].id == id) {
+                tempTasks[i] = {
+                    id: id,
+                    text: task.text,
+                    start_date: gantt.date.date_to_str("%Y-%m-%d")(task.start_date),
+                    duration: task.duration,
+                    progress: task.progress,
+                    parent: task.parent
+                };
+                break;
                 }
-                
-                // Add task
-                gantt.attachEvent("onAfterTaskAdd", function (id, task) {
-                    // Generate a unique temporary ID
-                    const tempId = 'temp_' + new Date().getTime() + '_' + Math.floor(Math.random() * 1000);
-                    
-                    // Store in our temporary array
-                    tempTasks.push({
-                        id: tempId,
-                        text: task.text,
-                        start_date: gantt.date.date_to_str("%Y-%m-%d")(task.start_date),
-                        duration: task.duration,
-                        progress: task.progress,
-                        parent: task.parent
-                    });
-                    
-                    // Update hidden form field
-                    $("#task_data_json").val(JSON.stringify(tempTasks));
-                    
-                    // Update gantt chart ID
-                    gantt.changeTaskId(id, tempId);
+            }
+            
+            // Update hidden form field immediately
+            $("#task_data_json").val(JSON.stringify(tempTasks));
+            
+            // For edit mode, save changes immediately via AJAX
+            if (editMode) {
+                $.ajax({
+                type: "POST",
+                url: "view.php",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    action: "update",
+                    id_gant: editMode,
+                    id: id,
+                    text: task.text,
+                    start_date: gantt.date.date_to_str("%Y-%m-%d")(task.start_date),
+                    duration: task.duration,
+                    progress: task.progress,
+                    parent: task.parent
+                }),
+                success: function(response) {
+                    console.log("Task updated successfully");
+                },
+                error: function(error) {
+                    console.error("Error updating task:", error);
+                }
                 });
+            }
+            });
+            
+            // Delete task
+            gantt.attachEvent("onAfterTaskDelete", function (id) {
+            // Find the task to delete
+            const taskToDelete = tempTasks.find(task => task.id == id);
+            
+            if (taskToDelete) {
+                // Remove from our temporary array
+                tempTasks = tempTasks.filter(task => task.id != id);
                 
-                // Update task
-                gantt.attachEvent("onAfterTaskUpdate", function (id, task) {
-                    // Update in our temporary array
-                    for (let i = 0; i < tempTasks.length; i++) {
-                        if (tempTasks[i].id == id) {
-                            tempTasks[i] = {
-                                id: id,
-                                text: task.text,
-                                start_date: gantt.date.date_to_str("%Y-%m-%d")(task.start_date),
-                                duration: task.duration,
-                                progress: task.progress,
-                                parent: task.parent
-                            };
-                            break;
-                        }
+                // Update hidden form field
+                $("#task_data_json").val(JSON.stringify(tempTasks));
+                
+                // For edit mode, delete task immediately via AJAX
+                if (editMode) {
+                $.ajax({
+                    type: "POST",
+                    url: "view.php",
+                    contentType: "application/json",
+                    data: JSON.stringify({
+                    action: "delete",
+                    id_gant: editMode,
+                    id: id
+                    }),
+                    success: function(response) {
+                    console.log("Task deleted successfully");
+                    },
+                    error: function(error) {
+                    console.error("Error deleting task:", error);
                     }
-                    
-                    // Update hidden form field
-                    $("#task_data_json").val(JSON.stringify(tempTasks));
                 });
-                
-                // Delete task
-                gantt.attachEvent("onAfterTaskDelete", function (id) {
-                    // Remove from our temporary array
-                    tempTasks = tempTasks.filter(task => task.id != id);
-                    
-                    // Update hidden form field
-                    $("#task_data_json").val(JSON.stringify(tempTasks));
-                });
-                
-                // Make sure form submission includes task data
-                $("form").on("submit", function() {
-                    // Ensure task data is included
-                    if (!$("#task_data_json").val()) {
-                        $("#task_data_json").val(JSON.stringify(tempTasks));
-                    }
-                    return true;
-                });
+                }
+            }
+            });
+            
+            // Make sure form submission includes task data
+            $("form").on("submit", function() {
+            // Ensure task data is included
+            if (!$("#task_data_json").val()) {
+                $("#task_data_json").val(JSON.stringify(tempTasks));
+            }
+            return true;
+            });
         }
-    });
+        });
 
         </script>
         <script src="https://cdn.dhtmlx.com/gantt/edge/dhtmlxgantt.js"></script>
