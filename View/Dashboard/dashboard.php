@@ -421,7 +421,7 @@ if (!isset($_SESSION['username'])) {
                                     </a>
 
                                     <!-- item-->
-                                    <a href="../../login.php" class="dropdown-item notify-item">
+                                    <a href="../../index.php" class="dropdown-item notify-item">
                                         <i class="mdi mdi-logout me-1"></i>
                                         <span>Logout</span>
                                     </a>

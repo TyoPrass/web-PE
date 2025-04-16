@@ -116,11 +116,11 @@ include_once("../../Database/koneksi.php");
                          </li>
  
                          <li class="side-nav-item">
-                             <a href="../Katakensha/view.php" class="side-nav-link">
-                                 <i class="uil-rss"></i>
-                                 <span> Social Feed </span>
-                             </a>
-                         </li>
+                            <a href="../Katakensha/view.php" class="side-nav-link">
+                                <i class="uil-rss"></i>
+                                <span> Katakensha </span>
+                            </a>
+                        </li>
  
                          <li class="side-nav-item">
                             <a href="#" class="side-nav-link">
@@ -430,7 +430,7 @@ include_once("../../Database/koneksi.php");
                                      </a>
  
                                      <!-- item-->
-                                     <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                     <a href="../../index.php" class="dropdown-item notify-item">
                                          <i class="mdi mdi-logout me-1"></i>
                                          <span>Logout</span>
                                      </a>
