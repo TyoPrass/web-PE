@@ -83,11 +83,11 @@ include_once("../../Database/koneksi.php");
                          <li class="side-nav-title side-nav-item">Navigation</li>
  
                          <li class="side-nav-item">
-                             <a data-bs-toggle="collapse" href="#sidebarDashboards" aria-expanded="false" aria-controls="sidebarDashboards" class="side-nav-link">
-                                 <i class="uil-home-alt"></i>
-                                 <span> Dashboards </span>
-                             </a>
-                         </li>
+                            <a href="../Dashboard/dashboard.php" class="side-nav-link">
+                                <i class="uil-home-alt"></i>
+                                <span> Dashboards </span>
+                            </a>
+                        </li>
  
                          <li class="side-nav-title side-nav-item">Apps</li>
  
@@ -98,17 +98,20 @@ include_once("../../Database/koneksi.php");
                                  <span class="menu-arrow"></span>
                              </a>
                              <div class="collapse" id="sidebarProjects">
-                                 <ul class="side-nav-second-level">
-                                     <li>
-                                         <a href="apps-projects-list.html">List</a>
-                                     </li>
-                                     <li>
-                                         <a href="apps-projects-details.html">Details</a>
-                                     </li>
-                                     <li>
-                                         <a href="apps-projects-add.html">Create Project</a>
-                                     </li>
-                                 </ul>
+                             <ul class="side-nav-second-level">
+                                    <li>
+                                        <a href="../Customer/view.php">Customer</a>
+                                    </li>
+                                    <li>
+                                        <a href="../Project/view.php">Part</a>
+                                    </li>
+                                    <li>
+                                        <a href="../Proses/view.php">Proses</a>
+                                    </li>
+                                    <li>
+                                        <a href="../Trial/view.php">Trial & Report</a>
+                                    </li>
+                                </ul>
                              </div>
                          </li>
  
@@ -128,7 +131,7 @@ include_once("../../Database/koneksi.php");
                              <div class="collapse" id="sidebarTasks">
                                  <ul class="side-nav-second-level">
                                      <li>
-                                         <a href="apps-tasks.html">List</a>
+                                         <a href="apps-tasks.html">Progress Project</a>
                                      </li>
                                      <li>
                                          <a href="apps-tasks-details.html">Details</a>
