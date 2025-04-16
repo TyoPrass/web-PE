@@ -105,8 +105,8 @@ include_once('action.php');
                         </li>
 
                         <li class="side-nav-item">
-                            <a href="#" class="side-nav-link">
-                                 <i class="uil-clipboard-alt"></i>
+                        <a href="../Schedule/view.php" class="side-nav-link">
+                        <i class="uil-clipboard-alt"></i>
                                  <span> Tasks </span>
                              </a>
                          </li>

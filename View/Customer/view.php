@@ -105,7 +105,7 @@ include('customer_action.php');
                         </li>
 
                         <li class="side-nav-item">
-                            <a href="#" class="side-nav-link">
+                            <a href="../Schedule/view.php" class="side-nav-link">
                                  <i class="uil-clipboard-alt"></i>
                                  <span> Tasks </span>
                              </a>
