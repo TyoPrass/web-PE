@@ -1,3 +1,186 @@
+<?php
+include_once("Database/koneksi.php");
+
+// Initialize session if not already started
+if (session_status() == PHP_SESSION_NONE || !isset($_SESSION)) {
+    session_start();
+}
+
+// Handle AJAX requests for Gantt chart data
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SERVER['CONTENT_TYPE']) && strpos($_SERVER['CONTENT_TYPE'], 'application/json') !== false) {
+    $request = json_decode(file_get_contents("php://input"), true);
+    
+    if (isset($request['action'])) {
+        $id_gant = $request['id_gant'];
+        $sql = "SELECT task_data FROM gant_customer WHERE id_gant = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $id_gant);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        $stmt->close();
+        
+        $tasks = [];
+        if ($row && !empty($row['task_data'])) {
+            $tasks = json_decode($row['task_data'], true) ?: [];
+        }
+        
+        switch ($request['action']) {
+            case 'update':
+                $taskId = $request['id'];
+                $found = false;
+                
+                // Update existing task or add if it doesn't exist
+                foreach ($tasks as &$task) {
+                    if ($task['id'] == $taskId) {
+                        $task['text'] = $request['text'];
+                        $task['start_date'] = $request['start_date'];
+                        $task['duration'] = $request['duration'];
+                        $task['progress'] = $request['progress'];
+                        $task['parent'] = $request['parent'];
+                        $found = true;
+                        break;
+                    }
+                }
+                
+                // If task wasn't found, add it as new
+                if (!$found) {
+                    $tasks[] = [
+                        'id' => $taskId,
+                        'text' => $request['text'],
+                        'start_date' => $request['start_date'],
+                        'duration' => $request['duration'],
+                        'progress' => $request['progress'],
+                        'parent' => $request['parent']
+                    ];
+                }
+                break;
+                
+            case 'delete':
+                $taskId = $request['id'];
+                foreach ($tasks as $key => $task) {
+                    if ($task['id'] == $taskId) {
+                        unset($tasks[$key]);
+                        break;
+                    }
+                }
+                $tasks = array_values($tasks); // Reindex array
+                break;
+        }
+        
+        // Update the task_data JSON in the database
+        $task_data_json = json_encode($tasks);
+        $sql = "UPDATE gant_customer SET task_data = ? WHERE id_gant = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("si", $task_data_json, $id_gant);
+        $result = $stmt->execute();
+        $stmt->close();
+        
+        echo json_encode(['success' => $result, 'task_count' => count($tasks)]);
+        exit();
+    }
+}
+
+// Fetch Gantt chart data for a specific id_gant
+if (isset($_GET['get_tasks']) && isset($_GET['id_gant'])) {
+    $id_gant = $_GET['id_gant'];
+    $sql = "SELECT task_data FROM gant_customer WHERE id_gant = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id_gant);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    $stmt->close();
+    
+    if ($row && !empty($row['task_data'])) {
+        echo $row['task_data'];
+    } else {
+        echo '[]';
+    }
+    exit();
+}
+
+// Function to handle insert, update, and delete operations
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['submit'])) {
+        // Insert operation
+        $id_customer = $_POST['id_customer'];
+        $tanggal = $_POST['tanggal'];
+        
+        // Process task_data from the form submission
+        $task_data = isset($_POST['task_data_json']) ? $_POST['task_data_json'] : '[]';
+        
+        $sql = "INSERT INTO gant_customer (id_customer, tanggal, task_data) VALUES (?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sss", $id_customer, $tanggal, $task_data);
+        
+        if ($stmt->execute()) {
+            $_SESSION['message'] = "Gantt chart created successfully!";
+            $_SESSION['message_type'] = "success";
+        } else {
+            $_SESSION['message'] = "Error creating Gantt chart: " . $conn->error;
+            $_SESSION['message_type'] = "danger";
+        }
+        $stmt->close();
+        header("Location: index.php");
+        exit();
+    } elseif (isset($_POST['update'])) {
+        // Update operation
+        $id_gant = $_POST['id_gant'];
+        $id_customer = $_POST['id_customer'];
+        $tanggal = $_POST['tanggal'];
+        
+        // Process task_data from the form submission
+        $task_data = isset($_POST['task_data_json']) ? $_POST['task_data_json'] : null;
+        
+        // If task data is provided, update it along with other fields
+        if ($task_data !== null) {
+            $sql = "UPDATE gant_customer SET id_customer = ?, tanggal = ?, task_data = ? WHERE id_gant = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("sssi", $id_customer, $tanggal, $task_data, $id_gant);
+        } else {
+            // Otherwise, just update the other fields
+            $sql = "UPDATE gant_customer SET id_customer = ?, tanggal = ? WHERE id_gant = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("ssi", $id_customer, $tanggal, $id_gant);
+        }
+        
+        if ($stmt->execute()) {
+            $_SESSION['message'] = "Gantt chart updated successfully!";
+            $_SESSION['message_type'] = "success";
+        } else {
+            $_SESSION['message'] = "Error updating Gantt chart: " . $conn->error;
+            $_SESSION['message_type'] = "danger";
+        }
+        $stmt->close();
+        header("Location: index.php");
+        exit();
+    }
+}
+
+if (isset($_GET['delete'])) {
+    // Delete operation
+    $id_gant = $_GET['delete'];
+    
+    $sql = "DELETE FROM gant_customer WHERE id_gant = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id_gant);
+    
+    if ($stmt->execute()) {
+        $_SESSION['message'] = "Gantt chart deleted successfully!";
+        $_SESSION['message_type'] = "success";
+    } else {
+        $_SESSION['message'] = "Error deleting Gantt chart: " . $conn->error;
+        $_SESSION['message_type'] = "danger";
+    }
+    $stmt->close();
+    header("Location: index.php");
+    exit();
+}
+?>
+
+
+
 <!DOCTYPE html>
  <html lang="en">
      
@@ -23,7 +206,22 @@
          <!-- App css -->
          <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
          <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" id="app-style"/>
- 
+    <!-- Gantt Chart CSS -->
+        <link rel="stylesheet" href="https://cdn.dhtmlx.com/gantt/edge/dhtmlxgantt.css">
+        <style>
+            #gantt_here {
+                width: 100%;
+                height: 500px;
+                background: white;
+                box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            }
+            .card {
+                margin-bottom: 10px;
+            }
+            .navbar {
+                margin-bottom: 20px;
+            }
+        </style>
      </head>
  
      <body class="loading" data-layout-color="light" data-leftbar-theme="dark" data-layout-mode="fluid" data-rightbar-onstart="true">
@@ -516,38 +714,326 @@
                          <!-- end page title --> 
  
  
-                         <div class="row">
-                             <div class="col-12">
-                                 <div class="card">
-                                     <div class="card-body">
-                                         <h4 class="header-title">Basic Data Table</h4>
-                                       
-                                         <ul class="nav nav-tabs nav-bordered mb-3">
-                                         
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="header-title">Gantt Chart Management</h4>
+                                        
+                                        
+                                        <?php if (isset($_SESSION['message'])): ?>
+                                            <div class="alert alert-<?php echo $_SESSION['message_type']; ?> alert-dismissible fade show" role="alert">
+                                                <?php echo $_SESSION['message']; ?>
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                            <?php unset($_SESSION['message']); unset($_SESSION['message_type']); ?>
+                                        <?php endif; ?>
+
+                                        <?php if (isset($_GET['detail'])): 
+                                            // Fetch the record to be viewed
+                                            $id_gant = $_GET['detail'];
+                                            $detail_sql = "SELECT * FROM gant_customer WHERE id_gant = ?";
+                                            $detail_stmt = $conn->prepare($detail_sql);
+                                            $detail_stmt->bind_param("i", $id_gant);
+                                            $detail_stmt->execute();
+                                            $detail_result = $detail_stmt->get_result();
+                                            $detail_data = $detail_result->fetch_assoc();
+                                            $detail_stmt->close();
                                             
-                                         </ul> <!-- end nav-->
-                                         <div class="tab-content">
-                                             <div class="tab-pane show active" id="basic-datatable-preview">
-                                                 <table id="basic-datatable" class="table table-striped dt-responsive nowrap w-100">
-                                                     <thead>
-                                                         <tr>
-                                                            <th>Nama Customer </th>
-                                                            <th>Tanggal</th>
-                                                            <th>Action </th>
+                                            if (!$detail_data) {
+                                                $_SESSION['message'] = "Record not found!";
+                                                $_SESSION['message_type'] = "danger";
+                                                header("Location: index.php");
+                                                exit();
+                                            }
+                                        ?>
+                                            <!-- Detail View -->
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <h5 class="text-uppercase fw-bold">Gantt Chart Details</h5>
+                                                        <table class="table table-sm table-bordered">
+                                                            <tr>
+                                                                <th style="width: 35%;">Customer</th>
+                                                                <td>
+                                                                    <?php 
+                                                                        $customer_id = $detail_data['id_customer'];
+                                                                        $customer_sql = "SELECT nama_customer FROM customer WHERE id_customer = ?";
+                                                                        $customer_stmt = $conn->prepare($customer_sql);
+                                                                        $customer_stmt->bind_param("s", $customer_id);
+                                                                        $customer_stmt->execute();
+                                                                        $customer_result = $customer_stmt->get_result();
+                                                                        $customer_data = $customer_result->fetch_assoc();
+                                                                        echo $customer_data ? htmlspecialchars($customer_data['nama_customer']) : htmlspecialchars($customer_id);
+                                                                        $customer_stmt->close();
+                                                                    ?>
+                                                                </td>
                                                             </tr>
-                                                     </thead>
-                                                 
-                                                 
-                                                     <tbody>
-                                                 
-                                                     </tbody>
-                                                 </table>                                           
-                                             </div> <!-- end preview-->
-                                         </div> <!-- end tab-content-->
-                                     </div> <!-- end card body-->
-                                 </div> <!-- end card -->
-                             </div><!-- end col-->
-                         </div> <!-- end row-->
+                                                            <tr>
+                                                                <th>Date</th>
+                                                                <td><?php echo date('d F Y', strtotime($detail_data['tanggal'])); ?></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Created</th>
+                                                                <td><?php echo date('d M Y H:i', strtotime($detail_data['created_at'] ?? $detail_data['tanggal'])); ?></td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="mt-3 mb-4">
+                                                <h5 class="text-uppercase fw-bold">Gantt Chart Visualization</h5>
+                                                <div id="gantt_here" style="height: 500px;"></div>
+                                            </div>
+
+                                            <div class="mt-4">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h5 class="card-title mb-0">Task List</h5>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-centered table-hover table-bordered">
+                                                                <thead class="table-light">
+                                                                    <tr>
+                                                                        <th>#</th>
+                                                                        <th>Task Name</th>
+                                                                        <th>Start Date</th>
+                                                                        <th>Duration (days)</th>
+                                                                        <th>Progress</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <?php
+                                                                    $tasks = json_decode($detail_data['task_data'], true) ?: [];
+                                                                    $counter = 1;
+                                                                    foreach ($tasks as $task):
+                                                                        // Get parent task name
+                                                                        $parent_name = '-';
+                                                                        if (!empty($task['parent']) && $task['parent'] != 0) {
+                                                                            foreach ($tasks as $potential_parent) {
+                                                                                if ($potential_parent['id'] == $task['parent']) {
+                                                                                    $parent_name = $potential_parent['text'];
+                                                                                    break;
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    ?>
+                                                                    <tr>
+                                                                        <td><?php echo $counter++; ?></td>
+                                                                        <td><?php echo htmlspecialchars($task['text']); ?></td>
+                                                                        <td><?php echo htmlspecialchars($task['start_date']); ?></td>
+                                                                        <td><?php echo htmlspecialchars($task['duration']); ?></td>
+                                                                        <td>
+                                                                            <div class="progress" style="height: 20px;">
+                                                                                <div class="progress-bar bg-success" role="progressbar" 
+                                                                                     style="width: <?php echo ($task['progress'] * 100); ?>%" 
+                                                                                     aria-valuenow="<?php echo ($task['progress'] * 100); ?>" 
+                                                                                     aria-valuemin="0" aria-valuemax="100">
+                                                                                    <?php echo round($task['progress'] * 100); ?>%
+                                                                                </div>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <?php endforeach; ?>
+                                                                    <?php if (empty($tasks)): ?>
+                                                                    <tr>
+                                                                        <td colspan="6" class="text-center">No tasks found</td>
+                                                                    </tr>
+                                                                    <?php endif; ?>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="mt-4">
+                                                <a href="index.php" class="btn btn-secondary">
+                                                    <i class="mdi mdi-arrow-left"></i> Back to List
+                                                </a>
+                                                <a href="index.php?edit=<?php echo $detail_data['id_gant']; ?>" class="btn btn-info">
+                                                    <i class="mdi mdi-pencil"></i> Edit
+                                                </a>
+                                                <a href="index.php?delete=<?php echo $detail_data['id_gant']; ?>" 
+                                                   class="btn btn-danger"
+                                                   onclick="return confirm('Are you sure you want to delete this Gantt chart?');">
+                                                    <i class="mdi mdi-delete"></i> Delete
+                                                </a>
+                                            </div>
+
+                                            <script>
+                                            // Initialize the Gantt chart in read-only mode
+                                            document.addEventListener('DOMContentLoaded', function() {
+                                                if (typeof gantt !== 'undefined') {
+                                                    gantt.config.date_format = "%Y-%m-%d";
+                                                    gantt.config.readonly = true;
+                                                    gantt.init("gantt_here");
+                                                    
+                                                    // Load the tasks
+                                                    fetch("index.php?get_tasks=true&id_gant=<?php echo $detail_data['id_gant']; ?>")
+                                                        .then(response => response.json())
+                                                        .then(data => {
+                                                            gantt.parse({data: data || []});
+                                                        })
+                                                        .catch(error => {
+                                                            console.error("Error loading Gantt data:", error);
+                                                        });
+                                                }
+                                            });
+                                            </script>
+                                        <?php elseif (isset($_GET['edit'])): 
+                                            // Fetch the record to be edited
+                                            $id_gant = $_GET['edit'];
+                                            $edit_sql = "SELECT * FROM gant_customer WHERE id_gant = ?";
+                                            $edit_stmt = $conn->prepare($edit_sql);
+                                            $edit_stmt->bind_param("i", $id_gant);
+                                            $edit_stmt->execute();
+                                            $edit_result = $edit_stmt->get_result();
+                                            $edit_data = $edit_result->fetch_assoc();
+                                            $edit_stmt->close();
+                                            
+                                            if (!$edit_data) {
+                                                $_SESSION['message'] = "Record not found!";
+                                                $_SESSION['message_type'] = "danger";
+                                                header("Location: index.php");
+                                                exit();
+                                            }
+                                        ?>
+                                                                                    <!-- Edit Form -->
+                                                <form action="index.php" method="post">
+                                                    <input type="hidden" name="id_gant" value="<?php echo htmlspecialchars($edit_data['id_gant']); ?>">
+                                                    <input type="hidden" name="update" value="true">
+                                                <div class="mb-3">
+                                                    <label for="id_customer" class="form-label">Nama Customer</label>
+                                                    <select class="form-control" id="id_customer" name="id_customer" required>
+                                                        <option value="">-- Select Customer --</option>
+                                                        <?php
+                                                        $customer_sql = "SELECT id_customer, nama_customer FROM customer ORDER BY nama_customer ASC";
+                                                        $customer_result = $conn->query($customer_sql);
+                                                        while ($customer = $customer_result->fetch_assoc()): ?>
+                                                            <option value="<?php echo $customer['id_customer']; ?>" <?php echo ($customer['id_customer'] == $edit_data['id_customer']) ? 'selected' : ''; ?>>
+                                                                <?php echo htmlspecialchars($customer['nama_customer']); ?>
+                                                            </option>
+                                                        <?php endwhile; ?>
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="tanggal" class="form-label">Date</label>
+                                                    <input type="date" class="form-control" id="tanggal" name="tanggal" value="<?php echo htmlspecialchars($edit_data['tanggal']); ?>" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="gant_json" class="form-label">Gantt JSON</label>
+                                                    <div id="gantt_here"></div>
+                                                    </div>
+                                                <button type="submit" class="btn btn-primary">Update</button>
+                                                <a href="index.php" class="btn btn-secondary">Cancel</a>
+                                            </form>
+                                            <?php elseif (isset($_GET['insert'])): ?>
+                                            <!-- Insert Form -->
+                                            <form action="index.php" method="post">
+                                                <input type="hidden" name="submit" value="true">
+                                                <input type="hidden" name="task_data_json" id="task_data_json" value="[]">
+                                                <div class="mb-3">
+                                                    <label for="id_customer" class="form-label">Nama Customer</label>
+                                                    <select class="form-control" id="id_customer" name="id_customer" required>
+                                                        <option value="">-- Select Customer --</option>
+                                                        <?php
+                                                        $customer_sql = "SELECT id_customer, nama_customer FROM customer ORDER BY nama_customer ASC";
+                                                        $customer_result = $conn->query($customer_sql);
+                                                        while ($customer = $customer_result->fetch_assoc()): ?>
+                                                            <option value="<?php echo $customer['id_customer']; ?>">
+                                                                <?php echo htmlspecialchars($customer['nama_customer']); ?>
+                                                            </option>
+                                                        <?php endwhile; ?>
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="tanggal" class="form-label">Date</label>
+                                                    <input type="date" class="form-control" id="tanggal" name="tanggal" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="gant_json" class="form-label">Gantt JSON</label>
+                                                    <div id="gantt_here"></div>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary">Insert</button>
+                                                <a href="index.php" class="btn btn-secondary">Cancel</a>
+                                            </form>
+                                        <?php else: ?>
+                                            <!-- Display Records Table -->
+                                            <div class="mt-3 mb-3">
+                                                <a href="index.php?insert=true" class="btn btn-success">
+                                                    <i class="mdi mdi-plus"></i> Insert New Gantt Chart
+                                                </a>
+                                            </div>
+                                            <div class="table-responsive">
+                                                <table id="basic-datatable" class="table table-striped dt-responsive nowrap w-100">
+                                                    <thead>
+                                                        <tr>
+                                                    <th>No</th>
+                                                            <th>Customer ID</th>
+                                                            <th>Date</th>
+                                                            <th>Actions</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <?php
+                                                        $sql = "SELECT * FROM gant_customer ORDER BY id_gant DESC";
+                                                        $result = $conn->query($sql);
+                                                        $no = 1;
+                                                        while ($row = $result->fetch_assoc()): ?>
+                                                            <tr>
+                                                                <td><?php echo $no++; ?></td>
+                                                                <td>
+                                                                    <?php 
+                                                                        // Get customer name using customer ID
+                                                                        $customer_id = $row['id_customer'];
+                                                                        $customer_sql = "SELECT nama_customer FROM customer WHERE id_customer = ?";
+                                                                        $customer_stmt = $conn->prepare($customer_sql);
+                                                                        $customer_stmt->bind_param("s", $customer_id);
+                                                                        $customer_stmt->execute();
+                                                                        $customer_result = $customer_stmt->get_result();
+                                                                        $customer_data = $customer_result->fetch_assoc();
+                                                                        echo $customer_data ? htmlspecialchars($customer_data['nama_customer']) : htmlspecialchars($customer_id);
+                                                                        $customer_stmt->close();
+                                                                    ?>
+                                                                </td>
+                                                                <td><?php echo htmlspecialchars($row['tanggal']); ?></td>
+                                                                <td>
+                                                                    <div class="btn-group">
+                                                                        <a href="index.php?edit=<?php echo $row['id_gant']; ?>" 
+                                                                           class="btn btn-info btn-sm" 
+                                                                           data-bs-toggle="tooltip" 
+                                                                           title="Edit">
+                                                                            <i class="mdi mdi-pencil"></i>
+                                                                        </a>
+                                                                        <a href="index.php?delete=<?php echo $row['id_gant']; ?>" 
+                                                                           class="btn btn-danger btn-sm" 
+                                                                           onclick="return confirm('Are you sure you want to delete this record?');"
+                                                                           data-bs-toggle="tooltip" 
+                                                                           title="Delete">
+                                                                            <i class="mdi mdi-delete"></i>
+                                                                        </a>
+                                                                        <a href="index.php?detail=<?php echo $row['id_gant']; ?>" 
+                                                                           class="btn btn-primary btn-sm" 
+                                                                           data-bs-toggle="tooltip" 
+                                                                           title="Detail">
+                                                                            <i class="mdi mdi-eye"></i>
+                                                                        </a>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        <?php endwhile; ?>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        <?php endif; ?>
+
+                                    </div> <!-- end card body-->
+                                </div> <!-- end card -->
+                            </div><!-- end col-->
+                        </div> <!-- end row-->
                      </div> <!-- container -->
                  </div> <!-- content -->
  
@@ -698,7 +1184,150 @@
          <!-- demo app -->
          <script src="assets/js/pages/demo.datatable-init.js"></script>
          <!-- end demo js-->
- 
+         <script>
+            $(document).ready(function () {
+    // Store tasks temporarily
+        let tempTasks = [];
+        
+        if ($("#gantt_here").length > 0) {
+            gantt.config.date_format = "%Y-%m-%d";
+            gantt.init("gantt_here");
+            
+            // Check if we're in edit mode and need to fetch existing data
+            const urlParams = new URLSearchParams(window.location.search);
+            const editMode = urlParams.get('edit');
+            const insertMode = urlParams.get('insert');
+            let currentIdGant = editMode || 'temp';
+            
+            if (editMode) {
+            // Load existing data for editing
+            $.getJSON("index.php?get_tasks=true&id_gant=" + editMode, function (data) {
+                tempTasks = data || [];
+                gantt.parse({ data: tempTasks });
+            });
+            } else if (insertMode) {
+            // Start with empty chart for insert
+            tempTasks = [];
+            gantt.parse({ data: [] });
+            }
+            
+            // Add task
+            gantt.attachEvent("onAfterTaskAdd", function (id, task) {
+            // Generate a unique temporary ID
+            const tempId = 'temp_' + new Date().getTime() + '_' + Math.floor(Math.random() * 1000);
+            
+            // Store in our temporary array
+            tempTasks.push({
+                id: tempId,
+                text: task.text,
+                start_date: gantt.date.date_to_str("%Y-%m-%d")(task.start_date),
+                duration: task.duration,
+                progress: task.progress,
+                parent: task.parent
+            });
+            
+            // Update hidden form field
+            $("#task_data_json").val(JSON.stringify(tempTasks));
+            
+            // Update gantt chart ID
+            gantt.changeTaskId(id, tempId);
+            });
+            
+            // Update task
+            gantt.attachEvent("onAfterTaskUpdate", function (id, task) {
+            // Update in our temporary array
+            for (let i = 0; i < tempTasks.length; i++) {
+                if (tempTasks[i].id == id) {
+                tempTasks[i] = {
+                    id: id,
+                    text: task.text,
+                    start_date: gantt.date.date_to_str("%Y-%m-%d")(task.start_date),
+                    duration: task.duration,
+                    progress: task.progress,
+                    parent: task.parent
+                };
+                break;
+                }
+            }
+            
+            // Update hidden form field immediately
+            $("#task_data_json").val(JSON.stringify(tempTasks));
+            
+            // For edit mode, save changes immediately via AJAX
+            if (editMode) {
+                $.ajax({
+                type: "POST",
+                url: "index.php",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    action: "update",
+                    id_gant: editMode,
+                    id: id,
+                    text: task.text,
+                    start_date: gantt.date.date_to_str("%Y-%m-%d")(task.start_date),
+                    duration: task.duration,
+                    progress: task.progress,
+                    parent: task.parent
+                }),
+                success: function(response) {
+                    console.log("Task updated successfully");
+                },
+                error: function(error) {
+                    console.error("Error updating task:", error);
+                }
+                });
+            }
+            });
+            
+            // Delete task
+            gantt.attachEvent("onAfterTaskDelete", function (id) {
+            // Find the task to delete
+            const taskToDelete = tempTasks.find(task => task.id == id);
+            
+            if (taskToDelete) {
+                // Remove from our temporary array
+                tempTasks = tempTasks.filter(task => task.id != id);
+                
+                // Update hidden form field
+                $("#task_data_json").val(JSON.stringify(tempTasks));
+                
+                // For edit mode, delete task immediately via AJAX
+                if (editMode) {
+                $.ajax({
+                    type: "POST",
+                    url: "index.php",
+                    contentType: "application/json",
+                    data: JSON.stringify({
+                    action: "delete",
+                    id_gant: editMode,
+                    id: id
+                    }),
+                    success: function(response) {
+                    console.log("Task deleted successfully");
+                    },
+                    error: function(error) {
+                    console.error("Error deleting task:", error);
+                    }
+                });
+                }
+            }
+            });
+            
+            // Make sure form submission includes task data
+            $("form").on("submit", function() {
+            // Ensure task data is included
+            if (!$("#task_data_json").val()) {
+                $("#task_data_json").val(JSON.stringify(tempTasks));
+            }
+            return true;
+            });
+        }
+        });
+
+        </script>
+        <script src="https://cdn.dhtmlx.com/gantt/edge/dhtmlxgantt.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        
      </body>
  
  <!-- Mirrored from coderthemes.com/hyper/saas/tables-datatable.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 29 Jul 2022 10:22:01 GMT -->
