@@ -105,25 +105,11 @@ include_once('action.php');
                         </li>
 
                         <li class="side-nav-item">
-                            <a data-bs-toggle="collapse" href="#sidebarTasks" aria-expanded="false" aria-controls="sidebarTasks" class="side-nav-link">
-                                <i class="uil-clipboard-alt"></i>
-                                <span> Tasks </span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <div class="collapse" id="sidebarTasks">
-                                <ul class="side-nav-second-level">
-                                    <li>
-                                        <a href="#">List</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Details</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Kanban Board</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
+                            <a href="#" class="side-nav-link">
+                                 <i class="uil-clipboard-alt"></i>
+                                 <span> Tasks </span>
+                             </a>
+                         </li>
 
                         <!-- end of list -->
                     </ul>
