@@ -4,7 +4,7 @@ session_start();
 
 
 if (!isset($_SESSION['username'])) {
-    header("Location: ../../login.php"); // Redirect ke halaman login
+    header("Location: ../../index.php"); // Redirect ke halaman login
     exit();
 }
 

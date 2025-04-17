@@ -4,10 +4,9 @@ session_start();
 
 
 if (!isset($_SESSION['username'])) {
-    header("Location: ../../login.php"); // Redirect ke halaman login
+    header("Location: ../../index.php"); // Redirect ke halaman login
     exit();
 }
-
 ?>
 
 
@@ -50,10 +49,10 @@ if (!isset($_SESSION['username'])) {
                 <!-- LOGO -->
                 <a href="index.html" class="logo text-center logo-light">
                     <span class="logo-lg">
-                        <img src="../../assets/images/logo.png" alt="" height="16">
+                        <img src="../../assets/images/logo2.png" alt="" height="50">
                     </span>
                     <span class="logo-sm">
-                        <img src="../../assets/images/logo_sm.png" alt="" height="16">
+                        <img src="../../assets/images/logo3.png" alt="" height="16">
                     </span>
                 </a>
 

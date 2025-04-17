@@ -49,13 +49,14 @@ include_once('action.php');
      
                  <!-- LOGO -->
                  <a href="index.html" class="logo text-center logo-light">
-                     <span class="logo-lg">
-                         <img src="../../assets/images/logo.png" alt="" height="16">
-                     </span>
-                     <span class="logo-sm">
-                         <img src="../../assets/images/logo_sm.png" alt="" height="16">
-                     </span>
-                 </a>
+                    <span class="logo-lg">
+                        <img src="../../assets/images/logo2.png" alt="" height="50">
+                    </span>
+                    <span class="logo-sm">
+                        <img src="../../assets/images/logo3.png" alt="" height="16">
+                    </span>
+                </a>
+
  
                  <!-- LOGO -->
                  <a href="index.html" class="logo text-center logo-dark">

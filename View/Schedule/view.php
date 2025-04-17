@@ -57,13 +57,14 @@ include_once("../../Database/koneksi.php");
      
                  <!-- LOGO -->
                  <a href="index.html" class="logo text-center logo-light">
-                     <span class="logo-lg">
-                         <img src="../../assets/images/logo.png" alt="" height="16">
-                     </span>
-                     <span class="logo-sm">
-                         <img src="../../assets/images/logo_sm.png" alt="" height="16">
-                     </span>
-                 </a>
+                    <span class="logo-lg">
+                        <img src="../../assets/images/logo2.png" alt="" height="50">
+                    </span>
+                    <span class="logo-sm">
+                        <img src="../../assets/images/logo3.png" alt="" height="16">
+                    </span>
+                </a>
+
  
                  <!-- LOGO -->
                  <a href="index.html" class="logo text-center logo-dark">
@@ -395,7 +396,7 @@ include_once("../../Database/koneksi.php");
                                          <img src="../../assets/images/users/avatar-1.jpg" alt="user-image" class="rounded-circle">
                                      </span>
                                      <span>
-                                         <span class="account-user-name">Dominic Keller</span>
+                                         <span class="account-user-name"><?= $_SESSION['username'];?></span>
                                          <span class="account-position">Founder</span>
                                      </span>
                                  </a>
