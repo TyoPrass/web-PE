@@ -631,7 +631,7 @@ include_once('action.php');
                                                 <input type="hidden" name="id_part" value="<?php echo htmlspecialchars($edit_data['id_part']); ?>">
                                                 <input type="hidden" name="update" value="true">
                                                 <div class="mb-3">
-                                                    <label for="projectname" class="form-label">Project Name</label>
+                                                    <label for="projectname" class="form-label">Part Name</label>
                                                     <input type="text" class="form-control" id="projectname" name="projectname" value="<?php echo htmlspecialchars($edit_data['nama_part']); ?>" required>
                                                 </div>
                                                 <div class="mb-3">
@@ -643,7 +643,7 @@ include_once('action.php');
                                                     <input type="date" class="form-control" id="duedate" name="duedate" value="<?php echo htmlspecialchars($edit_data['tgl_selesai']); ?>" required>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="id_customer" class="form-label">Customer</label>
+                                                    <label for="id_customer" class="form-label">Nama Projek Customer</label>
                                                     <select class="form-control" id="id_customer" name="id_customer" required>
                                                         <?php
                                                         $sql = "SELECT id_customer, project FROM customer";
@@ -671,7 +671,7 @@ include_once('action.php');
                                             <form action="action.php" method="post" enctype="multipart/form-data">
                                                 <input type="hidden" name="submit" value="true">
                                                 <div class="mb-3">
-                                                    <label for="projectname" class="form-label">Project Name</label>
+                                                    <label for="projectname" class="form-label">Part Name</label>
                                                     <input type="text" class="form-control" id="projectname" name="projectname" required>
                                                 </div>
                                                 <div class="mb-3">
@@ -683,7 +683,7 @@ include_once('action.php');
                                                     <input type="date" class="form-control" id="duedate" name="duedate" required>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="id_customer" class="form-label">Customer</label>
+                                                    <label for="id_customer" class="form-label">Nama Projek Customer</label>
                                                     <select class="form-control" id="id_customer" name="id_customer" required>
                                                         <?php
                                                         $sql = "SELECT id_customer, project FROM customer";
