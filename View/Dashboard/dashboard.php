@@ -766,7 +766,7 @@ if (!isset($_SESSION['username'])) {
                                     <div class="card-header d-flex justify-content-between align-items-center">
                                         <h4 class="header-title">Monthly Trial Statistics</h4>
                                         <div class="form-group mb-0">
-                                            <input type="month" id="monthSelector" class="form-control" value="<?= date('Y-m') ?>">
+                                            <input type="month" id="monthSelector" class="form-control" value="<?= isset($_GET['month']) ? $_GET['month'] : date('Y-m') ?>">
                                         </div>
                                     </div>
                                     <div class="card-body">
@@ -803,7 +803,8 @@ if (!isset($_SESSION['username'])) {
                                             // Month selector handler
                                             const monthSelector = document.getElementById('monthSelector');
                                             monthSelector.addEventListener('change', function() {
-                                                updateChart(this.value);
+                                                // Redirect to same page with month parameter
+                                                window.location.href = 'dashboard.php?month=' + this.value;
                                             });
 
                                             // Initialize chart
@@ -849,18 +850,6 @@ if (!isset($_SESSION['username'])) {
                                                     }
                                                 }
                                             });
-                                        }
-
-                                        function updateChart(selectedMonth) {
-                                            fetch(`get_trial_data.php?month=${selectedMonth}`)
-                                                .then(response => response.json())
-                                                .then(data => {
-                                                    trialChart.data.labels = data.dates;
-                                                    trialChart.data.datasets[0].data = data.counts;
-                                                    trialChart.options.plugins.title.text = 'Daily Trial Count for ' + data.monthYear;
-                                                    trialChart.update();
-                                                })
-                                                .catch(error => console.error('Error:', error));
                                         }
                                         </script>
                                     </div>
