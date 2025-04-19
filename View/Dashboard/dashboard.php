@@ -563,11 +563,11 @@ if (!isset($_SESSION['username'])) {
                         </div>
                         <!-- end row-->
 
-
-                        <div class="row">
-                            
                         <!-- Buat jaga-jaga kalau ada perlu tambahan dari data chart yang perlu ditambahin -->
-                        </div>
+
+                        <!-- <div class="row">
+
+                        </div> -->
                         <!-- end row-->
 
 
