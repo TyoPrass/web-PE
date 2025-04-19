@@ -764,7 +764,7 @@ if (!isset($_SESSION['username'])) {
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-header d-flex justify-content-between align-items-center">
-                                        <h4 class="header-title">Monthly Trial Statistics</h4>
+                                        <h4 class="header-title">Jumlah Data Trial Perbulan</h4>
                                         <div class="form-group mb-0">
                                             <input type="month" id="monthSelector" class="form-control" value="<?= isset($_GET['month']) ? $_GET['month'] : date('Y-m') ?>">
                                         </div>
@@ -958,7 +958,7 @@ if (!isset($_SESSION['username'])) {
         <!-- demo app -->
         <script src="../../assets/js/pages/demo.datatable-init.js"></script>
         <!-- end demo js-->
-                                        
+
         <script>
         let trialChart;
 
