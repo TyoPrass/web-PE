@@ -512,7 +512,7 @@ if (!isset($_SESSION['username'])) {
 
                         <div class="row">
                             <div class="col-12">
-                                <div class="card widget-inline">
+                                <div class="card widget-responsive">
                                     <div class="card-body p-0">
                                         <div class="row g-0">
                                             <div class="col-sm-6 col-lg-3">
@@ -544,16 +544,17 @@ if (!isset($_SESSION['username'])) {
                                                     </div>
                                                 </div>
                                             </div>
-                
                                             <div class="col-sm-6 col-lg-3">
                                                 <div class="card shadow-none m-0 border-start">
                                                     <div class="card-body text-center">
-                                                        <i class="dripicons-graph-line text-muted" style="font-size: 24px;"></i>
-                                                        <h3><span>93%</span> </h3>
-                                                        <p class="text-muted font-15 mb-0">Productivity</p>
+                                                        <i class="dripicons-user-group text-muted" style="font-size: 24px;"></i>
+                                                        <h3><span>31</span></h3>
+                                                        <p class="text-muted font-15 mb-0">Members</p>
                                                     </div>
                                                 </div>
                                             </div>
+                
+                               
                 
                                         </div> <!-- end row -->
                                     </div>
@@ -603,11 +604,11 @@ if (!isset($_SESSION['username'])) {
                                             </div>
                                             <div class="col-sm-4">
                                                 <div class="my-2 my-sm-0">
-                                                        <i class="mdi mdi-trending-down text-primary mt-3 h3"></i>
+                                                        <!-- <i class="mdi mdi-trending-down text-primary mt-3 h3"></i>
                                                     <h3 class="fw-normal">
                                                         <span>26%</span>
                                                     </h3>
-                                                    <p class="text-muted mb-0"> In-progress</p>
+                                                    <p class="text-muted mb-0"> In-progress</p> -->
                                                 </div>
                                                 
                                             </div>
@@ -755,38 +756,118 @@ if (!isset($_SESSION['username'])) {
                         <!-- end row-->
 
 
+                    
+
+                            <!-- Diagram menampilkan jumlah projek dimana dapat diatur sesuai bulan yang akan dipilih dengan bulannya -->
+                             <!-- Masih Kurang intinya -->
                         <div class="row">
                             <div class="col-12">
                                 <div class="card">
+                                    <div class="card-header d-flex justify-content-between align-items-center">
+                                        <h4 class="header-title">Monthly Trial Statistics</h4>
+                                        <div class="form-group mb-0">
+                                            <input type="month" id="monthSelector" class="form-control" value="<?= date('Y-m') ?>">
+                                        </div>
+                                    </div>
                                     <div class="card-body">
-                                        <div class="d-flex justify-content-between align-items-center mb-2">
-                                            <h4 class="header-title">Tasks Overview</h4>
-                                            <div class="dropdown">
-                                                <a href="#" class="dropdown-toggle arrow-none card-drop" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="mdi mdi-dots-vertical"></i>
-                                                </a>
-                                                <div class="dropdown-menu dropdown-menu-end">
-                                                    <!-- item-->
-                                                    <a href="javascript:void(0);" class="dropdown-item">Weekly Report</a>
-                                                    <!-- item-->
-                                                    <a href="javascript:void(0);" class="dropdown-item">Monthly Report</a>
-                                                    <!-- item-->
-                                                    <a href="javascript:void(0);" class="dropdown-item">Action</a>
-                                                    <!-- item-->
-                                                    <a href="javascript:void(0);" class="dropdown-item">Settings</a>
-                                                </div>
-                                            </div>
+                                        <div style="height: 400px;">
+                                            <canvas id="trialChart"></canvas>
                                         </div>
 
-                                        <div dir="ltr">
-                                            <div class="mt-3 chartjs-chart" style="height: 320px;">
-                                                <canvas id="task-area-chart" data-bgColor="#727cf5" data-borderColor="#727cf5"></canvas>
-                                            </div>
-                                        </div>
+                                        <?php
+                                        $selectedMonth = isset($_GET['month']) ? $_GET['month'] : date('Y-m');
+                                        $startDate = $selectedMonth . '-01';
+                                        $endDate = date('Y-m-t', strtotime($startDate));
 
-                                    </div> <!-- end card body-->
-                                </div> <!-- end card -->
-                            </div><!-- end col-->
+                                        $query = "SELECT DATE(tanggal) as trial_date, COUNT(id_trial) as trial_count 
+                                                 FROM trial 
+                                                 WHERE tanggal BETWEEN '$startDate' AND '$endDate'
+                                                 GROUP BY DATE(tanggal) 
+                                                 ORDER BY trial_date";
+
+                                        $result = mysqli_query($conn, $query);
+                                        
+                                        $dates = [];
+                                        $counts = [];
+                                        
+                                        while ($row = mysqli_fetch_assoc($result)) {
+                                            $dates[] = date('d M', strtotime($row['trial_date']));
+                                            $counts[] = (int)$row['trial_count'];
+                                        }
+                                        ?>
+
+                                        <script>
+                                        let trialChart;
+
+                                        document.addEventListener('DOMContentLoaded', function() {
+                                            // Month selector handler
+                                            const monthSelector = document.getElementById('monthSelector');
+                                            monthSelector.addEventListener('change', function() {
+                                                updateChart(this.value);
+                                            });
+
+                                            // Initialize chart
+                                            initChart(<?= json_encode($dates) ?>, <?= json_encode($counts) ?>, <?= json_encode(date('F Y', strtotime($selectedMonth))) ?>);
+                                        });
+
+                                        function initChart(labels, data, monthYear) {
+                                            const ctx = document.getElementById('trialChart').getContext('2d');
+                                            trialChart = new Chart(ctx, {
+                                                type: 'bar',
+                                                data: {
+                                                    labels: labels,
+                                                    datasets: [{
+                                                        label: 'Jumlah Data Masuk',
+                                                        data: data,
+                                                        backgroundColor: 'rgba(114, 124, 245, 0.7)',
+                                                        borderColor: 'rgb(114, 124, 245)',
+                                                        borderWidth: 1
+                                                    }]
+                                                },
+                                                options: {
+                                                    responsive: true,
+                                                    maintainAspectRatio: false,
+                                                    scales: {
+                                                        y: {
+                                                            beginAtZero: true,
+                                                            ticks: {
+                                                                stepSize: 1
+                                                            }
+                                                        }
+                                                    },
+                                                    plugins: {
+                                                        title: {
+                                                            display: true,
+                                                            text: 'Jumlah Trial Dalam Sehari ' + monthYear,
+                                                            font: {
+                                                                size: 16
+                                                            }
+                                                        },
+                                                        legend: {
+                                                            position: 'bottom'
+                                                        }
+                                                    }
+                                                }
+                                            });
+                                        }
+
+                                        function updateChart(selectedMonth) {
+                                            fetch(`get_trial_data.php?month=${selectedMonth}`)
+                                                .then(response => response.json())
+                                                .then(data => {
+                                                    trialChart.data.labels = data.dates;
+                                                    trialChart.data.datasets[0].data = data.counts;
+                                                    trialChart.options.plugins.title.text = 'Daily Trial Count for ' + data.monthYear;
+                                                    trialChart.update();
+                                                })
+                                                .catch(error => console.error('Error:', error));
+                                        }
+                                        </script>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         </div>
                         <!-- end row-->
 
@@ -943,6 +1024,8 @@ if (!isset($_SESSION['username'])) {
         <!-- demo app -->
         <script src="../../assets/js/pages/demo.datatable-init.js"></script>
         <!-- end demo js-->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 
     </body>
 
