@@ -796,62 +796,7 @@ if (!isset($_SESSION['username'])) {
                                         }
                                         ?>
 
-                                        <script>
-                                        let trialChart;
-
-                                        document.addEventListener('DOMContentLoaded', function() {
-                                            // Month selector handler
-                                            const monthSelector = document.getElementById('monthSelector');
-                                            monthSelector.addEventListener('change', function() {
-                                                // Redirect to same page with month parameter
-                                                window.location.href = 'dashboard.php?month=' + this.value;
-                                            });
-
-                                            // Initialize chart
-                                            initChart(<?= json_encode($dates) ?>, <?= json_encode($counts) ?>, <?= json_encode(date('F Y', strtotime($selectedMonth))) ?>);
-                                        });
-
-                                        function initChart(labels, data, monthYear) {
-                                            const ctx = document.getElementById('trialChart').getContext('2d');
-                                            trialChart = new Chart(ctx, {
-                                                type: 'bar',
-                                                data: {
-                                                    labels: labels,
-                                                    datasets: [{
-                                                        label: 'Jumlah Data Masuk',
-                                                        data: data,
-                                                        backgroundColor: 'rgba(114, 124, 245, 0.7)',
-                                                        borderColor: 'rgb(114, 124, 245)',
-                                                        borderWidth: 1
-                                                    }]
-                                                },
-                                                options: {
-                                                    responsive: true,
-                                                    maintainAspectRatio: false,
-                                                    scales: {
-                                                        y: {
-                                                            beginAtZero: true,
-                                                            ticks: {
-                                                                stepSize: 1
-                                                            }
-                                                        }
-                                                    },
-                                                    plugins: {
-                                                        title: {
-                                                            display: true,
-                                                            text: 'Jumlah Trial Dalam Sehari ' + monthYear,
-                                                            font: {
-                                                                size: 16
-                                                            }
-                                                        },
-                                                        legend: {
-                                                            position: 'bottom'
-                                                        }
-                                                    }
-                                                }
-                                            });
-                                        }
-                                        </script>
+                                       
                                     </div>
                                 </div>
                             </div>
@@ -1013,6 +958,63 @@ if (!isset($_SESSION['username'])) {
         <!-- demo app -->
         <script src="../../assets/js/pages/demo.datatable-init.js"></script>
         <!-- end demo js-->
+                                        
+        <script>
+        let trialChart;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Month selector handler
+            const monthSelector = document.getElementById('monthSelector');
+            monthSelector.addEventListener('change', function() {
+                // Redirect to same page with month parameter
+                window.location.href = 'dashboard.php?month=' + this.value;
+            });
+
+            // Initialize chart
+            initChart(<?= json_encode($dates) ?>, <?= json_encode($counts) ?>, <?= json_encode(date('F Y', strtotime($selectedMonth))) ?>);
+        });
+
+        function initChart(labels, data, monthYear) {
+            const ctx = document.getElementById('trialChart').getContext('2d');
+            trialChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Jumlah Data Masuk',
+                        data: data,
+                        backgroundColor: 'rgba(114, 124, 245, 0.7)',
+                        borderColor: 'rgb(114, 124, 245)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1
+                            }
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Jumlah Trial Dalam Sehari ' + monthYear,
+                            font: {
+                                size: 16
+                            }
+                        },
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+        </script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 
