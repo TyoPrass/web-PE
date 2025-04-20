@@ -554,7 +554,7 @@ include_once('action.php');
         <?php if (!isset($_GET['insert']) && !isset($_GET['edit']) && !isset($_GET['view'])): ?>
             <!-- Main List View -->
             <div class="mb-3">
-                <a href="view.php?insert" class="btn btn-success">Add New Checklist</a>
+                <a href="view.php?insert" class="btn btn-success">+ Insert New Checklist</a>
             </div>
 
             <!-- Read -->

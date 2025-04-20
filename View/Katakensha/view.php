@@ -126,14 +126,14 @@ include_once('action.php');
                      </ul>
  
                      <!-- Help Box -->
-                     <div class="help-box text-white text-center">
+                     <!-- <div class="help-box text-white text-center">
                          <a href="javascript: void(0);" class="float-end close-btn text-white">
                              <i class="mdi mdi-close"></i>
                          </a>
                          <img src="../../assets/images/help-icon.svg" height="90" alt="Helper Icon Image" />
                          <h5 class="mt-3">PE-STAMPING</h5>
                          <p class="mb-3">TES JERAPAHNAIKKUDA</p>
-                     </div>
+                     </div> -->
                      <!-- end Help Box -->
                      <!-- End Sidebar -->
  
@@ -538,13 +538,13 @@ include_once('action.php');
                 <?php echo $_SESSION['message']; ?>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-            <?php unset($_SESSION['message']); unset($_SESSION['message_type']); ?>
+            <?php unset($_SESSION['message']); unset($_SESSdION['message_type']); ?>
         <?php endif; ?>
 
         <?php if (!isset($_GET['insert']) && !isset($_GET['edit']) && !isset($_GET['view'])): ?>
             <!-- Main List View -->
             <div class="mb-3">
-                <a href="view.php?insert" class="btn btn-success">Add New Checklist</a>
+                <a href="view.php?insert" class="btn btn-success">+ Insert New Checklist</a>
             </div>
 
             <!-- Read -->

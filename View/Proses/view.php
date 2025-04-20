@@ -115,14 +115,14 @@ include_once('action.php');
                     </ul>
 
                     <!-- Help Box -->
-                    <div class="help-box text-white text-center">
+                    <!-- <div class="help-box text-white text-center">
                         <a href="javascript: void(0);" class="float-end close-btn text-white">
                             <i class="mdi mdi-close"></i>
                         </a>
                         <img src="../../assets/images/help-icon.svg" height="90" alt="Helper Icon Image" />
                         <h5 class="mt-3">PE-STAMPING</h5>
                         <p class="mb-3">TES JERAPAHNAIKKUDA</p>
-                    </div>
+                    </div> -->
                     <!-- end Help Box -->
                     <!-- End Sidebar -->
 
