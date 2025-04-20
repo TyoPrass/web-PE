@@ -1,7 +1,6 @@
 <?php
 include_once('../../Database/koneksi.php');
 include_once('action.php');
-
 ?>
 
 
@@ -533,12 +532,13 @@ include_once('action.php');
                                          </ul> <!-- end nav-->
                                          <div class="tab-content">
                                          <h2>Checklist Katakanesha</h2>
+
         <?php if (isset($_SESSION['message'])): ?>
             <div class="alert alert-<?php echo $_SESSION['message_type']; ?> alert-dismissible fade show" role="alert">
                 <?php echo $_SESSION['message']; ?>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-            <?php unset($_SESSION['message']); unset($_SESSdION['message_type']); ?>
+             <?php unset($_SESSION['message']); unset($_SESSION['message_type']); ?> 
         <?php endif; ?>
 
         <?php if (!isset($_GET['insert']) && !isset($_GET['edit']) && !isset($_GET['view'])): ?>
