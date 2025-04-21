@@ -983,23 +983,9 @@ include('action.php');
                                                                 <!-- Nama Project -->
                                                                 <div class="mb-3">
                                                                     <label for="project" class="form-label">Nama Project</label>
-                                                                    <select class="form-select" id="project" name="project" required>
-                                                                        <option value="">Nama Project</option>
-                                                                        <?php
-                                                                        // Get project from customer table based on selected id_customer
-                                                                        $sql_project = "SELECT DISTINCT c.project 
-                                                                                       FROM customer c 
-                                                                                       INNER JOIN data_part dp ON c.id_customer = dp.id_customer";
-                                                                        if (!empty($edit_data['id_customer'])) {
-                                                                            $sql_project .= " WHERE c.id_customer = " . $edit_data['id_customer'];
-                                                                        }
-                                                                        $result_project = $conn->query($sql_project);
-                                                                        while ($row = $result_project->fetch_assoc()) {
-                                                                            $selected = ($edit_data['project'] == $row['project']) ? 'selected' : '';
-                                                                            echo '<option value="' . htmlspecialchars($row['project']) . '" ' . $selected . '>' . htmlspecialchars($row['project']) . '</option>';
-                                                                        }
-                                                                        ?>
-                                                                    </select>
+                                                                    <input type="text" class="form-control" id="project" name="project" 
+                                                                           value="<?php echo htmlspecialchars($edit_data['project']); ?>" 
+                                                                           required placeholder="Enter project name">
                                                                 </div>
 
                                                                 <!-- Mat Spec -->
@@ -1500,16 +1486,7 @@ include('action.php');
             <!-- Nama Project -->
             <div class="mb-3">
                 <label for="project" class="form-label">Nama Project</label>
-                <select class="form-select" id="project" name="project" required>
-                    <option value="">Nama Project</option>
-                    <?php
-                    $sql = "SELECT DISTINCT project FROM customer";
-                    $result = $conn->query($sql);
-                    while ($row = $result->fetch_assoc()) {
-                        echo '<option value="' . htmlspecialchars($row['project']) . '">' . htmlspecialchars($row['project']) . '</option>';
-                    }
-                    ?>
-                </select>
+                <input type="text" class="form-control" id="project" name="project" required placeholder="Enter project name">
             </div>
 
             <!-- Mat Spec -->
