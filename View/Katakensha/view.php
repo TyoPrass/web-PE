@@ -694,6 +694,42 @@ include_once('action.php');
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>
+                            <h4>Approvment</h4>
+                            <table class="table table-bordered table-centered mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Group</th>
+                                        <th>No</th>
+                                        <th>Point Check</th>
+                                        <th>P1</th>
+                                        <th>P2</th>
+                                        <th>P3</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php 
+                                    $startIndex = count($checklist);
+                                    
+                                    foreach ($checklist5 as $i => $item): 
+                                        $index = $startIndex + $i;
+                                        if ($currentGroup != $item['group']):
+                                            $currentGroup = $item['group'];
+                                    ?>
+                                        <tr class="table-secondary">
+                                            <td colspan="6"><strong><?php echo htmlspecialchars($currentGroup); ?></strong></td>
+                                        </tr>
+                                    <?php endif; ?>
+                                        <tr>
+                                            <td><?php echo $item['group']; ?></td>
+                                            <td><?php echo $item['no'] ?? ''; ?></td>
+                                            <td><?php echo $item['point']; ?></td>
+                                            <td><?php echo htmlspecialchars($checklist_data[$index]['P1'] ?? ''); ?></td>
+                                            <td><?php echo htmlspecialchars($checklist_data[$index]['P2'] ?? ''); ?></td>
+                                            <td><?php echo htmlspecialchars($checklist_data[$index]['P3'] ?? ''); ?></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
                         </div>
                         <div class="tab-pane fade" id="view-statis" role="tabpanel" aria-labelledby="view-statis-tab">
                             <h4>Checklist Statis</h4>
@@ -730,6 +766,80 @@ include_once('action.php');
                                             <td><?php echo htmlspecialchars($checklist_data[$index]['P2'] ?? ''); ?></td>
                                             <td><?php echo htmlspecialchars($checklist_data[$index]['P3'] ?? ''); ?></td>
                                             <td><?php echo htmlspecialchars($checklist_data[$index]['keterangan'] ?? ''); ?></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                            <h4>Checklist 3 Items</h4>
+                            <table class="table table-bordered table-centered mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Group</th>
+                                        <th>No</th>
+                                        <th>Point Check</th>
+                                        <th>P1</th>
+                                        <th>P2</th>
+                                        <th>P3</th>
+                                        <th>Keterangan</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php 
+                                    $currentGroup = '';
+                                    $startIndex = count($checklist) + count($checklist2);
+                                    foreach ($checklist3 as $i => $item): 
+                                        $index = $startIndex + $i;
+                                        if ($currentGroup != $item['group']):
+                                            $currentGroup = $item['group'];
+                                    ?>
+                                        <tr class="table-secondary">
+                                            <td colspan="7"><strong><?php echo htmlspecialchars($currentGroup); ?></strong></td>
+                                        </tr>
+                                    <?php endif; ?>
+                                        <tr>
+                                            <td><?php echo $item['group']; ?></td>
+                                            <td><?php echo $item['no']; ?></td>
+                                            <td><?php echo $item['point']; ?></td>
+                                            <td><?php echo htmlspecialchars($checklist_data[$index]['P1'] ?? ''); ?></td>
+                                            <td><?php echo htmlspecialchars($checklist_data[$index]['P2'] ?? ''); ?></td>
+                                            <td><?php echo htmlspecialchars($checklist_data[$index]['P3'] ?? ''); ?></td>
+                                            <td><?php echo htmlspecialchars($checklist_data[$index]['keterangan'] ?? ''); ?></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+
+                            <h4>Approvment</h4>
+                            <table class="table table-bordered table-centered mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Group</th>
+                                        <th>No</th>
+                                        <th>Point Check</th>
+                                        <th>P1</th>
+                                        <th>P2</th>
+                                        <th>P3</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php 
+                                    $startIndex = count($checklist) + count($checklist2) + count($checklist3);
+                                    foreach ($checklist4 as $i => $item): 
+                                        $index = $startIndex + $i;
+                                        if ($currentGroup != $item['group']):
+                                            $currentGroup = $item['group'];
+                                    ?>
+                                        <tr class="table-secondary">
+                                            <td colspan="6"><strong><?php echo htmlspecialchars($currentGroup); ?></strong></td>
+                                        </tr>
+                                    <?php endif; ?>
+                                        <tr>
+                                            <td><?php echo $item['group']; ?></td>
+                                            <td><?php echo $item['no'] ?? ''; ?></td>
+                                            <td><?php echo $item['point']; ?></td>
+                                            <td><?php echo htmlspecialchars($checklist_data[$index]['P1'] ?? ''); ?></td>
+                                            <td><?php echo htmlspecialchars($checklist_data[$index]['P2'] ?? ''); ?></td>
+                                            <td><?php echo htmlspecialchars($checklist_data[$index]['P3'] ?? ''); ?></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>
