@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="card">
                     <div class="card-header pt-4 pb-4 text-center bg-primary">
                         <a href="register.php">
-                            <span><img src="assets/images/logo.png" alt="" height="18"></span>
+                            <span><img src="assets/images/sjm_logo2.png"></span>
                         </a>
                     </div>
 

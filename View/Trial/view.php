@@ -1882,7 +1882,7 @@ include('action.php');
                                 <th>Jam Finish</th>
                                 <th>M/C Name</th>
                                 <th>Kapasitas</th>
-                                <th>PIC</th>
+                                <th>Tanggal</th>
                                 <th>Proses</th>
                                 <th>Action</th>
                             </tr>
@@ -1905,12 +1905,12 @@ include('action.php');
                                 echo '<td>' . htmlspecialchars($row['jam_finish']) . '</td>';
                                 echo '<td>' . htmlspecialchars($row['mc_name']) . '</td>';
                                 echo '<td>' . htmlspecialchars($row['kapasitas']) . '</td>';
-                                echo '<td>' . htmlspecialchars($row['PIC']) . '</td>';
+                                echo '<td>' . htmlspecialchars($row['tanggal']) . '</td>';
                                 echo '<td>' . htmlspecialchars($row['Proses']) . '</td>';
                                 echo '<td>';
-                                echo '<a href="view.php?detail=' . $row['id_trial'] . '" class="btn btn-info btn-sm"><i class="mdi mdi-eye"></i></a> ';
-                                echo '<a href="view.php?edit=' . $row['id_trial'] . '" class="btn btn-warning btn-sm"><i class="mdi mdi-pencil"></i></a> ';
-                                echo '<a href="view.php?delete=' . $row['id_trial'] . '" class="btn btn-danger btn-sm" onclick="return confirm(\'Are you sure you want to delete this item?\')"><i class="mdi mdi-trash-can"></i></a>';
+                                echo '<a href="view.php?detail=' . $row['id_trial'] . '" class="btn btn-info btn-sm"><i class="mdi mdi-eye"></i></a>';
+                                echo '<a href="view.php?edit=' . $row['id_trial'] . '" class="btn btn-danger btn-sm"><i class="mdi mdi-pencil"></i></a>';
+                                echo '<a href="view.php?delete=' . $row['id_trial'] . '" class="btn btn-primary btn-sm" onclick="return confirm(\'Are you sure you want to delete this item?\')"><i class="mdi mdi-trash-can"></i></a>';
                                 echo '</td>';
                                 echo '</tr>';
                             }

@@ -31,13 +31,23 @@ if (isset($_GET['delete'])) {
     $sql = "DELETE FROM data_part WHERE id_part = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id_part);
-    if ($stmt->execute()) {
-        $_SESSION['message'] = 'Data deleted successfully.';
-        $_SESSION['message_type'] = 'success';
-    } else {
-        $_SESSION['message'] = 'Error: ' . $stmt->error;
-        $_SESSION['message_type'] = 'danger';
+    
+    try {
+        if ($stmt->execute()) {
+            $_SESSION['message'] = 'Data deleted successfully.';
+            $_SESSION['message_type'] = 'success';
+        }
+    } catch (mysqli_sql_exception $e) {
+        // Handle foreign key constraint error
+        if ($e->getCode() == 1451) {
+            $_SESSION['message'] = 'Data project tidak dapat dihapus karena merupakan data utama dan masih terhubung dengan data lain. Silahkan hapus data terkait terlebih dahulu.';
+            $_SESSION['message_type'] = 'danger';
+        } else {
+            $_SESSION['message'] = 'Terjadi kesalahan: ' . $e->getMessage();
+            $_SESSION['message_type'] = 'danger';
+        }
     }
+    
     $stmt->close();
     header('Location: view.php');
     exit();

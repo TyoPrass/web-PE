@@ -13,13 +13,23 @@ if (isset($_GET['delete'])) {
     $sql = "DELETE FROM customer WHERE id_customer = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id_customer);
-    if ($stmt->execute()) {
-        $_SESSION['message'] = 'Customer deleted successfully.';
-        $_SESSION['message_type'] = 'success';
-    } else {
-        $_SESSION['message'] = 'Error: ' . $stmt->error;
-        $_SESSION['message_type'] = 'danger';
+
+    try {
+        if ($stmt->execute()) {
+            $_SESSION['message'] = 'Customer berhasil dihapus.';
+            $_SESSION['message_type'] = 'success';
+        }
+    } catch (mysqli_sql_exception $e) {
+        // Tangani error karena foreign key constraint
+        if ($e->getCode() == 1451) {
+            $_SESSION['message'] = 'Data customer tidak dapat dihapus karena merupakan data utama dan masih terhubung dengan data lain. Silahkan hapus data terkait terlebih dahulu.';
+            $_SESSION['message_type'] = 'danger';
+        } else {
+            $_SESSION['message'] = 'Terjadi kesalahan: ' . $e->getMessage();
+            $_SESSION['message_type'] = 'danger';
+        }
     }
+
     $stmt->close();
     header('Location: view.php');
     exit();
@@ -36,12 +46,12 @@ if (isset($_POST['update'])) {
     $stmt->bind_param("ssi", $nama_customer, $project, $id_customer);
 
     if ($stmt->execute()) {
-        $_SESSION['message'] = 'Customer updated successfully.';
+        $_SESSION['message'] = 'Customer berhasil diperbarui.';
         $_SESSION['message_type'] = 'success';
-        echo "<script>alert('Customer updated successfully.'); window.location.href='view.php';</script>";
+        echo "<script>alert('Customer berhasil diperbarui.'); window.location.href='view.php';</script>";
         exit();
     } else {
-        $_SESSION['message'] = 'Error: ' . $stmt->error;
+        $_SESSION['message'] = 'Terjadi kesalahan: ' . $stmt->error;
         $_SESSION['message_type'] = 'danger';
     }
 
@@ -58,12 +68,12 @@ if (isset($_POST['submit'])) {
     $stmt->bind_param("ss", $nama_customer, $project);
 
     if ($stmt->execute()) {
-        $_SESSION['message'] = 'Customer inserted successfully.';
+        $_SESSION['message'] = 'Customer berhasil ditambahkan.';
         $_SESSION['message_type'] = 'success';
-        echo "<script>alert('Customer inserted successfully.'); window.location.href='view.php';</script>";
+        echo "<script>alert('Customer berhasil ditambahkan.'); window.location.href='view.php';</script>";
         exit();
     } else {
-        $_SESSION['message'] = 'Error: ' . $stmt->error;
+        $_SESSION['message'] = 'Terjadi kesalahan: ' . $stmt->error;
         $_SESSION['message_type'] = 'danger';
     }
 

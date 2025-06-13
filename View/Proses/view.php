@@ -514,16 +514,7 @@ include_once('action.php');
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h4 class="header-title">Basic Data Table</h4>
-
-                                        <div class="mt-2">
-                                                <a href="view.php?insert" class="btn btn-success">
-                                                    <i class="mdi mdi-plus"></i>  Insert New Proses
-                                                </a>
-                                            </div>
-                                            <br>
-                                      
-                 
+                                        <h4 class="header-title">Proses Data</h4>
                                         <?php if (isset($_SESSION['message'])): ?>
                                         <div class="alert alert-<?php echo $_SESSION['message_type']; ?> alert-dismissible fade show" role="alert">
                                             <?php echo $_SESSION['message']; ?>
@@ -685,6 +676,12 @@ include_once('action.php');
                                             </form>
                                         <?php else: ?>
                                             <!-- Display Records Table -->
+                                                <div class="mt-2 mb-3">
+                                                <a href="view.php?insert" class="btn btn-success">
+                                                    <i class="mdi mdi-plus"></i>  Insert New Proses
+                                                </a>
+                                            </div>
+                                        
                                             <div class="tab-content">
                                                 <div class="tab-pane show active" id="basic-datatable-preview">
                                                     <div class="table-responsive">
@@ -735,7 +732,7 @@ include_once('action.php');
                                                                                     <i class="mdi mdi-trash-can"></i>
                                                                                 </a>
                                                                                 <a href="view.php?detail=<?php echo $row['id_proses']; ?>" 
-                                                                                   class="btn btn-secondary btn-sm" 
+                                                                                   class="btn btn-primary btn-sm" 
                                                                                    data-bs-toggle="tooltip" 
                                                                                    title="Detail">
                                                                                     <i class="mdi mdi-eye"></i>

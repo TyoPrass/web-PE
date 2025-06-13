@@ -524,14 +524,13 @@ include_once('action.php');
                              <div class="col-12">
                                  <div class="card">
                                      <div class="card-body">
-                                         <h4 class="header-title">Basic Data Table</h4>
+                                         <h4 class="header-title">Checklist Katakanesha</h4>
                                        
-                                         <ul class="nav nav-tabs nav-bordered mb-3">
                                          
                                             
                                          </ul> <!-- end nav-->
                                          <div class="tab-content">
-                                         <h2>Checklist Katakanesha</h2>
+                                
 
         <?php if (isset($_SESSION['message'])): ?>
             <div class="alert alert-<?php echo $_SESSION['message_type']; ?> alert-dismissible fade show" role="alert">
@@ -582,9 +581,11 @@ include_once('action.php');
                                     <td><?php echo htmlspecialchars($row['date']); ?></td>
                                     <td><?php echo htmlspecialchars($row['proses']); ?></td>
                                     <td>
-                                        <a href="view.php?view=<?php echo $row['id']; ?>" class="btn btn-info btn-sm">View</a>
-                                        <a href="view.php?edit=<?php echo $row['id']; ?>" class="btn btn-warning btn-sm">Edit</a>
-                                        <a href="view.php?delete=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</a>
+                                      <?php
+                                            echo '<a href="view.php?view=' . $row['id'] . '" class="btn btn-info btn-sm"><i class="mdi mdi-eye"></i></a>';
+                                            echo '<a href="view.php?edit=' . $row['id'] . '" class="btn btn-danger btn-sm"><i class="mdi mdi-pencil"></i></a>';
+                                            echo '<a href="view.php?delete=' . $row['id'] . '" class="btn btn-primary btn-sm" onclick="return confirm(\'Are you sure?\')"><i class="mdi mdi-trash-can"></i></a>';
+                                            ?>
                                     </td>
                                 </tr>
                             <?php endwhile; ?>

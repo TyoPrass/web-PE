@@ -518,9 +518,15 @@ if (!isset($_SESSION['username'])) {
                                             <div class="col-sm-6 col-lg-3">
                                                 <div class="card shadow-none m-0">
                                                     <div class="card-body text-center">
-                                                        <i class="dripicons-briefcase text-muted" style="font-size: 24px;"></i>
-                                                        <h3><span>29</span></h3>
-                                                        <p class="text-muted font-15 mb-0">Total Projects</p>
+                                                        <i class="dripicons-user text-muted" style="font-size: 24px;"></i>
+                                                        <?php
+                                                        $queryCustomer = "SELECT COUNT(id_customer) as total_customer FROM customer";
+                                                        $resultCustomer = mysqli_query($conn, $queryCustomer);
+                                                        $rowCustomer = mysqli_fetch_assoc($resultCustomer);
+                                                        $totalCustomer = $rowCustomer['total_customer'];
+                                                        ?>
+                                                        <h3><span><?= $totalCustomer ?></span></h3>
+                                                        <p class="text-muted font-15 mb-0">Total Customers</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -529,8 +535,14 @@ if (!isset($_SESSION['username'])) {
                                                 <div class="card shadow-none m-0 border-start">
                                                     <div class="card-body text-center">
                                                         <i class="dripicons-checklist text-muted" style="font-size: 24px;"></i>
-                                                        <h3><span>715</span></h3>
-                                                        <p class="text-muted font-15 mb-0">Total Tasks</p>
+                                                        <?php
+                                                        $queryPart = "SELECT COUNT(id_part) as total_part FROM data_part";
+                                                        $resultPart = mysqli_query($conn, $queryPart);
+                                                        $rowPart = mysqli_fetch_assoc($resultPart);
+                                                        $totalPart = $rowPart['total_part'];
+                                                        ?>
+                                                        <h3><span><?= $totalPart ?></span></h3>
+                                                        <p class="text-muted font-15 mb-0">Total Parts</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -538,18 +550,31 @@ if (!isset($_SESSION['username'])) {
                                             <div class="col-sm-6 col-lg-3">
                                                 <div class="card shadow-none m-0 border-start">
                                                     <div class="card-body text-center">
-                                                        <i class="dripicons-user-group text-muted" style="font-size: 24px;"></i>
-                                                        <h3><span>31</span></h3>
-                                                        <p class="text-muted font-15 mb-0">Members</p>
+                                                        <i class="dripicons-document text-muted" style="font-size: 24px;"></i>
+                                                        <?php
+                                                        $queryTrial = "SELECT COUNT(id_trial) as total_trial FROM trial";
+                                                        $resultTrial = mysqli_query($conn, $queryTrial);
+                                                        $rowTrial = mysqli_fetch_assoc($resultTrial);
+                                                        $totalTrial = $rowTrial['total_trial'];
+                                                        ?>
+                                                        <h3><span><?= $totalTrial ?></span></h3>
+                                                        <p class="text-muted font-15 mb-0">Total Trials</p>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div>  
+
                                             <div class="col-sm-6 col-lg-3">
                                                 <div class="card shadow-none m-0 border-start">
                                                     <div class="card-body text-center">
-                                                        <i class="dripicons-user-group text-muted" style="font-size: 24px;"></i>
-                                                        <h3><span>31</span></h3>
-                                                        <p class="text-muted font-15 mb-0">Members</p>
+                                                        <i class="dripicons-document text-muted" style="font-size: 24px;"></i>
+                                                        <?php
+                                                        $queryKatakensha = "SELECT COUNT(id) as total_katakensha FROM checklist_katakanesha";
+                                                        $resultKatakensha = mysqli_query($conn, $queryKatakensha);
+                                                        $rowKatakensha = mysqli_fetch_assoc($resultKatakensha);
+                                                        $totalKatakensha = $rowKatakensha['total_katakensha'];
+                                                        ?>
+                                                        <h3><span><?= $totalKatakensha ?></span></h3>
+                                                        <p class="text-muted font-15 mb-0">Total Katakensha</p>
                                                     </div>
                                                 </div>
                                             </div>
